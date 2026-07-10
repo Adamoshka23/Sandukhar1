@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Contact SAN DUKHAR — visit our Istanbul atelier or send us a message.">
+    
+    <title data-i18n="nav_contact">Contact Us | SAN DUKHAR</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        .contacts-hero { text-align: center; padding: calc(var(--header-height) + 4rem) 0 3rem; }
+        .contacts-hero h1 { font-family: var(--font-display); font-size: var(--font-size-section-title); font-weight: var(--font-weight-light); color: var(--color-white); }
+        .contacts-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+        .contact-info-block { padding: 2rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); margin-bottom: 1.5rem; transition: border-color var(--transition-fast); }
+        .contact-info-block:hover { border-color: var(--color-gold-pale); }
+        .contact-info-block h3 { font-family: var(--font-display); font-size: 1.3rem; color: var(--color-gold); margin-bottom: 0.8rem; }
+        .contact-info-block p, .contact-info-block a { font-size: var(--font-size-small); color: var(--color-text-secondary); line-height: var(--line-height-luxury); }
+        .contact-info-block a:hover { color: var(--color-gold); }
+        .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+        .contact-form input, .contact-form textarea, .contact-form select { width: 100%; padding: 1rem 1.2rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); background: rgba(255,255,255,0.02); color: var(--color-white); font-family: var(--font-body); font-size: var(--font-size-small); transition: border-color var(--transition-fast); }
+        .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus { border-color: var(--color-gold); outline: none; }
+        .contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--color-text-muted); }
+        .contact-form textarea { min-height: 140px; resize: vertical; }
+        .contact-form select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23b0a89e' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; }
+        .map-container { margin-top: var(--space-2xl); border-radius: var(--border-radius-md); overflow: hidden; border: 1px solid var(--color-border); height: 400px; }
+        .map-container iframe { width: 100%; height: 100%; border: none; filter: grayscale(100%) invert(92%) contrast(83%); }
+        @media screen and (max-width: 991px) { .contacts-layout { grid-template-columns: 1fr; gap: 2rem; } .map-container { height: 300px; } }
+    </style>
+</head>
+<body class="contacts-page">
+
+    <header id="main-header" class="site-header scrolled">
+        <div class="header-container">
+            <div class="header-logo"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR"></a></div>
+            <nav class="main-navigation">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                    <li class="nav-item"><a href="catalog.html" class="nav-link" data-i18n="nav_collections">Collections</a></li>
+                    <li class="nav-item"><a href="materials.html" class="nav-link" data-i18n="nav_materials">Materials</a></li>
+                    <li class="nav-item"><a href="tailoring.html" class="nav-link" data-i18n="nav_bespoke">Bespoke</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link" data-i18n="nav_atelier">Atelier</a></li>
+                    <li class="nav-item"><a href="contacts.html" class="nav-link active" data-i18n="nav_contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-utilities">
+                <a href="cart.html" class="utility-btn cart-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count">0</span></a>
+                <button class="utility-btn menu-trigger" id="mobile-menu-trigger"><span class="menu-line"></span><span class="menu-line"></span><span class="menu-line"></span></button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="contacts-hero">
+            <div class="container">
+                <h1 class="fade-in-up" data-i18n="concierge">Concierge</h1>
+                <p class="section-subtitle fade-in-up delay-1" style="margin-top:0.5rem;" data-i18n="concierge_subtitle">We are at your service.</p>
+            </div>
+        </section>
+        <section class="section-padding">
+            <div class="container">
+                <div class="contacts-layout">
+                    <div class="slide-up">
+                        <div class="contact-info-block"><h3 data-i18n="contact_istanbul_atelier">Istanbul Atelier</h3><address style="font-style:normal;margin-bottom:0.5rem;">Abdi İpekçi Caddesi No: 47<br>Nişantaşı, Istanbul<br>34367, Turkey</address><p style="margin-bottom:0.3rem;" data-i18n="contact_atelier_hours">Monday – Saturday: 10:00 – 19:00</p><p data-i18n="contact_atelier_sunday">Sunday: By appointment only</p></div>
+                        <div class="contact-info-block"><h3 data-i18n="contact_telephone">Telephone</h3><a href="tel:+902123456789">+90 212 345 67 89</a><p style="margin-top:0.5rem;" data-i18n="contact_available_hours">Available during atelier hours.</p></div>
+                        <div class="contact-info-block"><h3 data-i18n="contact_email">Email</h3><a href="mailto:concierge@sandukhar.com">concierge@sandukhar.com</a><p style="margin-top:0.5rem;" data-i18n="contact_respond_time">We respond within 24 hours.</p></div>
+                        <div class="contact-info-block"><h3 data-i18n="contact_press">Press & Partnerships</h3><a href="mailto:press@sandukhar.com">press@sandukhar.com</a></div>
+                    </div>
+                    <div class="slide-up delay-1">
+                        <form class="contact-form" id="contact-form">
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                                <input type="text" placeholder="First Name *" required>
+                                <input type="text" placeholder="Last Name *" required>
+                            </div>
+                            <input type="email" placeholder="Email Address *" required>
+                            <input type="tel" data-i18n-attr="placeholder" data-i18n="contact_phone_placeholder" placeholder="+90 555 123 45 67">
+                            <select><option value="" data-i18n="contact_nature_enquiry">Nature of Enquiry</option><option data-i18n="contact_bespoke_commission">Bespoke Commission</option><option data-i18n="contact_product_information">Product Information</option><option data-i18n="contact_order_status">Order Status</option><option data-i18n="contact_atelier_visit">Atelier Visit</option><option data-i18n="contact_press_media">Press & Media</option><option data-i18n="contact_other">Other</option></select>
+                            <textarea data-i18n-attr="placeholder" data-i18n="contact_your_message" placeholder="Your message..."></textarea>
+                            <button type="submit" class="btn-gold" data-i18n="contact_send_enquiry">Send Enquiry</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="map-container slide-up"><iframe src="https://www.google.com/maps/embed?pb=..." allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="SAN DUKHAR Istanbul Atelier Location"></iframe></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer section-padding bg-black">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-col-brand"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR" style="height:1.8rem;"></a><p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship.</p></div>
+                <div class="footer-col"><h4 data-i18n="footer_customer_care">Customer Care</h4><ul><li><a href="contacts.html" data-i18n="footer_contact_faq">Contact</a></li></ul></div>
+                <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="#" data-i18n="footer_privacy">Privacy</a></li></ul></div>
+                <div class="footer-col"><h4 data-i18n="footer_istanbul">Istanbul</h4><address>Nişantaşı, Istanbul</address></div>
+            </div>
+            <div class="footer-bottom"><p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR.</p></div>
+        </div>
+    </footer>
+
+    <script src="js/i18n.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script>
+        document.getElementById('contact-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            btn.textContent = (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t('contact_enquiry_sent') : 'Enquiry Sent';
+            btn.style.background = 'var(--color-success)'; btn.style.borderColor = 'var(--color-success)'; btn.style.color = 'white';
+            setTimeout(() => { btn.textContent = (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t('contact_send_enquiry') : 'Send Enquiry'; btn.style.background = ''; btn.style.borderColor = ''; btn.style.color = ''; this.reset(); }, 3000);
+        });
+    </script>
+</body>
+</html>

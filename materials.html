@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Discover the exotic leathers of SAN DUKHAR — Nile crocodile, python, ostrich, stingray, and lizard. Learn about their origins, unique characteristics, and proper care.">
+    <meta name="keywords" content="exotic leather guide, crocodile leather, python leather, ostrich leather, stingray leather, lizard leather, leather care, SAN DUKHAR materials">
+
+    <meta property="og:title" content="Exotic Leather Materials | SAN DUKHAR">
+    <meta property="og:description" content="Explore the finest exotic leathers sourced from ethical farms worldwide.">
+    <meta property="og:image" content="https://www.sandukhar.com/images/materials/materials-hero.webp">
+    <meta property="og:url" content="https://www.sandukhar.com/materials.html">
+
+    <title>Exotic Leather Materials | Crocodile, Python, Ostrich & More | SAN DUKHAR</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        /* ============================================================
+           MATERIALS PAGE — CLEAN, ISOLATED STYLES
+           No conflicts with global header or other components
+           ============================================================ */
+
+        /* === Hero Section === */
+        .materials-hero {
+            position: relative;
+            width: 100%;
+            height: 55vh;
+            min-height: 400px;
+            max-height: 650px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: var(--header-height);
+            background-color: var(--color-black);
+        }
+
+        .materials-hero-image {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .materials-hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .materials-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(10, 10, 10, 0.35) 0%,
+                rgba(10, 10, 10, 0.55) 100%
+            );
+            z-index: 1;
+        }
+
+        .materials-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 750px;
+            padding: 0 var(--container-padding);
+        }
+
+        .materials-hero-content h1 {
+            font-family: var(--font-display);
+            font-size: var(--font-size-section-title);
+            font-weight: var(--font-weight-light);
+            color: var(--color-white);
+            margin-bottom: var(--space-md);
+            letter-spacing: var(--letter-spacing-title);
+        }
+
+        .materials-hero-content p {
+            font-size: 1.1rem;
+            color: var(--color-text-secondary);
+            line-height: var(--line-height-luxury);
+            max-width: 550px;
+            margin: 0 auto;
+            letter-spacing: var(--letter-spacing-subtitle);
+        }
+
+        /* === Material Detail Section === */
+        .material-detail-section {
+            position: relative;
+            padding: var(--space-section) 0;
+            border-bottom: 1px solid var(--color-border);
+            background-color: var(--color-black);
+            z-index: 1;
+        }
+
+        .material-detail-section.bg-graphite {
+            background-color: var(--color-graphite);
+            border-bottom-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .material-detail-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .material-detail-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .material-detail-layout.reverse {
+            direction: ltr;
+        }
+
+        .material-detail-layout.reverse .material-detail-image {
+            order: 2;
+        }
+
+        .material-detail-layout.reverse .material-detail-content {
+            order: 1;
+        }
+
+        .material-detail-image {
+            position: relative;
+            border-radius: var(--border-radius-sm);
+            overflow: hidden;
+            aspect-ratio: 4/5;
+            max-height: 650px;
+            background-color: var(--color-charcoal);
+        }
+
+        .material-detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-luxury);
+        }
+
+        .material-detail-image:hover img {
+            transform: scale(1.03);
+        }
+
+        .material-detail-content {
+            padding: var(--space-lg) 0;
+        }
+
+        .material-label {
+            font-size: var(--font-size-caption);
+            color: var(--color-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--space-sm);
+        }
+
+        .material-detail-title {
+            font-family: var(--font-display);
+            font-size: 2.8rem;
+            font-weight: var(--font-weight-light);
+            color: var(--color-white);
+            margin-bottom: var(--space-md);
+            letter-spacing: var(--letter-spacing-title);
+        }
+
+        .bg-graphite .material-detail-title {
+            color: var(--color-white);
+        }
+
+        .material-divider {
+            width: 60px;
+            height: 1px;
+            background: var(--color-gold);
+            margin-bottom: var(--space-lg);
+        }
+
+        .material-description {
+            font-size: 1rem;
+            color: var(--color-text-secondary);
+            line-height: var(--line-height-luxury);
+            margin-bottom: var(--space-xl);
+        }
+
+        /* === Material Attributes Grid === */
+        .material-attributes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: var(--space-xl);
+            padding: 1.8rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius-sm);
+        }
+
+        .attribute h4 {
+            font-family: var(--font-body);
+            font-size: var(--font-size-caption);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.4rem;
+        }
+
+        .attribute p {
+            font-size: var(--font-size-small);
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* === Material Finishes === */
+        .material-finishes {
+            margin-bottom: var(--space-xl);
+        }
+
+        .material-finishes h4 {
+            font-family: var(--font-body);
+            font-size: var(--font-size-caption);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.8rem;
+        }
+
+        .finish-swatches {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .finish-swatch {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid var(--color-border);
+            cursor: pointer;
+            transition: border-color var(--transition-fast), transform var(--transition-fast);
+            position: relative;
+        }
+
+        .finish-swatch:hover {
+            border-color: var(--color-gold);
+            transform: scale(1.15);
+        }
+
+        .finish-swatch::after {
+            content: attr(title);
+            position: absolute;
+            bottom: -1.8rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.6rem;
+            color: var(--color-text-muted);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity var(--transition-fast);
+            pointer-events: none;
+        }
+
+        .finish-swatch:hover::after {
+            opacity: 1;
+        }
+
+        /* === Care Guide Section === */
+        .care-guide-section {
+            padding: var(--space-section) 0;
+            background-color: var(--color-milk);
+        }
+
+        .care-guide-section .section-title {
+            color: var(--color-text-dark);
+        }
+
+        .care-guide-section .section-subtitle {
+            color: #6b635a;
+        }
+
+        .care-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .care-card {
+            padding: 2.5rem 2rem;
+            text-align: center;
+            background: var(--color-white);
+            border: 1px solid var(--color-border-light);
+            border-radius: var(--border-radius-sm);
+            transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+        }
+
+        .care-card:hover {
+            box-shadow: var(--shadow-card);
+            transform: translateY(-4px);
+        }
+
+        .care-icon {
+            font-size: 2.8rem;
+            margin-bottom: var(--space-md);
+            display: block;
+            line-height: 1;
+        }
+
+        .care-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: var(--font-weight-regular);
+            color: var(--color-text-dark);
+            margin-bottom: var(--space-sm);
+        }
+
+        .care-card p {
+            font-size: var(--font-size-small);
+            color: #6b635a;
+            line-height: var(--line-height-luxury);
+        }
+
+        /* === Intro Section === */
+        .materials-intro {
+            padding: var(--space-section) 0;
+            background-color: var(--color-graphite);
+        }
+
+        /* === Responsive Adjustments === */
+        @media screen and (max-width: 1199px) {
+            .material-detail-layout {
+                gap: 3rem;
+            }
+
+            .material-detail-title {
+                font-size: 2.2rem;
+            }
+
+            .care-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media screen and (max-width: 991px) {
+            .materials-hero {
+                height: 45vh;
+                min-height: 350px;
+            }
+
+            .material-detail-layout {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .material-detail-layout.reverse .material-detail-image {
+                order: 1;
+            }
+
+            .material-detail-layout.reverse .material-detail-content {
+                order: 2;
+            }
+
+            .material-detail-image {
+                aspect-ratio: 16/9;
+                max-height: 400px;
+            }
+
+            .material-detail-content {
+                padding: 0;
+            }
+
+            .material-detail-title {
+                font-size: 2rem;
+            }
+
+            .material-attributes {
+                grid-template-columns: 1fr 1fr;
+                gap: 1.2rem;
+                padding: 1.2rem;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .materials-hero {
+                height: 40vh;
+                min-height: 300px;
+            }
+
+            .materials-hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .materials-hero-content p {
+                font-size: 0.9rem;
+            }
+
+            .material-detail-section {
+                padding: 3rem 0;
+            }
+
+            .material-detail-layout {
+                gap: 1.5rem;
+            }
+
+            .material-detail-title {
+                font-size: 1.6rem;
+            }
+
+            .material-attributes {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .care-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .care-card {
+                padding: 1.5rem;
+            }
+
+            .care-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .finish-swatch {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        @media screen and (max-width: 479px) {
+            .materials-hero {
+                height: 35vh;
+                min-height: 250px;
+            }
+
+            .materials-hero-content h1 {
+                font-size: 1.6rem;
+            }
+
+            .material-detail-section {
+                padding: 2.5rem 0;
+            }
+
+            .material-detail-title {
+                font-size: 1.4rem;
+            }
+
+            .material-description {
+                font-size: 0.85rem;
+            }
+
+            .material-finishes h4 {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="materials-page">
+
+    <!-- ============================================================ -->
+    <!-- HEADER -->
+    <!-- ============================================================ -->
+    <header id="main-header" class="site-header scrolled">
+        <div class="header-container">
+            <div class="header-logo">
+                <a href="index.html" aria-label="SAN DUKHAR - Homepage">
+                    <img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR Logo" class="logo-gold">
+                </a>
+            </div>
+            <nav class="main-navigation" aria-label="Main Navigation">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                    <li class="nav-item"><a href="catalog.html" class="nav-link" data-i18n="nav_collections">Collections</a></li>
+                    <li class="nav-item"><a href="materials.html" class="nav-link active" data-i18n="nav_materials">Materials</a></li>
+                    <li class="nav-item"><a href="tailoring.html" class="nav-link" data-i18n="nav_bespoke">Bespoke</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link" data-i18n="nav_atelier">Atelier</a></li>
+                    <li class="nav-item"><a href="contacts.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-utilities">
+                <button class="utility-btn search-trigger" aria-label="Search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </button>
+                <a href="wishlist.html" class="utility-btn" aria-label="Wishlist">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                </a>
+                <a href="cart.html" class="utility-btn cart-icon" aria-label="Shopping Cart">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="account.html" class="utility-btn" aria-label="My Account">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </a>
+                <button class="utility-btn menu-trigger" id="mobile-menu-trigger" aria-label="Menu" aria-expanded="false">
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                    <span class="menu-line"></span>
+                </button>
+            </div>
+        </div>
+        <div class="search-overlay" id="search-overlay">
+            <div class="search-overlay-container">
+                <input type="search" data-i18n-attr="placeholder" data-i18n="nav_search_placeholder" placeholder="Search for leather, products, materials..." class="search-input" id="search-input" autocomplete="off">
+                <button class="search-close" aria-label="Close search">✕</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- MOBILE NAVIGATION -->
+    <!-- ============================================================ -->
+    <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+        <div class="mobile-nav-container">
+            <ul>
+                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                <li><a href="catalog.html" data-i18n="nav_collections">Collections</a></li>
+                <li><a href="materials.html" data-i18n="nav_materials">Materials</a></li>
+                <li><a href="tailoring.html" data-i18n="nav_bespoke">Bespoke Tailoring</a></li>
+                <li><a href="about.html" data-i18n="nav_atelier">Our Atelier</a></li>
+                <li><a href="contacts.html" data-i18n="nav_contact">Contact</a></li>
+                <li><a href="account.html" data-i18n="account_title">My Account</a></li>
+                <li><a href="wishlist.html" data-i18n="account_wishlist">Wishlist</a></li>
+                <li><a href="cart.html" data-i18n="cart_title">Cart</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- MAIN CONTENT -->
+    <!-- ============================================================ -->
+    <main>
+        <!-- Hero Banner -->
+        <section class="materials-hero">
+            <div class="materials-hero-image">
+                <img src="images/materials/materials-hero.webp" alt="Collection of exotic leather textures — crocodile, python, ostrich, stingray, and lizard" class="parallax-image">
+                <div class="materials-hero-overlay"></div>
+            </div>
+            <div class="materials-hero-content">
+                <h1 class="fade-in-up" data-i18n="section_materials">Exquisite Materials</h1>
+                <p class="fade-in-up delay-1" data-i18n="materials-hero-content">Nature's most extraordinary skins, ethically sourced and transformed by human hands into objects of enduring beauty.</p>
+            </div>
+        </section>
+
+        <!-- Introduction -->
+        <section class="materials-intro">
+            <div class="container">
+                <div class="section-header slide-up">
+                    <h2 class="section-title">A Philosophy of Material</h2>
+                    <p class="section-subtitle">We believe that the foundation of any exceptional creation lies in its raw material. Our atelier sources exclusively from CITES-certified farms where animal welfare and environmental stewardship are paramount. Each skin is individually selected by our master artisans for its symmetry, texture, and character.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Material 1: Crocodile -->
+        <section id="crocodile" class="material-detail-section">
+            <div class="container">
+                <div class="material-detail-layout">
+                    <div class="material-detail-image slide-up">
+                        <img src="images/materials/crocodile-full.webp" alt="Genuine Nile crocodile leather with uniform scale pattern" loading="lazy">
+                    </div>
+                    <div class="material-detail-content slide-up delay-1">
+                        <p class="material-label">01 — Porosus & Niloticus</p>
+                        <h2 class="material-detail-title">Crocodile Leather</h2>
+                        <div class="material-divider"></div>
+                        <p class="material-description">The undisputed king of exotic leathers. Crocodile skin is defined by its regular, rectangular scale pattern with prominent pore markings — a hallmark of authenticity that cannot be replicated. We work exclusively with Nile crocodile (Crocodylus niloticus) and saltwater crocodile (Crocodylus porosus), sourced from farms in Madagascar, Zimbabwe, and Australia.</p>
+                        
+                        <div class="material-attributes">
+                            <div class="attribute">
+                                <h4>Origin</h4>
+                                <p>Madagascar, Zimbabwe, Northern Australia</p>
+                            </div>
+                            <div class="attribute">
+                                <h4>Character</h4>
+                                <p>Uniform tile-like scales, natural sheen, exceptional durability</p>
+                            </div>
+                            <div class="attribute">
+                                <h4>Patina</h4>
+                                <p>Develops a rich, deep luster over decades of use</p>
+                            </div>
+                            <div class="attribute">
+                                <h4>Care</h4>
+                                <p>Occasional conditioning with natural oils. Avoid prolonged moisture.</p>
+                            </div>
+                        </div>
+
+                        <div class="material-finishes">
+                            <h4>Available Finishes</h4>
+                            <div class="finish-swatches">
+                                <span class="finish-swatch" style="background: #1a1a1a;" title="Matte Black"></span>
+                                <span class="finish-swatch" style="background: #3e2723;" title="Deep Brown"></span>
+                                <span class="finish-swatch" style="background: #8b5a2b;" title="Cognac"></span>
+                                <span class="finish-swatch" style="background: #2c1810;" title="Espresso"></span>
+                                <span class="finish-swatch" style="background: #1c1c1c;" title="Glazed Black"></span>
+                            </div>
+                        </div>
+
+                        <a href="catalog.html?material=crocodile" class="btn-outline" data-i18n="section_view_collection">Explore Crocodile Collection</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Material 2: Python -->
+        <section id="python" class="material-detail-section bg-graphite">
+            <div class="container">
+                <div class="material-detail-layout reverse">
+                    <div class="material-detail-image slide-up">
+                        <img src="images/materials/python-full.webp" alt="Natural python leather with distinctive overlapping scale pattern" loading="lazy">
+                    </div>
+                    <div class="material-detail-content slide-up delay-1">
+                        <p class="material-label">02 — Reticulatus & Molurus</p>
+                        <h2 class="material-detail-title">Python Leather</h2>
+                        <div class="material-divider"></div>
+                        <p class="material-description">Python skin is immediately recognizable by its dramatic, overlapping scale pattern that creates a natural three-dimensional effect. Each skin is utterly unique — a fingerprint of nature. We source from Southeast Asian farms where pythons are raised for their skins as part of a regulated trade that supports local communities.</p>
+                        
+                        <div class="material-attributes">
+                            <div class="attribute">
+                                <h4>Origin</h4>
+                                <p>Indonesia, Malaysia, Vietnam</p>
+                            </div>
+                            <div class="attribute">
+                                <h4>Character</h4>
+                                <p>Supple, lightweight, dramatic scale pattern</p>
+                            </div>
+                            <div class="attribute">
+                                <h4>Patina</h4>
+                                <p>Softens and gains character with wear</p>
+                            </div>
+                            <div class="attribute">
+                                <h4>Care</h4>
+                                <p>Gentle brushing to maintain scale alignment. Avoid friction.</p>
+                            </div>
+                        </div>
+
+                        <div class="material-finishes">
+                            <h4>Available Finishes</h4>
+                            <div class="finish-swatches">
+                                <span class="finish-swatch" style="background: #d4c5b2;" title="Natural"></span>
+                                <span class="finish-swatch" style="background: #1a1a1a;" title="Black"></span>
+                                <span class="finish-swatch" style="background: #5c3a21;" title="Tobacco"></span>
+                                <span class="finish-swatch" style="background: #8b0000;" title="Burgundy"></span>
+                                <span class="finish-swatch" style="background: #2f4f4f;" title="Forest"></span>
+                            </div>
+                        </div>
+
+                        <a href="catalog.html?material=python" class="btn-outline" data-i18n="section_view_collection">Explore Python Collection</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Material 3: Ostrich -->
+        <section id="ostrich" class="material-detail-section">
+            <div class="container">
+                <div class="material-detail-layout">
+                    <div class="material-detail-image slide-up">
+                        <img src="images/materials/ostrich-full.webp" alt="Full quill ostrich leather with distinctive follicle pattern" loading="lazy">
+                    </div>
+                    <div class="material-detail-content slide-up delay-1">
+                        <p class="material-label">03 — Struthio Camelus</p>
+                        <h2 class="material-detail-title">Ostrich Leather</h2>
+                        <div class="material-divider"></div>
+                        <p class="material-description">Ostrich leather is celebrated for its unique quill follicle pattern — the small bumps where feathers once grew. This creates a surface that is both visually striking and remarkably durable. We use only full-quill ostrich from the crown of the skin, sourced from South African farms with the highest ethical standards.</p>
+                        
+                        <div class="material-attributes">
+                            <div class="attribute">
+                                <h4>Origin</h4>
+                                <p>South Africa, Oudtshoorn region</p>
+                            </div>
+                            <div class="attribute">
+                                <h4>Character</h4>
+                                <p>Soft, pliable, distinctive quill pattern</p>
+                            </div>
+                            <div class="attribute">
+                                <h4>Patina</h4>
+                                <p>Darkens gracefully, follicles become more pronounced</p>
+                            </div>
+                            <div class="attribute">
+                                <h4>Care</h4>
+                                <p>Hydrate with specialized ostrich leather cream. Avoid heat.</p>
+                            </div>
+                        </div>
+
+                        <div class="material-finishes">
+                            <h4>Available Finishes</h4>
+                            <div class="finish-swatches">
+                                <span class="finish-swatch" style="background: #3e2723;" title="Dark Brown"></span>
+                                <span class="finish-swatch" style="background: #8b5a2b;" title="Cognac"></span>
+                                <span class="finish-swatch" style="background: #1a1a1a;" title="Black"></span>
+                                <span class="finish-swatch" style="background: #d2b48c;" title="Tan"></span>
+                                <span class="finish-swatch" style="background: #2c1810;" title="Mocha"></span>
+                            </div>
+                        </div>
+
+                        <a href="catalog.html?material=ostrich" class="btn-outline" data-i18n="section_view_collection">Explore Ostrich Collection</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Material 4: Stingray -->
+        <section id="stingray" class="material-detail-section bg-graphite">
+            <div class="container">
+                <div class="material-detail-layout reverse">
+                    <div class="material-detail-image slide-up">
+                        <img src="images/materials/stingray-full.webp" alt="Polished stingray leather with calcium deposit texture" loading="lazy">
+                    </div>
+                    <div class="material-detail-content slide-up delay-1">
+                        <p class="material-label">04 — Galuchat</p>
+                        <h2 class="material-detail-title">Stingray Leather</h2>
+                        <div class="material-divider"></div>
+                        <p class="material-description">Stingray leather — known in French as galuchat — is one of the most durable and distinctive exotic materials in existence. Its surface is covered in tiny calcium deposits that form a natural armor. When polished, these deposits create a mesmerizing shimmer that changes with the light. Our stingray skins come from sustainable fisheries in Thailand and Indonesia.</p>
+                        
+                        <div class="material-attributes">
+                            <div class="attribute">
+                                <h4>Origin</h4>
+                                <p>Thailand, Indonesia coastal waters</p>
+                            </div>
+                            <div class="attribute">
+                                <h4>Character</h4>
+                                <p>Extremely durable, shimmering pearl-like surface</p>
+                            </div>
+                            <div class="attribute">
+                                <h4>Patina</h4>
+                                <p>Calcium pearls polish naturally with use</p>
+                            </div>
+                            <div class="attribute">
+                                <h4>Care</h4>
+                                <p>Wipe with soft dry cloth. Virtually waterproof.</p>
+                            </div>
+                        </div>
+
+                        <div class="material-finishes">
+                            <h4>Available Finishes</h4>
+                            <div class="finish-swatches">
+                                <span class="finish-swatch" style="background: #4a4a4a;" title="Graphite"></span>
+                                <span class="finish-swatch" style="background: #1a1a1a;" title="Black"></span>
+                                <span class="finish-swatch" style="background: #f5f5dc;" title="Ivory"></span>
+                                <span class="finish-swatch" style="background: #191970;" title="Midnight"></span>
+                            </div>
+                        </div>
+
+                        <a href="catalog.html?material=stingray" class="btn-outline" data-i18n="section_view_collection">Explore Stingray Collection</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Material 5: Lizard -->
+        <section id="lizard" class="material-detail-section">
+            <div class="container">
+                <div class="material-detail-layout">
+                    <div class="material-detail-image slide-up">
+                        <img src="images/materials/lizard-full.webp" alt="Teju lizard leather with small uniform scales" loading="lazy">
+                    </div>
+                    <div class="material-detail-content slide-up delay-1">
+                        <p class="material-label">05 — Teju & Varanus</p>
+                        <h2 class="material-detail-title">Lizard Leather</h2>
+                        <div class="material-divider"></div>
+                        <p class="material-description">Lizard skin offers a refined, understated elegance with its small, uniform scales that create a subtle geometric pattern. We use two varieties: Teju lizard from South America, known for its smooth, fine scales, and Varanus from Southeast Asia, which has a slightly more textured surface. Both are prized for their flexibility and sophisticated appearance.</p>
+                        
+                        <div class="material-attributes">
+                            <div class="attribute">
+                                <h4>Origin</h4>
+                                <p>Argentina, Indonesia, Malaysia</p>
+                            </div>
+                            <div class="attribute">
+                                <h4>Character</h4>
+                                <p>Fine uniform scales, lightweight, elegant</p>
+                            </div>
+                            <div class="attribute">
+                                <h4>Patina</h4>
+                                <p>Develops a subtle sheen over time</p>
+                            </div>
+                            <div class="attribute">
+                                <h4>Care</h4>
+                                <p>Light conditioning. Store away from direct light.</p>
+                            </div>
+                        </div>
+
+                        <div class="material-finishes">
+                            <h4>Available Finishes</h4>
+                            <div class="finish-swatches">
+                                <span class="finish-swatch" style="background: #1a1a1a;" title="Black"></span>
+                                <span class="finish-swatch" style="background: #8b4513;" title="Saddle"></span>
+                                <span class="finish-swatch" style="background: #d4c5b2;" title="Natural"></span>
+                                <span class="finish-swatch" style="background: #2f4f4f;" title="Green"></span>
+                            </div>
+                        </div>
+
+                        <a href="catalog.html?material=lizard" class="btn-outline" data-i18n="section_view_collection">Explore Lizard Collection</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Care Guide -->
+        <section class="care-guide-section">
+            <div class="container">
+                <div class="section-header slide-up">
+                    <h2 class="section-title">The Art of Preservation</h2>
+                    <p class="section-subtitle">Your SAN DUKHAR creation is designed to be passed down through generations. Proper care will ensure it ages with grace and dignity.</p>
+                </div>
+                <div class="care-grid">
+                    <div class="care-card slide-up delay-1">
+                        <span class="care-icon" aria-hidden="true">☂</span>
+                        <h3>Avoid Water</h3>
+                        <p>Exotic leathers are naturally resistant but not waterproof. If exposed to rain, pat dry immediately with a soft, absorbent cloth and allow to air dry away from direct heat.</p>
+                    </div>
+                    <div class="care-card slide-up delay-2">
+                        <span class="care-icon" aria-hidden="true">☀</span>
+                        <h3>Mind the Sun</h3>
+                        <p>Prolonged exposure to direct sunlight can cause fading and drying. Store your pieces in their SAN DUKHAR dust bags when not in use.</p>
+                    </div>
+                    <div class="care-card slide-up delay-3">
+                        <span class="care-icon" aria-hidden="true">🧴</span>
+                        <h3>Condition Regularly</h3>
+                        <p>Apply a specialized exotic leather conditioner every 6–12 months. Use sparingly — a little goes a long way with premium skins.</p>
+                    </div>
+                    <div class="care-card slide-up delay-4">
+                        <span class="care-icon" aria-hidden="true">✋</span>
+                        <h3>Handle with Care</h3>
+                        <p>The natural oils from your hands contribute to the patina. Handle your piece with clean hands and avoid contact with alcohol-based products.</p>
+                    </div>
+                    <div class="care-card slide-up delay-5">
+                        <span class="care-icon" aria-hidden="true">📦</span>
+                        <h3>Store Properly</h3>
+                        <p>Store in a cool, dry place. Use the original box or dust bag. Never store in plastic, which traps moisture and can damage the leather.</p>
+                    </div>
+                    <div class="care-card slide-up delay-6">
+                        <span class="care-icon" aria-hidden="true">🔧</span>
+                        <h3>Professional Service</h3>
+                        <p>We offer complimentary cleaning for the first 5 years and lifetime restoration services at preferential rates for all SAN DUKHAR pieces.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============================================================ -->
+    <!-- FOOTER -->
+    <!-- ============================================================ -->
+    <footer class="site-footer section-padding bg-black">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-col-brand">
+                    <a href="index.html" class="footer-logo"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR"></a>
+                    <p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship. Since 2008, Istanbul.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Instagram"><img src="icons/instagram.svg" alt=""></a>
+                        <a href="#" aria-label="Facebook"><img src="icons/facebook.svg" alt=""></a>
+                        <a href="#" aria-label="Pinterest"><img src="icons/pinterest.svg" alt=""></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_customer_care">Customer Care</h4>
+                    <ul>
+                        <li><a href="contacts.html" data-i18n="footer_contact_faq">Contact & FAQ</a></li>
+                        <li><a href="#" data-i18n="footer_shipping_delivery">Shipping & Delivery</a></li>
+                        <li><a href="#" data-i18n="footer_returns">Returns & Exchanges</a></li>
+                        <li><a href="track-order.html" data-i18n="footer_track">Track Your Order</a></li>
+                        <li><a href="#" data-i18n="footer_care_guide">Care Guide</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_maison">Our Maison</h4>
+                    <ul>
+                        <li><a href="about.html" data-i18n="footer_brand_story">Brand Story</a></li>
+                        <li><a href="materials.html" data-i18n="footer_materials">Materials</a></li>
+                        <li><a href="tailoring.html" data-i18n="footer_bespoke">Bespoke</a></li>
+                        <li><a href="#" data-i18n="footer_careers">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_legal">Legal</h4>
+                    <ul>
+                        <li><a href="#" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        <li><a href="#" data-i18n="footer_terms">Terms & Conditions</a></li>
+                        <li><a href="#" data-i18n="footer_cookies">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col footer-col-contact">
+                    <h4 data-i18n="footer_istanbul">Istanbul Atelier</h4>
+                    <address>
+                        Abdi İpekçi Caddesi No: 47<br>
+                        Nişantaşı, Istanbul<br>
+                        34367, Turkey
+                    </address>
+                    <a href="tel:+902123456789">+90 212 345 67 89</a><br>
+                    <a href="mailto:concierge@sandukhar.com">concierge@sandukhar.com</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR. All rights reserved. Handcrafted with pride in Turkey.</p>
+                <div class="payment-icons">
+                    <span>Amex</span>
+                    <span>Mastercard</span>
+                    <span>Visa</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/i18n.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script src="js/cart.js" defer></script>
+    <script src="js/wishlist.js" defer></script>
+</body>
+</html>

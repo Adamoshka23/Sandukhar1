@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Commission a bespoke exotic leather piece from SAN DUKHAR. Configure your custom jacket, bag, or accessory.">
+    
+    <title data-i18n="tailoring_title">Bespoke Tailoring | SAN DUKHAR</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        .bespoke-hero { position: relative; height: 50vh; min-height: 400px; display: flex; align-items: center; justify-content: center; margin-top: var(--header-height); background: url('images/tailoring/tailoring-workshop.webp') center/cover no-repeat; }
+        .bespoke-hero::before { content: ''; position: absolute; inset: 0; background: rgba(10,10,10,0.6); }
+        .bespoke-hero-content { position: relative; z-index: 1; text-align: center; max-width: 700px; }
+        .bespoke-hero-content h1 { font-family: var(--font-display); font-size: var(--font-size-section-title); font-weight: var(--font-weight-light); color: var(--color-white); margin-bottom: var(--space-sm); }
+        .bespoke-process-intro { text-align: center; max-width: 700px; margin: 0 auto var(--space-3xl); }
+        .configurator-container { max-width: 900px; margin: 0 auto; padding: 0 var(--container-padding); }
+        .configurator-progress { display: flex; justify-content: space-between; margin-bottom: var(--space-3xl); position: relative; }
+        .configurator-progress::before { content: ''; position: absolute; top: 18px; left: 0; width: 100%; height: 1px; background: var(--color-border); z-index: 0; }
+        .progress-step { position: relative; z-index: 1; text-align: center; cursor: pointer; }
+        .progress-step-num { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--color-border); background: var(--color-black); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-caption); font-weight: var(--font-weight-semibold); color: var(--color-text-muted); margin: 0 auto 0.5rem; transition: all var(--transition-fast); }
+        .progress-step.active .progress-step-num { background: var(--color-gold); border-color: var(--color-gold); color: var(--color-black); }
+        .progress-step.completed .progress-step-num { background: var(--color-charcoal); border-color: var(--color-gold); color: var(--color-gold); }
+        .progress-step-label { font-size: var(--font-size-caption); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+        .progress-step.active .progress-step-label { color: var(--color-gold); }
+        .configurator-step { display: none; animation: fadeSlideIn 0.5s ease-out; }
+        .configurator-step.active { display: block; }
+        @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .step-title { font-family: var(--font-display); font-size: 2rem; font-weight: var(--font-weight-light); color: var(--color-white); margin-bottom: var(--space-lg); text-align: center; }
+        .step-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: var(--space-xl); }
+        .step-option-card { padding: 1.5rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); cursor: pointer; text-align: center; transition: all var(--transition-fast); background: transparent; color: var(--color-text-secondary); font-family: var(--font-body); }
+        .step-option-card:hover { border-color: var(--color-gold-pale); background: rgba(255,255,255,0.02); }
+        .step-option-card.selected { border-color: var(--color-gold); background: var(--color-gold-pale); color: var(--color-gold); }
+        .step-option-card .option-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+        .step-option-card h4 { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 0.3rem; color: inherit; }
+        .step-option-card p { font-size: var(--font-size-caption); color: inherit; opacity: 0.7; }
+        .color-preview { width: 60px; height: 60px; border-radius: 50%; margin: 0 auto 0.8rem; border: 2px solid var(--color-border); }
+        .step-option-card.selected .color-preview { border-color: var(--color-gold); }
+        .step-nav { display: flex; justify-content: space-between; margin-top: var(--space-xl); padding-top: var(--space-lg); border-top: 1px solid var(--color-border); }
+        .btn-back { background: transparent; border: 1px solid var(--color-border); color: var(--color-text-secondary); padding: 0.8rem 2rem; font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; transition: all var(--transition-fast); }
+        .btn-back:hover { border-color: var(--color-white); color: var(--color-white); }
+        .btn-next { background: var(--color-gold); border: 1px solid var(--color-gold); color: var(--color-black); padding: 0.8rem 2rem; font-size: var(--font-size-caption); text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; transition: all var(--transition-fast); }
+        .btn-next:hover { background: transparent; color: var(--color-gold); }
+        .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
+        .step-comment { width: 100%; min-height: 120px; padding: 1rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); background: rgba(255,255,255,0.02); color: var(--color-white); font-family: var(--font-body); font-size: var(--font-size-small); resize: vertical; transition: border-color var(--transition-fast); }
+        .step-comment:focus { border-color: var(--color-gold); outline: none; }
+        .step-comment::placeholder { color: var(--color-text-muted); }
+        .config-summary { background: rgba(255,255,255,0.02); border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); padding: 2rem; margin-bottom: var(--space-xl); }
+        .config-summary h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--color-gold); margin-bottom: var(--space-md); text-align: center; }
+        .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .summary-item { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--color-border); font-size: var(--font-size-small); }
+        .summary-label { color: var(--color-text-muted); }
+        .summary-value { color: var(--color-white); font-weight: var(--font-weight-medium); }
+        @media screen and (max-width: 767px) { .step-options { grid-template-columns: 1fr 1fr; } .configurator-progress { overflow-x: auto; gap: 1rem; padding-bottom: 0.5rem; } .progress-step-label { font-size: 0.6rem; white-space: nowrap; } .summary-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body class="tailoring-page">
+
+    <header id="main-header" class="site-header scrolled">
+        <div class="header-container">
+            <div class="header-logo"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR"></a></div>
+            <nav class="main-navigation">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                    <li class="nav-item"><a href="catalog.html" class="nav-link" data-i18n="nav_collections">Collections</a></li>
+                    <li class="nav-item"><a href="materials.html" class="nav-link" data-i18n="nav_materials">Materials</a></li>
+                    <li class="nav-item"><a href="tailoring.html" class="nav-link active" data-i18n="nav_bespoke">Bespoke</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link" data-i18n="nav_atelier">Atelier</a></li>
+                    <li class="nav-item"><a href="contacts.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-utilities">
+                <a href="cart.html" class="utility-btn cart-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count">0</span></a>
+                <button class="utility-btn menu-trigger" id="mobile-menu-trigger"><span class="menu-line"></span><span class="menu-line"></span><span class="menu-line"></span></button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="bespoke-hero">
+            <div class="bespoke-hero-content">
+                <h1 class="fade-in-up" data-i18n="tailoring_title">Bespoke Atelier</h1>
+                <p class="fade-in-up delay-1" style="color:var(--color-text-secondary);line-height:var(--line-height-luxury);" data-i18n="tailoring_subtitle">A creation that exists only because you imagined it.</p>
+            </div>
+        </section>
+        <section class="section-padding">
+            <div class="bespoke-process-intro slide-up">
+                <h2 class="section-title" data-i18n="tailoring_process_title">The Commission Process</h2>
+                <p class="section-subtitle" data-i18n="tailoring_process_desc">Each bespoke commission is a collaboration between you and our master artisan.</p>
+            </div>
+            <div class="configurator-container slide-up delay-1">
+                <div class="configurator-progress" id="configurator-progress">
+                    <div class="progress-step active" data-step="1"><div class="progress-step-num">1</div><span class="progress-step-label" data-i18n="tailoring_step_product">Product</span></div>
+                    <div class="progress-step" data-step="2"><div class="progress-step-num">2</div><span class="progress-step-label" data-i18n="tailoring_step_material">Material</span></div>
+                    <div class="progress-step" data-step="3"><div class="progress-step-num">3</div><span class="progress-step-label" data-i18n="tailoring_step_color">Color</span></div>
+                    <div class="progress-step" data-step="4"><div class="progress-step-num">4</div><span class="progress-step-label" data-i18n="tailoring_step_lining">Lining</span></div>
+                    <div class="progress-step" data-step="5"><div class="progress-step-num">5</div><span class="progress-step-label" data-i18n="tailoring_step_hardware">Hardware</span></div>
+                    <div class="progress-step" data-step="6"><div class="progress-step-num">6</div><span class="progress-step-label" data-i18n="tailoring_step_size">Size</span></div>
+                    <div class="progress-step" data-step="7"><div class="progress-step-num">7</div><span class="progress-step-label" data-i18n="tailoring_step_notes">Notes</span></div>
+                </div>
+                <form id="bespoke-form">
+                    <div class="configurator-step active" data-step="1">
+                        <h3 class="step-title" data-i18n="tailoring_select_creation">Select Your Creation</h3>
+                        <div class="step-options">
+                            <button type="button" class="step-option-card" data-value="jacket"><div class="option-icon">🧥</div><h4 data-i18n="tailoring_jacket">Leather Jacket</h4><p>Custom fitted</p></button>
+                            <button type="button" class="step-option-card" data-value="bag"><div class="option-icon">👜</div><h4 data-i18n="tailoring_bag">Bag / Briefcase</h4><p>Any configuration</p></button>
+                            <button type="button" class="step-option-card" data-value="shoes"><div class="option-icon">👞</div><h4 data-i18n="tailoring_shoes">Footwear</h4><p>Bespoke last</p></button>
+                            <button type="button" class="step-option-card" data-value="accessory"><div class="option-icon">💼</div><h4 data-i18n="tailoring_accessory">Accessory</h4><p>Wallets, belts, cases</p></button>
+                            <button type="button" class="step-option-card" data-value="other"><div class="option-icon">✨</div><h4 data-i18n="tailoring_other">Other</h4><p>Describe your vision</p></button>
+                        </div>
+                        <div class="step-nav"><div></div><button type="button" class="btn-next" disabled data-i18n="tailoring_continue">Continue →</button></div>
+                    </div>
+                    <div class="configurator-step" data-step="2">
+                        <h3 class="step-title" data-i18n="tailoring_choose_leather">Choose Your Leather</h3>
+                        <div class="step-options">
+                            <button type="button" class="step-option-card" data-value="crocodile"><div class="option-icon">🐊</div><h4 data-i18n="nav_crocodile">Crocodile</h4></button>
+                            <button type="button" class="step-option-card" data-value="python"><div class="option-icon">🐍</div><h4 data-i18n="nav_python">Python</h4></button>
+                            <button type="button" class="step-option-card" data-value="ostrich"><div class="option-icon">🦢</div><h4 data-i18n="nav_ostrich">Ostrich</h4></button>
+                            <button type="button" class="step-option-card" data-value="stingray"><div class="option-icon">🦈</div><h4 data-i18n="nav_stingray">Stingray</h4></button>
+                            <button type="button" class="step-option-card" data-value="lizard"><div class="option-icon">🦎</div><h4 data-i18n="nav_lizard">Lizard</h4></button>
+                        </div>
+                        <div class="step-nav"><button type="button" class="btn-back" data-i18n="tailoring_back">← Back</button><button type="button" class="btn-next" disabled data-i18n="tailoring_continue">Continue →</button></div>
+                    </div>
+                    <div class="configurator-step" data-step="3">
+                        <h3 class="step-title" data-i18n="tailoring_select_color">Select Color</h3>
+                        <div class="step-options">
+                            <button type="button" class="step-option-card color-card" data-value="black"><div class="color-preview" style="background:#1a1a1a;"></div><h4>Black</h4></button>
+                            <button type="button" class="step-option-card color-card" data-value="brown"><div class="color-preview" style="background:#3e2723;"></div><h4>Deep Brown</h4></button>
+                            <button type="button" class="step-option-card color-card" data-value="cognac"><div class="color-preview" style="background:#8b5a2b;"></div><h4>Cognac</h4></button>
+                            <button type="button" class="step-option-card color-card" data-value="natural"><div class="color-preview" style="background:#d4c5b2;"></div><h4>Natural</h4></button>
+                            <button type="button" class="step-option-card color-card" data-value="graphite"><div class="color-preview" style="background:#4a4a4a;"></div><h4>Graphite</h4></button>
+                            <button type="button" class="step-option-card color-card" data-value="custom"><div class="color-preview" style="background:linear-gradient(135deg,red,orange,yellow,green,blue,purple);"></div><h4>Custom</h4></button>
+                        </div>
+                        <div class="step-nav"><button type="button" class="btn-back" data-i18n="tailoring_back">← Back</button><button type="button" class="btn-next" disabled data-i18n="tailoring_continue">Continue →</button></div>
+                    </div>
+                    <div class="configurator-step" data-step="4">
+                        <h3 class="step-title" data-i18n="tailoring_interior_lining">Interior Lining</h3>
+                        <div class="step-options">
+                            <button type="button" class="step-option-card" data-value="suede"><h4>Suede</h4></button>
+                            <button type="button" class="step-option-card" data-value="silk"><h4>Silk</h4></button>
+                            <button type="button" class="step-option-card" data-value="leather"><h4>Smooth Leather</h4></button>
+                            <button type="button" class="step-option-card" data-value="cashmere"><h4>Cashmere</h4></button>
+                        </div>
+                        <div class="step-nav"><button type="button" class="btn-back" data-i18n="tailoring_back">← Back</button><button type="button" class="btn-next" disabled data-i18n="tailoring_continue">Continue →</button></div>
+                    </div>
+                    <div class="configurator-step" data-step="5">
+                        <h3 class="step-title" data-i18n="tailoring_hardware_finish">Hardware Finish</h3>
+                        <div class="step-options">
+                            <button type="button" class="step-option-card" data-value="gold"><span style="background:#c5a572;width:40px;height:40px;border-radius:50%;margin:0 auto 0.8rem;display:block;"></span><h4>Gold</h4></button>
+                            <button type="button" class="step-option-card" data-value="palladium"><span style="background:#c0c0c0;width:40px;height:40px;border-radius:50%;margin:0 auto 0.8rem;display:block;"></span><h4>Palladium</h4></button>
+                            <button type="button" class="step-option-card" data-value="ruthenium"><span style="background:#4a4a4a;width:40px;height:40px;border-radius:50%;margin:0 auto 0.8rem;display:block;"></span><h4>Ruthenium</h4></button>
+                        </div>
+                        <div class="step-nav"><button type="button" class="btn-back" data-i18n="tailoring_back">← Back</button><button type="button" class="btn-next" disabled data-i18n="tailoring_continue">Continue →</button></div>
+                    </div>
+                    <div class="configurator-step" data-step="6">
+                        <h3 class="step-title" data-i18n="tailoring_size_measurements">Size & Measurements</h3>
+                        <div class="step-options">
+                            <button type="button" class="step-option-card" data-value="standard"><h4 data-i18n="tailoring_standard_size">Standard Size</h4></button>
+                            <button type="button" class="step-option-card" data-value="custom-measure"><h4 data-i18n="tailoring_custom_measure">Custom Measurements</h4></button>
+                            <button type="button" class="step-option-card" data-value="atelier-visit"><h4 data-i18n="tailoring_atelier_visit">Atelier Visit</h4></button>
+                        </div>
+                        <div class="step-nav"><button type="button" class="btn-back" data-i18n="tailoring_back">← Back</button><button type="button" class="btn-next" disabled data-i18n="tailoring_continue">Continue →</button></div>
+                    </div>
+                    <div class="configurator-step" data-step="7">
+                        <h3 class="step-title" data-i18n="tailoring_final_details">Final Details</h3>
+                        <div class="config-summary" id="config-summary"><h3>Your Commission</h3><div class="summary-grid" id="summary-grid"></div></div>
+                        <label style="display:block;margin-bottom:0.5rem;color:var(--color-text-secondary);font-size:var(--font-size-caption);text-transform:uppercase;letter-spacing:0.08em;" data-i18n="tailoring_additional_notes">Additional Notes</label>
+                        <textarea class="step-comment" data-i18n-attr="placeholder" data-i18n="tailoring_describe_vision" placeholder="Describe any specific details, inspiration, or requirements..."></textarea>
+                        <div class="step-nav"><button type="button" class="btn-back" data-i18n="tailoring_back">← Back</button><button type="submit" class="btn-gold" data-i18n="tailoring_submit_enquiry">Submit Enquiry</button></div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer section-padding bg-black">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-col-brand"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR" style="height:1.8rem;"></a><p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship.</p></div>
+                <div class="footer-col"><h4 data-i18n="footer_customer_care">Customer Care</h4><ul><li><a href="contacts.html" data-i18n="footer_contact_faq">Contact</a></li></ul></div>
+                <div class="footer-col"><h4 data-i18n="footer_maison">Our Maison</h4><ul><li><a href="about.html" data-i18n="footer_brand_story">Brand Story</a></li></ul></div>
+                <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="#" data-i18n="footer_privacy">Privacy</a></li></ul></div>
+                <div class="footer-col"><h4 data-i18n="footer_istanbul">Istanbul</h4><address>Nişantaşı, Istanbul</address></div>
+            </div>
+            <div class="footer-bottom"><p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR.</p></div>
+        </div>
+    </footer>
+
+    <script src="js/i18n.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('bespoke-form');
+            const steps = form.querySelectorAll('.configurator-step');
+            const progressSteps = document.querySelectorAll('.progress-step');
+            const selections = {};
+            let currentStep = 1;
+            function showStep(stepNum) {
+                steps.forEach(s => s.classList.remove('active'));
+                const target = form.querySelector(`[data-step="${stepNum}"]`);
+                if (target) target.classList.add('active');
+                progressSteps.forEach(p => { p.classList.remove('active', 'completed'); const pStep = parseInt(p.getAttribute('data-step')); if (pStep === stepNum) p.classList.add('active'); if (pStep < stepNum) p.classList.add('completed'); });
+                currentStep = stepNum;
+                window.scrollTo({ top: form.offsetTop - 120, behavior: 'smooth' });
+            }
+            form.addEventListener('click', (e) => {
+                const card = e.target.closest('.step-option-card');
+                if (!card) return;
+                const stepDiv = card.closest('.configurator-step');
+                const stepNum = parseInt(stepDiv.getAttribute('data-step'));
+                const value = card.getAttribute('data-value');
+                stepDiv.querySelectorAll('.step-option-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                selections[stepNum] = { value, label: card.querySelector('h4')?.textContent || value };
+                const nextBtn = stepDiv.querySelector('.btn-next');
+                if (nextBtn) nextBtn.disabled = false;
+                if (stepNum >= 6) updateSummary();
+            });
+            form.addEventListener('click', (e) => { if (e.target.classList.contains('btn-next') && currentStep < 7) showStep(currentStep + 1); if (e.target.classList.contains('btn-back') && currentStep > 1) showStep(currentStep - 1); });
+            document.getElementById('configurator-progress').addEventListener('click', (e) => { const stepEl = e.target.closest('.progress-step'); if (!stepEl) return; const targetStep = parseInt(stepEl.getAttribute('data-step')); if (targetStep <= currentStep) showStep(targetStep); });
+            function updateSummary() { const grid = document.getElementById('summary-grid'); if (!grid) return; const stepNames = {1:(window.SD_I18N&&window.SD_I18N.t)?window.SD_I18N.t('tailoring_step_product'):'Product',2:(window.SD_I18N&&window.SD_I18N.t)?window.SD_I18N.t('tailoring_step_material'):'Material',3:(window.SD_I18N&&window.SD_I18N.t)?window.SD_I18N.t('tailoring_step_color'):'Color',4:(window.SD_I18N&&window.SD_I18N.t)?window.SD_I18N.t('tailoring_step_lining'):'Lining',5:(window.SD_I18N&&window.SD_I18N.t)?window.SD_I18N.t('tailoring_step_hardware'):'Hardware',6:(window.SD_I18N&&window.SD_I18N.t)?window.SD_I18N.t('tailoring_step_size'):'Size'}; grid.innerHTML = ''; for (let i=1;i<=6;i++) { if (selections[i]) { grid.innerHTML += `<div class="summary-item"><span class="summary-label">${stepNames[i]}</span><span class="summary-value">${selections[i].label}</span></div>`; } } }
+            form.addEventListener('submit', (e) => { e.preventDefault(); const submitBtn = form.querySelector('button[type="submit"]'); submitBtn.textContent = (window.SD_I18N&&window.SD_I18N.t)?window.SD_I18N.t('tailoring_enquiry_sent'):'Enquiry Sent'; submitBtn.style.background='var(--color-success)';submitBtn.style.borderColor='var(--color-success)';submitBtn.style.color='white'; setTimeout(()=>{submitBtn.textContent=(window.SD_I18N&&window.SD_I18N.t)?window.SD_I18N.t('tailoring_submit_enquiry'):'Submit Enquiry';submitBtn.style.background='';submitBtn.style.borderColor='';submitBtn.style.color='';},3000); });
+            showStep(1);
+        });
+    </script>
+</body>
+</html>

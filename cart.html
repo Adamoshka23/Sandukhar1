@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Review your SAN DUKHAR shopping cart. Secure checkout for your exotic leather selections.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <title data-i18n="cart_title">Shopping Cart | SAN DUKHAR</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        .cart-hero { text-align: center; padding: calc(var(--header-height) + 4rem) 0 3rem; }
+        .cart-hero h1 { font-family: var(--font-display); font-size: var(--font-size-section-title); font-weight: var(--font-weight-light); color: var(--color-white); }
+        .cart-layout { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: start; }
+        .cart-items { display: flex; flex-direction: column; gap: 1.5rem; }
+        .cart-item { display: grid; grid-template-columns: 120px 1fr auto; gap: 1.5rem; padding: 1.5rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); align-items: center; transition: border-color var(--transition-fast); }
+        .cart-item:hover { border-color: var(--color-gold-pale); }
+        .cart-item-image { aspect-ratio: 1; border-radius: var(--border-radius-sm); overflow: hidden; background: var(--color-charcoal); }
+        .cart-item-image img { width: 100%; height: 100%; object-fit: cover; }
+        .cart-item-image-placeholder { width: 100%; aspect-ratio: 1; background: var(--color-charcoal); display: flex; align-items: center; justify-content: center; border-radius: var(--border-radius-sm); }
+        .cart-item-image-placeholder span { color: var(--color-text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; }
+        .cart-item-name { font-family: var(--font-display); font-size: 1.2rem; color: var(--color-white); margin-bottom: 0.3rem; }
+        .cart-item-variant { font-size: var(--font-size-caption); color: var(--color-text-muted); }
+        .cart-item-price { font-size: 1rem; font-weight: var(--font-weight-medium); color: var(--color-gold); }
+        .cart-item-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 1rem; }
+        .quantity-control { display: flex; align-items: center; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); overflow: hidden; }
+        .qty-btn { width: 36px; height: 36px; background: transparent; border: none; color: var(--color-text-secondary); font-size: 1rem; cursor: pointer; transition: all var(--transition-fast); }
+        .qty-btn:hover { color: var(--color-white); background: rgba(255,255,255,0.05); }
+        .qty-display { width: 44px; height: 36px; display: flex; align-items: center; justify-content: center; color: var(--color-white); font-size: var(--font-size-small); font-family: var(--font-body); }
+        .remove-item-btn { background: none; border: none; color: var(--color-text-muted); font-size: var(--font-size-caption); cursor: pointer; text-transform: uppercase; letter-spacing: 0.08em; transition: color var(--transition-fast); }
+        .remove-item-btn:hover { color: var(--color-error); }
+        .cart-summary { position: sticky; top: calc(var(--header-height-scrolled) + 2rem); padding: 2rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); background: rgba(255,255,255,0.02); }
+        .cart-summary h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--color-white); margin-bottom: 1.5rem; }
+        .summary-row { display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid var(--color-border); font-size: var(--font-size-small); color: var(--color-text-secondary); }
+        .summary-row.total { border-bottom: none; font-size: 1.1rem; font-weight: var(--font-weight-semibold); color: var(--color-white); padding-top: 1.2rem; }
+        .summary-row.total .summary-value { color: var(--color-gold); }
+        .promo-input { width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); background: transparent; color: var(--color-white); font-size: var(--font-size-caption); margin: 1rem 0; font-family: var(--font-body); }
+        .promo-input:focus { border-color: var(--color-gold); outline: none; }
+        .promo-input::placeholder { color: var(--color-text-muted); }
+        .btn-checkout { width: 100%; margin-top: 1rem; display: inline-flex; align-items: center; justify-content: center; text-align: center; }
+        .cart-empty-state { text-align: center; padding: 5rem 2rem; display: none; }
+        .cart-empty-state h3 { font-family: var(--font-display); font-size: 2rem; color: var(--color-white); margin-bottom: 1rem; }
+        .cart-empty-state p { color: var(--color-text-muted); margin-bottom: 2rem; line-height: var(--line-height-luxury); }
+        .cart-secure-note { text-align: center; margin-top: 0.8rem; font-size: var(--font-size-caption); color: var(--color-text-muted); }
+        @media screen and (max-width: 991px) { .cart-layout { grid-template-columns: 1fr; } .cart-summary { position: relative; top: 0; } }
+        @media screen and (max-width: 767px) { .cart-item { grid-template-columns: 80px 1fr; gap: 1rem; } .cart-item-actions { grid-column: span 2; flex-direction: row; justify-content: space-between; align-items: center; } }
+    </style>
+</head>
+<body class="cart-page">
+
+    <header id="main-header" class="site-header scrolled">
+        <div class="header-container">
+            <div class="header-logo"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR"></a></div>
+            <nav class="main-navigation">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                    <li class="nav-item"><a href="catalog.html" class="nav-link" data-i18n="nav_collections">Collections</a></li>
+                    <li class="nav-item"><a href="materials.html" class="nav-link" data-i18n="nav_materials">Materials</a></li>
+                    <li class="nav-item"><a href="tailoring.html" class="nav-link" data-i18n="nav_bespoke">Bespoke</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link" data-i18n="nav_atelier">Atelier</a></li>
+                    <li class="nav-item"><a href="contacts.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-utilities">
+                <a href="cart.html" class="utility-btn cart-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count">0</span></a>
+                <button class="utility-btn menu-trigger" id="mobile-menu-trigger"><span class="menu-line"></span><span class="menu-line"></span><span class="menu-line"></span></button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+        <div class="mobile-nav-container">
+            <ul>
+                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                <li><a href="catalog.html" data-i18n="nav_collections">Collections</a></li>
+                <li><a href="materials.html" data-i18n="nav_materials">Materials</a></li>
+                <li><a href="tailoring.html" data-i18n="nav_bespoke">Bespoke</a></li>
+                <li><a href="about.html" data-i18n="nav_atelier">Atelier</a></li>
+                <li><a href="contacts.html" data-i18n="nav_contact">Contact</a></li>
+                <li><a href="account.html" data-i18n="account_title">My Account</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="cart-hero">
+            <div class="container">
+                <h1 class="fade-in-up" data-i18n="cart_title">Your Selection</h1>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="cart-layout" id="cart-layout">
+                    <div class="cart-items" id="cart-items"></div>
+
+                    <div class="cart-summary" id="cart-summary">
+                        <h3 data-i18n="cart_summary">Order Summary</h3>
+                        <div class="summary-row"><span data-i18n="cart_subtotal">Subtotal</span><span class="summary-value" id="summary-subtotal">$0</span></div>
+                        <div class="summary-row"><span data-i18n="cart_shipping">Shipping</span><span class="summary-value" id="summary-shipping" data-i18n="cart_shipping_value">Complimentary</span></div>
+                        <div class="summary-row"><span data-i18n="cart_tax">Taxes & Duties</span><span class="summary-value" id="summary-tax" data-i18n="cart_tax_value">Included</span></div>
+                        <input type="text" class="promo-input" data-i18n-attr="placeholder" data-i18n="cart_promo" placeholder="Promo Code" id="promo-code">
+                        <div class="summary-row total"><span data-i18n="cart_total">Total</span><span class="summary-value" id="summary-total">$0</span></div>
+                        <a href="checkout.html" class="btn-primary btn-checkout" id="btn-checkout" data-i18n="cart_checkout">Proceed to Checkout</a>
+                        <p class="cart-secure-note" data-i18n="cart_secure">Secure payment · Complimentary shipping</p>
+                    </div>
+
+                    <div class="cart-empty-state" id="cart-empty">
+                        <h3 data-i18n="cart_empty_title">Your Cart Awaits</h3>
+                        <p data-i18n="cart_empty_desc">You haven't added any creations to your selection yet. Explore our collections to discover pieces worthy of your consideration.</p>
+                        <a href="catalog.html" class="btn-gold" data-i18n="cart_empty_btn">Explore Collections</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer section-padding bg-black">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-col-brand"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR" style="height:1.8rem;"></a><p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship.</p></div>
+                <div class="footer-col"><h4 data-i18n="footer_customer_care">Customer Care</h4><ul><li><a href="contacts.html" data-i18n="footer_contact_faq">Contact</a></li><li><a href="track-order.html" data-i18n="footer_track">Track Order</a></li></ul></div>
+                <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="#" data-i18n="footer_privacy">Privacy</a></li><li><a href="#" data-i18n="footer_terms">Terms</a></li></ul></div>
+                <div class="footer-col"><h4 data-i18n="footer_istanbul">Istanbul</h4><address>Nişantaşı, Istanbul</address></div>
+            </div>
+            <div class="footer-bottom"><p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR.</p></div>
+        </div>
+    </footer>
+
+    <script src="js/i18n.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script src="js/cart.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Track your SAN DUKHAR order. Enter your order number to view the status of your exotic leather creation.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <title data-i18n="track_title">Track Your Order | SAN DUKHAR</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        .track-container { max-width: 700px; margin: 0 auto; padding: calc(var(--header-height) + 4rem) var(--container-padding) 4rem; }
+        .track-title { font-family: var(--font-display); font-size: var(--font-size-section-title); font-weight: var(--font-weight-light); color: var(--color-white); text-align: center; margin-bottom: 0.5rem; }
+        .track-subtitle { text-align: center; color: var(--color-text-secondary); margin-bottom: 3rem; font-size: 1rem; }
+        .track-form { display: flex; gap: 0.8rem; margin-bottom: 3rem; }
+        .track-input { flex: 1; padding: 1rem 1.2rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); background: rgba(255,255,255,0.02); color: var(--color-white); font-size: var(--font-size-small); font-family: var(--font-body); }
+        .track-input:focus { border-color: var(--color-gold); outline: none; }
+        .track-input::placeholder { color: var(--color-text-muted); }
+        .track-timeline { position: relative; padding-left: 2.5rem; display: none; }
+        .track-timeline::before { content: ''; position: absolute; left: 10px; top: 0; width: 1px; height: 100%; background: var(--color-border); }
+        .track-step { position: relative; padding-bottom: 2.5rem; }
+        .track-step:last-child { padding-bottom: 0; }
+        .track-step::before { content: ''; position: absolute; left: -2.1rem; top: 0.3rem; width: 14px; height: 14px; border-radius: 50%; background: var(--color-border); border: 2px solid var(--color-black); z-index: 1; }
+        .track-step.completed::before { background: var(--color-gold); border-color: var(--color-gold); }
+        .track-step.active::before { background: var(--color-black); border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(197,165,114,0.3); }
+        .track-step-date { font-size: var(--font-size-caption); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.2rem; }
+        .track-step-title { font-family: var(--font-display); font-size: 1.2rem; color: var(--color-white); margin-bottom: 0.3rem; }
+        .track-step-desc { font-size: var(--font-size-small); color: var(--color-text-secondary); line-height: 1.6; }
+        .track-step.completed .track-step-title { color: var(--color-gold); }
+        .track-error { text-align: center; padding: 3rem 1rem; display: none; }
+        .track-error h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--color-white); margin-bottom: 1rem; }
+        .track-error p { color: var(--color-text-muted); }
+        @media screen and (max-width: 767px) { .track-form { flex-direction: column; } .track-timeline { padding-left: 2rem; } .track-step::before { left: -1.7rem; width: 12px; height: 12px; } }
+    </style>
+</head>
+<body class="track-order-page">
+
+    <header id="main-header" class="site-header scrolled">
+        <div class="header-container">
+            <div class="header-logo"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR"></a></div>
+            <nav class="main-navigation">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                    <li class="nav-item"><a href="catalog.html" class="nav-link" data-i18n="nav_collections">Collections</a></li>
+                    <li class="nav-item"><a href="materials.html" class="nav-link" data-i18n="nav_materials">Materials</a></li>
+                    <li class="nav-item"><a href="tailoring.html" class="nav-link" data-i18n="nav_bespoke">Bespoke</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link" data-i18n="nav_atelier">Atelier</a></li>
+                    <li class="nav-item"><a href="contacts.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-utilities">
+                <a href="cart.html" class="utility-btn cart-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count">0</span></a>
+                <button class="utility-btn menu-trigger" id="mobile-menu-trigger"><span class="menu-line"></span><span class="menu-line"></span><span class="menu-line"></span></button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+        <div class="mobile-nav-container">
+            <ul>
+                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                <li><a href="catalog.html" data-i18n="nav_collections">Collections</a></li>
+                <li><a href="materials.html" data-i18n="nav_materials">Materials</a></li>
+                <li><a href="tailoring.html" data-i18n="nav_bespoke">Bespoke</a></li>
+                <li><a href="about.html" data-i18n="nav_atelier">Atelier</a></li>
+                <li><a href="contacts.html" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="track-container">
+            <h1 class="track-title fade-in-up" data-i18n="track_title">Track Your Creation</h1>
+            <p class="track-subtitle fade-in-up delay-1" data-i18n="track_subtitle">Enter your order number to follow the journey of your piece from our atelier to your hands.</p>
+            <div class="track-form slide-up delay-2">
+                <input type="text" class="track-input" id="order-number" data-i18n-attr="placeholder" data-i18n="track_placeholder" placeholder="Order number (e.g., SD-2026-001)" aria-label="Order Number">
+                <button class="btn-gold" id="track-btn" data-i18n="track_button">Track Order</button>
+            </div>
+            <div class="track-timeline slide-up delay-3" id="track-timeline">
+                <div class="track-step completed">
+                    <div class="track-step-date">March 15, 2026</div>
+                    <div class="track-step-title" data-i18n="track_step_confirmed">Order Confirmed</div>
+                    <div class="track-step-desc" data-i18n="track_step_confirmed_desc">Your order has been received and confirmed. A confirmation email has been sent.</div>
+                </div>
+                <div class="track-step completed">
+                    <div class="track-step-date">March 18, 2026</div>
+                    <div class="track-step-title" data-i18n="track_step_material">Material Selection</div>
+                    <div class="track-step-desc" data-i18n="track_step_material_desc">Our master cutter has selected the finest skin for your creation.</div>
+                </div>
+                <div class="track-step active">
+                    <div class="track-step-date" data-i18n="track_status_progress">In Progress</div>
+                    <div class="track-step-title" data-i18n="track_step_crafting">Artisan Crafting</div>
+                    <div class="track-step-desc" data-i18n="track_step_crafting_desc">Your piece is being handcrafted by a master artisan in our Istanbul atelier.</div>
+                </div>
+                <div class="track-step">
+                    <div class="track-step-date" data-i18n="track_status_pending">Pending</div>
+                    <div class="track-step-title" data-i18n="track_step_inspection">Quality Inspection</div>
+                    <div class="track-step-desc" data-i18n="track_step_inspection_desc">Every creation undergoes a rigorous 47-point quality inspection.</div>
+                </div>
+                <div class="track-step">
+                    <div class="track-step-date" data-i18n="track_status_pending">Pending</div>
+                    <div class="track-step-title" data-i18n="track_step_delivery">White-Glove Delivery</div>
+                    <div class="track-step-desc" data-i18n="track_step_delivery_desc">Your piece will be delivered by armored courier with personal presentation.</div>
+                </div>
+            </div>
+            <div class="track-error" id="track-error">
+                <h3 data-i18n="track_not_found_title">Order Not Found</h3>
+                <p data-i18n="track_not_found_desc">We couldn't locate an order with that number. Please verify your order number and try again.</p>
+                <a href="contacts.html" class="btn-outline" style="margin-top:1.5rem;" data-i18n="track_contact">Contact Concierge</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer section-padding bg-black">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-col-brand"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR" style="height:1.8rem;"></a><p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship.</p></div>
+                <div class="footer-col"><h4 data-i18n="footer_customer_care">Customer Care</h4><ul><li><a href="contacts.html" data-i18n="footer_contact_faq">Contact</a></li><li><a href="track-order.html" data-i18n="footer_track">Track Order</a></li></ul></div>
+                <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="#" data-i18n="footer_privacy">Privacy</a></li><li><a href="#" data-i18n="footer_terms">Terms</a></li></ul></div>
+                <div class="footer-col"><h4 data-i18n="footer_istanbul">Istanbul</h4><address>Nişantaşı, Istanbul</address></div>
+            </div>
+            <div class="footer-bottom"><p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR.</p></div>
+        </div>
+    </footer>
+
+    <script src="js/i18n.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const trackBtn = document.getElementById('track-btn');
+            const orderInput = document.getElementById('order-number');
+            const timeline = document.getElementById('track-timeline');
+            const errorBlock = document.getElementById('track-error');
+            function showTimeline() { timeline.style.display = 'block'; errorBlock.style.display = 'none'; }
+            function showError() { timeline.style.display = 'none'; errorBlock.style.display = 'block'; }
+            trackBtn.addEventListener('click', () => {
+                const orderNumber = orderInput.value.trim();
+                if (!orderNumber) { orderInput.style.borderColor = 'var(--color-error)'; orderInput.focus(); orderInput.addEventListener('input', function() { this.style.borderColor = 'var(--color-border)'; }, { once: true }); return; }
+                trackBtn.textContent = (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t('track_searching') : 'Searching...';
+                trackBtn.disabled = true;
+                setTimeout(() => {
+                    if (orderNumber.toUpperCase().startsWith('SD-')) { showTimeline(); } else { showError(); }
+                    trackBtn.textContent = (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t('track_button') : 'Track Order';
+                    trackBtn.disabled = false;
+                }, 1200);
+            });
+            orderInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') trackBtn.click(); });
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('order') === 'confirmed') { orderInput.value = 'SD-2026-001'; setTimeout(() => showTimeline(), 500); }
+        });
+    </script>
+</body>
+</html>

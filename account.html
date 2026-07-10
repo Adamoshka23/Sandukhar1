@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Your SAN DUKHAR account — order history, saved addresses, measurements, and personal profile.">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <title data-i18n="account_title">My Account | SAN DUKHAR</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <style>
+        .account-container { max-width: 1000px; margin: 0 auto; padding: calc(var(--header-height) + 3rem) var(--container-padding) 4rem; }
+        .account-title { font-family: var(--font-display); font-size: var(--font-size-section-title); font-weight: var(--font-weight-light); color: var(--color-white); text-align: center; margin-bottom: 3rem; }
+        .account-layout { display: grid; grid-template-columns: 220px 1fr; gap: 3rem; }
+        .account-nav { display: flex; flex-direction: column; gap: 0.3rem; }
+        .account-nav-btn { text-align: left; padding: 0.8rem 1.2rem; border: none; background: transparent; color: var(--color-text-secondary); font-size: var(--font-size-small); font-family: var(--font-body); cursor: pointer; border-radius: var(--border-radius-sm); transition: all var(--transition-fast); letter-spacing: 0.04em; }
+        .account-nav-btn:hover { color: var(--color-white); background: rgba(255,255,255,0.03); }
+        .account-nav-btn.active { color: var(--color-gold); background: var(--color-gold-pale); }
+        .account-section { display: none; }
+        .account-section.active { display: block; }
+        .account-section h2 { font-family: var(--font-display); font-size: 1.8rem; color: var(--color-white); margin-bottom: 1.5rem; }
+        .order-card { padding: 1.5rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); margin-bottom: 1rem; transition: border-color var(--transition-fast); }
+        .order-card:hover { border-color: var(--color-gold-pale); }
+        .order-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+        .order-number { font-family: var(--font-display); font-size: 1.1rem; color: var(--color-gold); }
+        .order-status { font-size: var(--font-size-caption); padding: 0.3rem 0.8rem; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.08em; }
+        .order-status.in-progress { background: rgba(197,165,114,0.15); color: var(--color-gold); }
+        .order-status.delivered { background: rgba(90,143,106,0.15); color: var(--color-success); }
+        .order-date { font-size: var(--font-size-caption); color: var(--color-text-muted); }
+        .order-total { font-weight: var(--font-weight-medium); color: var(--color-white); }
+        .account-form { display: flex; flex-direction: column; gap: 1rem; max-width: 500px; }
+        .account-form .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        .account-form label { font-size: var(--font-size-caption); color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.08em; }
+        .account-form input { padding: 0.9rem 1rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); background: rgba(255,255,255,0.02); color: var(--color-white); font-family: var(--font-body); font-size: var(--font-size-small); }
+        .account-form input:focus { border-color: var(--color-gold); outline: none; }
+        .address-card { padding: 1.2rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); margin-bottom: 1rem; }
+        .address-card h4 { font-family: var(--font-body); font-size: var(--font-size-small); font-weight: var(--font-weight-semibold); color: var(--color-white); margin-bottom: 0.3rem; }
+        .address-card p { font-size: var(--font-size-small); color: var(--color-text-secondary); line-height: 1.6; }
+        .empty-state { text-align: center; padding: 3rem 1rem; color: var(--color-text-muted); }
+        .empty-state p { margin-bottom: 1.5rem; }
+        @media screen and (max-width: 767px) { .account-layout { grid-template-columns: 1fr; gap: 2rem; } .account-nav { flex-direction: row; overflow-x: auto; padding-bottom: 0.5rem; gap: 0; } .account-nav-btn { white-space: nowrap; padding: 0.6rem 1rem; font-size: var(--font-size-caption); } }
+    </style>
+</head>
+<body class="account-page">
+
+    <header id="main-header" class="site-header scrolled">
+        <div class="header-container">
+            <div class="header-logo"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR"></a></div>
+            <nav class="main-navigation">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+                    <li class="nav-item"><a href="catalog.html" class="nav-link" data-i18n="nav_collections">Collections</a></li>
+                    <li class="nav-item"><a href="materials.html" class="nav-link" data-i18n="nav_materials">Materials</a></li>
+                    <li class="nav-item"><a href="tailoring.html" class="nav-link" data-i18n="nav_bespoke">Bespoke</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link" data-i18n="nav_atelier">Atelier</a></li>
+                    <li class="nav-item"><a href="contacts.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-utilities">
+                <a href="wishlist.html" class="utility-btn" aria-label="Wishlist"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></a>
+                <a href="cart.html" class="utility-btn cart-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count">0</span></a>
+                <a href="account.html" class="utility-btn active"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></a>
+                <button class="utility-btn menu-trigger" id="mobile-menu-trigger"><span class="menu-line"></span><span class="menu-line"></span><span class="menu-line"></span></button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+        <div class="mobile-nav-container">
+            <ul>
+                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                <li><a href="catalog.html" data-i18n="nav_collections">Collections</a></li>
+                <li><a href="materials.html" data-i18n="nav_materials">Materials</a></li>
+                <li><a href="tailoring.html" data-i18n="nav_bespoke">Bespoke</a></li>
+                <li><a href="about.html" data-i18n="nav_atelier">Atelier</a></li>
+                <li><a href="contacts.html" data-i18n="nav_contact">Contact</a></li>
+                <li><a href="account.html" data-i18n="account_title">My Account</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="account-container">
+            <h1 class="account-title fade-in-up" data-i18n="account_title">My Account</h1>
+            <div class="account-layout slide-up delay-1">
+                <nav class="account-nav" id="account-nav">
+                    <button class="account-nav-btn active" data-section="orders" data-i18n="account_orders">Order History</button>
+                    <button class="account-nav-btn" data-section="wishlist" data-i18n="account_wishlist">Wishlist</button>
+                    <button class="account-nav-btn" data-section="addresses" data-i18n="account_addresses">Addresses</button>
+                    <button class="account-nav-btn" data-section="measurements" data-i18n="account_measurements">Measurements</button>
+                    <button class="account-nav-btn" data-section="profile" data-i18n="account_profile">Profile</button>
+                </nav>
+                <div class="account-content">
+                    <div class="account-section active" id="section-orders">
+                        <h2 data-i18n="account_orders">Order History</h2>
+                        <div class="order-card">
+                            <div class="order-card-header">
+                                <span class="order-number">#SD-2026-001</span>
+                                <span class="order-status in-progress" data-i18n="account_status_production">In Production</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+                                <span class="order-date">Placed on March 15, 2026</span>
+                                <span class="order-total">$18,500</span>
+                            </div>
+                            <p style="font-size:var(--font-size-caption);color:var(--color-text-muted);margin-top:0.5rem;">Imperium Briefcase — Matte Black · Ruthenium</p>
+                            <a href="track-order.html?order=SD-2026-001" class="btn-outline" style="margin-top:1rem;display:inline-block;font-size:var(--font-size-caption);padding:0.5rem 1.2rem;" data-i18n="account_track_order">Track Order</a>
+                        </div>
+                        <div class="order-card">
+                            <div class="order-card-header">
+                                <span class="order-number">#SD-2025-047</span>
+                                <span class="order-status delivered" data-i18n="account_status_delivered">Delivered</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+                                <span class="order-date">Delivered on November 8, 2025</span>
+                                <span class="order-total">$2,200</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="account-section" id="section-wishlist">
+                        <h2 data-i18n="account_wishlist">My Wishlist</h2>
+                        <div class="empty-state"><p data-i18n="account_empty_wishlist">Your wishlist is currently empty.</p><a href="catalog.html" class="btn-outline" data-i18n="explore_btn">Explore Collections</a></div>
+                    </div>
+                    <div class="account-section" id="section-addresses">
+                        <h2 data-i18n="account_addresses">Saved Addresses</h2>
+                        <div class="address-card"><h4 data-i18n="account_primary_address">Primary Address</h4><p>Abdi İpekçi Caddesi No: 47<br>Nişantaşı, Istanbul<br>34367, Turkey</p></div>
+                        <button class="btn-outline" style="margin-top:1rem;" data-i18n="account_add_address">Add New Address</button>
+                    </div>
+                    <div class="account-section" id="section-measurements">
+                        <h2 data-i18n="account_measurements">My Measurements</h2>
+                        <div class="account-form">
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                                <div class="form-group"><label data-i18n="account_chest">Chest (cm)</label><input type="number" placeholder="e.g., 102"></div>
+                                <div class="form-group"><label data-i18n="account_waist">Waist (cm)</label><input type="number" placeholder="e.g., 86"></div>
+                                <div class="form-group"><label data-i18n="account_shoulder">Shoulder Width (cm)</label><input type="number" placeholder="e.g., 48"></div>
+                                <div class="form-group"><label data-i18n="account_sleeve">Sleeve Length (cm)</label><input type="number" placeholder="e.g., 65"></div>
+                            </div>
+                            <button class="btn-gold" style="margin-top:1rem;" data-i18n="account_save_measurements">Save Measurements</button>
+                        </div>
+                    </div>
+                    <div class="account-section" id="section-profile">
+                        <h2 data-i18n="account_profile">Personal Profile</h2>
+                        <div class="account-form">
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                                <div class="form-group"><label data-i18n="account_first_name">First Name</label><input type="text" value="Dukhar"></div>
+                                <div class="form-group"><label data-i18n="account_last_name">Last Name</label><input type="text" value="San"></div>
+                            </div>
+                            <div class="form-group"><label data-i18n="account_email">Email Address</label><input type="email" value="dukhar.san@sandukhar.com"></div>
+                            <div class="form-group"><label data-i18n="account_phone">Phone Number</label><input type="tel" value="+90 212 345 67 89"></div>
+                            <button class="btn-gold" style="margin-top:1rem;" data-i18n="account_update_profile">Update Profile</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer section-padding bg-black">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-col-brand"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR" style="height:1.8rem;"></a><p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship.</p></div>
+                <div class="footer-col"><h4 data-i18n="footer_customer_care">Customer Care</h4><ul><li><a href="contacts.html" data-i18n="footer_contact_faq">Contact</a></li><li><a href="track-order.html" data-i18n="footer_track">Track Order</a></li></ul></div>
+                <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="#" data-i18n="footer_privacy">Privacy</a></li><li><a href="#" data-i18n="footer_terms">Terms</a></li></ul></div>
+                <div class="footer-col"><h4 data-i18n="footer_istanbul">Istanbul</h4><address>Nişantaşı, Istanbul</address></div>
+            </div>
+            <div class="footer-bottom"><p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR.</p></div>
+        </div>
+    </footer>
+
+    <script src="js/i18n.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script src="js/account.js" defer></script>
+</body>
+</html>

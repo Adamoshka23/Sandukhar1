@@ -1,0 +1,818 @@
+/* ============================================================
+   SAN DUKHAR — RESPONSIVE DESIGN SYSTEM (AUDITED & FIXED)
+   Luxury Atelier — Adaptive Layouts
+   Version: 2.0 — Production Ready
+   ============================================================ */
+
+/* === BREAKPOINTS ===
+   Desktop XL: > 1600px
+   Desktop LG: 1200px - 1599px
+   Laptop:     992px - 1199px
+   Tablet:     768px - 991px
+   Mobile LG:  480px - 767px
+   Mobile SM:  < 479px
+   Mobile XS:  < 360px
+*/
+
+/* =============================================
+   DESKTOP XL — 4K & Ultrawide Displays
+   ============================================= */
+@media screen and (min-width: 1600px) {
+    :root {
+        --container-max-width: 1600px;
+        --space-section: 9rem;
+    }
+
+    .featured-grid {
+        gap: 3rem;
+    }
+
+    .lookbook-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .lookbook-item.wide {
+        grid-column: span 2;
+    }
+
+    .materials-grid {
+        gap: 2rem;
+    }
+
+    .promise-grid {
+        gap: 3rem;
+    }
+
+    .hero-content {
+        max-width: 1100px;
+    }
+}
+
+/* =============================================
+   DESKTOP LG — Standard Desktops
+   ============================================= */
+@media screen and (min-width: 1200px) and (max-width: 1599px) {
+    :root {
+        --container-max-width: 1320px;
+        --space-section: 7rem;
+    }
+}
+
+/* =============================================
+   LAPTOP — Small Desktops & Landscape Tablets
+   ============================================= */
+@media screen and (max-width: 1199px) {
+    :root {
+        --container-padding: 1.5rem;
+        --space-section: 5rem;
+    }
+
+    .nav-list {
+        gap: 1.2rem;
+    }
+
+    .nav-link {
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+    }
+
+    .split-layout {
+        gap: 2rem;
+    }
+
+    .split-image {
+        min-height: 450px;
+    }
+
+    .featured-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .featured-item.large {
+        grid-column: span 2;
+    }
+
+    .materials-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .materials-grid .material-card:nth-child(4),
+    .materials-grid .material-card:nth-child(5) {
+        grid-column: span 1;
+    }
+
+    .lookbook-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 250px;
+    }
+
+    .lookbook-item.wide {
+        grid-column: span 2;
+    }
+
+    .promise-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .footer-col-contact {
+        grid-column: span 2;
+    }
+
+    .mega-menu {
+        min-width: 500px;
+        padding: 1.5rem;
+    }
+
+    .mega-menu-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .mega-menu-image {
+        display: none;
+    }
+
+    .testimonial-item blockquote {
+        font-size: 1.4rem;
+    }
+}
+
+/* =============================================
+   TABLET — Portrait Tablets
+   ============================================= */
+@media screen and (max-width: 991px) {
+    :root {
+        --header-height: 4.5rem;
+        --header-height-scrolled: 3.5rem;
+        --space-section: 4rem;
+    }
+
+    .main-navigation {
+        display: none;
+    }
+
+    .menu-trigger {
+        display: flex;
+    }
+
+    .header-utilities .utility-btn.search-trigger,
+    .header-utilities .utility-btn.account-btn {
+        display: none;
+    }
+
+    .hero-section {
+        min-height: 100vh;
+        height: auto;
+        padding: calc(var(--header-height) + 2rem) 0;
+    }
+
+    .hero-content {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+
+    .hero-cta {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .hero-cta .btn-primary,
+    .hero-cta .btn-secondary {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .hero-scroll-indicator {
+        bottom: 1rem;
+    }
+
+    .split-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        min-height: auto;
+    }
+
+    .split-image {
+        min-height: 350px;
+        order: -1;
+        max-height: 400px;
+    }
+
+    .split-content {
+        padding: 0;
+    }
+
+    .featured-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .featured-item.large {
+        grid-column: span 2;
+    }
+
+    .product-card-image {
+        aspect-ratio: 3/4;
+    }
+
+    .product-card-name {
+        font-size: 1.1rem;
+    }
+
+    .materials-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .materials-grid .material-card:nth-child(5) {
+        grid-column: span 2;
+        max-width: 50%;
+        margin: 0 auto;
+    }
+
+    .lookbook-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 200px;
+        gap: 0.5rem;
+    }
+
+    .lookbook-item.wide {
+        grid-column: span 2;
+    }
+
+    .lookbook-item.tall {
+        grid-row: span 1;
+    }
+
+    .promise-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .promise-item {
+        padding: 1.5rem;
+    }
+
+    .testimonial-item blockquote {
+        font-size: 1.3rem;
+    }
+
+    .newsletter-form {
+        flex-direction: column;
+        max-width: 400px;
+    }
+
+    .newsletter-form .btn-gold {
+        width: 100%;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .footer-col-brand {
+        grid-column: span 2;
+    }
+
+    .footer-col-contact {
+        grid-column: span 2;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .modal-container {
+        max-width: 95%;
+    }
+
+    .modal-content {
+        padding: 1.5rem;
+    }
+
+    .parallax-section {
+        background-attachment: scroll;
+        min-height: 50vh;
+    }
+
+    .section-header {
+        margin-bottom: 3rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.95rem;
+        max-width: 500px;
+    }
+
+    .search-input {
+        font-size: 1.5rem;
+    }
+}
+
+/* =============================================
+   MOBILE LARGE — Phablets & Large Phones
+   ============================================= */
+@media screen and (max-width: 767px) {
+    :root {
+        --container-padding: 1.2rem;
+        --space-section: 3.5rem;
+        --space-xl: 2rem;
+        --space-2xl: 3rem;
+        --space-3xl: 5rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.9rem;
+        letter-spacing: 0.04em;
+    }
+
+    .header-logo img {
+        height: 1.6rem;
+    }
+
+    .scrolled .header-logo img {
+        height: 1.4rem;
+    }
+
+    .header-utilities {
+        gap: 0.5rem;
+    }
+
+    .utility-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .hero-section {
+        min-height: 100svh;
+    }
+
+    .hero-subtitle {
+        font-size: 0.9rem;
+        max-width: 400px;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-outline,
+    .btn-gold {
+        padding: 0.85rem 1.8rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+    }
+
+    .featured-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .featured-item.large {
+        grid-column: span 1;
+    }
+
+    .product-card-image {
+        aspect-ratio: 4/5;
+    }
+
+    .product-card-name {
+        font-size: 1.2rem;
+    }
+
+    .product-card-info {
+        padding: 0;
+    }
+
+    .materials-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem 1rem;
+    }
+
+    .materials-grid .material-card:nth-child(5) {
+        grid-column: span 2;
+        max-width: 60%;
+    }
+
+    .material-info h3 {
+        font-size: 1rem;
+    }
+
+    .lookbook-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 220px;
+        gap: 0.5rem;
+    }
+
+    .lookbook-item.wide,
+    .lookbook-item.tall {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    .promise-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .promise-item {
+        padding: 1rem 0;
+        text-align: left;
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .promise-icon {
+        width: 36px;
+        height: 36px;
+        margin: 0;
+        flex-shrink: 0;
+        margin-top: 0.2rem;
+    }
+
+    .promise-item h4 {
+        font-size: 1.1rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .split-content .btn-gold {
+        width: 100%;
+        text-align: center;
+    }
+
+    .testimonial-slider {
+        min-height: 150px;
+    }
+
+    .testimonial-item blockquote {
+        font-size: 1.1rem;
+    }
+
+    .newsletter-form input[type="email"] {
+        padding: 0.85rem 1.2rem;
+        font-size: 0.8rem;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .footer-col-brand,
+    .footer-col-contact {
+        grid-column: span 1;
+    }
+
+    .footer-logo img {
+        height: 1.4rem;
+    }
+
+    .mobile-nav {
+        max-width: 100%;
+    }
+
+    .mobile-nav-container ul li a {
+        font-size: 1.4rem;
+    }
+
+    .modal-overlay {
+        padding: 0.5rem;
+    }
+
+    .modal-container {
+        max-width: 100%;
+        max-height: 95vh;
+        border-radius: 0;
+    }
+
+    .quick-view-layout {
+        flex-direction: column;
+    }
+
+    .quick-view-gallery,
+    .quick-view-details {
+        width: 100%;
+    }
+
+    .parallax-section {
+        background-attachment: scroll;
+        min-height: 40vh;
+    }
+
+    .section-header {
+        margin-bottom: 2rem;
+    }
+
+    .section-title {
+        margin-bottom: 0.5rem;
+    }
+
+    .search-input {
+        font-size: 1.2rem;
+    }
+
+    .section-action .btn-outline,
+    .section-action .btn-gold {
+        width: 100%;
+    }
+}
+
+/* =============================================
+   MOBILE SMALL — Compact Phones (375px-479px)
+   ============================================= */
+@media screen and (max-width: 479px) {
+    :root {
+        --container-padding: 1rem;
+        --space-section: 2.5rem;
+        --space-md: 1rem;
+        --space-lg: 1.5rem;
+    }
+
+    body {
+        font-size: 0.9rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .header-logo img {
+        height: 1.3rem;
+    }
+
+    .utility-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .utility-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .cart-count {
+        width: 16px;
+        height: 16px;
+        font-size: 0.5rem;
+        top: 0;
+        right: 0;
+    }
+
+    .header-utilities .utility-btn[aria-label="Wishlist"] {
+        display: none;
+    }
+
+    .hero-content {
+        padding-top: 3rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .hero-cta .btn-primary,
+    .hero-cta .btn-secondary {
+        max-width: 280px;
+        padding: 0.75rem 1.5rem;
+        font-size: 0.65rem;
+    }
+
+    .product-card-image {
+        aspect-ratio: 3/4;
+    }
+
+    .product-card-name {
+        font-size: 1rem;
+    }
+
+    .product-card-material {
+        font-size: 0.7rem;
+    }
+
+    .product-card-price {
+        font-size: 0.75rem;
+    }
+
+    .btn-quick-view {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.65rem;
+    }
+
+    .materials-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .material-image-wrapper {
+        aspect-ratio: 1/1;
+    }
+
+    .material-info h3 {
+        font-size: 0.9rem;
+    }
+
+    .material-info p {
+        font-size: 0.65rem;
+    }
+
+    .lookbook-grid {
+        grid-auto-rows: 180px;
+    }
+
+    .promise-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .promise-icon {
+        margin: 0 auto;
+    }
+
+    .promise-item h4 {
+        font-size: 1rem;
+    }
+
+    .promise-item p {
+        font-size: 0.75rem;
+    }
+
+    .testimonial-item blockquote {
+        font-size: 1rem;
+    }
+
+    .testimonial-author {
+        font-size: 0.65rem;
+    }
+
+    .newsletter-form input[type="email"] {
+        padding: 0.7rem 1rem;
+        font-size: 0.75rem;
+    }
+
+    .btn-gold {
+        padding: 0.7rem 1rem;
+        font-size: 0.65rem;
+    }
+
+    .footer-col h4 {
+        font-size: 0.65rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-col ul li a {
+        font-size: 0.7rem;
+    }
+
+    .footer-col address,
+    .footer-col a {
+        font-size: 0.7rem;
+    }
+
+    .footer-bottom {
+        font-size: 0.6rem;
+    }
+
+    .social-links a {
+        width: 30px;
+        height: 30px;
+    }
+
+    .social-links a img {
+        width: 14px;
+        height: 14px;
+    }
+
+    .mobile-nav-container ul li a {
+        font-size: 1.2rem;
+    }
+
+    ::-webkit-scrollbar {
+        width: 3px;
+    }
+}
+
+/* =============================================
+   MOBILE XS — Extra Small (320px-359px)
+   ============================================= */
+@media screen and (max-width: 359px) {
+    :root {
+        --container-padding: 0.8rem;
+        --space-section: 2rem;
+    }
+
+    .hero-cta .btn-primary,
+    .hero-cta .btn-secondary {
+        max-width: 240px;
+        padding: 0.65rem 1rem;
+        font-size: 0.6rem;
+    }
+
+    .product-card-name {
+        font-size: 0.9rem;
+    }
+
+    .header-logo img {
+        height: 1.1rem;
+    }
+
+    .utility-btn {
+        width: 28px;
+        height: 28px;
+    }
+
+    .utility-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* =============================================
+   LANDSCAPE ORIENTATION FIXES
+   ============================================= */
+@media screen and (max-height: 600px) and (orientation: landscape) {
+    .hero-section {
+        min-height: 100vh;
+        height: auto;
+    }
+
+    .hero-content {
+        padding-top: 5rem;
+        padding-bottom: 3rem;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.75rem;
+        max-width: 500px;
+    }
+
+    .hero-scroll-indicator {
+        display: none;
+    }
+}
+
+/* =============================================
+   HIGH DPI / RETINA DISPLAYS
+   ============================================= */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Images are served at 2x resolution via srcset in production */
+}
+
+/* =============================================
+   PRINT STYLES
+   ============================================= */
+@media print {
+    .site-header,
+    .mobile-nav,
+    .search-overlay,
+    .hero-scroll-indicator,
+    .hero-video-wrapper,
+    .newsletter-form,
+    .social-links,
+    .modal-overlay,
+    .btn-quick-view,
+    .product-card-overlay,
+    .mega-menu,
+    .btn-wishlist,
+    .btn-360-view,
+    .btn-video-trigger {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+        color: black;
+        font-size: 12pt;
+    }
+
+    .section-padding {
+        padding: 1rem 0;
+    }
+
+    img {
+        max-width: 300px;
+    }
+
+    a {
+        color: black;
+        text-decoration: underline;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

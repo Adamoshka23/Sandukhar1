@@ -1,0 +1,300 @@
+/* ============================================================
+   SAN DUKHAR — ANIMATIONS & TRANSITIONS (AUDITED & FIXED)
+   Luxury Kinetic Design System
+   Version: 2.0 — Production Ready
+   ============================================================ */
+
+/* === Reduced Motion Preference === */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .hero-video {
+        display: none;
+    }
+
+    .parallax-section {
+        background-attachment: scroll;
+    }
+
+    .hero-scroll-indicator {
+        animation: none;
+    }
+}
+
+/* === Fade In Up (On Scroll) === */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
+                transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Delays for staggered animations */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+.delay-6 { transition-delay: 0.6s; }
+
+/* === Slide Up === */
+.slide-up {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.9s cubic-bezier(0.25, 0.1, 0.25, 1),
+                transform 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.slide-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* === Fade In (Simple) === */
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.6s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+}
+
+/* === Scale In (For Modal-like elements) === */
+.scale-in {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scale-in.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* === Parallax Image Hover === */
+.parallax-image {
+    overflow: hidden;
+}
+
+.parallax-image img {
+    transform: scale(1.02);
+    transition: transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.parallax-image.visible img {
+    transform: scale(1);
+}
+
+/* === Hover Lift Effect (Cards) === */
+.hover-lift {
+    transition: transform var(--transition-smooth),
+                box-shadow var(--transition-smooth);
+}
+
+.hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-luxury);
+}
+
+/* === Glass Effect (Static) === */
+.glass-panel {
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius-md);
+}
+
+/* === Smooth Page Transition === */
+.page-transition {
+    animation: pageIn 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+@keyframes pageIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* === Skeleton Loading Placeholder === */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--color-charcoal) 0%,
+        var(--color-graphite) 40%,
+        var(--color-charcoal) 80%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--border-radius-sm);
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* === Button Ripple Effect === */
+.btn-ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-ripple::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 10%);
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: scale(10);
+    opacity: 0;
+    transition: transform 0.5s, opacity 0.5s;
+}
+
+.btn-ripple:active::after {
+    transform: scale(0);
+    opacity: 0.3;
+    transition: 0s;
+}
+
+/* === Gold Shimmer Text === */
+.gold-shimmer {
+    background: linear-gradient(
+        135deg,
+        var(--color-gold) 0%,
+        var(--color-gold-light) 30%,
+        var(--color-white) 50%,
+        var(--color-gold-light) 70%,
+        var(--color-gold) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmerText 3s linear infinite;
+}
+
+@keyframes shimmerText {
+    to { background-position: 200% center; }
+}
+
+/* === Lazy Loading Image Reveal === */
+.lazy-image {
+    opacity: 0;
+    transform: scale(0.98);
+    transition: opacity 0.6s ease-out,
+                transform 0.6s ease-out;
+}
+
+.lazy-image.loaded {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* === Stagger Children (For grids, scalable to any number) === */
+.stagger-children > * {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1),
+                transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.stagger-children.visible > *:nth-child(1) { transition-delay: 0.05s; }
+.stagger-children.visible > *:nth-child(2) { transition-delay: 0.10s; }
+.stagger-children.visible > *:nth-child(3) { transition-delay: 0.15s; }
+.stagger-children.visible > *:nth-child(4) { transition-delay: 0.20s; }
+.stagger-children.visible > *:nth-child(5) { transition-delay: 0.25s; }
+.stagger-children.visible > *:nth-child(6) { transition-delay: 0.30s; }
+.stagger-children.visible > *:nth-child(7) { transition-delay: 0.35s; }
+.stagger-children.visible > *:nth-child(8) { transition-delay: 0.40s; }
+.stagger-children.visible > *:nth-child(9) { transition-delay: 0.45s; }
+.stagger-children.visible > *:nth-child(10) { transition-delay: 0.50s; }
+.stagger-children.visible > *:nth-child(11) { transition-delay: 0.55s; }
+.stagger-children.visible > *:nth-child(12) { transition-delay: 0.60s; }
+
+.stagger-children.visible > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* === Reveal Text (Line by line) === */
+.reveal-text {
+    overflow: hidden;
+}
+
+.reveal-text span {
+    display: block;
+    transform: translateY(100%);
+    transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.reveal-text.visible span {
+    transform: translateY(0);
+}
+
+/* === Image Zoom Container (For product page) === */
+.zoom-container {
+    overflow: hidden;
+    cursor: crosshair;
+}
+
+.zoom-container img {
+    transition: transform 0.1s ease-out;
+}
+
+.zoom-container:hover img {
+    transform: scale(2);
+}
+
+/* === Pulse Dot (For live indicators) === */
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-gold);
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+}
+
+.pulse-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background: var(--color-gold);
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(2); opacity: 0; }
+}
+
+/* === Magnetic Button === */
+.magnetic {
+    transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
