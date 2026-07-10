@@ -1,8 +1,7 @@
 /**
  * ============================================================
- * SAN DUKHAR — INTERNATIONALIZATION MODULE (FULLY FIXED)
- * Complete Multi-language Support: English & Russian
- * Version: 2.0 — All Translation Issues Resolved
+ * SAN DUKHAR — INTERNATIONALIZATION MODULE (v4.0 — COMPLETE)
+ * Full dictionaries for EN & RU + link-aware translation
  * ============================================================
  */
 
@@ -15,13 +14,9 @@ const SD_I18N = {
     initialized: false,
     observer: null,
 
-    /**
-     * Complete translation dictionaries.
-     * EVERY text element on the site has a corresponding key.
-     */
     dictionaries: {
         en: {
-            // === HEADER ===
+            // Header
             'nav_home': 'Home',
             'nav_collections': 'Collections',
             'nav_materials': 'Materials',
@@ -40,9 +35,9 @@ const SD_I18N = {
             'nav_ostrich': 'Ostrich Leather',
             'nav_stingray': 'Stingray Leather',
             'nav_lizard': 'Lizard Leather',
-            'nav_new_arrivals': 'The Croco Collection — Limited Series',
+            'nav_new_arrivals': 'The Serpentine Collection — New Arrivals',
 
-            // === HERO ===
+            // Hero
             'hero_line1': 'Where Nature Meets',
             'hero_line2': 'Centuries of Craft',
             'hero_subtitle': 'The finest exotic leather goods, handcrafted in the heart of Istanbul. From our atelier to the world, each piece is a statement of timeless luxury and individuality.',
@@ -50,17 +45,18 @@ const SD_I18N = {
             'hero_bespoke': 'Bespoke Enquiry',
             'hero_discover': 'Discover',
 
-            // === SECTIONS ===
-            'section_featured': 'Collection',
+            // Sections
+            'section_featured': 'The Imperium Collection',
             'section_featured_desc': 'A study in power and precision. Crafted from the rarest Nile crocodile skins, each piece is a testament to nature\'s artistry and human skill. Limited to a series of 25 worldwide.',
             'section_view_collection': 'View Full Collection',
             'section_materials': 'Exquisite Materials',
             'section_materials_desc': 'We travel the globe to source only the finest, ethically farmed exotic leathers. Each material has a distinct character, texture, and story.',
             'section_bespoke_cta': 'Bespoke Tailoring',
-            'section_bespoke_desc': 'A garment crafted solely for you. Experience the ultimate in personal expression with our master tailors.',
+            'section_bespoke_desc': 'A garment crafted solely for you. Experience the ultimate in personal expression with our master tailors, who will guide you through every detail.',
             'section_begin_journey': 'Begin Your Journey',
             'section_lookbook': 'The Visual Diary',
-            'section_lookbook_desc': 'Follow @sandukhar for a glimpse into our world of craft, travel, and timeless style.',
+            'section_lookbook_follow': 'Follow',
+            'section_lookbook_glimpse': 'for a glimpse into our world of craft, travel, and timeless style.',
             'section_testimonials': 'Words from Our Patrons',
             'section_newsletter': 'A Glimpse into Our World',
             'section_newsletter_desc': 'Receive exclusive previews of new collections, invitations to private events, and stories from our Istanbul atelier.',
@@ -68,13 +64,25 @@ const SD_I18N = {
             'section_subscribe': 'Subscribe',
             'section_privacy_note': 'We respect your privacy. Unsubscribe anytime.',
 
-            // === BRAND STORY ===
+            // Brand
             'brand_title': 'The Atelier of Silent Luxury',
-            'brand_desc1': 'SAN DUKHAR was born from a profound respect for nature\'s most exquisite materials. Founded in Istanbul in 2008, our maison bridges the ancient traditions of Anatolian craftsmanship with a relentless pursuit of perfection.',
-            'brand_desc2': 'Every stitch, every cut, and every polish is performed by a master artisan whose hands have spent decades perfecting a single skill.',
+            'brand_desc1': 'SAN DUKHAR was born from a profound respect for nature\'s most exquisite materials. Founded in Istanbul in 2008, our maison bridges the ancient traditions of Anatolian craftsmanship with a relentless pursuit of perfection. We do not follow trends; we create heirlooms designed to transcend generations.',
+            'brand_desc2': 'Every stitch, every cut, and every polish is performed by a master artisan whose hands have spent decades perfecting a single skill. We believe that true luxury is not about logos—it\'s about the unmistakable feel of genuine exotic leather, the perfect symmetry of a hand-stitched seam, and the quiet confidence it brings to the person who owns it.',
             'brand_discover': 'Discover Our Philosophy',
 
-            // === PROMISE ===
+            // Materials
+            'material_crocodile': 'Crocodile',
+            'material_python': 'Python',
+            'material_ostrich': 'Ostrich',
+            'material_stingray': 'Stingray',
+            'material_lizard': 'Lizard',
+            'material_porosus': 'Porosus & Niloticus',
+            'material_reticulatus': 'Reticulatus & Molurus',
+            'material_full_quill': 'Full Quill Crown',
+            'material_galuchat': 'Polished Galuchat',
+            'material_teju': 'Teju & Varanus',
+
+            // Promise
             'promise_handmade_title': 'Handcrafted in Istanbul',
             'promise_handmade_desc': 'Over 80 hours of meticulous labor by a single master artisan goes into every major piece.',
             'promise_certificate_title': 'Certificate of Authenticity',
@@ -84,15 +92,15 @@ const SD_I18N = {
             'promise_limited_title': 'Limited Production',
             'promise_limited_desc': 'We intentionally limit our collections to ensure exclusivity and uncompromised quality control.',
 
-            // === TESTIMONIALS ===
-            'testimonial_1': '"The Imperium Briefcase is not merely an accessory; it is a companion for life. The scent of the leather, the sound of the lock — it\'s pure mechanical poetry."',
+            // Testimonials
+            'testimonial_1': '"The Imperium Briefcase is not merely an accessory; it is a companion for life. The scent of the leather, the sound of the lock—it\'s pure mechanical poetry."',
             'testimonial_1_author': '— A. R. Voss, Zurich',
             'testimonial_2': '"Commissioning a bespoke jacket from SAN DUKHAR was one of the most personal and rewarding experiences I\'ve ever had. The fit is, predictably, flawless."',
             'testimonial_2_author': '— L. E. Moreau, Paris',
             'testimonial_3': '"I inherited a SAN DUKHAR wallet from my father. It\'s 15 years old and looks as magnificent as the day he bought it. This is what true luxury means."',
             'testimonial_3_author': '— K. Tanaka, Tokyo',
 
-            // === CATALOG ===
+            // Catalog
             'catalog_title': 'The Collections',
             'catalog_subtitle': 'Each piece is a dialogue between nature\'s finest materials and human artistry.',
             'catalog_filters': 'Filters',
@@ -118,10 +126,10 @@ const SD_I18N = {
             'catalog_limited': 'Limited Edition',
             'catalog_apply_price': 'Apply',
 
-            // === PRODUCT ===
+            // Product
             'product_breadcrumb_home': 'Home',
             'product_breadcrumb_collections': 'Collections',
-            'product_collection_label': 'Collection',
+            'product_collection_label': 'The Imperium Collection',
             'product_limited_notice': 'Limited production — Only 25 pieces worldwide',
             'product_color': 'Color',
             'product_hardware': 'Hardware',
@@ -136,7 +144,7 @@ const SD_I18N = {
             'product_shipping': 'Shipping & Delivery',
             'product_care': 'Care & Guarantee',
             'product_video_title': 'The Art of Creation',
-            'product_video_desc': 'Witness the journey of the Imperium Briefcase — from the selection of the skin to the final polish.',
+            'product_video_desc': 'Witness the journey of the Imperium Briefcase.',
             'product_reviews': 'Patron Reviews',
             'product_related': 'Complete the Ensemble',
             'product_verified': 'Verified Purchase',
@@ -152,7 +160,7 @@ const SD_I18N = {
             'product_unique_limited_desc': 'Only 25 pieces in existence',
             'product_price_note': 'Taxes & duties included',
 
-            // === CART ===
+            // Cart
             'cart_title': 'Your Selection',
             'cart_empty_title': 'Your Cart Awaits',
             'cart_empty_desc': 'You haven\'t added any creations to your selection yet.',
@@ -169,7 +177,7 @@ const SD_I18N = {
             'cart_secure': 'Secure payment · Complimentary shipping',
             'remove': 'Remove',
 
-            // === CHECKOUT ===
+            // Checkout
             'checkout_title': 'Complete Your Order',
             'checkout_shipping_info': 'Shipping Information',
             'checkout_first_name': 'First Name',
@@ -199,7 +207,7 @@ const SD_I18N = {
             'checkout_order_summary': 'Order Summary',
             'checkout_select_country': 'Select country',
 
-            // === ACCOUNT ===
+            // Account
             'account_title': 'My Account',
             'account_orders': 'Order History',
             'account_wishlist': 'Wishlist',
@@ -223,18 +231,18 @@ const SD_I18N = {
             'account_status_production': 'In Production',
             'account_status_delivered': 'Delivered',
 
-            // === WISHLIST ===
+            // Wishlist
             'wishlist_title': 'Your Curated Selection',
             'wishlist_count_zero': '0 pieces saved',
             'wishlist_count_one': '1 piece saved',
             'wishlist_count_many': 'pieces saved',
             'wishlist_empty_title': 'Your Collection Awaits',
-            'wishlist_empty_desc': 'Pieces you save will appear here — a personal gallery of creations that inspire you.',
+            'wishlist_empty_desc': 'Pieces you save will appear here.',
             'wishlist_empty_btn': 'Explore Collections',
 
-            // === TRACK ORDER ===
+            // Track Order
             'track_title': 'Track Your Creation',
-            'track_subtitle': 'Enter your order number to follow the journey of your piece.',
+            'track_subtitle': 'Enter your order number to follow the journey.',
             'track_placeholder': 'Order number (e.g., SD-2026-001)',
             'track_button': 'Track Order',
             'track_not_found_title': 'Order Not Found',
@@ -247,14 +255,14 @@ const SD_I18N = {
             'track_step_crafting': 'Artisan Crafting',
             'track_step_crafting_desc': 'Your piece is being handcrafted in our Istanbul atelier.',
             'track_step_inspection': 'Quality Inspection',
-            'track_step_inspection_desc': 'Every creation undergoes a rigorous 47-point quality inspection.',
+            'track_step_inspection_desc': 'Every creation undergoes a rigorous 47-point inspection.',
             'track_step_delivery': 'White-Glove Delivery',
             'track_step_delivery_desc': 'Your piece will be delivered by armored courier.',
             'track_status_pending': 'Pending',
             'track_status_progress': 'In Progress',
             'track_searching': 'Searching...',
 
-            // === FOOTER ===
+            // Footer
             'footer_brand_desc': 'The pinnacle of genuine exotic leather craftsmanship. Since 2008, Istanbul.',
             'footer_customer_care': 'Customer Care',
             'footer_contact_faq': 'Contact & FAQ',
@@ -274,17 +282,22 @@ const SD_I18N = {
             'footer_istanbul': 'Istanbul Atelier',
             'footer_copyright': '© 2026 SAN DUKHAR. All rights reserved. Handcrafted with pride in Turkey.',
 
-            // === CONTACT ===
+            // Contact
             'concierge': 'Concierge',
-            'concierge_subtitle': 'We are at your service. Whether you seek a bespoke commission, have a question, or wish to visit — we welcome your enquiry.',
-            'contact_telephone': 'Telephone',
-            'contact_email': 'Email',
-            'contact_press': 'Press & Partnerships',
+            'concierge_subtitle': 'We are at your service.',
             'contact_istanbul_atelier': 'Istanbul Atelier',
             'contact_atelier_hours': 'Monday – Saturday: 10:00 – 19:00',
             'contact_atelier_sunday': 'Sunday: By appointment only',
+            'contact_telephone': 'Telephone',
             'contact_available_hours': 'Available during atelier hours.',
+            'contact_email': 'Email',
             'contact_respond_time': 'We respond to all emails within 24 hours.',
+            'contact_press': 'Press & Partnerships',
+            'contact_first_name_placeholder': 'First Name',
+            'contact_last_name_placeholder': 'Last Name',
+            'contact_email_placeholder': 'Email Address',
+            'contact_phone_placeholder': 'Phone Number',
+            'contact_message_placeholder': 'Your message...',
             'contact_nature_enquiry': 'Nature of Enquiry',
             'contact_bespoke_commission': 'Bespoke Commission',
             'contact_product_information': 'Product Information',
@@ -295,13 +308,12 @@ const SD_I18N = {
             'contact_your_message': 'Your message...',
             'contact_send_enquiry': 'Send Enquiry',
             'contact_enquiry_sent': 'Enquiry Sent',
-            'contact_phone_placeholder': '+90 555 123 45 67',
 
-            // === TAILORING ===
+            // Tailoring
             'tailoring_title': 'Bespoke Atelier',
             'tailoring_subtitle': 'A creation that exists only because you imagined it.',
             'tailoring_process_title': 'The Commission Process',
-            'tailoring_process_desc': 'Each bespoke commission is a collaboration between you and our master artisan. The process takes 6–10 weeks.',
+            'tailoring_process_desc': 'Each bespoke commission is a collaboration between you and our master artisan.',
             'tailoring_step_product': 'Product',
             'tailoring_step_material': 'Material',
             'tailoring_step_color': 'Color',
@@ -316,28 +328,72 @@ const SD_I18N = {
             'tailoring_hardware_finish': 'Hardware Finish',
             'tailoring_size_measurements': 'Size & Measurements',
             'tailoring_final_details': 'Final Details',
-            'tailoring_additional_notes': 'Additional Notes',
-            'tailoring_describe_vision': 'Describe any specific details, inspiration, or requirements...',
-            'tailoring_submit_enquiry': 'Submit Enquiry',
-            'tailoring_enquiry_sent': 'Enquiry Sent',
+            'tailoring_your_commission': 'Your Commission',
             'tailoring_continue': 'Continue →',
             'tailoring_back': '← Back',
+            'tailoring_submit_enquiry': 'Submit Enquiry',
+            'tailoring_enquiry_sent': 'Enquiry Sent',
             'tailoring_jacket': 'Leather Jacket',
+            'tailoring_jacket_desc': 'Custom fitted',
             'tailoring_bag': 'Bag / Briefcase',
+            'tailoring_bag_desc': 'Any configuration',
             'tailoring_shoes': 'Footwear',
+            'tailoring_shoes_desc': 'Bespoke last',
             'tailoring_accessory': 'Accessory',
+            'tailoring_accessory_desc': 'Wallets, belts, cases',
             'tailoring_other': 'Other',
+            'tailoring_other_desc': 'Describe your vision',
+            'tailoring_suede': 'Suede',
+            'tailoring_suede_desc': 'Soft, luxurious',
+            'tailoring_silk': 'Silk',
+            'tailoring_silk_desc': 'Elegant sheen',
+            'tailoring_smooth_leather': 'Smooth Leather',
+            'tailoring_smooth_leather_desc': 'Durable, refined',
+            'tailoring_cashmere': 'Cashmere',
+            'tailoring_cashmere_desc': 'Ultimate softness',
+            'tailoring_gold': 'Gold',
+            'tailoring_gold_desc': '24K Plated',
+            'tailoring_palladium': 'Palladium',
+            'tailoring_palladium_desc': 'Silvery-white',
+            'tailoring_ruthenium': 'Ruthenium',
+            'tailoring_ruthenium_desc': 'Dark, matte',
             'tailoring_standard_size': 'Standard Size',
+            'tailoring_standard_size_desc': 'Provide your usual size',
             'tailoring_custom_measure': 'Custom Measurements',
+            'tailoring_custom_measure_desc': 'We\'ll send a guide',
             'tailoring_atelier_visit': 'Atelier Visit',
+            'tailoring_atelier_visit_desc': 'Istanbul fitting',
+            'tailoring_additional_notes': 'Additional Notes',
+            'tailoring_describe_vision': 'Describe any specific details, inspiration, or requirements...',
 
-            // === TOASTS / NOTIFICATIONS ===
-            'cart_added': 'Added to your selection',
-            'promo_applied': 'Promo code applied',
-            'wishlist_added': 'Added to wishlist',
-            'wishlist_removed': 'Removed from wishlist',
+            // About
+            'about_hero_title': 'The Atelier of<br>Silent Luxury',
+            'about_hero_text': 'Born in Istanbul in 2008, SAN DUKHAR bridges centuries of Anatolian craftsmanship with a contemporary vision of understated elegance.',
+            'about_quote': '"True luxury does not announce itself. It is felt in the weight of a lock, seen in the symmetry of a stitch, and understood in the silence of admiration."',
+            'about_quote_author': '— Dukhar San, Founder & Creative Director',
+            'about_journey_title': 'Our Journey',
+            'about_philosophy_title': 'Our Philosophy',
+            'about_artisans_title': 'The Hands Behind the Art',
+            'about_timeline_2008_title': 'The First Atelier',
+            'about_timeline_2008_text': 'SAN DUKHAR opens its first workshop in Nişantaşı, Istanbul.',
+            'about_timeline_2014_title': 'Bespoke Program Launch',
+            'about_timeline_2014_text': 'The Bespoke Atelier is established.',
+            'about_timeline_2017_title': 'The Imperium Collection',
+            'about_timeline_2017_text': 'The iconic Imperium Collection debuts.',
+            'about_timeline_2020_title': 'Global Recognition',
+            'about_timeline_2020_text': 'SAN DUKHAR pieces appear in private collections worldwide.',
+            'about_timeline_2026_title': 'A New Chapter',
+            'about_timeline_2026_text': 'The house unveils its renewed digital presence.',
+            'about_artisan_1_name': 'Mehmet Usta',
+            'about_artisan_1_role': 'Master Cutter — 31 years',
+            'about_artisan_2_name': 'Ayşe Hanım',
+            'about_artisan_2_role': 'Master Stitcher — 25 years',
+            'about_artisan_3_name': 'Kemal Bey',
+            'about_artisan_3_role': 'Hardware & Finish — 19 years',
+            'about_artisan_4_name': 'Dukhar San',
+            'about_artisan_4_role': 'Creative Director — 17 years',
 
-            // === MISC ===
+            // Misc
             'quick_view': 'Quick View',
             'view_details': 'View Full Details',
             'limited_edition': 'Limited Edition',
@@ -359,18 +415,14 @@ const SD_I18N = {
             'submit_enquiry': 'Submit Enquiry',
             'select_country': 'Select country',
             'newsletter_email_placeholder': 'Your Email Address',
-
-            // === Попытки ===
-            'materials-hero-content': 'Natures most extraordinary skins, ethically sourced and transformed by human hands into objects of enduring beauty.',
-
+            'cart_added': 'Added to your selection',
+            'promo_applied': 'Promo code applied',
+            'wishlist_added': 'Added to wishlist',
+            'wishlist_removed': 'Removed from wishlist',
         },
 
         ru: {
-
-            // === Попытки ===
-            'materials-hero-content': 'Ты лох бро',
-
-            // === HEADER ===
+            // Header
             'nav_home': 'Главная',
             'nav_collections': 'Коллекции',
             'nav_materials': 'Материалы',
@@ -389,9 +441,9 @@ const SD_I18N = {
             'nav_ostrich': 'Кожа страуса',
             'nav_stingray': 'Кожа ската',
             'nav_lizard': 'Кожа ящерицы',
-            'nav_new_arrivals': 'Коллекция Imperium — Лимитированная серия',
+            'nav_new_arrivals': 'Коллекция Serpentine — Новые поступления',
 
-            // === HERO ===
+            // Hero
             'hero_line1': 'Там, где природа встречает',
             'hero_line2': 'Многовековое мастерство',
             'hero_subtitle': 'Изысканные изделия из экзотической кожи, созданные вручную в самом сердце Стамбула. От нашего ателье — всему миру. Каждое изделие — воплощение вечной роскоши и индивидуальности.',
@@ -399,49 +451,62 @@ const SD_I18N = {
             'hero_bespoke': 'Заказать индивидуально',
             'hero_discover': 'Узнать больше',
 
-            // === SECTIONS ===
-            'section_featured': 'Коллекция',
-            'section_featured_desc': 'Исследование силы и точности. Создано из редчайшей кожи нильского крокодила. Каждое изделие — свидетельство искусства природы и человеческого мастерства. Лимитированная серия из 25 экземпляров.',
+            // Sections
+            'section_featured': 'Коллекция Imperium',
+            'section_featured_desc': 'Исследование силы и точности. Создано из редчайшей кожи нильского крокодила. Лимитированная серия из 25 экземпляров.',
             'section_view_collection': 'Смотреть всю коллекцию',
             'section_materials': 'Изысканные материалы',
-            'section_materials_desc': 'Мы путешествуем по всему миру в поисках лучшей, этично выращенной экзотической кожи. Каждый материал обладает уникальным характером, текстурой и историей.',
+            'section_materials_desc': 'Мы путешествуем по всему миру в поисках лучшей, этично выращенной экзотической кожи.',
             'section_bespoke_cta': 'Индивидуальный пошив',
             'section_bespoke_desc': 'Изделие, созданное исключительно для вас. Испытайте высшую степень самовыражения с нашими мастерами.',
             'section_begin_journey': 'Начать путешествие',
             'section_lookbook': 'Визуальный дневник',
-            'section_lookbook_desc': 'Подпишитесь на @sandukhar, чтобы заглянуть в наш мир мастерства, путешествий и вечного стиля.',
+            'section_lookbook_follow': 'Подпишитесь на',
+            'section_lookbook_glimpse': 'чтобы заглянуть в наш мир мастерства, путешествий и вечного стиля.',
             'section_testimonials': 'Слова наших клиентов',
             'section_newsletter': 'Окно в наш мир',
-            'section_newsletter_desc': 'Получайте эксклюзивные превью новых коллекций, приглашения на частные мероприятия и истории из нашего стамбульского ателье.',
+            'section_newsletter_desc': 'Получайте эксклюзивные превью новых коллекций, приглашения на частные мероприятия.',
             'section_newsletter_placeholder': 'Ваш email',
             'section_subscribe': 'Подписаться',
             'section_privacy_note': 'Мы уважаем вашу конфиденциальность. Отписка в любое время.',
 
-            // === BRAND STORY ===
+            // Brand
             'brand_title': 'Ателье тихой роскоши',
             'brand_desc1': 'SAN DUKHAR родился из глубокого уважения к самым изысканным материалам природы. Основанный в Стамбуле в 2008 году, наш Дом соединяет древние традиции анатолийского мастерства с неустанным стремлением к совершенству.',
             'brand_desc2': 'Каждый стежок, каждый срез и каждая полировка выполняются мастером, чьи руки десятилетиями оттачивали одно-единственное умение.',
             'brand_discover': 'Узнать нашу философию',
 
-            // === PROMISE ===
+            // Materials
+            'material_crocodile': 'Крокодил',
+            'material_python': 'Питон',
+            'material_ostrich': 'Страус',
+            'material_stingray': 'Скат',
+            'material_lizard': 'Ящерица',
+            'material_porosus': 'Porosus & Niloticus',
+            'material_reticulatus': 'Reticulatus & Molurus',
+            'material_full_quill': 'Full Quill Crown',
+            'material_galuchat': 'Полированный галюша',
+            'material_teju': 'Teju & Varanus',
+
+            // Promise
             'promise_handmade_title': 'Ручная работа в Стамбуле',
             'promise_handmade_desc': 'Более 80 часов кропотливого труда одного мастера вложено в каждое крупное изделие.',
             'promise_certificate_title': 'Сертификат подлинности',
-            'promise_certificate_desc': 'Каждое изделие сопровождается подписанным сертификатом и номерной идентификационной табличкой.',
+            'promise_certificate_desc': 'Каждое изделие сопровождается подписанным сертификатом.',
             'promise_repair_title': 'Пожизненная реставрация',
-            'promise_repair_desc': 'Мы предлагаем бесплатную чистку и льготную реставрацию на весь срок службы вашего изделия SAN DUKHAR.',
+            'promise_repair_desc': 'Бесплатная чистка и льготная реставрация на весь срок службы.',
             'promise_limited_title': 'Ограниченное производство',
-            'promise_limited_desc': 'Мы намеренно ограничиваем тираж коллекций, чтобы гарантировать эксклюзивность и бескомпромиссный контроль качества.',
+            'promise_limited_desc': 'Мы намеренно ограничиваем тираж для гарантии эксклюзивности.',
 
-            // === TESTIMONIALS ===
+            // Testimonials
             'testimonial_1': '«Портфель Imperium — не просто аксессуар, это спутник жизни. Аромат кожи, звук замка — это чистая механическая поэзия.»',
             'testimonial_1_author': '— А. Р. Восс, Цюрих',
-            'testimonial_2': '«Заказ индивидуальной куртки в SAN DUKHAR стал одним из самых личных и впечатляющих событий в моей жизни. Посадка, как и ожидалось, безупречна.»',
+            'testimonial_2': '«Заказ индивидуальной куртки в SAN DUKHAR стал одним из самых личных и впечатляющих событий в моей жизни.»',
             'testimonial_2_author': '— Л. Э. Моро, Париж',
-            'testimonial_3': '«Я унаследовал бумажник SAN DUKHAR от отца. Ему 15 лет, и он выглядит так же великолепно, как в день покупки. Вот что значит истинная роскошь.»',
+            'testimonial_3': '«Я унаследовал бумажник SAN DUKHAR от отца. Ему 15 лет, и он выглядит так же великолепно, как в день покупки.»',
             'testimonial_3_author': '— К. Танака, Токио',
 
-            // === CATALOG ===
+            // Catalog
             'catalog_title': 'Коллекции',
             'catalog_subtitle': 'Каждое изделие — диалог между лучшими материалами природы и человеческим мастерством.',
             'catalog_filters': 'Фильтры',
@@ -455,7 +520,7 @@ const SD_I18N = {
             'catalog_name': 'Название: А-Я',
             'catalog_results': 'Изделий',
             'catalog_empty_title': 'Ничего не найдено',
-            'catalog_empty_desc': 'По вашему запросу ничего не найдено. Попробуйте изменить параметры фильтрации.',
+            'catalog_empty_desc': 'По вашему запросу ничего не найдено.',
             'catalog_empty_btn': 'Смотреть все коллекции',
             'catalog_category': 'Категория',
             'catalog_material_filter': 'Материал',
@@ -467,11 +532,11 @@ const SD_I18N = {
             'catalog_limited': 'Лимитированная серия',
             'catalog_apply_price': 'Применить',
 
-            // === PRODUCT ===
+            // Product
             'product_breadcrumb_home': 'Главная',
             'product_breadcrumb_collections': 'Коллекции',
             'product_collection_label': 'Коллекция Imperium',
-            'product_limited_notice': 'Лимитированное производство — Всего 25 экземпляров в мире',
+            'product_limited_notice': 'Лимитированное производство — Всего 25 экземпляров',
             'product_color': 'Цвет',
             'product_hardware': 'Фурнитура',
             'product_personalization': 'Персонализация',
@@ -485,7 +550,7 @@ const SD_I18N = {
             'product_shipping': 'Доставка',
             'product_care': 'Уход и гарантия',
             'product_video_title': 'Искусство создания',
-            'product_video_desc': 'Станьте свидетелем пути портфеля Imperium — от отбора кожи до финальной полировки.',
+            'product_video_desc': 'Станьте свидетелем пути портфеля Imperium.',
             'product_reviews': 'Отзывы клиентов',
             'product_related': 'Дополните ансамбль',
             'product_verified': 'Подтверждённая покупка',
@@ -498,13 +563,13 @@ const SD_I18N = {
             'product_unique_repair': 'Пожизненная реставрация',
             'product_unique_repair_desc': 'Бесплатная программа обслуживания',
             'product_unique_limited': 'Ограниченный тираж',
-            'product_unique_limited_desc': 'Всего 25 экземпляров в мире',
+            'product_unique_limited_desc': 'Всего 25 экземпляров',
             'product_price_note': 'Налоги и пошлины включены',
 
-            // === CART ===
+            // Cart
             'cart_title': 'Ваша корзина',
             'cart_empty_title': 'Корзина ждёт',
-            'cart_empty_desc': 'Вы ещё не добавили ни одного изделия. Исследуйте наши коллекции, чтобы найти достойные экземпляры.',
+            'cart_empty_desc': 'Вы ещё не добавили ни одного изделия.',
             'cart_empty_btn': 'Смотреть коллекции',
             'cart_summary': 'Сводка заказа',
             'cart_subtotal': 'Подытог',
@@ -518,7 +583,7 @@ const SD_I18N = {
             'cart_secure': 'Безопасный платёж · Бесплатная доставка',
             'remove': 'Удалить',
 
-            // === CHECKOUT ===
+            // Checkout
             'checkout_title': 'Завершение заказа',
             'checkout_shipping_info': 'Информация о доставке',
             'checkout_first_name': 'Имя',
@@ -533,12 +598,12 @@ const SD_I18N = {
             'checkout_white_glove': 'Премиум-доставка (Бесплатно)',
             'checkout_white_glove_desc': 'Бронированный курьер · 4-6 недель · Полная страховка',
             'checkout_express': 'Экспресс-доставка (+$450)',
-            'checkout_express_desc': 'Приоритетная обработка · 2-3 недели · Полная страховка',
+            'checkout_express_desc': 'Приоритетная обработка · 2-3 недели',
             'checkout_payment_method': 'Способ оплаты',
             'checkout_card': 'Банковская карта',
             'checkout_card_desc': 'Visa, Mastercard, American Express',
             'checkout_transfer': 'Банковский перевод',
-            'checkout_transfer_desc': 'Реквизиты будут отправлены после подтверждения заказа',
+            'checkout_transfer_desc': 'Реквизиты после подтверждения заказа',
             'checkout_card_number': 'Номер карты',
             'checkout_expiry': 'Срок действия',
             'checkout_cvc': 'CVC',
@@ -548,7 +613,7 @@ const SD_I18N = {
             'checkout_order_summary': 'Состав заказа',
             'checkout_select_country': 'Выберите страну',
 
-            // === ACCOUNT ===
+            // Account
             'account_title': 'Личный кабинет',
             'account_orders': 'История заказов',
             'account_wishlist': 'Избранное',
@@ -572,18 +637,18 @@ const SD_I18N = {
             'account_status_production': 'В производстве',
             'account_status_delivered': 'Доставлен',
 
-            // === WISHLIST ===
+            // Wishlist
             'wishlist_title': 'Ваше избранное',
             'wishlist_count_zero': 'Нет сохранённых изделий',
             'wishlist_count_one': '1 изделие сохранено',
             'wishlist_count_many': 'изделий сохранено',
             'wishlist_empty_title': 'Коллекция ждёт',
-            'wishlist_empty_desc': 'Сохранённые изделия появятся здесь — ваша личная галерея творений, которые вас вдохновляют.',
+            'wishlist_empty_desc': 'Сохранённые изделия появятся здесь.',
             'wishlist_empty_btn': 'Смотреть коллекции',
 
-            // === TRACK ORDER ===
+            // Track Order
             'track_title': 'Отследить заказ',
-            'track_subtitle': 'Введите номер заказа, чтобы следить за путём вашего изделия от ателье до ваших рук.',
+            'track_subtitle': 'Введите номер заказа, чтобы следить за путём изделия.',
             'track_placeholder': 'Номер заказа (например, SD-2026-001)',
             'track_button': 'Отследить',
             'track_not_found_title': 'Заказ не найден',
@@ -592,18 +657,18 @@ const SD_I18N = {
             'track_step_confirmed': 'Заказ подтверждён',
             'track_step_confirmed_desc': 'Ваш заказ получен и подтверждён.',
             'track_step_material': 'Подбор материала',
-            'track_step_material_desc': 'Наш мастер выбрал лучшую кожу для вашего изделия.',
+            'track_step_material_desc': 'Наш мастер выбрал лучшую кожу.',
             'track_step_crafting': 'Работа мастера',
-            'track_step_crafting_desc': 'Ваше изделие создаётся вручную в нашем стамбульском ателье.',
+            'track_step_crafting_desc': 'Ваше изделие создаётся вручную в Стамбуле.',
             'track_step_inspection': 'Контроль качества',
-            'track_step_inspection_desc': 'Каждое изделие проходит строгую проверку по 47 пунктам.',
+            'track_step_inspection_desc': 'Проверка по 47 пунктам.',
             'track_step_delivery': 'Премиум-доставка',
-            'track_step_delivery_desc': 'Ваше изделие будет доставлено бронированным курьером.',
+            'track_step_delivery_desc': 'Доставка бронированным курьером.',
             'track_status_pending': 'Ожидается',
             'track_status_progress': 'В процессе',
             'track_searching': 'Поиск...',
 
-            // === FOOTER ===
+            // Footer
             'footer_brand_desc': 'Вершина мастерства из подлинной экзотической кожи. С 2008 года, Стамбул.',
             'footer_customer_care': 'Поддержка',
             'footer_contact_faq': 'Контакты и FAQ',
@@ -623,17 +688,22 @@ const SD_I18N = {
             'footer_istanbul': 'Ателье в Стамбуле',
             'footer_copyright': '© 2026 SAN DUKHAR. Все права защищены. С гордостью создано в Турции.',
 
-            // === CONTACT ===
+            // Contact
             'concierge': 'Консьерж',
-            'concierge_subtitle': 'Мы к вашим услугам. Будь то индивидуальный заказ, вопрос или желание посетить ателье — мы будем рады вашему обращению.',
-            'contact_telephone': 'Телефон',
-            'contact_email': 'Email',
-            'contact_press': 'Пресса и партнёрства',
+            'concierge_subtitle': 'Мы к вашим услугам.',
             'contact_istanbul_atelier': 'Ателье в Стамбуле',
             'contact_atelier_hours': 'Понедельник – Суббота: 10:00 – 19:00',
             'contact_atelier_sunday': 'Воскресенье: Только по записи',
+            'contact_telephone': 'Телефон',
             'contact_available_hours': 'Доступны в часы работы ателье.',
+            'contact_email': 'Email',
             'contact_respond_time': 'Отвечаем на все письма в течение 24 часов.',
+            'contact_press': 'Пресса и партнёрства',
+            'contact_first_name_placeholder': 'Имя',
+            'contact_last_name_placeholder': 'Фамилия',
+            'contact_email_placeholder': 'Email',
+            'contact_phone_placeholder': 'Телефон',
+            'contact_message_placeholder': 'Ваше сообщение...',
             'contact_nature_enquiry': 'Тема обращения',
             'contact_bespoke_commission': 'Индивидуальный заказ',
             'contact_product_information': 'Информация о товаре',
@@ -644,13 +714,12 @@ const SD_I18N = {
             'contact_your_message': 'Ваше сообщение...',
             'contact_send_enquiry': 'Отправить запрос',
             'contact_enquiry_sent': 'Запрос отправлен',
-            'contact_phone_placeholder': '+90 555 123 45 67',
 
-            // === TAILORING ===
+            // Tailoring
             'tailoring_title': 'Ателье индивидуального пошива',
             'tailoring_subtitle': 'Творение, которое существует только потому, что вы его представили.',
             'tailoring_process_title': 'Процесс создания',
-            'tailoring_process_desc': 'Каждый индивидуальный заказ — это сотрудничество между вами и нашим мастером. Процесс занимает 6–10 недель.',
+            'tailoring_process_desc': 'Каждый заказ — сотрудничество между вами и мастером.',
             'tailoring_step_product': 'Изделие',
             'tailoring_step_material': 'Материал',
             'tailoring_step_color': 'Цвет',
@@ -665,28 +734,72 @@ const SD_I18N = {
             'tailoring_hardware_finish': 'Отделка фурнитуры',
             'tailoring_size_measurements': 'Размеры и мерки',
             'tailoring_final_details': 'Финальные детали',
-            'tailoring_additional_notes': 'Дополнительные пожелания',
-            'tailoring_describe_vision': 'Опишите детали, вдохновение или особые требования...',
-            'tailoring_submit_enquiry': 'Отправить запрос',
-            'tailoring_enquiry_sent': 'Запрос отправлен',
+            'tailoring_your_commission': 'Ваш заказ',
             'tailoring_continue': 'Продолжить →',
             'tailoring_back': '← Назад',
+            'tailoring_submit_enquiry': 'Отправить запрос',
+            'tailoring_enquiry_sent': 'Запрос отправлен',
             'tailoring_jacket': 'Кожаная куртка',
+            'tailoring_jacket_desc': 'Индивидуальный пошив',
             'tailoring_bag': 'Сумка / Портфель',
+            'tailoring_bag_desc': 'Любая конфигурация',
             'tailoring_shoes': 'Обувь',
+            'tailoring_shoes_desc': 'Индивидуальная колодка',
             'tailoring_accessory': 'Аксессуар',
+            'tailoring_accessory_desc': 'Бумажники, ремни, футляры',
             'tailoring_other': 'Другое',
+            'tailoring_other_desc': 'Опишите ваше видение',
+            'tailoring_suede': 'Замша',
+            'tailoring_suede_desc': 'Мягкая, роскошная',
+            'tailoring_silk': 'Шёлк',
+            'tailoring_silk_desc': 'Элегантный блеск',
+            'tailoring_smooth_leather': 'Гладкая кожа',
+            'tailoring_smooth_leather_desc': 'Прочная, изысканная',
+            'tailoring_cashmere': 'Кашемир',
+            'tailoring_cashmere_desc': 'Высшая мягкость',
+            'tailoring_gold': 'Золото',
+            'tailoring_gold_desc': '24К покрытие',
+            'tailoring_palladium': 'Палладий',
+            'tailoring_palladium_desc': 'Серебристо-белый',
+            'tailoring_ruthenium': 'Рутений',
+            'tailoring_ruthenium_desc': 'Тёмный, матовый',
             'tailoring_standard_size': 'Стандартный размер',
+            'tailoring_standard_size_desc': 'Укажите ваш обычный размер',
             'tailoring_custom_measure': 'Индивидуальные мерки',
+            'tailoring_custom_measure_desc': 'Мы отправим инструкцию',
             'tailoring_atelier_visit': 'Визит в ателье',
+            'tailoring_atelier_visit_desc': 'Примерка в Стамбуле',
+            'tailoring_additional_notes': 'Дополнительные пожелания',
+            'tailoring_describe_vision': 'Опишите детали, вдохновение или требования...',
 
-            // === TOASTS / NOTIFICATIONS ===
-            'cart_added': 'Добавлено в корзину',
-            'promo_applied': 'Промокод применён',
-            'wishlist_added': 'Добавлено в избранное',
-            'wishlist_removed': 'Удалено из избранного',
+            // About
+            'about_hero_title': 'Ателье<br>Тихой Роскоши',
+            'about_hero_text': 'Основанный в Стамбуле в 2008 году, SAN DUKHAR соединяет многовековые традиции анатолийского мастерства с современным видением.',
+            'about_quote': '"Истинная роскошь не заявляет о себе. Она ощущается в весе замка, видна в симметрии стежка и понимается в тишине восхищения."',
+            'about_quote_author': '— Духар Сан, основатель и креативный директор',
+            'about_journey_title': 'Наш путь',
+            'about_philosophy_title': 'Наша философия',
+            'about_artisans_title': 'Руки, создающие искусство',
+            'about_timeline_2008_title': 'Первое ателье',
+            'about_timeline_2008_text': 'SAN DUKHAR открывает первую мастерскую в Нишанташи, Стамбул.',
+            'about_timeline_2014_title': 'Запуск программы Bespoke',
+            'about_timeline_2014_text': 'Создано Ателье индивидуального пошива.',
+            'about_timeline_2017_title': 'Коллекция Imperium',
+            'about_timeline_2017_text': 'Дебютирует знаковая коллекция Imperium.',
+            'about_timeline_2020_title': 'Мировое признание',
+            'about_timeline_2020_text': 'Изделия появляются в частных коллекциях по всему миру.',
+            'about_timeline_2026_title': 'Новая глава',
+            'about_timeline_2026_text': 'Дом представляет обновлённое цифровое присутствие.',
+            'about_artisan_1_name': 'Мехмет Уста',
+            'about_artisan_1_role': 'Мастер раскроя — 31 год',
+            'about_artisan_2_name': 'Айше Ханым',
+            'about_artisan_2_role': 'Мастер строчки — 25 лет',
+            'about_artisan_3_name': 'Кемаль Бей',
+            'about_artisan_3_role': 'Фурнитура и отделка — 19 лет',
+            'about_artisan_4_name': 'Духар Сан',
+            'about_artisan_4_role': 'Креативный директор — 17 лет',
 
-            // === MISC ===
+            // Misc
             'quick_view': 'Быстрый просмотр',
             'view_details': 'Подробнее',
             'limited_edition': 'Лимитированная серия',
@@ -708,295 +821,146 @@ const SD_I18N = {
             'submit_enquiry': 'Отправить запрос',
             'select_country': 'Выберите страну',
             'newsletter_email_placeholder': 'Ваш email',
+            'cart_added': 'Добавлено в корзину',
+            'promo_applied': 'Промокод применён',
+            'wishlist_added': 'Добавлено в избранное',
+            'wishlist_removed': 'Удалено из избранного',
         }
     },
 
-    /**
-     * Initialize the i18n system.
-     * Determines locale from: URL param > localStorage > browser language > default 'en'.
-     */
     init: function(defaultLocale) {
         if (this.initialized) return;
-
         const urlLocale = this.getUrlParam('lang');
         const storedLocale = localStorage.getItem('sandukhar_locale');
         const browserLocale = this.getBrowserLocale();
-
         let locale = defaultLocale || urlLocale || storedLocale || browserLocale || 'en';
-
-        if (!this.supportedLocales.includes(locale)) {
-            locale = 'en';
-        }
-
+        if (!this.supportedLocales.includes(locale)) locale = 'en';
         this.currentLocale = locale;
         localStorage.setItem('sandukhar_locale', locale);
         this.translations = this.dictionaries[locale] || this.dictionaries['en'];
-
-        // Initial translation
         this.translatePage();
-
-        // Add language switcher to header
         this.addLanguageSwitcher();
-
-        // Observe DOM for dynamically added elements
         this.startObserver();
-
-        // Listen for cart/wishlist dynamic updates
-        document.addEventListener('sd_i18n_update', () => this.translatePage());
-
         this.initialized = true;
-
         document.dispatchEvent(new CustomEvent('sd_i18n_ready', { detail: { locale: locale } }));
     },
 
-    /**
-     * Switch to a different locale and re-translate the entire page.
-     */
     setLocale: function(locale) {
         if (!this.supportedLocales.includes(locale)) return;
         if (locale === this.currentLocale) return;
-
         this.currentLocale = locale;
         localStorage.setItem('sandukhar_locale', locale);
         this.translations = this.dictionaries[locale] || this.dictionaries['en'];
-
         this.translatePage();
         this.updateSwitcherButton();
-
         document.dispatchEvent(new CustomEvent('sd_i18n_changed', { detail: { locale: locale } }));
     },
 
-    /**
-     * Get translated string for a key.
-     * Falls back to English, then to the key itself if not found.
-     */
     t: function(key, params) {
         let text = this.translations[key] || this.dictionaries['en'][key] || key;
-
-        if (params) {
-            Object.keys(params).forEach(param => {
-                text = text.replace(`{${param}}`, params[param]);
-            });
-        }
-
+        if (params) { Object.keys(params).forEach(param => { text = text.replace(`{${param}}`, params[param]); }); }
         return text;
     },
 
-    /**
-     * Translate all elements with data-i18n attribute.
-     * Handles text content, placeholder, title, aria-label, and value attributes.
-     */
     translatePage: function() {
         const elements = document.querySelectorAll('[data-i18n]');
-
         elements.forEach(el => {
             const key = el.getAttribute('data-i18n');
             if (!key) return;
-
             const translation = this.t(key);
             if (!translation || translation === key) return;
-
             const attr = el.getAttribute('data-i18n-attr');
-
-            if (attr === 'placeholder') {
-                el.setAttribute('placeholder', translation);
-            } else if (attr === 'title') {
-                el.setAttribute('title', translation);
-            } else if (attr === 'aria-label') {
-                el.setAttribute('aria-label', translation);
-            } else if (attr === 'value') {
-                el.setAttribute('value', translation);
-            } else if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                // For inputs without data-i18n-attr, set placeholder by default
-                el.setAttribute('placeholder', translation);
-            } else {
-                // For regular elements, replace only direct text content
-                this.replaceTextContent(el, translation);
-            }
+            if (attr === 'placeholder') { el.setAttribute('placeholder', translation); }
+            else if (attr === 'title') { el.setAttribute('title', translation); }
+            else if (attr === 'aria-label') { el.setAttribute('aria-label', translation); }
+            else if (attr === 'value') { el.setAttribute('value', translation); }
+            else if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') { el.setAttribute('placeholder', translation); }
+            else { this.replaceTextContent(el, translation); }
         });
-
-        // Update HTML lang attribute
         document.documentElement.setAttribute('lang', this.currentLocale);
     },
 
-    /**
-     * Replace only the direct text content of an element,
-     * preserving child elements (SVGs, spans, etc.).
-     */
     replaceTextContent: function(el, text) {
-        // Check if element has child elements that should be preserved
         const hasChildren = el.children.length > 0;
         const hasNestedI18n = el.querySelector('[data-i18n]');
-
+        const hasLinks = el.querySelector('a');
+        if (hasLinks && !hasNestedI18n) {
+            const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+            const textNodes = [];
+            while (walker.nextNode()) { if (walker.currentNode.textContent.trim()) textNodes.push(walker.currentNode); }
+            if (textNodes.length > 0) { textNodes[0].textContent = text; }
+            return;
+        }
         if (!hasChildren || hasNestedI18n) {
-            // Simple case: just text, or contains nested i18n elements
-            // Walk through child nodes and replace only text nodes
             for (let i = 0; i < el.childNodes.length; i++) {
                 const node = el.childNodes[i];
-                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-                    node.textContent = text;
-                    return;
-                }
+                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) { node.textContent = text; return; }
             }
-            // If no text node found, prepend
-            if (el.childNodes.length === 0) {
-                el.textContent = text;
-            }
+            if (el.childNodes.length === 0) el.textContent = text;
         } else {
-            // Has child elements but no nested i18n — replace first text node
             for (let i = 0; i < el.childNodes.length; i++) {
-                if (el.childNodes[i].nodeType === Node.TEXT_NODE) {
-                    el.childNodes[i].textContent = text;
-                    return;
-                }
+                if (el.childNodes[i].nodeType === Node.TEXT_NODE) { el.childNodes[i].textContent = text; return; }
             }
         }
     },
 
-    /**
-     * Add language switcher button to header utilities.
-     */
     addLanguageSwitcher: function() {
         if (document.getElementById('lang-switcher')) return;
-
         const headerUtilities = document.querySelector('.header-utilities');
         if (!headerUtilities) return;
-
         const switcher = document.createElement('button');
         switcher.id = 'lang-switcher';
         switcher.className = 'utility-btn lang-switcher';
         switcher.setAttribute('aria-label', 'Switch language');
         switcher.innerHTML = this.currentLocale === 'en' ? 'RU' : 'EN';
-
-        switcher.addEventListener('click', () => {
-            const newLocale = this.currentLocale === 'en' ? 'ru' : 'en';
-            this.setLocale(newLocale);
-        });
-
+        switcher.addEventListener('click', () => { this.setLocale(this.currentLocale === 'en' ? 'ru' : 'en'); });
         const menuTrigger = headerUtilities.querySelector('.menu-trigger');
-        if (menuTrigger) {
-            headerUtilities.insertBefore(switcher, menuTrigger);
-        } else {
-            headerUtilities.appendChild(switcher);
-        }
-
+        if (menuTrigger) { headerUtilities.insertBefore(switcher, menuTrigger); } else { headerUtilities.appendChild(switcher); }
         this.injectSwitcherStyles();
     },
 
-    /**
-     * Update the language switcher button text and title.
-     */
     updateSwitcherButton: function() {
         const switcher = document.getElementById('lang-switcher');
         if (!switcher) return;
-
         switcher.innerHTML = this.currentLocale === 'en' ? 'RU' : 'EN';
-        switcher.setAttribute('title', this.currentLocale === 'en' ? 'Switch to Russian' : 'Switch to English');
     },
 
-    /**
-     * Inject minimal styles for the language switcher button.
-     */
     injectSwitcherStyles: function() {
         if (document.getElementById('lang-switcher-styles')) return;
-
         const style = document.createElement('style');
         style.id = 'lang-switcher-styles';
         style.textContent = `
-            .lang-switcher {
-                font-family: var(--font-body, 'Inter', sans-serif);
-                font-size: 0.7rem;
-                font-weight: var(--font-weight-semibold, 600);
-                letter-spacing: 0.08em;
-                color: var(--color-gold, #c5a572) !important;
-                border: 1px solid var(--color-gold-pale, rgba(197,165,114,0.15)) !important;
-                border-radius: var(--border-radius-sm, 2px);
-                width: 36px;
-                height: 36px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                transition: all var(--transition-fast, 0.2s ease);
-                background: transparent;
-            }
-            .lang-switcher:hover {
-                background: var(--color-gold, #c5a572) !important;
-                color: var(--color-black, #0a0a0a) !important;
-                border-color: var(--color-gold, #c5a572) !important;
-            }
-            @media screen and (max-width: 767px) {
-                .lang-switcher {
-                    width: 32px;
-                    height: 32px;
-                    font-size: 0.6rem;
-                }
-            }
+            .lang-switcher{font-family:var(--font-body);font-size:0.7rem;font-weight:var(--font-weight-semibold);letter-spacing:0.08em;color:var(--color-gold)!important;border:1px solid var(--color-gold-pale)!important;border-radius:var(--border-radius-sm);width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--transition-fast);background:transparent}
+            .lang-switcher:hover{background:var(--color-gold)!important;color:var(--color-black)!important;border-color:var(--color-gold)!important}
+            @media(max-width:767px){.lang-switcher{width:32px;height:32px;font-size:0.6rem}}
         `;
         document.head.appendChild(style);
     },
 
-    /**
-     * Start MutationObserver to translate dynamically added content.
-     */
     startObserver: function() {
         if (this.observer) this.observer.disconnect();
-
         const self = this;
         this.observer = new MutationObserver(function(mutations) {
             let shouldTranslate = false;
-
             for (const mutation of mutations) {
                 if (mutation.type === 'childList') {
                     for (const node of mutation.addedNodes) {
                         if (node.nodeType === Node.ELEMENT_NODE) {
-                            if (node.hasAttribute && node.hasAttribute('data-i18n')) {
-                                shouldTranslate = true;
-                                break;
-                            }
-                            if (node.querySelectorAll && node.querySelectorAll('[data-i18n]').length > 0) {
-                                shouldTranslate = true;
-                                break;
-                            }
+                            if (node.hasAttribute && node.hasAttribute('data-i18n')) { shouldTranslate = true; break; }
+                            if (node.querySelectorAll && node.querySelectorAll('[data-i18n]').length > 0) { shouldTranslate = true; break; }
                         }
                     }
                 }
                 if (shouldTranslate) break;
             }
-
-            if (shouldTranslate) {
-                self.translatePage();
-            }
+            if (shouldTranslate) self.translatePage();
         });
-
-        this.observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
+        this.observer.observe(document.body, { childList: true, subtree: true });
     },
 
-    /**
-     * Get URL parameter value.
-     */
-    getUrlParam: function(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
-    },
-
-    /**
-     * Detect browser's preferred language.
-     */
-    getBrowserLocale: function() {
-        const lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-        if (lang.startsWith('ru')) return 'ru';
-        return 'en';
-    }
+    getUrlParam: function(param) { return new URLSearchParams(window.location.search).get(param); },
+    getBrowserLocale: function() { const lang = (navigator.language || '').toLowerCase(); if (lang.startsWith('ru')) return 'ru'; return 'en'; }
 };
 
-// Expose globally
 window.SD_I18N = SD_I18N;
-
-// Auto-initialize on DOM ready
-document.addEventListener('DOMContentLoaded', function() {
-    SD_I18N.init();
-});
+document.addEventListener('DOMContentLoaded', () => { SD_I18N.init(); });
