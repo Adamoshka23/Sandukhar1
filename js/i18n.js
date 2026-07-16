@@ -1,7 +1,7 @@
 /**
  * ============================================================
- * SAN DUKHAR — INTERNATIONALIZATION MODULE (v4.0 — COMPLETE)
- * Full dictionaries for EN & RU + link-aware translation
+ * SAN DUKHAR — INTERNATIONALIZATION MODULE (v5.0 — COMPLETE)
+ * Full dictionaries for EN & RU — All UI elements covered
  * ============================================================
  */
 
@@ -160,6 +160,32 @@ const SD_I18N = {
             'product_unique_limited_desc': 'Only 25 pieces in existence',
             'product_price_note': 'Taxes & duties included',
 
+            // Product — Detailed Specs
+            'product_imperium_desc': 'The Imperium Briefcase is the definitive statement of power and refinement. Crafted from a single flawless Nile crocodile skin, selected for its uniform scale pattern and rich matte finish, this briefcase requires over 120 hours of meticulous handwork by a single master artisan in our Istanbul atelier.',
+            'product_imperium_spec_1': 'Genuine matte Nile crocodile leather (CITES certified)',
+            'product_imperium_spec_2': 'Ruthenium-plated solid brass lock and hinges',
+            'product_imperium_spec_3': 'Hand-stitched using waxed linen thread',
+            'product_imperium_spec_4': 'Suede leather interior with padded laptop compartment',
+            'product_imperium_spec_5': 'Two internal document pockets and card slots',
+            'product_imperium_spec_6': 'Detachable shoulder strap in matching leather',
+            'product_imperium_spec_7': 'Hand-numbered identification plate',
+            'product_imperium_spec_8': 'Dimensions: 42cm × 30cm × 12cm',
+            'product_imperium_spec_9': 'Weight: 2.4 kg',
+            'product_shipping_desc': 'Each Imperium Briefcase is made to order. Please allow 4–6 weeks for our artisans to complete your piece.',
+            'product_shipping_spec_1': 'Complimentary worldwide shipping via armored courier',
+            'product_shipping_spec_2': 'Fully insured during transit',
+            'product_shipping_spec_3': 'White-glove delivery with personal presentation',
+            'product_shipping_spec_4': 'Discreet packaging with SAN DUKHAR signature box',
+            'product_care_desc': 'Your SAN DUKHAR creation is designed to last for generations with proper care.',
+            'product_care_spec_1': 'Complimentary cleaning and conditioning for the first 5 years',
+            'product_care_spec_2': 'Lifetime repair service at a preferential rate',
+            'product_care_spec_3': 'Store in the provided dust bag away from direct sunlight',
+            'product_care_spec_4': 'Avoid contact with water, alcohol, and abrasive surfaces',
+            'product_care_spec_5': 'Certificate of Authenticity included',
+            'product_bespoke_cta_title': 'Seeking Something Truly Personal?',
+            'product_bespoke_cta_desc': 'Commission a bespoke briefcase tailored to your exact specifications—leather, color, hardware, interior configuration, and personal monogram.',
+            'product_bespoke_cta_btn': 'Begin Your Commission',
+
             // Cart
             'cart_title': 'Your Selection',
             'cart_empty_title': 'Your Cart Awaits',
@@ -206,6 +232,16 @@ const SD_I18N = {
             'checkout_secure': 'Secured by 256-bit SSL encryption',
             'checkout_order_summary': 'Order Summary',
             'checkout_select_country': 'Select country',
+            'checkout_first_name_placeholder': 'First name',
+            'checkout_last_name_placeholder': 'Last name',
+            'checkout_email_placeholder': 'your@email.com',
+            'checkout_address_placeholder': 'Street address',
+            'checkout_city_placeholder': 'City',
+            'checkout_postal_placeholder': 'Postal code',
+            'checkout_card_number_placeholder': '0000 0000 0000 0000',
+            'checkout_expiry_placeholder': 'MM/YY',
+            'checkout_cvc_placeholder': '123',
+            'checkout_card_name_placeholder': 'Name as it appears',
 
             // Account
             'account_title': 'My Account',
@@ -375,15 +411,23 @@ const SD_I18N = {
             'about_philosophy_title': 'Our Philosophy',
             'about_artisans_title': 'The Hands Behind the Art',
             'about_timeline_2008_title': 'The First Atelier',
-            'about_timeline_2008_text': 'SAN DUKHAR opens its first workshop in Nişantaşı, Istanbul.',
+            'about_timeline_2008_text': 'SAN DUKHAR opens its first workshop in Nişantaşı, Istanbul, with a team of three artisans. The inaugural collection features five crocodile briefcases.',
             'about_timeline_2014_title': 'Bespoke Program Launch',
-            'about_timeline_2014_text': 'The Bespoke Atelier is established.',
+            'about_timeline_2014_text': 'The Bespoke Atelier is established, offering clients the ability to commission completely personalized exotic leather creations.',
             'about_timeline_2017_title': 'The Imperium Collection',
-            'about_timeline_2017_text': 'The iconic Imperium Collection debuts.',
+            'about_timeline_2017_text': 'The iconic Imperium Collection debuts — limited-edition crocodile leather pieces that define the house\'s aesthetic.',
             'about_timeline_2020_title': 'Global Recognition',
-            'about_timeline_2020_text': 'SAN DUKHAR pieces appear in private collections worldwide.',
+            'about_timeline_2020_text': 'SAN DUKHAR pieces begin appearing in private collections across Europe, the Middle East, and Asia.',
             'about_timeline_2026_title': 'A New Chapter',
-            'about_timeline_2026_text': 'The house unveils its renewed digital presence.',
+            'about_timeline_2026_text': 'The house unveils its renewed digital presence, bringing the atelier experience to connoisseurs worldwide.',
+            'about_philosophy_one_title': 'One Artisan, One Piece',
+            'about_philosophy_one_desc': 'Every major creation is the work of a single master from start to finish. This ensures continuity of vision and absolute accountability.',
+            'about_philosophy_two_title': 'Intentional Scarcity',
+            'about_philosophy_two_desc': 'We produce fewer than 500 pieces per year across all collections. Exclusivity is not a marketing strategy — it is a necessity of our craft.',
+            'about_philosophy_three_title': 'Ethical Provenance',
+            'about_philosophy_three_desc': 'Every skin is CITES-certified and sourced from farms that meet the highest standards of animal welfare and environmental responsibility.',
+            'about_philosophy_four_title': 'Generational Commitment',
+            'about_philosophy_four_desc': 'We stand behind our creations for life. Our restoration service ensures your SAN DUKHAR piece can be passed to the next generation.',
             'about_artisan_1_name': 'Mehmet Usta',
             'about_artisan_1_role': 'Master Cutter — 31 years',
             'about_artisan_2_name': 'Ayşe Hanım',
@@ -392,6 +436,22 @@ const SD_I18N = {
             'about_artisan_3_role': 'Hardware & Finish — 19 years',
             'about_artisan_4_name': 'Dukhar San',
             'about_artisan_4_role': 'Creative Director — 17 years',
+
+            // Quick View Modal
+            'qv_product_preview': 'Product Preview',
+            'qv_exotic_creation': 'Exotic Leather Creation',
+            'qv_handcrafted_desc': 'Handcrafted in our Istanbul atelier from the finest ethically sourced exotic leather. Each piece is unique and made to order.',
+
+            // Colors
+            'color_black': 'Black',
+            'color_brown': 'Brown',
+            'color_cognac': 'Cognac',
+            'color_graphite': 'Graphite',
+            'color_natural': 'Natural',
+
+            // Pagination
+            'pagination_previous': 'Previous Page',
+            'pagination_next': 'Next Page',
 
             // Misc
             'quick_view': 'Quick View',
@@ -426,7 +486,7 @@ const SD_I18N = {
             'nav_home': 'Главная',
             'nav_collections': 'Коллекции',
             'nav_materials': 'Материалы',
-            'nav_bespoke': 'Индив. пошив',
+            'nav_bespoke': 'Индивидуальный пошив',
             'nav_atelier': 'Ателье',
             'nav_contact': 'Контакты',
             'nav_search_placeholder': 'Поиск по коже, изделиям, материалам...',
@@ -566,6 +626,32 @@ const SD_I18N = {
             'product_unique_limited_desc': 'Всего 25 экземпляров',
             'product_price_note': 'Налоги и пошлины включены',
 
+            // Product — Detailed Specs
+            'product_imperium_desc': 'Портфель Imperium — это абсолютное воплощение силы и утончённости. Созданный из цельной безупречной кожи нильского крокодила, отобранной за равномерный рисунок чешуи и богатую матовую текстуру, этот портфель требует более 120 часов кропотливой ручной работы одного мастера в нашем стамбульском ателье.',
+            'product_imperium_spec_1': 'Подлинная матовая кожа нильского крокодила (сертифицирована CITES)',
+            'product_imperium_spec_2': 'Замок и петли из цельной латуни с родиевым покрытием',
+            'product_imperium_spec_3': 'Ручная прошивка вощёной льняной нитью',
+            'product_imperium_spec_4': 'Внутренняя отделка из замши с отделением для ноутбука',
+            'product_imperium_spec_5': 'Два внутренних кармана для документов и слоты для карт',
+            'product_imperium_spec_6': 'Съёмный плечевой ремень из той же кожи',
+            'product_imperium_spec_7': 'Номерная идентификационная табличка',
+            'product_imperium_spec_8': 'Размеры: 42см × 30см × 12см',
+            'product_imperium_spec_9': 'Вес: 2,4 кг',
+            'product_shipping_desc': 'Каждый портфель Imperium создаётся на заказ. Пожалуйста, предусмотрите 4–6 недель на изготовление вашего изделия нашими мастерами.',
+            'product_shipping_spec_1': 'Бесплатная доставка по всему миру бронированным курьером',
+            'product_shipping_spec_2': 'Полное страхование на время транспортировки',
+            'product_shipping_spec_3': 'Премиум-доставка с личной презентацией',
+            'product_shipping_spec_4': 'Дискретная упаковка в фирменную коробку SAN DUKHAR',
+            'product_care_desc': 'Ваше изделие SAN DUKHAR создано, чтобы служить поколениям при правильном уходе.',
+            'product_care_spec_1': 'Бесплатная чистка и кондиционирование в первые 5 лет',
+            'product_care_spec_2': 'Пожизненный ремонт по льготной стоимости',
+            'product_care_spec_3': 'Храните в прилагаемом пылезащитном чехле вдали от прямых солнечных лучей',
+            'product_care_spec_4': 'Избегайте контакта с водой, спиртом и абразивными поверхностями',
+            'product_care_spec_5': 'Сертификат подлинности прилагается',
+            'product_bespoke_cta_title': 'Ищете нечто по-настоящему личное?',
+            'product_bespoke_cta_desc': 'Закажите индивидуальный портфель, созданный точно по вашим спецификациям — кожа, цвет, фурнитура, внутренняя конфигурация и личная монограмма.',
+            'product_bespoke_cta_btn': 'Начать индивидуальный заказ',
+
             // Cart
             'cart_title': 'Ваша корзина',
             'cart_empty_title': 'Корзина ждёт',
@@ -612,6 +698,16 @@ const SD_I18N = {
             'checkout_secure': 'Защищено 256-битным SSL-шифрованием',
             'checkout_order_summary': 'Состав заказа',
             'checkout_select_country': 'Выберите страну',
+            'checkout_first_name_placeholder': 'Имя',
+            'checkout_last_name_placeholder': 'Фамилия',
+            'checkout_email_placeholder': 'ваш@email.ru',
+            'checkout_address_placeholder': 'Улица, дом, квартира',
+            'checkout_city_placeholder': 'Город',
+            'checkout_postal_placeholder': 'Почтовый индекс',
+            'checkout_card_number_placeholder': '0000 0000 0000 0000',
+            'checkout_expiry_placeholder': 'ММ/ГГ',
+            'checkout_cvc_placeholder': '123',
+            'checkout_card_name_placeholder': 'Имя как на карте',
 
             // Account
             'account_title': 'Личный кабинет',
@@ -781,15 +877,23 @@ const SD_I18N = {
             'about_philosophy_title': 'Наша философия',
             'about_artisans_title': 'Руки, создающие искусство',
             'about_timeline_2008_title': 'Первое ателье',
-            'about_timeline_2008_text': 'SAN DUKHAR открывает первую мастерскую в Нишанташи, Стамбул.',
+            'about_timeline_2008_text': 'SAN DUKHAR открывает первую мастерскую в Нишанташи, Стамбул, с командой из трёх мастеров. Первая коллекция включает пять портфелей из крокодиловой кожи.',
             'about_timeline_2014_title': 'Запуск программы Bespoke',
-            'about_timeline_2014_text': 'Создано Ателье индивидуального пошива.',
+            'about_timeline_2014_text': 'Создано Ателье индивидуального пошива, предлагающее клиентам возможность заказать полностью персонализированные изделия.',
             'about_timeline_2017_title': 'Коллекция Imperium',
-            'about_timeline_2017_text': 'Дебютирует знаковая коллекция Imperium.',
+            'about_timeline_2017_text': 'Дебютирует знаковая коллекция Imperium — лимитированная серия изделий из крокодиловой кожи.',
             'about_timeline_2020_title': 'Мировое признание',
-            'about_timeline_2020_text': 'Изделия появляются в частных коллекциях по всему миру.',
+            'about_timeline_2020_text': 'Изделия SAN DUKHAR появляются в частных коллекциях по всей Европе, Ближнему Востоку и Азии.',
             'about_timeline_2026_title': 'Новая глава',
-            'about_timeline_2026_text': 'Дом представляет обновлённое цифровое присутствие.',
+            'about_timeline_2026_text': 'Дом представляет обновлённое цифровое присутствие, открывая опыт ателье ценителям по всему миру.',
+            'about_philosophy_one_title': 'Один мастер — одно изделие',
+            'about_philosophy_one_desc': 'Каждое крупное творение от начала до конца выполняет один мастер. Это гарантирует непрерывность видения и абсолютную ответственность.',
+            'about_philosophy_two_title': 'Осознанная редкость',
+            'about_philosophy_two_desc': 'Мы производим менее 500 изделий в год по всем коллекциям. Эксклюзивность — не маркетинговая стратегия, а необходимость нашего ремесла.',
+            'about_philosophy_three_title': 'Этичное происхождение',
+            'about_philosophy_three_desc': 'Каждая кожа сертифицирована CITES и поставляется с ферм, соответствующих высочайшим стандартам благополучия животных и экологической ответственности.',
+            'about_philosophy_four_title': 'Обязательство на поколения',
+            'about_philosophy_four_desc': 'Мы отвечаем за наши творения на протяжении всей их жизни. Наша служба реставрации гарантирует, что ваше изделие SAN DUKHAR может быть передано следующему поколению.',
             'about_artisan_1_name': 'Мехмет Уста',
             'about_artisan_1_role': 'Мастер раскроя — 31 год',
             'about_artisan_2_name': 'Айше Ханым',
@@ -798,6 +902,22 @@ const SD_I18N = {
             'about_artisan_3_role': 'Фурнитура и отделка — 19 лет',
             'about_artisan_4_name': 'Духар Сан',
             'about_artisan_4_role': 'Креативный директор — 17 лет',
+
+            // Quick View Modal
+            'qv_product_preview': 'Превью изделия',
+            'qv_exotic_creation': 'Изделие из экзотической кожи',
+            'qv_handcrafted_desc': 'Создано вручную в нашем стамбульском ателье из лучшей этично sourced экзотической кожи. Каждое изделие уникально и создаётся на заказ.',
+
+            // Colors
+            'color_black': 'Чёрный',
+            'color_brown': 'Коричневый',
+            'color_cognac': 'Коньячный',
+            'color_graphite': 'Графитовый',
+            'color_natural': 'Натуральный',
+
+            // Pagination
+            'pagination_previous': 'Предыдущая страница',
+            'pagination_next': 'Следующая страница',
 
             // Misc
             'quick_view': 'Быстрый просмотр',

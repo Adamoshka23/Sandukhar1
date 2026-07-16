@@ -1,6 +1,6 @@
 /**
  * ============================================================
- * SAN DUKHAR — MAIN APPLICATION LOGIC (v3.0 — SEARCH FIXED)
+ * SAN DUKHAR — MAIN APPLICATION LOGIC (v4.0 — I18N COMPLETE)
  * Luxury Exotic Leather Atelier
  * ============================================================
  */
@@ -8,7 +8,7 @@
 'use strict';
 
 const SANDUKHAR = {
-    version: '3.0.0',
+    version: '4.0.0',
 
     init: function() {
         this.header.init();
@@ -26,11 +26,7 @@ const SANDUKHAR = {
 
     handleVisibilityChange: function() {
         document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                document.body.classList.add('tab-hidden');
-            } else {
-                document.body.classList.remove('tab-hidden');
-            }
+            document.body.classList.toggle('tab-hidden', document.hidden);
         });
     },
 
@@ -66,10 +62,7 @@ SANDUKHAR.header = {
 
     requestTick: function() {
         if (!this.ticking) {
-            requestAnimationFrame(() => {
-                this.onScroll();
-                this.ticking = false;
-            });
+            requestAnimationFrame(() => { this.onScroll(); this.ticking = false; });
             this.ticking = true;
         }
     },
@@ -91,62 +84,37 @@ SANDUKHAR.header = {
     },
 
     onResize: function() {
-        if (window.innerWidth > 1024) {
-            SANDUKHAR.mobileNav.close();
-        }
+        if (window.innerWidth > 1024) SANDUKHAR.mobileNav.close();
     }
 };
 
 // ============================================================
-// SEARCH OVERLAY MODULE — WITH LIVE SEARCH
+// SEARCH OVERLAY MODULE
 // ============================================================
 SANDUKHAR.searchOverlay = {
-    overlay: null,
-    input: null,
-    trigger: null,
-    closeBtn: null,
-    searchTimeout: null,
+    overlay: null, input: null, trigger: null, closeBtn: null, searchTimeout: null,
 
     init: function() {
         this.overlay = document.getElementById('search-overlay');
         this.input = document.getElementById('search-input');
         this.trigger = document.querySelector('.search-trigger');
         this.closeBtn = document.querySelector('.search-close');
-
         if (!this.overlay || !this.trigger) return;
         this.bindEvents();
     },
 
     bindEvents: function() {
-        this.trigger.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.open();
-        });
-
-        if (this.closeBtn) {
-            this.closeBtn.addEventListener('click', () => this.close());
-        }
-
+        this.trigger.addEventListener('click', (e) => { e.preventDefault(); this.open(); });
+        if (this.closeBtn) this.closeBtn.addEventListener('click', () => this.close());
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.overlay.classList.contains('active')) {
-                this.close();
-            }
+            if (e.key === 'Escape' && this.overlay.classList.contains('active')) this.close();
             if (e.key === 'Enter' && this.overlay.classList.contains('active') && this.input) {
                 const query = this.input.value.trim();
-                if (query.length >= 2) {
-                    this.close();
-                    window.location.href = 'catalog.html?search=' + encodeURIComponent(query);
-                }
+                if (query.length >= 2) { this.close(); window.location.href = 'catalog.html?search=' + encodeURIComponent(query); }
             }
         });
-
-        this.overlay.addEventListener('click', (e) => {
-            if (e.target === this.overlay) this.close();
-        });
-
-        if (this.input) {
-            this.input.addEventListener('input', () => this.performLiveSearch());
-        }
+        this.overlay.addEventListener('click', (e) => { if (e.target === this.overlay) this.close(); });
+        if (this.input) this.input.addEventListener('input', () => this.performLiveSearch());
     },
 
     open: function() {
@@ -165,14 +133,12 @@ SANDUKHAR.searchOverlay = {
     performLiveSearch: function() {
         clearTimeout(this.searchTimeout);
         const query = this.input ? this.input.value.trim() : '';
-
         if (query.length < 2) {
             if (window.SANDUKHAR.catalog && typeof window.SANDUKHAR.catalog.resetSearch === 'function') {
                 window.SANDUKHAR.catalog.resetSearch();
             }
             return;
         }
-
         this.searchTimeout = setTimeout(() => {
             if (window.SANDUKHAR.catalog && typeof window.SANDUKHAR.catalog.performSearch === 'function') {
                 window.SANDUKHAR.catalog.performSearch(query);
@@ -185,9 +151,7 @@ SANDUKHAR.searchOverlay = {
 // MOBILE NAVIGATION MODULE
 // ============================================================
 SANDUKHAR.mobileNav = {
-    trigger: null,
-    nav: null,
-    isOpen: false,
+    trigger: null, nav: null, isOpen: false,
 
     init: function() {
         this.trigger = document.getElementById('mobile-menu-trigger');
@@ -198,39 +162,24 @@ SANDUKHAR.mobileNav = {
 
     bindEvents: function() {
         this.trigger.addEventListener('click', () => this.toggle());
-        const navLinks = this.nav.querySelectorAll('a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => this.close());
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isOpen) this.close();
-        });
+        this.nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => this.close()));
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && this.isOpen) this.close(); });
         document.addEventListener('click', (e) => {
-            if (this.isOpen && !this.nav.contains(e.target) && !this.trigger.contains(e.target)) {
-                this.close();
-            }
+            if (this.isOpen && !this.nav.contains(e.target) && !this.trigger.contains(e.target)) this.close();
         });
     },
 
-    toggle: function() {
-        if (this.isOpen) { this.close(); } else { this.open(); }
-    },
-
+    toggle: function() { this.isOpen ? this.close() : this.open(); },
     open: function() {
         this.isOpen = true;
-        this.nav.classList.add('active');
-        this.trigger.classList.add('active');
-        this.trigger.setAttribute('aria-expanded', 'true');
-        this.nav.setAttribute('aria-hidden', 'false');
+        this.nav.classList.add('active'); this.trigger.classList.add('active');
+        this.trigger.setAttribute('aria-expanded', 'true'); this.nav.setAttribute('aria-hidden', 'false');
         document.body.classList.add('no-scroll');
     },
-
     close: function() {
         this.isOpen = false;
-        this.nav.classList.remove('active');
-        this.trigger.classList.remove('active');
-        this.trigger.setAttribute('aria-expanded', 'false');
-        this.nav.setAttribute('aria-hidden', 'true');
+        this.nav.classList.remove('active'); this.trigger.classList.remove('active');
+        this.trigger.setAttribute('aria-expanded', 'false'); this.nav.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('no-scroll');
     }
 };
@@ -240,22 +189,15 @@ SANDUKHAR.mobileNav = {
 // ============================================================
 SANDUKHAR.scrollAnimations = {
     observer: null,
-
     init: function() {
         if (!('IntersectionObserver' in window)) {
-            document.querySelectorAll('.fade-in-up, .slide-up, .fade-in, .scale-in').forEach(el => {
-                el.classList.add('visible');
-            });
+            document.querySelectorAll('.fade-in-up, .slide-up, .fade-in, .scale-in').forEach(el => el.classList.add('visible'));
             return;
         }
-        const options = { root: null, rootMargin: '0px 0px -30px 0px', threshold: 0.1 };
-        this.observer = new IntersectionObserver(this.handleIntersect.bind(this), options);
-        const selectors = ['.fade-in-up', '.slide-up', '.fade-in', '.scale-in', '.stagger-children', '.reveal-text', '.parallax-image', '.lazy-image'];
-        selectors.forEach(selector => {
-            document.querySelectorAll(selector).forEach(el => this.observer.observe(el));
-        });
+        this.observer = new IntersectionObserver(this.handleIntersect.bind(this), { root: null, rootMargin: '0px 0px -30px 0px', threshold: 0.1 });
+        ['.fade-in-up', '.slide-up', '.fade-in', '.scale-in', '.stagger-children', '.reveal-text', '.parallax-image', '.lazy-image']
+            .forEach(s => document.querySelectorAll(s).forEach(el => this.observer.observe(el)));
     },
-
     handleIntersect: function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -266,15 +208,14 @@ SANDUKHAR.scrollAnimations = {
             }
         });
     },
-
     loadLazyImage: function(img) {
         const src = img.getAttribute('data-src');
         if (src && !img.src.includes(src)) {
-            const tempImage = new Image();
-            tempImage.onload = () => { img.src = src; img.classList.add('loaded'); };
-            tempImage.onerror = () => { img.classList.add('loaded'); };
-            tempImage.src = src;
-            if (tempImage.complete) { img.src = src; img.classList.add('loaded'); }
+            const temp = new Image();
+            temp.onload = () => { img.src = src; img.classList.add('loaded'); };
+            temp.onerror = () => { img.classList.add('loaded'); };
+            temp.src = src;
+            if (temp.complete) { img.src = src; img.classList.add('loaded'); }
         } else if (!img.getAttribute('data-src')) {
             img.classList.add('loaded');
         }
@@ -282,13 +223,10 @@ SANDUKHAR.scrollAnimations = {
 };
 
 // ============================================================
-// QUICK VIEW MODULE
+// QUICK VIEW MODULE — ALL TEXTS I18N
 // ============================================================
 SANDUKHAR.quickView = {
-    modal: null,
-    content: null,
-    closeBtn: null,
-    previousActiveElement: null,
+    modal: null, content: null, closeBtn: null, previousActiveElement: null,
 
     init: function() {
         this.modal = document.getElementById('quick-view-modal');
@@ -301,12 +239,7 @@ SANDUKHAR.quickView = {
     bindEvents: function() {
         document.addEventListener('click', (e) => {
             const btn = e.target.closest('.btn-quick-view');
-            if (btn) {
-                e.preventDefault();
-                e.stopPropagation();
-                const productId = btn.getAttribute('data-product-id');
-                this.open(productId);
-            }
+            if (btn) { e.preventDefault(); e.stopPropagation(); this.open(btn.getAttribute('data-product-id')); }
         });
         if (this.closeBtn) this.closeBtn.addEventListener('click', () => this.close());
         this.modal.addEventListener('click', (e) => { if (e.target === this.modal) this.close(); });
@@ -317,34 +250,30 @@ SANDUKHAR.quickView = {
     },
 
     trapFocus: function(e) {
-        const focusableElements = this.modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-        if (focusableElements.length === 0) return;
-        const firstElement = focusableElements[0];
-        const lastElement = focusableElements[focusableElements.length - 1];
-        if (e.shiftKey) {
-            if (document.activeElement === firstElement) { e.preventDefault(); lastElement.focus(); }
-        } else {
-            if (document.activeElement === lastElement) { e.preventDefault(); firstElement.focus(); }
-        }
+        const focusable = this.modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+        const first = focusable[0], last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     },
 
     open: function(productId) {
         this.previousActiveElement = document.activeElement;
-        this.modal.classList.add('active');
-        this.modal.setAttribute('aria-hidden', 'false');
+        this.modal.classList.add('active'); this.modal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('no-scroll');
         this.loadProductData(productId);
         if (this.closeBtn) setTimeout(() => this.closeBtn.focus(), 100);
     },
 
     close: function() {
-        this.modal.classList.remove('active');
-        this.modal.setAttribute('aria-hidden', 'true');
+        this.modal.classList.remove('active'); this.modal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('no-scroll');
         if (this.previousActiveElement) this.previousActiveElement.focus();
     },
 
     loadProductData: function(productId) {
+        const i18n = (key, fallback) => (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t(key) : fallback;
+
         this.content.innerHTML = `
             <div class="quick-view-layout">
                 <div class="quick-view-gallery"><div class="skeleton" style="width:100%; aspect-ratio:3/4;"></div></div>
@@ -355,20 +284,21 @@ SANDUKHAR.quickView = {
                     <div class="skeleton" style="height:48px; width:100%;"></div>
                 </div>
             </div>`;
+
         setTimeout(() => {
             this.content.innerHTML = `
                 <div class="quick-view-layout">
                     <div class="quick-view-gallery">
                         <div style="width:100%; aspect-ratio:3/4; background:var(--color-charcoal); display:flex; align-items:center; justify-content:center; border-radius:4px;">
-                            <p style="color:var(--color-text-muted); font-family:var(--font-display);">Product Preview</p>
+                            <p style="color:var(--color-text-muted); font-family:var(--font-display);">${i18n('qv_product_preview', 'Product Preview')}</p>
                         </div>
                     </div>
                     <div class="quick-view-details">
-                        <p class="quick-view-collection" data-i18n="product_collection_label">The Imperium Collection</p>
-                        <h2 class="quick-view-name">Exotic Leather Creation</h2>
-                        <p class="quick-view-price">Price upon request</p>
-                        <p class="quick-view-description">Handcrafted in our Istanbul atelier from the finest ethically sourced exotic leather. Each piece is unique and made to order.</p>
-                        <a href="product.html" class="btn-primary" style="width:100%; margin-top:20px; display:inline-flex; text-align:center; justify-content:center;" data-i18n="view_details">View Full Details</a>
+                        <p class="quick-view-collection" data-i18n="product_collection_label">${i18n('product_collection_label', 'The Imperium Collection')}</p>
+                        <h2 class="quick-view-name">${i18n('qv_exotic_creation', 'Exotic Leather Creation')}</h2>
+                        <p class="quick-view-price">${i18n('price_upon_request', 'Price upon request')}</p>
+                        <p class="quick-view-description">${i18n('qv_handcrafted_desc', 'Handcrafted in our Istanbul atelier from the finest ethically sourced exotic leather. Each piece is unique and made to order.')}</p>
+                        <a href="product.html" class="btn-primary" style="width:100%; margin-top:20px; display:inline-flex; text-align:center; justify-content:center;" data-i18n="view_details">${i18n('view_details', 'View Full Details')}</a>
                     </div>
                 </div>`;
             if (window.SD_I18N && window.SD_I18N.translatePage) window.SD_I18N.translatePage();
@@ -377,7 +307,7 @@ SANDUKHAR.quickView = {
 };
 
 // ============================================================
-// LAZY LOADING MODULE
+// LAZY LOADING, SMOOTH SCROLL, TESTIMONIALS, MAGNETIC
 // ============================================================
 SANDUKHAR.lazyLoading = {
     init: function() {
@@ -392,9 +322,6 @@ SANDUKHAR.lazyLoading = {
     }
 };
 
-// ============================================================
-// SMOOTH SCROLL MODULE
-// ============================================================
 SANDUKHAR.smoothScroll = {
     init: function() {
         document.addEventListener('click', (e) => {
@@ -412,16 +339,8 @@ SANDUKHAR.smoothScroll = {
     }
 };
 
-// ============================================================
-// TESTIMONIAL SLIDER MODULE
-// ============================================================
 SANDUKHAR.testimonialSlider = {
-    items: [],
-    currentIndex: 0,
-    interval: null,
-    delay: 5000,
-    slider: null,
-
+    items: [], currentIndex: 0, interval: null, delay: 5000, slider: null,
     init: function() {
         this.slider = document.querySelector('.testimonial-slider');
         if (!this.slider) return;
@@ -433,34 +352,25 @@ SANDUKHAR.testimonialSlider = {
         this.slider.addEventListener('touchstart', () => this.pause(), { passive: true });
         this.slider.addEventListener('touchend', () => this.resume());
     },
-
     startAutoRotation: function() { this.stopAutoRotation(); this.interval = setInterval(() => this.next(), this.delay); },
     stopAutoRotation: function() { if (this.interval) { clearInterval(this.interval); this.interval = null; } },
     pause: function() { this.stopAutoRotation(); },
     resume: function() { if (!this.interval) this.startAutoRotation(); },
-    next: function() { if (this.items.length === 0) return; this.items[this.currentIndex].classList.remove('active'); this.currentIndex = (this.currentIndex + 1) % this.items.length; this.items[this.currentIndex].classList.add('active'); },
-    prev: function() { if (this.items.length === 0) return; this.items[this.currentIndex].classList.remove('active'); this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length; this.items[this.currentIndex].classList.add('active'); }
+    next: function() { if (!this.items.length) return; this.items[this.currentIndex].classList.remove('active'); this.currentIndex = (this.currentIndex + 1) % this.items.length; this.items[this.currentIndex].classList.add('active'); },
+    prev: function() { if (!this.items.length) return; this.items[this.currentIndex].classList.remove('active'); this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length; this.items[this.currentIndex].classList.add('active'); }
 };
 
-// ============================================================
-// MAGNETIC BUTTONS MODULE
-// ============================================================
 SANDUKHAR.magneticButtons = {
     init: function() {
         document.querySelectorAll('.magnetic').forEach(el => {
             el.addEventListener('mousemove', (e) => {
                 const rect = el.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                el.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+                el.style.transform = `translate(${(e.clientX - rect.left - rect.width / 2) * 0.15}px, ${(e.clientY - rect.top - rect.height / 2) * 0.15}px)`;
             });
             el.addEventListener('mouseleave', () => { el.style.transform = 'translate(0, 0)'; });
         });
     }
 };
 
-// ============================================================
-// INITIALIZATION
-// ============================================================
 document.addEventListener('DOMContentLoaded', () => { SANDUKHAR.init(); });
 window.addEventListener('beforeunload', () => { if (SANDUKHAR.testimonialSlider) SANDUKHAR.testimonialSlider.stopAutoRotation(); });

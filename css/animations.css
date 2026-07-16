@@ -4,7 +4,6 @@
    Version: 2.0 — Production Ready
    ============================================================ */
 
-/* === Reduced Motion Preference === */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -28,7 +27,7 @@
     }
 }
 
-/* === Fade In Up (On Scroll) === */
+
 .fade-in-up {
     opacity: 0;
     transform: translateY(40px);
