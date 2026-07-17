@@ -1,54 +1,59 @@
-/**
- * ============================================================
- * API ROUTES — MAIN ROUTER
- * ============================================================
- */
-
 const express = require('express');
 const router = express.Router();
 
 const productsRoutes = require('./products');
-const categoriesRoutes = require('./categories');
-const materialsRoutes = require('./materials');
-const usersRoutes = require('./users');
 const authRoutes = require('./auth');
-const ordersRoutes = require('./orders');
-const wishlistRoutes = require('./wishlist');
-const translationsRoutes = require('./translations');
-const galleryRoutes = require('./gallery');
-const reviewsRoutes = require('./reviews');
-const addressesRoutes = require('./addresses');
-const tailoringRoutes = require('./tailoring');
-const contactsRoutes = require('./contacts');
-const newsletterRoutes = require('./newsletter');
-const faqRoutes = require('./faq');
 const adminRoutes = require('./admin');
 
-// Health check
-router.get('/health', (req, res) => {
-    res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
-
-// Public routes
 router.use('/auth', authRoutes);
 router.use('/products', productsRoutes);
-router.use('/categories', categoriesRoutes);
-router.use('/materials', materialsRoutes);
-router.use('/translations', translationsRoutes);
-router.use('/gallery', galleryRoutes);
-router.use('/reviews', reviewsRoutes);
-router.use('/contacts', contactsRoutes);
-router.use('/newsletter', newsletterRoutes);
-router.use('/faq', faqRoutes);
-
-// Protected routes (require authentication)
-router.use('/users', usersRoutes);
-router.use('/orders', ordersRoutes);
-router.use('/wishlist', wishlistRoutes);
-router.use('/addresses', addressesRoutes);
-router.use('/tailoring', tailoringRoutes);
-
-// Admin routes
 router.use('/admin', adminRoutes);
+
+// Простые маршруты для категорий и материалов (без отдельных контроллеров)
+router.get('/categories', async (req, res) => {
+    const { query } = require('../config/database');
+    try {
+        const result = await query('SELECT * FROM categories WHERE is_active = true ORDER BY sort_order');
+        res.json({ success: true, data: { categories: result.rows } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.get('/materials', async (req, res) => {
+    const { query } = require('../config/database');
+    try {
+        const result = await query('SELECT * FROM materials WHERE is_active = true ORDER BY sort_order');
+        res.json({ success: true, data: { materials: result.rows } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.get('/translations/all', async (req, res) => {
+    const { query } = require('../config/database');
+    try {
+        const result = await query('SELECT * FROM translations ORDER BY key, locale');
+        res.json({ success: true, data: { translations: result.rows } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.get('/translations', async (req, res) => {
+    const { query } = require('../config/database');
+    try {
+        const { locale = 'en' } = req.query;
+        const result = await query('SELECT * FROM translations WHERE locale = $1 ORDER BY key', [locale]);
+        res.json({ success: true, data: { translations: result.rows } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// Заказы (заглушка)
+router.get('/orders', async (req, res) => {
+    res.json({ success: true, data: { orders: [] } });
+});
 
 module.exports = router;

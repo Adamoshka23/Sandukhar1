@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="robots" content="noindex, nofollow">
+    <title>SAN DUKHAR | Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --border: #2a2a2a;
+            --text: #f0ebe4;
+            --text-muted: #8a8278;
+            --gold: #c5a572;
+            --gold-pale: rgba(197, 165, 114, 0.15);
+            --error: #c94b4b;
+            --success: #5a8f6a;
+            --radius: 4px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 14px; line-height: 1.6; }
+        .admin-layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+        
+        /* SIDEBAR */
+        .sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 1.5rem; display: flex; flex-direction: column; gap: 2rem; }
+        .sidebar-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; letter-spacing: 0.15em; color: var(--gold); text-align: center; }
+        .sidebar-nav { display: flex; flex-direction: column; gap: 0.3rem; }
+        .sidebar-nav a { display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 1rem; color: var(--text-muted); text-decoration: none; border-radius: var(--radius); transition: all 0.2s; font-size: 0.85rem; cursor: pointer; }
+        .sidebar-nav a:hover, .sidebar-nav a.active { color: var(--text); background: rgba(255,255,255,0.03); }
+        .sidebar-nav a.active { color: var(--gold); background: var(--gold-pale); }
+        .sidebar-user { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border); }
+        .sidebar-user-name { font-weight: 500; font-size: 0.85rem; }
+        .sidebar-user-role { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+        .btn-logout { margin-top: 0.5rem; background: none; border: 1px solid var(--border); color: var(--text-muted); padding: 0.4rem 1rem; border-radius: var(--radius); cursor: pointer; font-size: 0.75rem; transition: all 0.2s; }
+        .btn-logout:hover { border-color: var(--error); color: var(--error); }
+
+        /* MAIN */
+        .main-content { padding: 2rem; overflow-y: auto; }
+        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .page-title { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; }
+        .btn-primary { background: var(--gold); color: #0a0a0a; border: 1px solid var(--gold); padding: 0.65rem 1.5rem; border-radius: var(--radius); cursor: pointer; font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; transition: all 0.2s; }
+        .btn-primary:hover { background: transparent; color: var(--gold); }
+        .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: 0.55rem 1.2rem; border-radius: var(--radius); cursor: pointer; font-size: 0.75rem; transition: all 0.2s; }
+        .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+        .btn-danger { background: transparent; border: 1px solid var(--error); color: var(--error); padding: 0.45rem 0.9rem; border-radius: var(--radius); cursor: pointer; font-size: 0.7rem; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.05em; }
+        .btn-danger:hover { background: var(--error); color: white; }
+        .btn-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius); border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
+        .btn-icon:hover { border-color: var(--gold); color: var(--gold); }
+
+        /* STATS */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+        .stat-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+        .stat-value { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--gold); }
+
+        /* TABLE */
+        .table-container { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+        .table-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); }
+        .table-header input { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 0.5rem 0.8rem; border-radius: var(--radius); font-size: 0.8rem; width: 250px; }
+        .table-header input:focus { outline: none; border-color: var(--gold); }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 0.8rem 1.5rem; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid var(--border); font-weight: 500; }
+        td { padding: 0.8rem 1.5rem; border-bottom: 1px solid var(--border); font-size: 0.85rem; vertical-align: middle; }
+        tr:hover td { background: rgba(255,255,255,0.01); }
+        .product-thumb { width: 50px; height: 50px; border-radius: var(--radius); object-fit: cover; background: var(--bg); }
+        .status-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 2px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.08em; }
+        .status-badge.active { background: rgba(90,143,106,0.15); color: var(--success); }
+        .status-badge.draft { background: rgba(255,255,255,0.05); color: var(--text-muted); }
+        .status-badge.archived { background: rgba(201,75,75,0.1); color: var(--error); }
+        .actions { display: flex; gap: 0.3rem; }
+
+        /* MODAL */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(10,10,10,0.9); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 1rem; display: none; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); width: 100%; max-width: 700px; max-height: 90vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border); }
+        .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; }
+        .modal-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+        .modal-footer { display: flex; justify-content: flex-end; gap: 0.5rem; padding: 1rem 1.5rem; border-top: 1px solid var(--border); }
+        .form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+        .form-group label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+        .form-group input, .form-group select, .form-group textarea { padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.85rem; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--gold); }
+        .form-group textarea { min-height: 80px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+
+        /* TOAST */
+        .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; padding: 1rem 1.5rem; border-radius: var(--radius); z-index: 200; font-size: 0.85rem; animation: slideUp 0.3s ease; }
+        .toast.success { background: var(--success); color: white; border: 1px solid var(--success); }
+        .toast.error { background: var(--error); color: white; border: 1px solid var(--error); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) { .admin-layout { grid-template-columns: 1fr; } .sidebar { display: none; } .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr; } .form-row, .form-row.triple { grid-template-columns: 1fr; } table { font-size: 0.75rem; } th, td { padding: 0.5rem 0.8rem; } }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">SAN DUKHAR</div>
+            <nav class="sidebar-nav">
+                <a href="#" class="active" data-page="dashboard">📊 Dashboard</a>
+                <a href="#" data-page="products">📦 Products</a>
+                <a href="#" data-page="categories">📂 Categories</a>
+                <a href="#" data-page="materials">🪶 Materials</a>
+                <a href="#" data-page="orders">📋 Orders</a>
+                <a href="#" data-page="translations">🌐 Translations</a>
+                <a href="#" data-page="settings">⚙️ Settings</a>
+            </nav>
+            <div class="sidebar-user">
+                <div class="sidebar-user-name" id="admin-name">Admin</div>
+                <div class="sidebar-user-role">Administrator</div>
+                <button class="btn-logout" onclick="handleLogout()">Logout</button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content" id="main-content">
+            <!-- DASHBOARD PAGE -->
+            <div id="page-dashboard" class="page active">
+                <div class="page-header">
+                    <h1 class="page-title">Dashboard</h1>
+                </div>
+                <div class="stats-grid" id="dashboard-stats">
+                    <div class="stat-card"><div class="stat-label">Total Products</div><div class="stat-value" id="stat-products">—</div></div>
+                    <div class="stat-card"><div class="stat-label">Total Orders</div><div class="stat-value" id="stat-orders">—</div></div>
+                    <div class="stat-card"><div class="stat-label">Total Users</div><div class="stat-value" id="stat-users">—</div></div>
+                    <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-value" id="stat-revenue">—</div></div>
+                </div>
+            </div>
+
+            <!-- PRODUCTS PAGE -->
+            <div id="page-products" class="page" style="display:none;">
+                <div class="page-header">
+                    <h1 class="page-title">Products</h1>
+                    <button class="btn-primary" onclick="openProductModal()">+ Add Product</button>
+                </div>
+                <div class="table-container">
+                    <div class="table-header">
+                        <input type="text" placeholder="Search products..." id="product-search" oninput="filterProducts()">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>SKU</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body">
+                            <tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- CATEGORIES PAGE -->
+            <div id="page-categories" class="page" style="display:none;">
+                <div class="page-header">
+                    <h1 class="page-title">Categories</h1>
+                    <button class="btn-primary" onclick="openCategoryModal()">+ Add Category</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Name</th><th>Slug</th><th>Products</th><th>Order</th><th>Actions</th></tr></thead>
+                        <tbody id="categories-table-body">
+                            <tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- MATERIALS PAGE -->
+            <div id="page-materials" class="page" style="display:none;">
+                <div class="page-header">
+                    <h1 class="page-title">Materials</h1>
+                    <button class="btn-primary" onclick="openMaterialModal()">+ Add Material</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Name</th><th>Slug</th><th>Scientific Name</th><th>Order</th><th>Actions</th></tr></thead>
+                        <tbody id="materials-table-body">
+                            <tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ORDERS PAGE -->
+            <div id="page-orders" class="page" style="display:none;">
+                <div class="page-header"><h1 class="page-title">Orders</h1></div>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>Order #</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+                        <tbody id="orders-table-body">
+                            <tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TRANSLATIONS PAGE -->
+            <div id="page-translations" class="page" style="display:none;">
+                <div class="page-header">
+                    <h1 class="page-title">Translations</h1>
+                    <button class="btn-primary" onclick="openTranslationModal()">+ Add Translation</button>
+                </div>
+                <div class="table-container">
+                    <div class="table-header">
+                        <select id="translation-locale-filter" onchange="loadTranslations()" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:0.5rem 0.8rem;border-radius:var(--radius);">
+                            <option value="all">All Languages</option>
+                            <option value="en">English</option>
+                            <option value="ru">Русский</option>
+                        </select>
+                    </div>
+                    <table>
+                        <thead><tr><th>Key</th><th>Locale</th><th>Value</th><th>Context</th><th>Actions</th></tr></thead>
+                        <tbody id="translations-table-body">
+                            <tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SETTINGS PAGE -->
+            <div id="page-settings" class="page" style="display:none;">
+                <div class="page-header"><h1 class="page-title">Settings</h1></div>
+                <p style="color:var(--text-muted);">Settings management coming soon.</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- PRODUCT MODAL -->
+    <div class="modal-overlay" id="product-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="product-modal-title">Add Product</h2>
+                <button class="btn-icon" onclick="closeProductModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="product-id">
+                <div class="form-row">
+                    <div class="form-group"><label>Slug *</label><input type="text" id="product-slug" placeholder="imperium-briefcase"></div>
+                    <div class="form-group"><label>SKU *</label><input type="text" id="product-sku" placeholder="SD-XXX-000"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Name (EN) *</label><input type="text" id="product-name-en" placeholder="Imperium Briefcase"></div>
+                    <div class="form-group"><label>Name (RU) *</label><input type="text" id="product-name-ru" placeholder="Портфель Imperium"></div>
+                </div>
+                <div class="form-group"><label>Short Description (EN)</label><textarea id="product-short-desc-en" rows="2"></textarea></div>
+                <div class="form-group"><label>Short Description (RU)</label><textarea id="product-short-desc-ru" rows="2"></textarea></div>
+                <div class="form-group"><label>Full Description (EN)</label><textarea id="product-desc-en" rows="3"></textarea></div>
+                <div class="form-group"><label>Full Description (RU)</label><textarea id="product-desc-ru" rows="3"></textarea></div>
+                <div class="form-row triple">
+                    <div class="form-group"><label>Price ($) *</label><input type="number" id="product-price" step="0.01" placeholder="18500.00"></div>
+                    <div class="form-group"><label>Old Price ($)</label><input type="number" id="product-old-price" step="0.01"></div>
+                    <div class="form-group"><label>Stock</label><input type="number" id="product-stock" value="0"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Category</label><select id="product-category"><option value="">Select...</option></select></div>
+                    <div class="form-group"><label>Material</label><select id="product-material"><option value="">Select...</option></select></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Status</label><select id="product-status"><option value="active">Active</option><option value="draft">Draft</option></select></div>
+                    <div class="form-group" style="flex-direction:row;align-items:center;gap:1rem;padding-top:1.2rem;">
+                        <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;"><input type="checkbox" id="product-featured"> Featured</label>
+                        <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;"><input type="checkbox" id="product-limited"> Limited Edition</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeProductModal()">Cancel</button>
+                <button class="btn-primary" onclick="saveProduct()">Save Product</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CATEGORY MODAL -->
+    <div class="modal-overlay" id="category-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="category-modal-title">Add Category</h2>
+                <button class="btn-icon" onclick="closeCategoryModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="category-id">
+                <div class="form-row">
+                    <div class="form-group"><label>Slug *</label><input type="text" id="category-slug"></div>
+                    <div class="form-group"><label>Sort Order</label><input type="number" id="category-order" value="0"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Name (EN) *</label><input type="text" id="category-name-en"></div>
+                    <div class="form-group"><label>Name (RU) *</label><input type="text" id="category-name-ru"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeCategoryModal()">Cancel</button>
+                <button class="btn-primary" onclick="saveCategory()">Save Category</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MATERIAL MODAL -->
+    <div class="modal-overlay" id="material-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="material-modal-title">Add Material</h2>
+                <button class="btn-icon" onclick="closeMaterialModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="material-id">
+                <div class="form-row">
+                    <div class="form-group"><label>Slug *</label><input type="text" id="material-slug"></div>
+                    <div class="form-group"><label>Scientific Name</label><input type="text" id="material-scientific"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Name (EN) *</label><input type="text" id="material-name-en"></div>
+                    <div class="form-group"><label>Name (RU) *</label><input type="text" id="material-name-ru"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Sort Order</label><input type="number" id="material-order" value="0"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeMaterialModal()">Cancel</button>
+                <button class="btn-primary" onclick="saveMaterial()">Save Material</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TRANSLATION MODAL -->
+    <div class="modal-overlay" id="translation-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Translation</h2>
+                <button class="btn-icon" onclick="closeTranslationModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group"><label>Key *</label><input type="text" id="translation-key" placeholder="nav_home"></div>
+                    <div class="form-group"><label>Locale *</label><select id="translation-locale"><option value="en">English</option><option value="ru">Русский</option></select></div>
+                </div>
+                <div class="form-group"><label>Value *</label><input type="text" id="translation-value" placeholder="Home"></div>
+                <div class="form-group"><label>Context</label><input type="text" id="translation-context" placeholder="navigation"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeTranslationModal()">Cancel</button>
+                <button class="btn-primary" onclick="saveTranslation()">Save Translation</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // SAN DUKHAR ADMIN PANEL — Full CRUD
+        // ============================================================
+        const API_BASE = 'http://localhost:3000/api';
+        let authToken = null;
+        let allProducts = [];
+        let allCategories = [];
+        let allMaterials = [];
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            authToken = localStorage.getItem('sandukhar_token');
+            if (!authToken) {
+                showLoginPrompt();
+                return;
+            }
+            checkAuth();
+        });
+
+        function showLoginPrompt() {
+            document.querySelector('.main-content').innerHTML = `
+                <div style="max-width:400px;margin:100px auto;text-align:center;">
+                    <h1 style="font-family:'Cormorant Garamond',serif;font-size:2rem;margin-bottom:2rem;color:var(--gold);">SAN DUKHAR Admin</h1>
+                    <div class="form-group" style="margin-bottom:1rem;"><input type="email" id="login-email" placeholder="Email" style="width:100%;padding:0.8rem;"></div>
+                    <div class="form-group" style="margin-bottom:1rem;"><input type="password" id="login-password" placeholder="Password" style="width:100%;padding:0.8rem;"></div>
+                    <button class="btn-primary" onclick="doLogin()" style="width:100%;">Login</button>
+                    <p id="login-error" style="color:var(--error);margin-top:1rem;display:none;"></p>
+                </div>
+            `;
+        }
+
+        async function doLogin() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const errorEl = document.getElementById('login-error');
+            
+            try {
+                const res = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                
+                if (!data.success) {
+                    errorEl.textContent = data.message;
+                    errorEl.style.display = 'block';
+                    return;
+                }
+                
+                authToken = data.data.accessToken;
+                localStorage.setItem('sandukhar_token', authToken);
+                location.reload();
+            } catch (err) {
+                errorEl.textContent = 'Connection error. Is the server running?';
+                errorEl.style.display = 'block';
+            }
+        }
+
+        async function checkAuth() {
+            try {
+                const res = await fetch(`${API_BASE}/auth/me`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                const data = await res.json();
+                
+                if (!data.success || (data.data.user.role !== 'admin' && data.data.user.role !== 'manager')) {
+                    localStorage.removeItem('sandukhar_token');
+                    showLoginPrompt();
+                    return;
+                }
+                
+                document.getElementById('admin-name').textContent = data.data.user.firstName || 'Admin';
+                loadDashboard();
+                loadProducts();
+                loadCategories();
+                loadMaterials();
+                loadOrders();
+                loadTranslations();
+            } catch (err) {
+                showToast('Connection error', 'error');
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('sandukhar_token');
+            location.reload();
+        }
+
+        function getHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
+            };
+        }
+
+        // ============================================================
+        // NAVIGATION
+        // ============================================================
+        document.querySelectorAll('.sidebar-nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.sidebar-nav a').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                const page = link.getAttribute('data-page');
+                document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+                const pageEl = document.getElementById(`page-${page}`);
+                if (pageEl) pageEl.style.display = 'block';
+                if (page === 'dashboard') loadDashboard();
+            });
+        });
+
+        // ============================================================
+        // DASHBOARD
+        // ============================================================
+        async function loadDashboard() {
+            try {
+                const res = await fetch(`${API_BASE}/admin/dashboard`, { headers: getHeaders() });
+                const data = await res.json();
+                if (data.success) {
+                    document.getElementById('stat-products').textContent = data.data.totalProducts;
+                    document.getElementById('stat-orders').textContent = data.data.totalOrders;
+                    document.getElementById('stat-users').textContent = data.data.totalUsers;
+                    document.getElementById('stat-revenue').textContent = '$' + data.data.totalRevenue.toLocaleString();
+                }
+            } catch (err) {
+                console.error('Dashboard error:', err);
+            }
+        }
+
+        // ============================================================
+        // PRODUCTS CRUD
+        // ============================================================
+        async function loadProducts() {
+            try {
+                const res = await fetch(`${API_BASE}/products?limit=100`, { headers: getHeaders() });
+                const data = await res.json();
+                if (data.success) {
+                    allProducts = data.data.products;
+                    renderProductsTable(allProducts);
+                }
+            } catch (err) {
+                console.error('Products error:', err);
+            }
+        }
+
+        function renderProductsTable(products) {
+            const tbody = document.getElementById('products-table-body');
+            if (products.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">No products found</td></tr>';
+                return;
+            }
+            tbody.innerHTML = products.map(p => `
+                <tr>
+                    <td>
+                        <div style="display:flex;align-items:center;gap:0.8rem;">
+                            ${p.images && p.images[0] ? `<img src="http://localhost:3000/uploads/products/${p.images[0].url}" class="product-thumb" alt="">` : '<div class="product-thumb" style="display:flex;align-items:center;justify-content:center;color:var(--text-muted);">—</div>'}
+                            <div>
+                                <div style="font-weight:500;">${p.name_en}</div>
+                                <div style="font-size:0.7rem;color:var(--text-muted);">${p.name_ru}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="font-family:monospace;font-size:0.8rem;">${p.sku}</td>
+                    <td>${p.category_name || '—'}</td>
+                    <td style="color:var(--gold);">$${parseFloat(p.price).toLocaleString()}</td>
+                    <td><span class="status-badge ${p.status}">${p.status}</span></td>
+                    <td>
+                        <div class="actions">
+                            <button class="btn-icon" onclick="editProduct('${p.id}')" title="Edit">✎</button>
+                            <button class="btn-danger" onclick="deleteProduct('${p.id}')" title="Delete">✕</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterProducts() {
+            const query = document.getElementById('product-search').value.toLowerCase();
+            const filtered = allProducts.filter(p =>
+                p.name_en.toLowerCase().includes(query) ||
+                p.name_ru.toLowerCase().includes(query) ||
+                p.sku.toLowerCase().includes(query)
+            );
+            renderProductsTable(filtered);
+        }
+
+        function openProductModal(productId = null) {
+            document.getElementById('product-modal').classList.add('active');
+            document.getElementById('product-id').value = '';
+            document.getElementById('product-modal-title').textContent = 'Add Product';
+            resetProductForm();
+            loadCategoryOptions();
+            loadMaterialOptions();
+            
+            if (productId) {
+                document.getElementById('product-modal-title').textContent = 'Edit Product';
+                const product = allProducts.find(p => p.id === productId);
+                if (product) fillProductForm(product);
+            }
+        }
+
+        function closeProductModal() {
+            document.getElementById('product-modal').classList.remove('active');
+        }
+
+        function resetProductForm() {
+            ['product-id','product-slug','product-sku','product-name-en','product-name-ru',
+             'product-short-desc-en','product-short-desc-ru','product-desc-en','product-desc-ru',
+             'product-price','product-old-price','product-stock'].forEach(id => {
+                document.getElementById(id).value = '';
+            });
+            document.getElementById('product-status').value = 'active';
+            document.getElementById('product-featured').checked = false;
+            document.getElementById('product-limited').checked = false;
+            document.getElementById('product-category').value = '';
+            document.getElementById('product-material').value = '';
+        }
+
+        function fillProductForm(product) {
+            document.getElementById('product-id').value = product.id;
+            document.getElementById('product-slug').value = product.slug || '';
+            document.getElementById('product-sku').value = product.sku || '';
+            document.getElementById('product-name-en').value = product.name_en || '';
+            document.getElementById('product-name-ru').value = product.name_ru || '';
+            document.getElementById('product-short-desc-en').value = product.short_description_en || '';
+            document.getElementById('product-short-desc-ru').value = product.short_description_ru || '';
+            document.getElementById('product-desc-en').value = product.description_en || '';
+            document.getElementById('product-desc-ru').value = product.description_ru || '';
+            document.getElementById('product-price').value = product.price || '';
+            document.getElementById('product-old-price').value = product.old_price || '';
+            document.getElementById('product-stock').value = product.stock || 0;
+            document.getElementById('product-status').value = product.status || 'active';
+            document.getElementById('product-featured').checked = product.featured || false;
+            document.getElementById('product-limited').checked = product.limited_edition || false;
+            document.getElementById('product-category').value = product.category_id || '';
+            document.getElementById('product-material').value = product.material_id || '';
+        }
+
+        async function saveProduct() {
+            const id = document.getElementById('product-id').value;
+            const productData = {
+                slug: document.getElementById('product-slug').value,
+                sku: document.getElementById('product-sku').value,
+                nameRu: document.getElementById('product-name-ru').value,
+                nameEn: document.getElementById('product-name-en').value,
+                descriptionRu: document.getElementById('product-desc-ru').value,
+                descriptionEn: document.getElementById('product-desc-en').value,
+                shortDescriptionRu: document.getElementById('product-short-desc-ru').value,
+                shortDescriptionEn: document.getElementById('product-short-desc-en').value,
+                price: parseFloat(document.getElementById('product-price').value),
+                oldPrice: parseFloat(document.getElementById('product-old-price').value) || null,
+                categoryId: document.getElementById('product-category').value || null,
+                materialId: document.getElementById('product-material').value || null,
+                stock: parseInt(document.getElementById('product-stock').value) || 0,
+                status: document.getElementById('product-status').value,
+                featured: document.getElementById('product-featured').checked,
+                limitedEdition: document.getElementById('product-limited').checked
+            };
+
+            if (!productData.slug || !productData.sku || !productData.nameEn || !productData.price) {
+                showToast('Please fill all required fields', 'error');
+                return;
+            }
+
+            try {
+                const url = id ? `${API_BASE}/admin/products/${id}` : `${API_BASE}/admin/products`;
+                const method = id ? 'PUT' : 'POST';
+                
+                const res = await fetch(url, {
+                    method,
+                    headers: getHeaders(),
+                    body: JSON.stringify(productData)
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    showToast(id ? 'Product updated' : 'Product created', 'success');
+                    closeProductModal();
+                    loadProducts();
+                } else {
+                    showToast(data.message || 'Error saving product', 'error');
+                }
+            } catch (err) {
+                showToast('Connection error', 'error');
+            }
+        }
+
+        function editProduct(id) {
+            openProductModal(id);
+        }
+
+        async function deleteProduct(id) {
+            if (!confirm('Archive this product? It will be hidden from the store.')) return;
+            try {
+                const res = await fetch(`${API_BASE}/admin/products/${id}`, {
+                    method: 'DELETE',
+                    headers: getHeaders()
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Product archived', 'success');
+                    loadProducts();
+                }
+            } catch (err) {
+                showToast('Error deleting product', 'error');
+            }
+        }
+
+        async function loadCategoryOptions() {
+            try {
+                const res = await fetch(`${API_BASE}/categories`);
+                const data = await res.json();
+                if (data.success) {
+                    const select = document.getElementById('product-category');
+                    select.innerHTML = '<option value="">Select...</option>' + 
+                        data.data.categories.map(c => `<option value="${c.id}">${c.name_en}</option>`).join('');
+                }
+            } catch (err) {}
+        }
+
+        async function loadMaterialOptions() {
+            try {
+                const res = await fetch(`${API_BASE}/materials`);
+                const data = await res.json();
+                if (data.success) {
+                    const select = document.getElementById('product-material');
+                    select.innerHTML = '<option value="">Select...</option>' + 
+                        data.data.materials.map(m => `<option value="${m.id}">${m.name_en}</option>`).join('');
+                }
+            } catch (err) {}
+        }
+
+        // ============================================================
+        // CATEGORIES CRUD
+        // ============================================================
+        async function loadCategories() {
+            try {
+                const res = await fetch(`${API_BASE}/categories`);
+                const data = await res.json();
+                if (data.success) {
+                    allCategories = data.data.categories;
+                    document.getElementById('categories-table-body').innerHTML = allCategories.map(c => `
+                        <tr>
+                            <td>${c.name_en} <span style="color:var(--text-muted);font-size:0.75rem;">/ ${c.name_ru}</span></td>
+                            <td style="font-family:monospace;">${c.slug}</td>
+                            <td>—</td>
+                            <td>${c.sort_order}</td>
+                            <td><div class="actions">
+                                <button class="btn-icon" onclick="editCategory('${c.id}')">✎</button>
+                                <button class="btn-danger" onclick="deleteCategory('${c.id}')">✕</button>
+                            </div></td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (err) {}
+        }
+
+        function openCategoryModal(id = null) {
+            document.getElementById('category-modal').classList.add('active');
+            document.getElementById('category-id').value = '';
+            document.getElementById('category-modal-title').textContent = 'Add Category';
+            ['category-slug','category-name-en','category-name-ru','category-order'].forEach(f => document.getElementById(f).value = '');
+            document.getElementById('category-order').value = '0';
+            if (id) {
+                document.getElementById('category-modal-title').textContent = 'Edit Category';
+                const cat = allCategories.find(c => c.id === id);
+                if (cat) {
+                    document.getElementById('category-id').value = cat.id;
+                    document.getElementById('category-slug').value = cat.slug;
+                    document.getElementById('category-name-en').value = cat.name_en;
+                    document.getElementById('category-name-ru').value = cat.name_ru;
+                    document.getElementById('category-order').value = cat.sort_order;
+                }
+            }
+        }
+
+        function closeCategoryModal() { document.getElementById('category-modal').classList.remove('active'); }
+
+        async function saveCategory() {
+            const id = document.getElementById('category-id').value;
+            const data = {
+                slug: document.getElementById('category-slug').value,
+                nameEn: document.getElementById('category-name-en').value,
+                nameRu: document.getElementById('category-name-ru').value,
+                sortOrder: parseInt(document.getElementById('category-order').value) || 0
+            };
+            try {
+                const url = id ? `${API_BASE}/admin/categories/${id}` : `${API_BASE}/admin/categories`;
+                const method = id ? 'PUT' : 'POST';
+                const res = await fetch(url, { method, headers: getHeaders(), body: JSON.stringify(data) });
+                const result = await res.json();
+                if (result.success) { showToast('Category saved', 'success'); closeCategoryModal(); loadCategories(); }
+                else showToast(result.message, 'error');
+            } catch (err) { showToast('Error', 'error'); }
+        }
+
+        function editCategory(id) { openCategoryModal(id); }
+        async function deleteCategory(id) {
+            if (!confirm('Delete this category?')) return;
+            try {
+                await fetch(`${API_BASE}/admin/categories/${id}`, { method: 'DELETE', headers: getHeaders() });
+                showToast('Category deleted', 'success');
+                loadCategories();
+            } catch (err) { showToast('Error', 'error'); }
+        }
+
+        // ============================================================
+        // MATERIALS CRUD
+        // ============================================================
+        async function loadMaterials() {
+            try {
+                const res = await fetch(`${API_BASE}/materials`);
+                const data = await res.json();
+                if (data.success) {
+                    allMaterials = data.data.materials;
+                    document.getElementById('materials-table-body').innerHTML = allMaterials.map(m => `
+                        <tr>
+                            <td>${m.name_en} <span style="color:var(--text-muted);font-size:0.75rem;">/ ${m.name_ru}</span></td>
+                            <td style="font-family:monospace;">${m.slug}</td>
+                            <td>${m.scientific_name || '—'}</td>
+                            <td>${m.sort_order}</td>
+                            <td><div class="actions">
+                                <button class="btn-icon" onclick="editMaterial('${m.id}')">✎</button>
+                                <button class="btn-danger" onclick="deleteMaterial('${m.id}')">✕</button>
+                            </div></td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (err) {}
+        }
+
+        function openMaterialModal(id = null) {
+            document.getElementById('material-modal').classList.add('active');
+            document.getElementById('material-id').value = '';
+            document.getElementById('material-modal-title').textContent = 'Add Material';
+            ['material-slug','material-scientific','material-name-en','material-name-ru','material-order'].forEach(f => document.getElementById(f).value = '');
+            document.getElementById('material-order').value = '0';
+            if (id) {
+                document.getElementById('material-modal-title').textContent = 'Edit Material';
+                const mat = allMaterials.find(m => m.id === id);
+                if (mat) {
+                    document.getElementById('material-id').value = mat.id;
+                    document.getElementById('material-slug').value = mat.slug;
+                    document.getElementById('material-scientific').value = mat.scientific_name || '';
+                    document.getElementById('material-name-en').value = mat.name_en;
+                    document.getElementById('material-name-ru').value = mat.name_ru;
+                    document.getElementById('material-order').value = mat.sort_order;
+                }
+            }
+        }
+
+        function closeMaterialModal() { document.getElementById('material-modal').classList.remove('active'); }
+
+        async function saveMaterial() {
+            const id = document.getElementById('material-id').value;
+            const data = {
+                slug: document.getElementById('material-slug').value,
+                scientificName: document.getElementById('material-scientific').value,
+                nameEn: document.getElementById('material-name-en').value,
+                nameRu: document.getElementById('material-name-ru').value,
+                sortOrder: parseInt(document.getElementById('material-order').value) || 0
+            };
+            try {
+                const url = id ? `${API_BASE}/admin/materials/${id}` : `${API_BASE}/admin/materials`;
+                const method = id ? 'PUT' : 'POST';
+                const res = await fetch(url, { method, headers: getHeaders(), body: JSON.stringify(data) });
+                const result = await res.json();
+                if (result.success) { showToast('Material saved', 'success'); closeMaterialModal(); loadMaterials(); }
+                else showToast(result.message, 'error');
+            } catch (err) { showToast('Error', 'error'); }
+        }
+
+        function editMaterial(id) { openMaterialModal(id); }
+        async function deleteMaterial(id) {
+            if (!confirm('Delete this material?')) return;
+            try {
+                await fetch(`${API_BASE}/admin/materials/${id}`, { method: 'DELETE', headers: getHeaders() });
+                showToast('Material deleted', 'success');
+                loadMaterials();
+            } catch (err) { showToast('Error', 'error'); }
+        }
+
+        // ============================================================
+        // ORDERS
+        // ============================================================
+        async function loadOrders() {
+            try {
+                const res = await fetch(`${API_BASE}/orders`, { headers: getHeaders() });
+                const data = await res.json();
+                if (data.success) {
+                    document.getElementById('orders-table-body').innerHTML = data.data.orders.length === 0 
+                        ? '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">No orders yet</td></tr>'
+                        : data.data.orders.map(o => `
+                            <tr>
+                                <td style="font-family:monospace;">${o.order_number}</td>
+                                <td>${o.user_email || 'Guest'}</td>
+                                <td style="color:var(--gold);">$${parseFloat(o.total).toLocaleString()}</td>
+                                <td><span class="status-badge ${o.status === 'delivered' ? 'active' : ''}">${o.status.replace('_', ' ')}</span></td>
+                                <td>${new Date(o.created_at).toLocaleDateString()}</td>
+                                <td><button class="btn-icon" onclick="viewOrder('${o.id}')">👁</button></td>
+                            </tr>
+                        `).join('');
+                }
+            } catch (err) {}
+        }
+
+        function viewOrder(id) { alert('Order details coming soon. Order ID: ' + id); }
+
+        // ============================================================
+        // TRANSLATIONS
+        // ============================================================
+        async function loadTranslations() {
+            try {
+                const locale = document.getElementById('translation-locale-filter')?.value || 'all';
+                const url = locale === 'all' ? `${API_BASE}/translations/all` : `${API_BASE}/translations?locale=${locale}`;
+                const res = await fetch(url, { headers: getHeaders() });
+                const data = await res.json();
+                if (data.success) {
+                    const translations = data.data.translations || [];
+                    document.getElementById('translations-table-body').innerHTML = translations.length === 0
+                        ? '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">No translations found</td></tr>'
+                        : translations.map(t => `
+                            <tr>
+                                <td style="font-family:monospace;font-size:0.8rem;">${t.key}</td>
+                                <td><span style="background:var(--gold-pale);padding:0.1rem 0.5rem;border-radius:2px;font-size:0.7rem;">${t.locale}</span></td>
+                                <td>${t.value}</td>
+                                <td style="font-size:0.7rem;color:var(--text-muted);">${t.context || '—'}</td>
+                                <td><button class="btn-danger" onclick="deleteTranslation('${t.id}')">✕</button></td>
+                            </tr>
+                        `).join('');
+                }
+            } catch (err) {}
+        }
+
+        function openTranslationModal() { document.getElementById('translation-modal').classList.add('active'); }
+        function closeTranslationModal() { document.getElementById('translation-modal').classList.remove('active'); }
+
+        async function saveTranslation() {
+            const data = {
+                key: document.getElementById('translation-key').value,
+                locale: document.getElementById('translation-locale').value,
+                value: document.getElementById('translation-value').value,
+                context: document.getElementById('translation-context').value
+            };
+            try {
+                const res = await fetch(`${API_BASE}/admin/translations`, {
+                    method: 'POST', headers: getHeaders(), body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                if (result.success) { showToast('Translation saved', 'success'); closeTranslationModal(); loadTranslations(); }
+                else showToast(result.message, 'error');
+            } catch (err) { showToast('Error', 'error'); }
+        }
+
+        async function deleteTranslation(id) {
+            if (!confirm('Delete this translation?')) return;
+            try {
+                await fetch(`${API_BASE}/admin/translations/${id}`, { method: 'DELETE', headers: getHeaders() });
+                showToast('Translation deleted', 'success');
+                loadTranslations();
+            } catch (err) { showToast('Error', 'error'); }
+        }
+
+        // ============================================================
+        // TOAST
+        // ============================================================
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+    </script>
+    <script src="js/i18n.js"></script>
+</body>
+</html>
