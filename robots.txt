@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /account.html
+Disallow: /checkout.html
+Disallow: /cart.html
+Disallow: /track-order.html
+Disallow: /server/
+
+Sitemap: https://www.sandukhar.com/sitemap.xml

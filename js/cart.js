@@ -174,6 +174,20 @@ SANDUKHAR.cart = {
         }
     },
 
+    /**
+     * Play a brief "bump" on the quantity display after it changes so the
+     * update reads as a direct response to the click, not a silent re-render.
+     * @param {string} itemId
+     */
+    bumpQtyDisplay: function(itemId) {
+        const row = document.querySelector(`.cart-item[data-id="${CSS.escape(itemId)}"]`);
+        const display = row ? row.querySelector('.qty-display') : null;
+        if (!display) return;
+        display.classList.remove('bump');
+        void display.offsetWidth; // restart the animation if it's already mid-play
+        display.classList.add('bump');
+    },
+
     // ============================================================
     // CALCULATIONS
     // ============================================================
@@ -249,9 +263,7 @@ SANDUKHAR.cart = {
                 <div class="cart-item-image">
                     ${item.image
                         ? `<img src="${this.escapeHTML(item.image)}" alt="${this.escapeHTML(item.name)}" loading="lazy">`
-                        : `<div class="cart-item-image-placeholder" aria-hidden="true">
-                            <span>${this.escapeHTML(noImageText)}</span>
-                           </div>`
+                        : (window.SANDUKHAR && window.SANDUKHAR.media ? window.SANDUKHAR.media.placeholder(item.name) : `<div class="cart-item-image-placeholder" aria-hidden="true"><span>${this.escapeHTML(noImageText)}</span></div>`)
                     }
                 </div>
                 <div class="cart-item-details">
@@ -336,6 +348,7 @@ SANDUKHAR.cart = {
                 const item = this.items.find(i => i.id === id);
                 if (item && item.quantity > 1) {
                     this.updateQuantity(id, item.quantity - 1);
+                    this.bumpQtyDisplay(id);
                 }
             });
         });
@@ -347,15 +360,22 @@ SANDUKHAR.cart = {
                 const item = this.items.find(i => i.id === id);
                 if (item && item.quantity < 10) {
                     this.updateQuantity(id, item.quantity + 1);
+                    this.bumpQtyDisplay(id);
                 }
             });
         });
 
-        // Remove item
+        // Remove item — let the row animate out before it actually leaves the cart
         document.querySelectorAll('.remove-item-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const id = btn.getAttribute('data-id');
-                this.removeItem(id);
+                const row = btn.closest('.cart-item');
+                if (row) {
+                    row.classList.add('removing');
+                    setTimeout(() => this.removeItem(id), 220);
+                } else {
+                    this.removeItem(id);
+                }
             });
         });
 
@@ -604,6 +624,15 @@ SANDUKHAR.cart = {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+        .cart-item-image {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: var(--border-radius-sm, 2px);
+            overflow: hidden;
+        }
+        .cart-item-image .sd-placeholder-monogram {
+            font-size: 1.2rem;
         }
         .cart-item-image-placeholder {
             width: 100%;

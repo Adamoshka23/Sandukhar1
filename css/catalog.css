@@ -30,11 +30,9 @@
 .catalog-hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        to bottom,
-        rgba(10, 10, 10, 0.3) 0%,
-        rgba(10, 10, 10, 0.6) 100%
-    );
+    background: linear-gradient(to bottom,
+            rgba(10, 10, 10, 0.3) 0%,
+            rgba(10, 10, 10, 0.6) 100%);
 }
 
 .catalog-hero-content {
@@ -369,12 +367,12 @@
     transition: all var(--transition-fast);
 }
 
-.filter-option input:checked ~ .checkmark {
+.filter-option input:checked~.checkmark {
     background: var(--color-gold);
     border-color: var(--color-gold);
 }
 
-.filter-option input:checked ~ .checkmark::after {
+.filter-option input:checked~.checkmark::after {
     content: '';
     position: absolute;
     left: 5px;
@@ -417,7 +415,7 @@
     flex-shrink: 0;
 }
 
-.color-swatch input:checked ~ .swatch {
+.color-swatch input:checked~.swatch {
     border-color: var(--color-gold);
 }
 
@@ -501,8 +499,15 @@
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .product-card .product-card-image {
@@ -558,7 +563,10 @@
     color: var(--color-white);
     opacity: 0;
     transform: translateY(-10px);
-    transition: all var(--transition-smooth);
+    transition: opacity 0.3s var(--ease-out-strong),
+                transform 0.3s var(--ease-out-strong),
+                background-color 0.2s ease,
+                color 0.2s ease;
     z-index: 2;
 }
 
@@ -572,6 +580,11 @@
     color: var(--color-black);
 }
 
+.btn-wishlist:active {
+    transform: scale(0.85);
+    transition-duration: 0.08s;
+}
+
 .btn-wishlist.active {
     color: var(--color-gold);
     opacity: 1;
@@ -580,6 +593,13 @@
 
 .btn-wishlist.active svg {
     fill: var(--color-gold);
+    animation: wishlistPop 0.4s var(--ease-out-strong);
+}
+
+@keyframes wishlistPop {
+    0% { transform: scale(1); }
+    35% { transform: scale(1.35); }
+    100% { transform: scale(1); }
 }
 
 /* List View Product Card */

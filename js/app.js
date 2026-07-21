@@ -39,6 +39,10 @@ const SANDUKHAR = {
     }
 };
 
+// Explicitly expose on window — top-level `const`/`let` bindings are global
+// but not window properties, and other inline scripts read window.SANDUKHAR.
+window.SANDUKHAR = SANDUKHAR;
+
 // ============================================================
 // HEADER MODULE
 // ============================================================
@@ -239,7 +243,7 @@ SANDUKHAR.quickView = {
     bindEvents: function() {
         document.addEventListener('click', (e) => {
             const btn = e.target.closest('.btn-quick-view');
-            if (btn) { e.preventDefault(); e.stopPropagation(); this.open(btn.getAttribute('data-product-id')); }
+            if (btn) { e.preventDefault(); e.stopPropagation(); this.open(btn.getAttribute('data-product-slug') || btn.getAttribute('data-product-id')); }
         });
         if (this.closeBtn) this.closeBtn.addEventListener('click', () => this.close());
         this.modal.addEventListener('click', (e) => { if (e.target === this.modal) this.close(); });
@@ -257,11 +261,11 @@ SANDUKHAR.quickView = {
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     },
 
-    open: function(productId) {
+    open: function(slugOrId) {
         this.previousActiveElement = document.activeElement;
         this.modal.classList.add('active'); this.modal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('no-scroll');
-        this.loadProductData(productId);
+        this.loadProductData(slugOrId);
         if (this.closeBtn) setTimeout(() => this.closeBtn.focus(), 100);
     },
 
@@ -271,7 +275,7 @@ SANDUKHAR.quickView = {
         if (this.previousActiveElement) this.previousActiveElement.focus();
     },
 
-    loadProductData: function(productId) {
+    loadProductData: function(slug) {
         const i18n = (key, fallback) => (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t(key) : fallback;
 
         this.content.innerHTML = `
@@ -285,24 +289,32 @@ SANDUKHAR.quickView = {
                 </div>
             </div>`;
 
-        setTimeout(() => {
-            this.content.innerHTML = `
-                <div class="quick-view-layout">
-                    <div class="quick-view-gallery">
-                        <div style="width:100%; aspect-ratio:3/4; background:var(--color-charcoal); display:flex; align-items:center; justify-content:center; border-radius:4px;">
-                            <p style="color:var(--color-text-muted); font-family:var(--font-display);">${i18n('qv_product_preview', 'Product Preview')}</p>
+        fetch(window.SD_API.baseURL + '/products/' + slug)
+            .then(res => res.json())
+            .then(data => {
+                if (!data.success) throw new Error('Not found');
+                const p = data.data.product;
+                const image = (p.images && p.images.length)
+                    ? `<img src="${p.images[0].url}" alt="${p.name_en}" style="width:100%;height:100%;object-fit:cover;">`
+                    : SANDUKHAR.media.placeholder(p.name_en, p.material_slug);
+
+                this.content.innerHTML = `
+                    <div class="quick-view-layout">
+                        <div class="quick-view-gallery">
+                            <div style="position:relative;width:100%;aspect-ratio:3/4;border-radius:4px;overflow:hidden;">${image}</div>
                         </div>
-                    </div>
-                    <div class="quick-view-details">
-                        <p class="quick-view-collection" data-i18n="product_collection_label">${i18n('product_collection_label', 'The Imperium Collection')}</p>
-                        <h2 class="quick-view-name">${i18n('qv_exotic_creation', 'Exotic Leather Creation')}</h2>
-                        <p class="quick-view-price">${i18n('price_upon_request', 'Price upon request')}</p>
-                        <p class="quick-view-description">${i18n('qv_handcrafted_desc', 'Handcrafted in our Istanbul atelier from the finest ethically sourced exotic leather. Each piece is unique and made to order.')}</p>
-                        <a href="product.html" class="btn-primary" style="width:100%; margin-top:20px; display:inline-flex; text-align:center; justify-content:center;" data-i18n="view_details">${i18n('view_details', 'View Full Details')}</a>
-                    </div>
-                </div>`;
-            if (window.SD_I18N && window.SD_I18N.translatePage) window.SD_I18N.translatePage();
-        }, 500);
+                        <div class="quick-view-details">
+                            <p class="quick-view-collection">${p.category_name || ''}</p>
+                            <h2 class="quick-view-name">${p.name_en}</h2>
+                            <p class="quick-view-price">${SANDUKHAR.format.price(p.price)}</p>
+                            <p class="quick-view-description">${p.short_description_en || p.description_en || ''}</p>
+                            <a href="product.html?slug=${p.slug}" class="btn-primary" style="width:100%; margin-top:20px; display:inline-flex; text-align:center; justify-content:center;" data-i18n="view_details">${i18n('view_details', 'View Full Details')}</a>
+                        </div>
+                    </div>`;
+            })
+            .catch(() => {
+                this.content.innerHTML = `<p style="padding:2rem;text-align:center;color:var(--color-text-muted);">This creation could not be loaded.</p>`;
+            });
     }
 };
 
@@ -369,6 +381,33 @@ SANDUKHAR.magneticButtons = {
             });
             el.addEventListener('mouseleave', () => { el.style.transform = 'translate(0, 0)'; });
         });
+    }
+};
+
+// ============================================================
+// MEDIA PLACEHOLDER — premium tonal placeholder markup
+// used wherever a real product/lookbook photo is not available.
+// ============================================================
+SANDUKHAR.media = {
+    monogram: function(name) {
+        if (!name) return 'SD';
+        const words = name.trim().split(/\s+/);
+        if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+        return (words[0][0] + words[1][0]).toUpperCase();
+    },
+    placeholder: function(name, variant) {
+        const modifier = variant ? ` sd-placeholder--${variant}` : '';
+        return `<div class="sd-placeholder${modifier}"><span class="sd-placeholder-monogram">${this.monogram(name)}</span></div>`;
+    }
+};
+
+// ============================================================
+// FORMAT HELPERS
+// ============================================================
+SANDUKHAR.format = {
+    price: function(value) {
+        const n = parseFloat(value) || 0;
+        return '$' + n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
     }
 };
 

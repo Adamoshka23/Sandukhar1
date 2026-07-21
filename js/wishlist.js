@@ -31,6 +31,24 @@ SANDUKHAR.wishlist = {
         this.bindEvents();
         this.updateAllWishlistButtons();
         this.subscribeToI18nEvents();
+        this.syncFromServer();
+    },
+
+    /**
+     * If the user is logged in, pull their server-side wishlist so it's
+     * consistent across devices, merging with any local guest selections.
+     */
+    syncFromServer: function() {
+        if (!window.SD_API || !window.SD_API.token) return;
+        window.SD_API.getWishlist().then((res) => {
+            if (!res.success) return;
+            const serverIds = res.data.items.map(item => item.id);
+            const merged = Array.from(new Set([...this.items, ...serverIds]));
+            this.items = merged;
+            this.saveWishlist();
+            this.updateAllWishlistButtons();
+            document.dispatchEvent(new CustomEvent('wishlistUpdated'));
+        }).catch(() => {});
     },
 
     // ============================================================
@@ -86,6 +104,10 @@ SANDUKHAR.wishlist = {
      */
     toggle: function(productId) {
         if (!productId) return;
+
+        if (window.SD_API && window.SD_API.token) {
+            window.SD_API.toggleWishlist(productId).catch(() => {});
+        }
 
         const index = this.items.indexOf(productId);
 

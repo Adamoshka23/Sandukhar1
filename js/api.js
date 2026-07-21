@@ -139,6 +139,46 @@ const SD_API = {
     },
 
     // ============================================================
+    // USERS
+    // ============================================================
+    async updateProfile(data) {
+        return this.request('/users/me', { method: 'PATCH', body: JSON.stringify(data) });
+    },
+
+    async changePassword(currentPassword, newPassword) {
+        return this.request('/users/me/password', {
+            method: 'PATCH',
+            body: JSON.stringify({ currentPassword, newPassword })
+        });
+    },
+
+    // ============================================================
+    // ADDRESSES
+    // ============================================================
+    async getAddresses() {
+        return this.request('/addresses');
+    },
+
+    async createAddress(address) {
+        return this.request('/addresses', { method: 'POST', body: JSON.stringify(address) });
+    },
+
+    async updateAddress(id, address) {
+        return this.request(`/addresses/${id}`, { method: 'PUT', body: JSON.stringify(address) });
+    },
+
+    async deleteAddress(id) {
+        return this.request(`/addresses/${id}`, { method: 'DELETE' });
+    },
+
+    // ============================================================
+    // TAILORING
+    // ============================================================
+    async submitTailoringRequest(data) {
+        return this.request('/tailoring', { method: 'POST', body: JSON.stringify(data) });
+    },
+
+    // ============================================================
     // WISHLIST
     // ============================================================
     async getWishlist() {

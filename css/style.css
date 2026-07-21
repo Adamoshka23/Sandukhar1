@@ -1,9 +1,3 @@
-/* ============================================================
-   SAN DUKHAR — MAIN STYLESHEET (AUDITED & FIXED)
-   Luxury Exotic Leather Atelier
-   Version: 2.0 — Production Ready
-   ============================================================ */
-
 :root {
     /* Color Palette */
     --color-black: #0a0a0a;
@@ -84,6 +78,14 @@
     --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-luxury: 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
     --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Stronger easing for entrances/exits and press feedback — the built-in
+       CSS easings read as flat; these have the punch that makes motion feel
+       intentional rather than merely present. */
+    --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+    --press-scale: 0.97;
 
     /* Z-Index Scale */
     --z-base: 1;
@@ -362,7 +364,10 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
     z-index: var(--z-sticky);
     height: var(--header-height);
-    transition: all var(--transition-smooth);
+    transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     padding: 0 var(--container-padding);
 }
 
@@ -484,7 +489,8 @@ h1, h2, h3, h4, h5, h6 {
     position: absolute;
     top: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(10px);
+    transform: translateX(-50%) translateY(6px) scale(0.98);
+    transform-origin: top center;
     background: rgba(20, 20, 20, 0.98);
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
@@ -494,7 +500,9 @@ h1, h2, h3, h4, h5, h6 {
     min-width: 700px;
     opacity: 0;
     visibility: hidden;
-    transition: all var(--transition-smooth);
+    transition: opacity 0.2s var(--ease-out-strong),
+                transform 0.2s var(--ease-out-strong),
+                visibility 0.2s;
     box-shadow: var(--shadow-luxury);
     z-index: var(--z-dropdown);
 }
@@ -502,7 +510,7 @@ h1, h2, h3, h4, h5, h6 {
 .nav-item.dropdown:hover .mega-menu {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%) translateY(0) scale(1);
 }
 
 .mega-menu-container {
@@ -580,12 +588,22 @@ h1, h2, h3, h4, h5, h6 {
     width: 40px;
     height: 40px;
     color: var(--color-text-secondary);
-    transition: color var(--transition-fast);
+    transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.12s var(--ease-out-strong);
     border-radius: 50%;
 }
 
-.utility-btn:hover {
-    color: var(--color-white);
+@media (hover: hover) and (pointer: fine) {
+    .utility-btn:hover {
+        color: var(--color-white);
+        background-color: rgba(255, 255, 255, 0.06);
+    }
+}
+
+.utility-btn:active {
+    transform: scale(var(--press-scale));
+    transition-duration: 0.08s;
 }
 
 .utility-btn.active {
@@ -654,7 +672,7 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
     opacity: 0;
     visibility: hidden;
-    transition: all var(--transition-smooth);
+    transition: opacity 0.3s ease, visibility 0.3s;
 }
 
 .search-overlay.active {
@@ -666,6 +684,15 @@ h1, h2, h3, h4, h5, h6 {
     width: 90%;
     max-width: 700px;
     position: relative;
+    transform: translateY(12px);
+    opacity: 0;
+    transition: transform 0.35s var(--ease-out-strong) 0.05s,
+                opacity 0.35s var(--ease-out-strong) 0.05s;
+}
+
+.search-overlay.active .search-overlay-container {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .search-input {
@@ -720,7 +747,7 @@ h1, h2, h3, h4, h5, h6 {
     z-index: var(--z-overlay);
     padding: calc(var(--header-height) + var(--space-xl)) var(--space-xl) var(--space-xl);
     transform: translateX(100%);
-    transition: transform var(--transition-smooth);
+    transition: transform 0.32s var(--ease-drawer);
     overflow-y: auto;
 }
 
@@ -733,6 +760,27 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     gap: var(--space-md);
 }
+
+.mobile-nav-container ul li {
+    opacity: 0;
+    transform: translateX(16px);
+    transition: opacity 0.3s var(--ease-out-strong), transform 0.3s var(--ease-out-strong);
+}
+
+.mobile-nav.active .mobile-nav-container ul li {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.mobile-nav.active .mobile-nav-container ul li:nth-child(1) { transition-delay: 0.06s; }
+.mobile-nav.active .mobile-nav-container ul li:nth-child(2) { transition-delay: 0.09s; }
+.mobile-nav.active .mobile-nav-container ul li:nth-child(3) { transition-delay: 0.12s; }
+.mobile-nav.active .mobile-nav-container ul li:nth-child(4) { transition-delay: 0.15s; }
+.mobile-nav.active .mobile-nav-container ul li:nth-child(5) { transition-delay: 0.18s; }
+.mobile-nav.active .mobile-nav-container ul li:nth-child(6) { transition-delay: 0.21s; }
+.mobile-nav.active .mobile-nav-container ul li:nth-child(7) { transition-delay: 0.24s; }
+.mobile-nav.active .mobile-nav-container ul li:nth-child(8) { transition-delay: 0.27s; }
+.mobile-nav.active .mobile-nav-container ul li:nth-child(9) { transition-delay: 0.3s; }
 
 .mobile-nav-container ul li a {
     font-family: var(--font-display);
@@ -869,11 +917,34 @@ h1, h2, h3, h4, h5, h6 {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     border-radius: var(--border-radius-sm);
-    transition: all var(--transition-smooth);
+    transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.12s var(--ease-out-strong);
     cursor: pointer;
     position: relative;
     overflow: hidden;
     text-align: center;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover,
+    .btn-secondary:hover,
+    .btn-outline:hover,
+    .btn-gold:hover {
+        transform: translateY(-1px);
+    }
+}
+
+/* Declared after :hover so a real click (hover + active together) always
+   reads as a press, not a lift. */
+.btn-primary:active,
+.btn-secondary:active,
+.btn-outline:active,
+.btn-gold:active {
+    transform: scale(var(--press-scale));
+    transition-duration: 0.08s;
 }
 
 .btn-primary {
@@ -955,8 +1026,13 @@ h1, h2, h3, h4, h5, h6 {
     transition: transform var(--transition-luxury);
 }
 
-.product-card-link:hover .product-card-image img {
+.product-card-link:hover .product-card-image img,
+.product-card-link:hover .product-card-image .sd-placeholder {
     transform: scale(1.05);
+}
+
+.product-card-image .sd-placeholder {
+    transition: transform var(--transition-luxury);
 }
 
 .product-card-overlay {
@@ -1405,7 +1481,7 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
     opacity: 0;
     visibility: hidden;
-    transition: all var(--transition-smooth);
+    transition: opacity 0.25s ease, visibility 0.25s;
     padding: var(--space-xl);
 }
 
@@ -1424,6 +1500,18 @@ h1, h2, h3, h4, h5, h6 {
     overflow-y: auto;
     position: relative;
     box-shadow: var(--shadow-luxury);
+    /* Modals aren't anchored to a trigger, so they scale from center rather
+       than an origin point (unlike popovers/dropdowns). */
+    transform-origin: center;
+    transform: scale(0.95) translateY(8px);
+    opacity: 0;
+    transition: transform 0.3s var(--ease-out-strong),
+                opacity 0.25s var(--ease-out-strong);
+}
+
+.modal-overlay.active .modal-container {
+    transform: scale(1) translateY(0);
+    opacity: 1;
 }
 
 .modal-close {
@@ -1441,11 +1529,19 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.2rem;
     cursor: pointer;
     z-index: 2;
-    transition: background var(--transition-fast);
+    transition: background-color 0.2s ease, transform 0.2s var(--ease-out-strong);
 }
 
-.modal-close:hover {
-    background: rgba(255, 255, 255, 0.2);
+@media (hover: hover) and (pointer: fine) {
+    .modal-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: rotate(90deg);
+    }
+}
+
+.modal-close:active {
+    transform: scale(0.88);
+    transition-duration: 0.08s;
 }
 
 .modal-content {
@@ -1473,6 +1569,132 @@ body.no-scroll {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-gold-dark);
+}
+
+/* ============================================================
+   FORM MESSAGES — shared validation / status feedback
+   ============================================================ */
+.form-message {
+    font-size: var(--font-size-small);
+    min-height: 1.4em;
+    margin-top: 0.6rem;
+}
+
+.form-message.error {
+    color: var(--color-error);
+}
+
+.form-message.success {
+    color: var(--color-success);
+}
+
+/* ============================================================
+   SD PLACEHOLDER — premium tonal media placeholder
+   Used wherever a product/lookbook photo is not yet available.
+   ============================================================ */
+.sd-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background:
+        linear-gradient(135deg, rgba(197, 165, 114, 0.10) 0%, transparent 35%),
+        linear-gradient(150deg, var(--color-charcoal) 0%, var(--color-graphite) 48%, var(--color-black) 100%);
+}
+
+.sd-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+        115deg,
+        rgba(255, 255, 255, 0.025) 0px,
+        rgba(255, 255, 255, 0.025) 1px,
+        transparent 1px,
+        transparent 8px
+    );
+    opacity: 0.6;
+}
+
+.sd-placeholder::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(197, 165, 114, 0.18);
+    margin: 10px;
+    pointer-events: none;
+}
+
+.sd-placeholder-monogram {
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-display);
+    font-weight: var(--font-weight-light);
+    font-size: clamp(1.8rem, 6vw, 3.4rem);
+    letter-spacing: 0.12em;
+    color: var(--color-gold);
+    opacity: 0.55;
+    text-transform: uppercase;
+    transition: opacity var(--transition-base, 0.4s ease), transform var(--transition-base, 0.4s ease);
+}
+
+.product-card:hover .sd-placeholder-monogram,
+a:hover .sd-placeholder-monogram {
+    opacity: 0.85;
+    transform: scale(1.04);
+}
+
+/* Tonal variants keyed to material for subtle differentiation across a grid */
+[data-material="crocodile"] .sd-placeholder,
+.sd-placeholder--crocodile {
+    background:
+        linear-gradient(135deg, rgba(197, 165, 114, 0.10) 0%, transparent 35%),
+        linear-gradient(150deg, #23211d 0%, #17140f 55%, #0a0a0a 100%);
+}
+
+[data-material="python"] .sd-placeholder,
+.sd-placeholder--python {
+    background:
+        linear-gradient(135deg, rgba(197, 165, 114, 0.10) 0%, transparent 35%),
+        linear-gradient(150deg, #232620 0%, #171912 55%, #0a0a0a 100%);
+}
+
+[data-material="ostrich"] .sd-placeholder,
+.sd-placeholder--ostrich {
+    background:
+        linear-gradient(135deg, rgba(197, 165, 114, 0.12) 0%, transparent 35%),
+        linear-gradient(150deg, #2c2219 0%, #1c1611 55%, #0a0a0a 100%);
+}
+
+[data-material="stingray"] .sd-placeholder,
+.sd-placeholder--stingray {
+    background:
+        linear-gradient(135deg, rgba(197, 165, 114, 0.10) 0%, transparent 35%),
+        linear-gradient(150deg, #1e2226 0%, #131619 55%, #0a0a0a 100%);
+}
+
+[data-material="lizard"] .sd-placeholder,
+.sd-placeholder--lizard {
+    background:
+        linear-gradient(135deg, rgba(197, 165, 114, 0.10) 0%, transparent 35%),
+        linear-gradient(150deg, #1c231e 0%, #121712 55%, #0a0a0a 100%);
+}
+
+.sd-placeholder--light {
+    background:
+        linear-gradient(135deg, rgba(197, 165, 114, 0.14) 0%, transparent 40%),
+        linear-gradient(150deg, var(--color-milk-warm) 0%, var(--color-milk) 100%);
+}
+
+.sd-placeholder--light .sd-placeholder-monogram {
+    color: var(--color-gold-dark);
+    opacity: 0.7;
+}
+
+.sd-placeholder--light::after {
+    border-color: rgba(168, 133, 75, 0.3);
 }
 
 /* === Animation Keyframes === */

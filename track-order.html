@@ -12,9 +12,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css?v=2">
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="stylesheet" href="css/responsive.css?v=2">
+    <link rel="icon" type="image/svg+xml" href="icons/sandukhar-logo-gold.svg">
 
     <style>
         .track-container { max-width: 700px; margin: 0 auto; padding: calc(var(--header-height) + 4rem) var(--container-padding) 4rem; }
@@ -80,40 +81,15 @@
         <div class="track-container">
             <h1 class="track-title fade-in-up" data-i18n="track_title">Track Your Creation</h1>
             <p class="track-subtitle fade-in-up delay-1" data-i18n="track_subtitle">Enter your order number to follow the journey of your piece from our atelier to your hands.</p>
-            <div class="track-form slide-up delay-2">
-                <input type="text" class="track-input" id="order-number" data-i18n-attr="placeholder" data-i18n="track_placeholder" placeholder="Order number (e.g., SD-2026-001)" aria-label="Order Number">
+            <div class="track-form slide-up delay-2" style="flex-wrap: wrap;">
+                <input type="text" class="track-input" id="order-number" placeholder="Order number (e.g., SD-20260720-1234)" aria-label="Order Number" style="flex-basis: 100%;">
+                <input type="email" class="track-input" id="order-email" placeholder="Email used at checkout" aria-label="Email" autocomplete="email">
                 <button class="btn-gold" id="track-btn" data-i18n="track_button">Track Order</button>
             </div>
-            <div class="track-timeline slide-up delay-3" id="track-timeline">
-                <div class="track-step completed">
-                    <div class="track-step-date">March 15, 2026</div>
-                    <div class="track-step-title" data-i18n="track_step_confirmed">Order Confirmed</div>
-                    <div class="track-step-desc" data-i18n="track_step_confirmed_desc">Your order has been received and confirmed. A confirmation email has been sent.</div>
-                </div>
-                <div class="track-step completed">
-                    <div class="track-step-date">March 18, 2026</div>
-                    <div class="track-step-title" data-i18n="track_step_material">Material Selection</div>
-                    <div class="track-step-desc" data-i18n="track_step_material_desc">Our master cutter has selected the finest skin for your creation.</div>
-                </div>
-                <div class="track-step active">
-                    <div class="track-step-date" data-i18n="track_status_progress">In Progress</div>
-                    <div class="track-step-title" data-i18n="track_step_crafting">Artisan Crafting</div>
-                    <div class="track-step-desc" data-i18n="track_step_crafting_desc">Your piece is being handcrafted by a master artisan in our Istanbul atelier.</div>
-                </div>
-                <div class="track-step">
-                    <div class="track-step-date" data-i18n="track_status_pending">Pending</div>
-                    <div class="track-step-title" data-i18n="track_step_inspection">Quality Inspection</div>
-                    <div class="track-step-desc" data-i18n="track_step_inspection_desc">Every creation undergoes a rigorous 47-point quality inspection.</div>
-                </div>
-                <div class="track-step">
-                    <div class="track-step-date" data-i18n="track_status_pending">Pending</div>
-                    <div class="track-step-title" data-i18n="track_step_delivery">White-Glove Delivery</div>
-                    <div class="track-step-desc" data-i18n="track_step_delivery_desc">Your piece will be delivered by armored courier with personal presentation.</div>
-                </div>
-            </div>
+            <div class="track-timeline slide-up delay-3" id="track-timeline"></div>
             <div class="track-error" id="track-error">
                 <h3 data-i18n="track_not_found_title">Order Not Found</h3>
-                <p data-i18n="track_not_found_desc">We couldn't locate an order with that number. Please verify your order number and try again.</p>
+                <p data-i18n="track_not_found_desc">We couldn't locate an order with that number and email. Please verify your details and try again.</p>
                 <a href="contacts.html" class="btn-outline" style="margin-top:1.5rem;" data-i18n="track_contact">Contact Concierge</a>
             </div>
         </div>
@@ -125,38 +101,96 @@
                 <div class="footer-col footer-col-brand"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR" style="height:1.8rem;"></a><p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship.</p></div>
                 <div class="footer-col"><h4 data-i18n="footer_customer_care">Customer Care</h4><ul><li><a href="contacts.html" data-i18n="footer_contact_faq">Contact</a></li><li><a href="track-order.html" data-i18n="footer_track">Track Order</a></li></ul></div>
                 <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="#" data-i18n="footer_privacy">Privacy</a></li><li><a href="#" data-i18n="footer_terms">Terms</a></li></ul></div>
-                <div class="footer-col"><h4 data-i18n="footer_istanbul">Istanbul</h4><address>Nişantaşı, Istanbul</address></div>
+                <div class="footer-col"><h4 data-i18n="footer_istanbul">Istanbul</h4><address>Zeytinburnu, Istanbul</address></div>
             </div>
             <div class="footer-bottom"><p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR.</p></div>
         </div>
     </footer>
 
-    <script src="js/i18n.js" defer></script>
-    <script src="js/app.js" defer></script>
+    <script src="js/api.js?v=2" defer></script>
+    <script src="js/app.js?v=2" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const trackBtn = document.getElementById('track-btn');
             const orderInput = document.getElementById('order-number');
+            const emailInput = document.getElementById('order-email');
             const timeline = document.getElementById('track-timeline');
             const errorBlock = document.getElementById('track-error');
-            function showTimeline() { timeline.style.display = 'block'; errorBlock.style.display = 'none'; }
+
+            const STAGES = [
+                { key: 'confirmed', title: 'Order Confirmed', desc: 'Your order has been received and confirmed. A confirmation email has been sent.' },
+                { key: 'in_production', title: 'Artisan Crafting', desc: 'Your piece is being handcrafted by a master artisan in our Istanbul atelier.' },
+                { key: 'quality_check', title: 'Quality Inspection', desc: 'Every creation undergoes a rigorous 47-point quality inspection.' },
+                { key: 'shipped', title: 'White-Glove Delivery', desc: 'Your piece is on its way, delivered by armored courier with personal presentation.' },
+                { key: 'delivered', title: 'Delivered', desc: 'Your creation has arrived. Thank you for choosing SAN DUKHAR.' }
+            ];
+            const STATUS_INDEX = { pending: 0, confirmed: 0, in_production: 1, quality_check: 2, shipped: 3, delivered: 4, cancelled: -1, returned: -1 };
+
+            function renderTimeline(order) {
+                const currentIndex = STATUS_INDEX[order.status] ?? 0;
+                if (order.status === 'cancelled' || order.status === 'returned') {
+                    timeline.innerHTML = `<div class="track-step active"><div class="track-step-date">${order.order_number}</div><div class="track-step-title">Order ${order.status === 'cancelled' ? 'Cancelled' : 'Returned'}</div><div class="track-step-desc">Contact our concierge team for details on this order.</div></div>`;
+                    timeline.style.display = 'block';
+                    errorBlock.style.display = 'none';
+                    return;
+                }
+                timeline.innerHTML = STAGES.map((stage, i) => {
+                    const state = i < currentIndex ? 'completed' : (i === currentIndex ? 'active' : '');
+                    const dateLabel = i < currentIndex ? 'Completed' : (i === currentIndex ? 'In Progress' : 'Pending');
+                    return `<div class="track-step ${state}">
+                        <div class="track-step-date">${dateLabel}</div>
+                        <div class="track-step-title">${stage.title}</div>
+                        <div class="track-step-desc">${stage.desc}</div>
+                    </div>`;
+                }).join('');
+                timeline.style.display = 'block';
+                errorBlock.style.display = 'none';
+            }
+
             function showError() { timeline.style.display = 'none'; errorBlock.style.display = 'block'; }
-            trackBtn.addEventListener('click', () => {
+
+            function track() {
                 const orderNumber = orderInput.value.trim();
-                if (!orderNumber) { orderInput.style.borderColor = 'var(--color-error)'; orderInput.focus(); orderInput.addEventListener('input', function() { this.style.borderColor = 'var(--color-border)'; }, { once: true }); return; }
-                trackBtn.textContent = (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t('track_searching') : 'Searching...';
+                const email = emailInput.value.trim();
+                let hasError = false;
+                [orderInput, emailInput].forEach(input => {
+                    if (!input.value.trim()) {
+                        input.style.borderColor = 'var(--color-error)';
+                        input.addEventListener('input', function() { this.style.borderColor = 'var(--color-border)'; }, { once: true });
+                        hasError = true;
+                    }
+                });
+                if (hasError) return;
+
+                trackBtn.textContent = 'Searching…';
                 trackBtn.disabled = true;
-                setTimeout(() => {
-                    if (orderNumber.toUpperCase().startsWith('SD-')) { showTimeline(); } else { showError(); }
-                    trackBtn.textContent = (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t('track_button') : 'Track Order';
-                    trackBtn.disabled = false;
-                }, 1200);
-            });
-            orderInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') trackBtn.click(); });
+
+                fetch(window.SD_API.baseURL + '/orders/track/' + encodeURIComponent(orderNumber) + '?email=' + encodeURIComponent(email))
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            renderTimeline(data.data.order);
+                        } else {
+                            showError();
+                        }
+                    })
+                    .catch(() => showError())
+                    .finally(() => {
+                        trackBtn.textContent = 'Track Order';
+                        trackBtn.disabled = false;
+                    });
+            }
+
+            trackBtn.addEventListener('click', track);
+            [orderInput, emailInput].forEach(input => input.addEventListener('keypress', (e) => { if (e.key === 'Enter') track(); }));
+
             const params = new URLSearchParams(window.location.search);
-            if (params.get('order') === 'confirmed') { orderInput.value = 'SD-2026-001'; setTimeout(() => showTimeline(), 500); }
+            if (params.get('order')) {
+                orderInput.value = params.get('order');
+                if (params.get('email')) emailInput.value = params.get('email');
+                if (params.get('email')) track();
+            }
         });
     </script>
-    <script src="js/i18n.js"></script>
 </body>
 </html>

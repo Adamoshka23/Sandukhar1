@@ -12,9 +12,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css?v=2">
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="stylesheet" href="css/responsive.css?v=2">
+    <link rel="icon" type="image/svg+xml" href="icons/sandukhar-logo-gold.svg">
 
     <style>
         .checkout-container { max-width: 900px; margin: 0 auto; padding: calc(var(--header-height) + 3rem) var(--container-padding) 4rem; }
@@ -27,13 +28,15 @@
         .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
         .form-group label { font-size: var(--font-size-caption); color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: var(--font-weight-medium); }
         .form-group input, .form-group select { padding: 0.9rem 1rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); background: rgba(255,255,255,0.02); color: var(--color-white); font-family: var(--font-body); font-size: var(--font-size-small); transition: border-color var(--transition-fast); }
-        .form-group input:focus, .form-group select:focus { border-color: var(--color-gold); outline: none; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(197,165,114,0.12); outline: none; }
         .form-group input::placeholder { color: var(--color-text-muted); }
         .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23b0a89e' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; }
         .payment-methods { display: flex; flex-direction: column; gap: 0.8rem; }
-        .payment-option { display: flex; align-items: flex-start; gap: 1rem; padding: 1.2rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); cursor: pointer; transition: all var(--transition-fast); }
+        .payment-option { display: flex; align-items: flex-start; gap: 1rem; padding: 1.2rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); cursor: pointer; transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.12s var(--ease-out-strong); }
         .payment-option:hover { border-color: var(--color-gold-pale); }
-        .payment-option.selected { border-color: var(--color-gold); background: var(--color-gold-pale); }
+        .payment-option:active { transform: scale(0.99); }
+        .payment-option.selected { border-color: var(--color-gold); background: var(--color-gold-pale); animation: optionSelect 0.3s var(--ease-out-strong); }
+        @keyframes optionSelect { 0% { transform: scale(0.98); } 100% { transform: scale(1); } }
         .payment-option input[type="radio"] { accent-color: var(--color-gold); margin-top: 0.2rem; }
         .payment-option-label { font-size: var(--font-size-small); color: var(--color-white); font-weight: var(--font-weight-medium); }
         .payment-option-desc { font-size: var(--font-size-caption); color: var(--color-text-muted); }
@@ -50,7 +53,10 @@
         .order-total-row.final .amount { color: var(--color-gold); }
         .btn-place-order { width: 100%; margin-top: 1.5rem; padding: 1.1rem; display: inline-flex; align-items: center; justify-content: center; }
         .secure-notice { text-align: center; margin-top: 1rem; font-size: var(--font-size-caption); color: var(--color-text-muted); display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
-        #card-details { margin-top: 1rem; }
+        .collapsible { max-height: 0; overflow: hidden; transition: max-height 0.3s var(--ease-in-out-strong); }
+        .collapsible.active { max-height: 400px; }
+        .collapsible-inner { min-height: 0; }
+        .collapsible.active .collapsible-inner { margin-top: 1rem; }
         @media screen and (max-width: 991px) { .checkout-layout { grid-template-columns: 1fr; } .order-summary-sidebar { position: relative; top: 0; order: -1; } }
         @media screen and (max-width: 767px) { .form-row { grid-template-columns: 1fr; } }
     </style>
@@ -180,13 +186,15 @@
                                     <div class="payment-option-desc" data-i18n="checkout_card_desc">Visa, Mastercard, American Express</div>
                                 </div>
                             </label>
-                            <div id="card-details">
+                            <div id="card-details" class="collapsible active">
+                              <div class="collapsible-inner">
                                 <div class="form-row full"><div class="form-group"><label for="card-number" data-i18n="checkout_card_number">Card Number *</label><input type="text" id="card-number" placeholder="0000 0000 0000 0000" autocomplete="cc-number"></div></div>
                                 <div class="form-row">
                                     <div class="form-group"><label for="card-expiry" data-i18n="checkout_expiry">Expiry Date *</label><input type="text" id="card-expiry" placeholder="MM/YY" autocomplete="cc-exp"></div>
                                     <div class="form-group"><label for="card-cvc" data-i18n="checkout_cvc">CVC *</label><input type="text" id="card-cvc" placeholder="123" maxlength="4" autocomplete="cc-csc"></div>
                                 </div>
                                 <div class="form-row full"><div class="form-group"><label for="card-name" data-i18n="checkout_card_name">Name on Card *</label><input type="text" id="card-name" placeholder="Name as it appears" autocomplete="cc-name"></div></div>
+                              </div>
                             </div>
                             <label class="payment-option">
                                 <input type="radio" name="payment" value="bank-transfer">
@@ -208,10 +216,11 @@
                 <div class="order-summary-sidebar slide-up delay-3">
                     <h3 data-i18n="checkout_order_summary">Order Summary</h3>
                     <div id="checkout-order-items"></div>
-                    <div class="order-total-row"><span data-i18n="cart_subtotal">Subtotal</span><span>$18,500</span></div>
-                    <div class="order-total-row"><span data-i18n="cart_shipping">Shipping</span><span data-i18n="cart_shipping_value">Complimentary</span></div>
+                    <div class="order-total-row"><span data-i18n="cart_subtotal">Subtotal</span><span id="checkout-subtotal">$0</span></div>
+                    <div class="order-total-row"><span data-i18n="cart_shipping">Shipping</span><span id="checkout-shipping-cost">Complimentary</span></div>
                     <div class="order-total-row"><span data-i18n="cart_tax">Taxes & Duties</span><span data-i18n="cart_tax_value">Included</span></div>
-                    <div class="order-total-row final"><span data-i18n="cart_total">Total</span><span class="amount">$18,500</span></div>
+                    <div class="order-total-row final"><span data-i18n="cart_total">Total</span><span class="amount" id="checkout-total">$0</span></div>
+                    <p class="form-message" id="checkout-error-message" role="alert" style="margin-top:1rem; color: var(--color-error); display:none;"></p>
                 </div>
             </div>
         </div>
@@ -223,23 +232,57 @@
                 <div class="footer-col footer-col-brand"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR" style="height:1.8rem;"></a><p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship.</p></div>
                 <div class="footer-col"><h4 data-i18n="footer_customer_care">Customer Care</h4><ul><li><a href="contacts.html" data-i18n="footer_contact_faq">Contact</a></li><li><a href="track-order.html" data-i18n="footer_track">Track Order</a></li></ul></div>
                 <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="#" data-i18n="footer_privacy">Privacy</a></li><li><a href="#" data-i18n="footer_terms">Terms</a></li></ul></div>
-                <div class="footer-col"><h4 data-i18n="footer_istanbul">Istanbul</h4><address>Nişantaşı, Istanbul</address></div>
+                <div class="footer-col"><h4 data-i18n="footer_istanbul">Istanbul</h4><address>Zeytinburnu, Istanbul</address></div>
             </div>
             <div class="footer-bottom"><p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR.</p></div>
         </div>
     </footer>
 
-    <script src="js/i18n.js" defer></script>
-    <script src="js/app.js" defer></script>
+    <script src="js/api.js?v=2" defer></script>
+    <script src="js/app.js?v=2" defer></script>
+    <script src="js/cart.js?v=2" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const cart = JSON.parse(localStorage.getItem('sandukhar_cart') || '[]');
+
+            if (cart.length === 0) {
+                window.location.href = 'cart.html';
+                return;
+            }
+
+            function renderSummary() {
+                const itemsContainer = document.getElementById('checkout-order-items');
+                const shippingMethod = (document.querySelector('input[name="shipping"]:checked') || {}).value || 'complimentary';
+                const shippingCost = shippingMethod === 'express' ? 150 : 0;
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const total = subtotal + shippingCost;
+
+                itemsContainer.innerHTML = cart.map(item => `
+                    <div class="order-item">
+                        <div class="order-item-image">${item.image ? `<img src="${item.image}" alt="${item.name}">` : (window.SANDUKHAR ? window.SANDUKHAR.media.placeholder(item.name) : '')}</div>
+                        <div>
+                            <div class="order-item-name">${item.name} ${item.quantity > 1 ? '× ' + item.quantity : ''}</div>
+                            ${item.variant ? `<div class="order-item-variant">${item.variant}</div>` : ''}
+                            <div class="order-item-price">${SANDUKHAR.format.price(item.price * item.quantity)}</div>
+                        </div>
+                    </div>
+                `).join('');
+
+                document.getElementById('checkout-subtotal').textContent = SANDUKHAR.format.price(subtotal);
+                document.getElementById('checkout-shipping-cost').textContent = shippingCost > 0 ? SANDUKHAR.format.price(shippingCost) : 'Complimentary';
+                document.getElementById('checkout-total').textContent = SANDUKHAR.format.price(total);
+            }
+
+            renderSummary();
+            document.querySelectorAll('input[name="shipping"]').forEach(opt => opt.addEventListener('change', renderSummary));
+
             const paymentOptions = document.querySelectorAll('input[name="payment"]');
             const cardDetails = document.getElementById('card-details');
             paymentOptions.forEach(option => {
                 option.addEventListener('change', function() {
                     paymentOptions.forEach(opt => opt.closest('.payment-option').classList.remove('selected'));
                     this.closest('.payment-option').classList.add('selected');
-                    cardDetails.style.display = this.value === 'credit-card' ? 'block' : 'none';
+                    cardDetails.classList.toggle('active', this.value === 'credit-card');
                 });
             });
             const shippingOptions = document.querySelectorAll('input[name="shipping"]');
@@ -249,10 +292,15 @@
                     this.closest('.payment-option').classList.add('selected');
                 });
             });
+
             const placeOrderBtn = document.getElementById('place-order-btn');
             const form = document.getElementById('checkout-form');
+            const errorMessage = document.getElementById('checkout-error-message');
+
             placeOrderBtn.addEventListener('click', function(e) {
                 e.preventDefault();
+                errorMessage.style.display = 'none';
+
                 let isValid = true;
                 form.querySelectorAll('[required]').forEach(field => {
                     if (!field.value.trim()) {
@@ -266,15 +314,61 @@
                     if (firstError) { firstError.scrollIntoView({ behavior: 'smooth', block: 'center' }); firstError.focus(); }
                     return;
                 }
-                placeOrderBtn.textContent = (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t('checkout_processing') : 'Processing...';
+
+                const paymentMethod = (document.querySelector('input[name="payment"]:checked') || {}).value || 'credit-card';
+                if (paymentMethod === 'credit-card') {
+                    const cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
+                    const cardExpiry = document.getElementById('card-expiry').value;
+                    const cardCvc = document.getElementById('card-cvc').value;
+                    if (cardNumber.length < 15 || !cardExpiry.includes('/') || cardCvc.length < 3) {
+                        errorMessage.textContent = 'Please check your card details.';
+                        errorMessage.style.display = 'block';
+                        return;
+                    }
+                }
+
+                placeOrderBtn.textContent = 'Processing…';
                 placeOrderBtn.disabled = true;
-                setTimeout(() => {
-                    placeOrderBtn.textContent = (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t('checkout_confirmed') : 'Order Confirmed ✓';
+
+                const shippingMethod = (document.querySelector('input[name="shipping"]:checked') || {}).value || 'complimentary';
+                const email = document.getElementById('email').value.trim();
+
+                const orderPayload = {
+                    items: cart.map(item => ({
+                        productId: item.id,
+                        quantity: item.quantity,
+                        variant: item.variant || null,
+                        imageUrl: item.image || null
+                    })),
+                    shippingAddress: {
+                        firstName: document.getElementById('first-name').value.trim(),
+                        lastName: document.getElementById('last-name').value.trim(),
+                        email: email,
+                        phone: document.getElementById('phone').value.trim(),
+                        addressLine1: document.getElementById('address').value.trim(),
+                        city: document.getElementById('city').value.trim(),
+                        postalCode: document.getElementById('postal-code').value.trim(),
+                        country: document.getElementById('country').value
+                    },
+                    shippingMethod: shippingMethod,
+                    paymentMethod: paymentMethod
+                };
+
+                window.SD_API.createOrder(orderPayload).then((res) => {
+                    localStorage.removeItem('sandukhar_cart');
+                    placeOrderBtn.textContent = 'Order Confirmed ✓';
                     placeOrderBtn.style.background = 'var(--color-success)';
                     placeOrderBtn.style.borderColor = 'var(--color-success)';
                     placeOrderBtn.style.color = 'white';
-                    setTimeout(() => { window.location.href = 'track-order.html?order=confirmed'; }, 2000);
-                }, 1500);
+                    setTimeout(() => {
+                        window.location.href = 'track-order.html?order=' + encodeURIComponent(res.data.order.order_number) + '&email=' + encodeURIComponent(email);
+                    }, 1500);
+                }).catch((err) => {
+                    errorMessage.textContent = err.message || 'Something went wrong placing your order. Please try again.';
+                    errorMessage.style.display = 'block';
+                    placeOrderBtn.textContent = 'Place Order Securely';
+                    placeOrderBtn.disabled = false;
+                });
             });
             const cardNumber = document.getElementById('card-number');
             if (cardNumber) {
@@ -294,6 +388,5 @@
             }
         });
     </script>
-    <script src="js/i18n.js"></script>
 </body>
 </html>

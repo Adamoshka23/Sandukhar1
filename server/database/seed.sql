@@ -8,7 +8,7 @@ INSERT INTO users (id, email, password_hash, first_name, last_name, role, email_
 VALUES (
     uuid_generate_v4(),
     'admin@sandukhar.com',
-    '$2b$12$LJ3m4ys3Ll0cRCbJkVtM1e8nOUqpH7kLMVSBZMk0rpOMXGqBkTzOe',
+    '$2b$12$uDjS6.F/TecqUVT3.OyOG.RXNvwt0NJqOHpgW/R5puolXbFHbK.dC',
     'Dukhar',
     'San',
     'admin',
@@ -150,6 +150,6 @@ INSERT INTO settings (key, value, description) VALUES
 ('site_description', '{"en": "Luxury Exotic Leather Atelier", "ru": "Ателье экзотической кожи"}', 'Site description'),
 ('contact_email', '"concierge@sandukhar.com"', 'Main contact email'),
 ('contact_phone', '"+90 212 345 67 89"', 'Main contact phone'),
-('address', '{"line1": "Abdi İpekçi Caddesi No: 47", "city": "Istanbul", "district": "Nişantaşı", "postal_code": "34367", "country": "Turkey"}', 'Atelier address'),
-('working_hours', '{"en": "Monday – Saturday: 10:00 – 19:00", "ru": "Понедельник – Суббота: 10:00 – 19:00"}', 'Working hours'),
+('address', '{"line1": "Yenidoğan, Zübeyde Hanım Cd. No:80/B", "city": "İstanbul", "district": "Zeytinburnu", "postal_code": "34021", "country": "Turkey"}', 'Atelier address'),
+('working_hours', '{"en": "Monday – Friday: 10:00 – 19:00 · Saturday: 10:00 – 15:00 · Sunday: Closed", "ru": "Понедельник – Пятница: 10:00 – 19:00 · Суббота: 10:00 – 15:00 · Воскресенье: Выходной"}', 'Working hours'),
 ('social_links', '{"instagram": "https://www.instagram.com/sandukhar", "facebook": "https://www.facebook.com/sandukhar", "pinterest": "https://www.pinterest.com/sandukhar"}', 'Social media links');

@@ -1,0 +1,19 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a2a2a"/>
+      <stop offset="55%" stop-color="#1a1a1a"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a8854b"/>
+      <stop offset="50%" stop-color="#d4bc8b"/>
+      <stop offset="100%" stop-color="#a8854b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="48" y="48" width="1104" height="534" fill="none" stroke="#c5a572" stroke-opacity="0.35" stroke-width="1.5"/>
+  <text x="600" y="300" text-anchor="middle" font-family="Georgia, 'Cormorant Garamond', serif" font-size="92" letter-spacing="18" fill="url(#gold)">SAN DUKHAR</text>
+  <text x="600" y="352" text-anchor="middle" font-family="Georgia, 'Cormorant Garamond', serif" font-size="22" letter-spacing="10" fill="#8a8278">ISTANBUL</text>
+  <text x="600" y="410" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" letter-spacing="4" fill="#b0a89e">EXOTIC LEATHER ATELIER · SINCE 2008</text>
+</svg>

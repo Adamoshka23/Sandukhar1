@@ -269,7 +269,7 @@ CREATE TABLE tailoring_orders (
 -- ============================================================
 CREATE TABLE translations (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    key VARCHAR(300) UNIQUE NOT NULL,
+    key VARCHAR(300) NOT NULL,
     locale VARCHAR(10) NOT NULL,
     value TEXT NOT NULL,
     context VARCHAR(100),

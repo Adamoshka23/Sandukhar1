@@ -1,0 +1,15 @@
+<svg width="900" height="1125" viewBox="0 0 900 1125" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c231e"/><stop offset="55%" stop-color="#121712"/><stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <pattern id="grid" width="16" height="16" patternUnits="userSpaceOnUse">
+      <rect width="14" height="14" x="1" y="1" fill="none" stroke="#ffffff" stroke-opacity="0.035" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="900" height="1125" fill="url(#bg)"/>
+  <rect width="900" height="1125" fill="url(#grid)"/>
+  <rect x="30" y="30" width="840" height="1065" fill="none" stroke="#c5a572" stroke-opacity="0.25" stroke-width="1.5"/>
+  <text x="450" y="545" text-anchor="middle" font-family="Georgia, 'Cormorant Garamond', serif" font-weight="300" font-size="68" letter-spacing="6" fill="#c5a572" fill-opacity="0.6">LIZARD</text>
+  <text x="450" y="610" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" letter-spacing="6" fill="#8a8278">SAN DUKHAR ATELIER</text>
+</svg>

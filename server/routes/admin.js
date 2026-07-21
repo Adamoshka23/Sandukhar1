@@ -105,6 +105,51 @@ router.delete('/products/:id', async (req, res) => {
 });
 
 // ============================================================
+// PRODUCT IMAGES
+// ============================================================
+const { productUpload } = require('../middleware/upload');
+
+router.post('/products/:id/images', productUpload.array('images', 10), async (req, res) => {
+    try {
+        const { id } = req.params;
+        const files = req.files || [];
+
+        if (files.length === 0) {
+            return res.status(400).json({ success: false, message: 'No images uploaded' });
+        }
+
+        const existingCount = await query('SELECT COUNT(*) as count FROM product_images WHERE product_id = $1', [id]);
+        const hasPrimary = parseInt(existingCount.rows[0].count) > 0;
+
+        const inserted = [];
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const url = `${req.protocol}://${req.get('host')}/uploads/products/${file.filename}`;
+            const result = await query(
+                `INSERT INTO product_images (id, product_id, image_url, sort_order, is_primary)
+                 VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+                [uuidv4(), id, url, i, !hasPrimary && i === 0]
+            );
+            inserted.push(result.rows[0]);
+        }
+
+        res.status(201).json({ success: true, data: { images: inserted } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.delete('/products/:id/images/:imageId', async (req, res) => {
+    try {
+        const { imageId } = req.params;
+        await query('DELETE FROM product_images WHERE id = $1', [imageId]);
+        res.json({ success: true, message: 'Image deleted' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// ============================================================
 // CATEGORIES CRUD
 // ============================================================
 router.post('/categories', async (req, res) => {
@@ -217,6 +262,140 @@ router.delete('/translations/:id', async (req, res) => {
         const { id } = req.params;
         await query(`DELETE FROM translations WHERE id = $1`, [id]);
         res.json({ success: true, message: 'Translation deleted' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// ============================================================
+// ORDERS
+// ============================================================
+router.get('/orders', async (req, res) => {
+    try {
+        const result = await query('SELECT * FROM orders ORDER BY created_at DESC LIMIT 200');
+        res.json({ success: true, data: { orders: result.rows } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.patch('/orders/:id/status', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+        const result = await query(`UPDATE orders SET status = $2 WHERE id = $1 RETURNING *`, [id, status]);
+        if (result.rows.length === 0) return res.status(404).json({ success: false, message: 'Order not found' });
+        res.json({ success: true, data: { order: result.rows[0] } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// ============================================================
+// REVIEWS MODERATION
+// ============================================================
+router.get('/reviews', async (req, res) => {
+    try {
+        const { status = 'pending' } = req.query;
+        const result = await query(
+            `SELECT r.*, u.email as user_email, p.name_en as product_name
+             FROM reviews r JOIN users u ON u.id = r.user_id JOIN products p ON p.id = r.product_id
+             WHERE r.is_approved = $1 ORDER BY r.created_at DESC`,
+            [status === 'approved']
+        );
+        res.json({ success: true, data: { reviews: result.rows } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.patch('/reviews/:id/approve', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await query(`UPDATE reviews SET is_approved = true WHERE id = $1 RETURNING *`, [id]);
+        if (result.rows.length === 0) return res.status(404).json({ success: false, message: 'Review not found' });
+        res.json({ success: true, data: { review: result.rows[0] } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.delete('/reviews/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await query(`DELETE FROM reviews WHERE id = $1`, [id]);
+        res.json({ success: true, message: 'Review deleted' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// ============================================================
+// CONTACT ENQUIRIES
+// ============================================================
+router.get('/contacts', async (req, res) => {
+    try {
+        const result = await query('SELECT * FROM contact_enquiries ORDER BY created_at DESC LIMIT 200');
+        res.json({ success: true, data: { enquiries: result.rows } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.patch('/contacts/:id/read', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await query(`UPDATE contact_enquiries SET is_read = true WHERE id = $1 RETURNING *`, [id]);
+        if (result.rows.length === 0) return res.status(404).json({ success: false, message: 'Enquiry not found' });
+        res.json({ success: true, data: { enquiry: result.rows[0] } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// ============================================================
+// BESPOKE / TAILORING REQUESTS
+// ============================================================
+router.get('/tailoring', async (req, res) => {
+    try {
+        const result = await query('SELECT * FROM tailoring_orders ORDER BY created_at DESC LIMIT 200');
+        res.json({ success: true, data: { requests: result.rows } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.patch('/tailoring/:id/status', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+        const result = await query(`UPDATE tailoring_orders SET status = $2 WHERE id = $1 RETURNING *`, [id, status]);
+        if (result.rows.length === 0) return res.status(404).json({ success: false, message: 'Request not found' });
+        res.json({ success: true, data: { request: result.rows[0] } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// ============================================================
+// NEWSLETTER SUBSCRIBERS
+// ============================================================
+router.get('/newsletter', async (req, res) => {
+    try {
+        const result = await query('SELECT * FROM newsletter_subscribers WHERE is_active = true ORDER BY subscribed_at DESC');
+        res.json({ success: true, data: { subscribers: result.rows } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// ============================================================
+// USERS
+// ============================================================
+router.get('/users', async (req, res) => {
+    try {
+        const result = await query('SELECT id, email, first_name, last_name, role, is_active, created_at, last_login FROM users ORDER BY created_at DESC LIMIT 200');
+        res.json({ success: true, data: { users: result.rows } });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

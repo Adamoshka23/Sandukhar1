@@ -12,9 +12,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css?v=2">
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="stylesheet" href="css/responsive.css?v=2">
+    <link rel="icon" type="image/svg+xml" href="icons/sandukhar-logo-gold.svg">
 
     <style>
         .cart-hero { text-align: center; padding: calc(var(--header-height) + 4rem) 0 3rem; }
@@ -32,18 +33,23 @@
         .cart-item-price { font-size: 1rem; font-weight: var(--font-weight-medium); color: var(--color-gold); }
         .cart-item-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 1rem; }
         .quantity-control { display: flex; align-items: center; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); overflow: hidden; }
-        .qty-btn { width: 36px; height: 36px; background: transparent; border: none; color: var(--color-text-secondary); font-size: 1rem; cursor: pointer; transition: all var(--transition-fast); }
+        .qty-btn { width: 36px; height: 36px; background: transparent; border: none; color: var(--color-text-secondary); font-size: 1rem; cursor: pointer; transition: color 0.2s ease, background-color 0.2s ease, transform 0.1s var(--ease-out-strong); }
         .qty-btn:hover { color: var(--color-white); background: rgba(255,255,255,0.05); }
+        .qty-btn:active { transform: scale(0.88); transition-duration: 0.06s; }
         .qty-display { width: 44px; height: 36px; display: flex; align-items: center; justify-content: center; color: var(--color-white); font-size: var(--font-size-small); font-family: var(--font-body); }
-        .remove-item-btn { background: none; border: none; color: var(--color-text-muted); font-size: var(--font-size-caption); cursor: pointer; text-transform: uppercase; letter-spacing: 0.08em; transition: color var(--transition-fast); }
+        .qty-display.bump { animation: qtyBump 0.25s var(--ease-out-strong); }
+        @keyframes qtyBump { 0% { transform: scale(1); } 40% { transform: scale(1.25); } 100% { transform: scale(1); } }
+        .remove-item-btn { background: none; border: none; color: var(--color-text-muted); font-size: var(--font-size-caption); cursor: pointer; text-transform: uppercase; letter-spacing: 0.08em; transition: color 0.2s ease; }
         .remove-item-btn:hover { color: var(--color-error); }
+        .cart-item { transition: opacity 0.25s ease, transform 0.25s ease; }
+        .cart-item.removing { opacity: 0; transform: translateX(24px) scale(0.97); }
         .cart-summary { position: sticky; top: calc(var(--header-height-scrolled) + 2rem); padding: 2rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); background: rgba(255,255,255,0.02); }
         .cart-summary h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--color-white); margin-bottom: 1.5rem; }
         .summary-row { display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid var(--color-border); font-size: var(--font-size-small); color: var(--color-text-secondary); }
         .summary-row.total { border-bottom: none; font-size: 1.1rem; font-weight: var(--font-weight-semibold); color: var(--color-white); padding-top: 1.2rem; }
         .summary-row.total .summary-value { color: var(--color-gold); }
         .promo-input { width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); background: transparent; color: var(--color-white); font-size: var(--font-size-caption); margin: 1rem 0; font-family: var(--font-body); }
-        .promo-input:focus { border-color: var(--color-gold); outline: none; }
+        .promo-input:focus { border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(197,165,114,0.12); outline: none; }
         .promo-input::placeholder { color: var(--color-text-muted); }
         .btn-checkout { width: 100%; margin-top: 1rem; display: inline-flex; align-items: center; justify-content: center; text-align: center; }
         .cart-empty-state { text-align: center; padding: 5rem 2rem; display: none; }
@@ -129,15 +135,13 @@
                 <div class="footer-col footer-col-brand"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR" style="height:1.8rem;"></a><p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship.</p></div>
                 <div class="footer-col"><h4 data-i18n="footer_customer_care">Customer Care</h4><ul><li><a href="contacts.html" data-i18n="footer_contact_faq">Contact</a></li><li><a href="track-order.html" data-i18n="footer_track">Track Order</a></li></ul></div>
                 <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="#" data-i18n="footer_privacy">Privacy</a></li><li><a href="#" data-i18n="footer_terms">Terms</a></li></ul></div>
-                <div class="footer-col"><h4 data-i18n="footer_istanbul">Istanbul</h4><address>Nişantaşı, Istanbul</address></div>
+                <div class="footer-col"><h4 data-i18n="footer_istanbul">Istanbul</h4><address>Zeytinburnu, Istanbul</address></div>
             </div>
             <div class="footer-bottom"><p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR.</p></div>
         </div>
     </footer>
 
-    <script src="js/i18n.js" defer></script>
-    <script src="js/app.js" defer></script>
-    <script src="js/cart.js" defer></script>
-    <script src="js/i18n.js"></script>
+    <script src="js/app.js?v=2" defer></script>
+    <script src="js/cart.js?v=2" defer></script>
 </body>
 </html>

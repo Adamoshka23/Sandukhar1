@@ -1,0 +1,15 @@
+<svg width="900" height="1125" viewBox="0 0 900 1125" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2c2219"/><stop offset="55%" stop-color="#1c1611"/><stop offset="100%" stop-color="#0a0a0a"/>
+    </linearGradient>
+    <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="11" cy="11" r="1.6" fill="#ffffff" fill-opacity="0.05"/>
+    </pattern>
+  </defs>
+  <rect width="900" height="1125" fill="url(#bg)"/>
+  <rect width="900" height="1125" fill="url(#dots)"/>
+  <rect x="30" y="30" width="840" height="1065" fill="none" stroke="#c5a572" stroke-opacity="0.25" stroke-width="1.5"/>
+  <text x="450" y="545" text-anchor="middle" font-family="Georgia, 'Cormorant Garamond', serif" font-weight="300" font-size="66" letter-spacing="6" fill="#c5a572" fill-opacity="0.6">OSTRICH</text>
+  <text x="450" y="610" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" letter-spacing="6" fill="#8a8278">SAN DUKHAR ATELIER</text>
+</svg>

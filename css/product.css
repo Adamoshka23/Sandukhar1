@@ -410,13 +410,19 @@
     align-items: center;
     justify-content: center;
     color: var(--color-text-secondary);
-    transition: all var(--transition-fast);
+    transition: border-color 0.2s ease, color 0.2s ease,
+                background-color 0.2s ease, transform 0.12s var(--ease-out-strong);
     flex-shrink: 0;
 }
 
 .btn-wishlist-large:hover {
     border-color: var(--color-gold);
     color: var(--color-gold);
+}
+
+.btn-wishlist-large:active {
+    transform: scale(var(--press-scale));
+    transition-duration: 0.08s;
 }
 
 .btn-wishlist-large.active {
@@ -427,6 +433,13 @@
 
 .btn-wishlist-large.active svg {
     fill: var(--color-gold);
+    animation: wishlistPop 0.4s var(--ease-out-strong);
+}
+
+@keyframes wishlistPop {
+    0% { transform: scale(1); }
+    35% { transform: scale(1.35); }
+    100% { transform: scale(1); }
 }
 
 .bespoke-link {
@@ -496,12 +509,18 @@
 .accordion-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease, padding 0.4s ease;
+    transition: max-height 0.4s var(--ease-in-out-strong), padding 0.4s var(--ease-in-out-strong);
 }
 
 .accordion-content.active {
-    max-height: 600px;
+    /* Generous cap well above any real panel so the transition always runs
+       to the content's true height rather than clipping it. */
+    max-height: 700px;
     padding-bottom: 1.2rem;
+}
+
+.accordion-content-inner {
+    padding-bottom: 0;
 }
 
 .accordion-content p {
