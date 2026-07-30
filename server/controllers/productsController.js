@@ -18,8 +18,9 @@ const productsController = {
                 category, material, featured, search,
                 sort = 'created_at', order = 'DESC',
                 page = 1, limit = 12,
-                locale = 'en'
+                locale: rawLocale = 'en'
             } = req.query;
+            const locale = rawLocale === 'ru' ? 'ru' : 'en';
 
             let sql = `
                 SELECT p.*,
@@ -144,7 +145,8 @@ const productsController = {
     getBySlug: async (req, res, next) => {
         try {
             const { slug } = req.params;
-            const { locale = 'en' } = req.query;
+            const { locale: rawLocale = 'en' } = req.query;
+            const locale = rawLocale === 'ru' ? 'ru' : 'en';
 
             const result = await query(`
                 SELECT p.*,
@@ -259,9 +261,12 @@ const productsController = {
             // Build dynamic UPDATE query
             const allowedFields = [
                 'slug', 'sku', 'name_ru', 'name_en', 'description_ru', 'description_en',
+                'short_description_ru', 'short_description_en',
                 'price', 'old_price', 'category_id', 'material_id',
-                'stock', 'status', 'featured', 'limited_edition', 'made_to_order'
+                'stock', 'status', 'featured', 'limited_edition', 'made_to_order',
+                'colors', 'sizes', 'hardware_options', 'specifications'
             ];
+            const jsonbFields = ['colors', 'sizes', 'hardware_options', 'specifications'];
 
             const setClauses = [];
             const params = [id];
@@ -272,7 +277,7 @@ const productsController = {
                 if (allowedFields.includes(dbKey)) {
                     paramCount++;
                     setClauses.push(`${dbKey} = $${paramCount}`);
-                    params.push(value);
+                    params.push(jsonbFields.includes(dbKey) ? JSON.stringify(value || []) : value);
                 }
             }
 

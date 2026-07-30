@@ -22,7 +22,19 @@ const app = express();
 // SECURITY MIDDLEWARE
 // ============================================================
 app.use(helmet({
-    contentSecurityPolicy: false,
+    // This server only ever returns JSON and uploaded image files (no HTML
+    // templates, no inline scripts) — safe to run a strict policy here.
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'"],
+            styleSrc: ["'self'"],
+            imgSrc: ["'self'", 'data:'],
+            objectSrc: ["'none'"],
+            baseUri: ["'self'"],
+            frameAncestors: ["'self'"]
+        }
+    },
     crossOriginEmbedderPolicy: false,
     // The frontend is served from a different origin/port than this API
     // (Live Server, python http.server, Vite, ...). Helmet's default

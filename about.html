@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Discover the story of SAN DUKHAR — Istanbul's premier exotic leather atelier. Founded in 2008.">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: http://localhost:3000; connect-src 'self' http://localhost:3000; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="description" content="Discover the story of SAN DUKHAR — Istanbul's premier exotic leather atelier. Founded in 2021.">
     
-    <title data-i18n="nav_atelier">Our Atelier | SAN DUKHAR</title>
+    <title data-i18n="title_atelier">Our Atelier | SAN DUKHAR</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +18,7 @@
     <link rel="icon" type="image/svg+xml" href="icons/sandukhar-logo-gold.svg">
 
     <style>
-        .about-hero { position: relative; height: 70vh; min-height: 500px; display: flex; align-items: center; margin-top: var(--header-height); background: url('images/placeholder-bg.svg') center/cover no-repeat; }
+        .about-hero { position: relative; height: 70vh; min-height: 500px; display: flex; align-items: center; margin-top: var(--header-height); background: url('images/about/atelier-hero.jpg') center/cover no-repeat; }
         .about-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, rgba(10,10,10,0.8) 0%, rgba(10,10,10,0.3) 70%); }
         .about-hero-content { position: relative; z-index: 1; max-width: 600px; padding: var(--space-2xl) var(--container-padding); }
         .about-hero-content h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 5rem); font-weight: var(--font-weight-light); color: var(--color-white); margin-bottom: var(--space-md); }
@@ -64,63 +65,82 @@
                 </ul>
             </nav>
             <div class="header-utilities">
+                <button class="utility-btn lang-toggle" data-lang-toggle aria-label="Switch language"><span class="lang-toggle-current">RU</span></button>
+
                 <a href="cart.html" class="utility-btn cart-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count">0</span></a>
                 <button class="utility-btn menu-trigger" id="mobile-menu-trigger"><span class="menu-line"></span><span class="menu-line"></span><span class="menu-line"></span></button>
             </div>
         </div>
     </header>
 
+    <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+        <div class="mobile-nav-container">
+            <span class="mobile-nav-eyebrow">Menu</span>
+            <ul>
+                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                <li><a href="catalog.html" data-i18n="nav_collections">Collections</a></li>
+                <li><a href="materials.html" data-i18n="nav_materials">Materials</a></li>
+                <li><a href="tailoring.html" data-i18n="nav_bespoke">Bespoke Tailoring</a></li>
+                <li><a href="about.html" data-i18n="nav_atelier">Our Atelier</a></li>
+                <li><a href="contacts.html" data-i18n="nav_contact">Contact</a></li>
+                <li><a href="account.html" data-i18n="account_title">My Account</a></li>
+                <li><a href="wishlist.html" data-i18n="account_wishlist">Wishlist</a></li>
+                <li><a href="cart.html" data-i18n="nav_cart">Cart</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <main>
         <section class="about-hero">
             <div class="about-hero-content">
-                <h1 class="fade-in-up" data-i18n="brand_title">The Atelier of<br>Silent Luxury</h1>
-                <p class="fade-in-up delay-1">Born in Istanbul in 2008, SAN DUKHAR bridges centuries of Anatolian craftsmanship with a contemporary vision of understated elegance.</p>
+                <h1 class="fade-in-up" data-i18n="about_brand_title">The Atelier of<br>Silent Luxury</h1>
+                <p class="fade-in-up delay-1" data-i18n="about_hero_subtitle">Born in Istanbul in 2021, SAN DUKHAR bridges centuries of Anatolian craftsmanship with a contemporary vision of understated elegance.</p>
             </div>
         </section>
         <section class="section-padding">
             <div class="container">
                 <div class="founder-section">
-                    <div class="founder-image slide-up"><img src="images/placeholder-tile.svg" alt="Dukhar San, founder of SAN DUKHAR" loading="lazy"></div>
+                    <div class="founder-image slide-up"><img src="images/about/founder-dukhar-san.jpg" alt="Dukhar San, founder of SAN DUKHAR" loading="lazy"></div>
                     <div class="slide-up delay-1">
-                        <blockquote class="founder-quote">"True luxury does not announce itself. It is felt in the weight of a lock, seen in the symmetry of a stitch, and understood in the silence of admiration."</blockquote>
-                        <p style="color:var(--color-text-secondary);line-height:var(--line-height-luxury);margin-bottom:var(--space-md);" data-i18n="brand_desc1">SAN DUKHAR was born from a profound respect for nature's most exquisite materials.</p>
-                        <p style="color:var(--color-text-secondary);line-height:var(--line-height-luxury);" data-i18n="brand_desc2">Every stitch, every cut, and every polish is performed by a master artisan.</p>
-                        <p class="founder-name" style="margin-top:var(--space-md);">— Dukhar San, Founder & Creative Director</p>
+                        <blockquote class="founder-quote" data-i18n="about_founder_quote">"True luxury does not announce itself. It is felt in the weight of a lock, seen in the symmetry of a stitch, and understood in the silence of admiration."</blockquote>
+                        <p style="color:var(--color-text-secondary);line-height:var(--line-height-luxury);margin-bottom:var(--space-md);" data-i18n="about_brand_desc1">SAN DUKHAR was born from a profound respect for nature's most exquisite materials.</p>
+                        <p style="color:var(--color-text-secondary);line-height:var(--line-height-luxury);" data-i18n="about_brand_desc2">Every stitch, every cut, and every polish is performed by a master artisan.</p>
+                        <p class="founder-name" style="margin-top:var(--space-md);" data-i18n="about_founder_name">— Dukhar San, Founder & Creative Director</p>
                     </div>
                 </div>
             </div>
         </section>
         <section class="section-padding bg-graphite">
             <div class="container">
-                <div class="section-header slide-up"><h2 class="section-title">Our Journey</h2></div>
+                <div class="section-header slide-up"><h2 class="section-title" data-i18n="about_journey_title">Our Journey</h2></div>
                 <div class="timeline">
-                    <div class="timeline-item slide-up"><div class="timeline-year">2008</div><div class="timeline-title">The First Atelier</div><p class="timeline-text">SAN DUKHAR opens its first workshop in Zeytinburnu, Istanbul.</p></div>
-                    <div class="timeline-item slide-up delay-1"><div class="timeline-year">2014</div><div class="timeline-title">Bespoke Program Launch</div><p class="timeline-text">The Bespoke Atelier is established.</p></div>
-                    <div class="timeline-item slide-up delay-2"><div class="timeline-year">2017</div><div class="timeline-title">Collection</div><p class="timeline-text">The iconic Imperium Collection debuts.</p></div>
-                    <div class="timeline-item slide-up delay-3"><div class="timeline-year">2020</div><div class="timeline-title">Global Recognition</div><p class="timeline-text">SAN DUKHAR pieces appear in private collections worldwide.</p></div>
-                    <div class="timeline-item slide-up delay-4"><div class="timeline-year">2026</div><div class="timeline-title">A New Chapter</div><p class="timeline-text">The house unveils its renewed digital presence.</p></div>
+                    <div class="timeline-item slide-up"><div class="timeline-year">2021</div><div class="timeline-title" data-i18n="about_timeline_2021_title">The First Atelier</div><p class="timeline-text" data-i18n="about_timeline_2021_text">SAN DUKHAR opens its first workshop in Zeytinburnu, Istanbul.</p></div>
+                    <div class="timeline-item slide-up delay-1"><div class="timeline-year">2022</div><div class="timeline-title" data-i18n="about_timeline_2022_title">Bespoke Program Launch</div><p class="timeline-text" data-i18n="about_timeline_2022_text">The Bespoke Atelier is established.</p></div>
+                    <div class="timeline-item slide-up delay-2"><div class="timeline-year">2023</div><div class="timeline-title" data-i18n="about_timeline_2023_title">Collection</div><p class="timeline-text" data-i18n="about_timeline_2023_text">The iconic Sovereign Collection debuts.</p></div>
+                    <div class="timeline-item slide-up delay-3"><div class="timeline-year">2024</div><div class="timeline-title" data-i18n="about_timeline_2024_title">Global Recognition</div><p class="timeline-text" data-i18n="about_timeline_2024_text">SAN DUKHAR pieces appear in private collections worldwide.</p></div>
+                    <div class="timeline-item slide-up delay-4"><div class="timeline-year">2026</div><div class="timeline-title" data-i18n="about_timeline_2026_title">A New Chapter</div><p class="timeline-text" data-i18n="about_timeline_2026_text">The house unveils its renewed digital presence.</p></div>
                 </div>
             </div>
         </section>
         <section class="section-padding">
             <div class="container">
-                <div class="section-header slide-up"><h2 class="section-title">Our Philosophy</h2></div>
+                <div class="section-header slide-up"><h2 class="section-title" data-i18n="about_philosophy_title">Our Philosophy</h2></div>
                 <div class="promise-grid stagger-children">
-                    <div class="promise-item"><img src="icons/icon-handmade.svg" alt="" class="promise-icon"><h4 data-i18n="promise_handmade_title">Handcrafted in Istanbul</h4><p data-i18n="promise_handmade_desc">Over 80 hours of meticulous labor.</p></div>
-                    <div class="promise-item"><img src="icons/icon-limited.svg" alt="" class="promise-icon"><h4 data-i18n="promise_limited_title">Limited Production</h4><p data-i18n="promise_limited_desc">We intentionally limit our collections.</p></div>
-                    <div class="promise-item"><img src="icons/icon-certificate.svg" alt="" class="promise-icon"><h4 data-i18n="promise_certificate_title">Certificate of Authenticity</h4><p data-i18n="promise_certificate_desc">Each creation arrives with a signed certificate.</p></div>
-                    <div class="promise-item"><img src="icons/icon-lifetime-repair.svg" alt="" class="promise-icon"><h4 data-i18n="promise_repair_title">Lifetime Restoration</h4><p data-i18n="promise_repair_desc">Complimentary cleaning and restoration.</p></div>
+                    <div class="promise-item"><img src="icons/icon-handmade.svg" alt="" class="promise-icon"><h4 data-i18n="promise_handmade_title">Handcrafted in Istanbul</h4><p data-i18n="about_promise_handmade_desc">Over 80 hours of meticulous labor.</p></div>
+                    <div class="promise-item"><img src="icons/icon-limited.svg" alt="" class="promise-icon"><h4 data-i18n="promise_limited_title">Limited Production</h4><p data-i18n="about_promise_limited_desc">We intentionally limit our collections.</p></div>
+                    <div class="promise-item"><img src="icons/icon-certificate.svg" alt="" class="promise-icon"><h4 data-i18n="promise_certificate_title">Certificate of Authenticity</h4><p data-i18n="about_promise_certificate_desc">Each creation arrives with a signed certificate.</p></div>
+                    <div class="promise-item"><img src="icons/icon-lifetime-repair.svg" alt="" class="promise-icon"><h4 data-i18n="promise_repair_title">Lifetime Restoration</h4><p data-i18n="about_promise_repair_desc">Complimentary cleaning and restoration.</p></div>
                 </div>
             </div>
         </section>
         <section class="section-padding bg-graphite">
             <div class="container">
-                <div class="section-header slide-up"><h2 class="section-title">The Hands Behind the Art</h2></div>
+                <div class="section-header slide-up"><h2 class="section-title" data-i18n="about_hands_title">The Hands Behind the Art</h2></div>
                 <div class="artisan-grid stagger-children">
-                    <div class="artisan-card"><div class="artisan-photo"><img src="images/placeholder-tile.svg" alt="Mehmet Usta" loading="lazy"></div><h4>Mehmet Usta</h4><p class="role">Master Cutter — 31 years</p></div>
-                    <div class="artisan-card"><div class="artisan-photo"><img src="images/placeholder-tile.svg" alt="Ayşe Hanım" loading="lazy"></div><h4>Ayşe Hanım</h4><p class="role">Master Stitcher — 25 years</p></div>
-                    <div class="artisan-card"><div class="artisan-photo"><img src="images/placeholder-tile.svg" alt="Kemal Bey" loading="lazy"></div><h4>Kemal Bey</h4><p class="role">Hardware & Finish — 19 years</p></div>
-                    <div class="artisan-card"><div class="artisan-photo"><img src="images/placeholder-tile.svg" alt="Dukhar San" loading="lazy"></div><h4>Dukhar San</h4><p class="role">Creative Director — 17 years</p></div>
+                    <div class="artisan-card"><div class="artisan-photo"><img src="images/about/artisan-mehmet-usta.jpg" alt="Mehmet Usta" loading="lazy"></div><h4>Mehmet Usta</h4><p class="role" data-i18n="about_artisan_1_role">Master Cutter — 31 years</p></div>
+                    <div class="artisan-card"><div class="artisan-photo"><img src="images/about/artisan-ayse-hanim.jpg" alt="Ayşe Hanım" loading="lazy"></div><h4>Ayşe Hanım</h4><p class="role" data-i18n="about_artisan_2_role">Master Stitcher — 25 years</p></div>
+                    <div class="artisan-card"><div class="artisan-photo"><img src="images/about/artisan-kemal-bey.jpg" alt="Kemal Bey" loading="lazy"></div><h4>Kemal Bey</h4><p class="role" data-i18n="about_artisan_3_role">Hardware & Finish — 19 years</p></div>
+                    <div class="artisan-card"><div class="artisan-photo"><img src="images/about/founder-dukhar-san.jpg" alt="Dukhar San" loading="lazy"></div><h4>Dukhar San</h4><p class="role" data-i18n="about_artisan_4_role">Creative Director — 17 years</p></div>
                 </div>
             </div>
         </section>
@@ -132,7 +152,7 @@
                 <div class="footer-col footer-col-brand"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR" style="height:1.8rem;"></a><p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship.</p></div>
                 <div class="footer-col"><h4 data-i18n="footer_customer_care">Customer Care</h4><ul><li><a href="contacts.html" data-i18n="footer_contact_faq">Contact</a></li></ul></div>
                 <div class="footer-col"><h4 data-i18n="footer_maison">Our Maison</h4><ul><li><a href="about.html" data-i18n="footer_brand_story">Brand Story</a></li></ul></div>
-                <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="#" data-i18n="footer_privacy">Privacy</a></li></ul></div>
+                <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="privacy-policy.html" data-i18n="footer_privacy">Privacy</a></li></ul></div>
                 <div class="footer-col"><h4 data-i18n="footer_istanbul">Istanbul</h4><address>Zeytinburnu, Istanbul</address></div>
             </div>
             <div class="footer-bottom"><p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR.</p></div>
@@ -140,5 +160,7 @@
     </footer>
 
     <script src="js/app.js?v=2" defer></script>
+    <script src="js/translations.js?v=1"></script>
+    <script src="js/i18n.js?v=1"></script>
 </body>
 </html>

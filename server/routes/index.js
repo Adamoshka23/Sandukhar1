@@ -13,7 +13,6 @@ router.use('/reviews', require('./reviews'));
 router.use('/addresses', require('./addresses'));
 router.use('/users', require('./users'));
 router.use('/contacts', require('./contacts'));
-router.use('/newsletter', require('./newsletter'));
 router.use('/tailoring', require('./tailoring'));
 router.use('/faq', require('./faq'));
 router.use('/gallery', require('./gallery'));

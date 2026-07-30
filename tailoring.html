@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: http://localhost:3000; connect-src 'self' http://localhost:3000; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="description"
         content="Commission a bespoke exotic leather piece from SAN DUKHAR. Configure your custom jacket, bag, or accessory.">
 
-    <title data-i18n="tailoring_title">Bespoke Tailoring | SAN DUKHAR</title>
+    <title data-i18n="title_tailoring">Bespoke Tailoring | SAN DUKHAR</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +30,7 @@
             align-items: center;
             justify-content: center;
             margin-top: var(--header-height);
-            background: url('images/placeholder-bg.svg') center/cover no-repeat;
+            background: url('images/tailoring/bespoke-hero.jpg') center/cover no-repeat;
         }
 
         .bespoke-hero::before {
@@ -165,6 +166,11 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
             margin-bottom: var(--space-xl);
+        }
+
+        .configurator-step[data-flow-key="hardware"] .step-options {
+            grid-template-columns: repeat(2, minmax(0, 220px));
+            justify-content: center;
         }
 
         .step-option-card {
@@ -401,6 +407,8 @@
                 </ul>
             </nav>
             <div class="header-utilities">
+                <button class="utility-btn lang-toggle" data-lang-toggle aria-label="Switch language"><span class="lang-toggle-current">RU</span></button>
+
                 <a href="cart.html" class="utility-btn cart-icon"><svg width="20" height="20" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="1.5">
                         <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
@@ -412,6 +420,23 @@
             </div>
         </div>
     </header>
+
+    <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+        <div class="mobile-nav-container">
+            <span class="mobile-nav-eyebrow">Menu</span>
+            <ul>
+                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                <li><a href="catalog.html" data-i18n="nav_collections">Collections</a></li>
+                <li><a href="materials.html" data-i18n="nav_materials">Materials</a></li>
+                <li><a href="tailoring.html" data-i18n="nav_bespoke">Bespoke Tailoring</a></li>
+                <li><a href="about.html" data-i18n="nav_atelier">Our Atelier</a></li>
+                <li><a href="contacts.html" data-i18n="nav_contact">Contact</a></li>
+                <li><a href="account.html" data-i18n="account_title">My Account</a></li>
+                <li><a href="wishlist.html" data-i18n="account_wishlist">Wishlist</a></li>
+                <li><a href="cart.html" data-i18n="nav_cart">Cart</a></li>
+            </ul>
+        </div>
+    </nav>
 
     <main>
         <section class="bespoke-hero">
@@ -429,64 +454,35 @@
                     collaboration between you and our master artisan.</p>
             </div>
             <div class="configurator-container slide-up delay-1">
-                <div class="configurator-progress" id="configurator-progress">
-                    <div class="progress-step active" data-step="1">
-                        <div class="progress-step-num">1</div><span class="progress-step-label"
-                            data-i18n="tailoring_step_product">Product</span>
-                    </div>
-                    <div class="progress-step" data-step="2">
-                        <div class="progress-step-num">2</div><span class="progress-step-label"
-                            data-i18n="tailoring_step_material">Material</span>
-                    </div>
-                    <div class="progress-step" data-step="3">
-                        <div class="progress-step-num">3</div><span class="progress-step-label"
-                            data-i18n="tailoring_step_color">Color</span>
-                    </div>
-                    <div class="progress-step" data-step="4">
-                        <div class="progress-step-num">4</div><span class="progress-step-label"
-                            data-i18n="tailoring_step_lining">Lining</span>
-                    </div>
-                    <div class="progress-step" data-step="5">
-                        <div class="progress-step-num">5</div><span class="progress-step-label"
-                            data-i18n="tailoring_step_hardware">Hardware</span>
-                    </div>
-                    <div class="progress-step" data-step="6">
-                        <div class="progress-step-num">6</div><span class="progress-step-label"
-                            data-i18n="tailoring_step_size">Size</span>
-                    </div>
-                    <div class="progress-step" data-step="7">
-                        <div class="progress-step-num">7</div><span class="progress-step-label"
-                            data-i18n="tailoring_step_notes">Notes</span>
-                    </div>
-                </div>
+                <div class="configurator-progress" id="configurator-progress"></div>
                 <form id="bespoke-form">
-                    <div class="configurator-step active" data-step="1">
+                    <div class="configurator-step active" data-flow-key="product">
                         <h3 class="step-title" data-i18n="tailoring_select_creation">Select Your Creation</h3>
                         <div class="step-options">
                             <button type="button" class="step-option-card" data-value="jacket">
                                 <div class="option-icon">🧥</div>
                                 <h4 data-i18n="tailoring_jacket">Leather Jacket</h4>
-                                <p>Custom fitted</p>
+                                <p data-i18n="tailoring_jacket_desc">Custom fitted</p>
                             </button>
                             <button type="button" class="step-option-card" data-value="bag">
                                 <div class="option-icon">👜</div>
                                 <h4 data-i18n="tailoring_bag">Bag / Briefcase</h4>
-                                <p>Any configuration</p>
+                                <p data-i18n="tailoring_bag_desc">Any configuration</p>
                             </button>
                             <button type="button" class="step-option-card" data-value="shoes">
                                 <div class="option-icon">👞</div>
                                 <h4 data-i18n="tailoring_shoes">Footwear</h4>
-                                <p>Bespoke last</p>
+                                <p data-i18n="tailoring_shoes_desc">Bespoke last</p>
                             </button>
                             <button type="button" class="step-option-card" data-value="accessory">
                                 <div class="option-icon">💼</div>
                                 <h4 data-i18n="tailoring_accessory">Accessory</h4>
-                                <p>Wallets, belts, cases</p>
+                                <p data-i18n="tailoring_accessory_desc">Wallets, belts, cases</p>
                             </button>
                             <button type="button" class="step-option-card" data-value="other">
                                 <div class="option-icon">✨</div>
                                 <h4 data-i18n="tailoring_other">Other</h4>
-                                <p>Describe your vision</p>
+                                <p data-i18n="tailoring_other_desc">Describe your vision</p>
                             </button>
                         </div>
                         <div class="step-nav">
@@ -494,129 +490,115 @@
                                 data-i18n="tailoring_continue">Continue →</button>
                         </div>
                     </div>
-                    <div class="configurator-step" data-step="2">
+                    <div class="configurator-step" data-flow-key="material">
                         <h3 class="step-title" data-i18n="tailoring_choose_leather">Choose Your Leather</h3>
                         <div class="step-options">
                             <button type="button" class="step-option-card" data-value="crocodile">
                                 <div class="option-icon">🐊</div>
-                                <h4 data-i18n="nav_crocodile">Crocodile</h4>
+                                <h4 data-i18n="material_short_crocodile">Crocodile</h4>
                             </button>
                             <button type="button" class="step-option-card" data-value="python">
                                 <div class="option-icon">🐍</div>
-                                <h4 data-i18n="nav_python">Python</h4>
+                                <h4 data-i18n="material_short_python">Python</h4>
                             </button>
                             <button type="button" class="step-option-card" data-value="ostrich">
                                 <div class="option-icon">🦢</div>
-                                <h4 data-i18n="nav_ostrich">Ostrich</h4>
+                                <h4 data-i18n="material_short_ostrich">Ostrich</h4>
                             </button>
                             <button type="button" class="step-option-card" data-value="stingray">
                                 <div class="option-icon">🦈</div>
-                                <h4 data-i18n="nav_stingray">Stingray</h4>
+                                <h4 data-i18n="material_short_stingray">Stingray</h4>
                             </button>
-                            <button type="button" class="step-option-card" data-value="lizard">
-                                <div class="option-icon">🦎</div>
-                                <h4 data-i18n="nav_lizard">Lizard</h4>
+                            <button type="button" class="step-option-card" data-value="suede">
+                                <div class="option-icon">🐐</div>
+                                <h4 data-i18n="material_short_suede">Suede</h4>
                             </button>
                         </div>
                         <div class="step-nav"><button type="button" class="btn-back" data-i18n="tailoring_back">←
                                 Back</button><button type="button" class="btn-next" disabled
                                 data-i18n="tailoring_continue">Continue →</button></div>
                     </div>
-                    <div class="configurator-step" data-step="3">
+                    <div class="configurator-step" data-flow-key="color">
                         <h3 class="step-title" data-i18n="tailoring_select_color">Select Color</h3>
                         <div class="step-options">
                             <button type="button" class="step-option-card color-card" data-value="black">
                                 <div class="color-preview" style="background:#1a1a1a;"></div>
-                                <h4>Black</h4>
+                                <h4 data-i18n="tailoring_color_black">Black</h4>
                             </button>
                             <button type="button" class="step-option-card color-card" data-value="brown">
                                 <div class="color-preview" style="background:#3e2723;"></div>
-                                <h4>Deep Brown</h4>
+                                <h4 data-i18n="tailoring_color_brown">Deep Brown</h4>
                             </button>
                             <button type="button" class="step-option-card color-card" data-value="cognac">
                                 <div class="color-preview" style="background:#8b5a2b;"></div>
-                                <h4>Cognac</h4>
+                                <h4 data-i18n="tailoring_color_cognac">Cognac</h4>
                             </button>
                             <button type="button" class="step-option-card color-card" data-value="natural">
                                 <div class="color-preview" style="background:#d4c5b2;"></div>
-                                <h4>Natural</h4>
+                                <h4 data-i18n="tailoring_color_natural">Natural</h4>
                             </button>
                             <button type="button" class="step-option-card color-card" data-value="graphite">
                                 <div class="color-preview" style="background:#4a4a4a;"></div>
-                                <h4>Graphite</h4>
+                                <h4 data-i18n="tailoring_color_graphite">Graphite</h4>
                             </button>
                             <button type="button" class="step-option-card color-card" data-value="custom">
                                 <div class="color-preview"
                                     style="background:linear-gradient(135deg,red,orange,yellow,green,blue,purple);">
                                 </div>
-                                <h4>Custom</h4>
+                                <h4 data-i18n="tailoring_color_custom">Custom</h4>
                             </button>
                         </div>
                         <div class="step-nav"><button type="button" class="btn-back" data-i18n="tailoring_back">←
                                 Back</button><button type="button" class="btn-next" disabled
                                 data-i18n="tailoring_continue">Continue →</button></div>
                     </div>
-                    <div class="configurator-step" data-step="4">
+                    <div class="configurator-step" data-flow-key="lining">
                         <h3 class="step-title" data-i18n="tailoring_interior_lining">Interior Lining</h3>
                         <div class="step-options">
                             <button type="button" class="step-option-card" data-value="suede">
-                                <h4>Suede</h4>
+                                <h4 data-i18n="tailoring_lining_suede">Suede</h4>
                             </button>
                             <button type="button" class="step-option-card" data-value="silk">
-                                <h4>Silk</h4>
+                                <h4 data-i18n="tailoring_lining_silk">Silk</h4>
                             </button>
                             <button type="button" class="step-option-card" data-value="leather">
-                                <h4>Smooth Leather</h4>
+                                <h4 data-i18n="tailoring_lining_leather">Smooth Leather</h4>
                             </button>
                             <button type="button" class="step-option-card" data-value="cashmere">
-                                <h4>Cashmere</h4>
+                                <h4 data-i18n="tailoring_lining_cashmere">Cashmere</h4>
                             </button>
                         </div>
                         <div class="step-nav"><button type="button" class="btn-back" data-i18n="tailoring_back">←
                                 Back</button><button type="button" class="btn-next" disabled
                                 data-i18n="tailoring_continue">Continue →</button></div>
                     </div>
-                    <div class="configurator-step" data-step="5">
+                    <div class="configurator-step" data-flow-key="hardware">
                         <h3 class="step-title" data-i18n="tailoring_hardware_finish">Hardware Finish</h3>
                         <div class="step-options">
                             <button type="button" class="step-option-card" data-value="gold"><span
                                     style="background:#c5a572;width:40px;height:40px;border-radius:50%;margin:0 auto 0.8rem;display:block;"></span>
-                                <h4>Gold</h4>
+                                <h4 data-i18n="tailoring_hardware_gold">Gold</h4>
                             </button>
-                            <button type="button" class="step-option-card" data-value="palladium"><span
+                            <button type="button" class="step-option-card" data-value="silver"><span
                                     style="background:#c0c0c0;width:40px;height:40px;border-radius:50%;margin:0 auto 0.8rem;display:block;"></span>
-                                <h4>Palladium</h4>
-                            </button>
-                            <button type="button" class="step-option-card" data-value="ruthenium"><span
-                                    style="background:#4a4a4a;width:40px;height:40px;border-radius:50%;margin:0 auto 0.8rem;display:block;"></span>
-                                <h4>Ruthenium</h4>
+                                <h4 data-i18n="tailoring_hardware_silver">Silver</h4>
                             </button>
                         </div>
                         <div class="step-nav"><button type="button" class="btn-back" data-i18n="tailoring_back">←
                                 Back</button><button type="button" class="btn-next" disabled
                                 data-i18n="tailoring_continue">Continue →</button></div>
                     </div>
-                    <div class="configurator-step" data-step="6">
-                        <h3 class="step-title" data-i18n="tailoring_size_measurements">Size & Measurements</h3>
-                        <div class="step-options">
-                            <button type="button" class="step-option-card" data-value="standard">
-                                <h4 data-i18n="tailoring_standard_size">Standard Size</h4>
-                            </button>
-                            <button type="button" class="step-option-card" data-value="custom-measure">
-                                <h4 data-i18n="tailoring_custom_measure">Custom Measurements</h4>
-                            </button>
-                            <button type="button" class="step-option-card" data-value="atelier-visit">
-                                <h4 data-i18n="tailoring_atelier_visit">Atelier Visit</h4>
-                            </button>
-                        </div>
+                    <div class="configurator-step" data-flow-key="size">
+                        <h3 class="step-title" id="size-step-title" data-i18n="tailoring_size_measurements">Size & Measurements</h3>
+                        <div class="step-options" id="size-step-options"></div>
                         <div class="step-nav"><button type="button" class="btn-back" data-i18n="tailoring_back">←
                                 Back</button><button type="button" class="btn-next" disabled
                                 data-i18n="tailoring_continue">Continue →</button></div>
                     </div>
-                    <div class="configurator-step" data-step="7">
+                    <div class="configurator-step" data-flow-key="notes">
                         <h3 class="step-title" data-i18n="tailoring_final_details">Final Details</h3>
                         <div class="config-summary" id="config-summary">
-                            <h3>Your Commission</h3>
+                            <h3 data-i18n="tailoring_your_commission">Your Commission</h3>
                             <div class="summary-grid" id="summary-grid"></div>
                         </div>
                         <label
@@ -628,16 +610,16 @@
 
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1.5rem;">
                             <div class="form-group">
-                                <label style="display:block;margin-bottom:0.5rem;color:var(--color-text-secondary);font-size:var(--font-size-caption);text-transform:uppercase;letter-spacing:0.08em;">Full Name *</label>
+                                <label style="display:block;margin-bottom:0.5rem;color:var(--color-text-secondary);font-size:var(--font-size-caption);text-transform:uppercase;letter-spacing:0.08em;" data-i18n="tailoring_full_name">Full Name *</label>
                                 <input type="text" id="tailoring-name" class="step-comment" style="min-height:auto;padding:0.9rem 1rem;" required>
                             </div>
                             <div class="form-group">
-                                <label style="display:block;margin-bottom:0.5rem;color:var(--color-text-secondary);font-size:var(--font-size-caption);text-transform:uppercase;letter-spacing:0.08em;">Email *</label>
+                                <label style="display:block;margin-bottom:0.5rem;color:var(--color-text-secondary);font-size:var(--font-size-caption);text-transform:uppercase;letter-spacing:0.08em;" data-i18n="checkout_email">Email *</label>
                                 <input type="email" id="tailoring-email" class="step-comment" style="min-height:auto;padding:0.9rem 1rem;" required>
                             </div>
                         </div>
                         <div class="form-group" style="margin-top:1rem;">
-                            <label style="display:block;margin-bottom:0.5rem;color:var(--color-text-secondary);font-size:var(--font-size-caption);text-transform:uppercase;letter-spacing:0.08em;">Phone</label>
+                            <label style="display:block;margin-bottom:0.5rem;color:var(--color-text-secondary);font-size:var(--font-size-caption);text-transform:uppercase;letter-spacing:0.08em;" data-i18n="account_phone">Phone</label>
                             <input type="tel" id="tailoring-phone" class="step-comment" style="min-height:auto;padding:0.9rem 1rem;">
                         </div>
                         <p class="form-message" id="tailoring-form-message" role="status"></p>
@@ -673,7 +655,7 @@
                 <div class="footer-col">
                     <h4 data-i18n="footer_legal">Legal</h4>
                     <ul>
-                        <li><a href="#" data-i18n="footer_privacy">Privacy</a></li>
+                        <li><a href="privacy-policy.html" data-i18n="footer_privacy">Privacy</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -689,37 +671,191 @@
 
     <script src="js/api.js?v=2" defer></script>
     <script src="js/app.js?v=2" defer></script>
+    <script src="js/translations.js?v=1"></script>
+    <script src="js/i18n.js?v=1"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('bespoke-form');
-            const steps = form.querySelectorAll('.configurator-step');
-            const progressSteps = document.querySelectorAll('.progress-step');
+            const progressEl = document.getElementById('configurator-progress');
+
+            const PRODUCT_FLOWS = {
+                jacket: ['material', 'color', 'lining', 'hardware', 'size', 'notes'],
+                bag: ['material', 'color', 'hardware', 'size', 'notes'],
+                shoes: ['material', 'color', 'size', 'notes'],
+                accessory: ['material', 'color', 'hardware', 'size', 'notes'],
+                other: ['material', 'color', 'notes']
+            };
+
+            const SIZE_STEP_CONFIG = {
+                jacket: {
+                    titleKey: 'tailoring_size_measurements',
+                    options: [
+                        { value: 'standard', icon: '📏', labelKey: 'tailoring_standard_size' },
+                        { value: 'custom', icon: '✍️', labelKey: 'tailoring_custom_measure' },
+                        { value: 'atelier', icon: '🏛️', labelKey: 'tailoring_atelier_visit' }
+                    ]
+                },
+                shoes: {
+                    titleKey: 'tailoring_shoe_size',
+                    options: [
+                        { value: 'standard', icon: '📏', labelKey: 'tailoring_standard_size' },
+                        { value: 'custom', icon: '✍️', labelKey: 'tailoring_custom_measure' },
+                        { value: 'atelier', icon: '🏛️', labelKey: 'tailoring_atelier_visit' }
+                    ]
+                },
+                accessory: {
+                    titleKey: 'tailoring_size_measurements',
+                    options: [
+                        { value: 'standard', icon: '📏', labelKey: 'tailoring_standard_size' },
+                        { value: 'custom', icon: '✍️', labelKey: 'tailoring_custom_measure' },
+                        { value: 'atelier', icon: '🏛️', labelKey: 'tailoring_atelier_visit' }
+                    ]
+                },
+                bag: {
+                    titleKey: 'tailoring_bag_configuration',
+                    options: [
+                        { value: 'compact', icon: '👝', labelKey: 'tailoring_size_compact' },
+                        { value: 'standard', icon: '👜', labelKey: 'tailoring_size_standard' },
+                        { value: 'oversized', icon: '🧳', labelKey: 'tailoring_size_oversized' },
+                        { value: 'custom', icon: '✍️', labelKey: 'tailoring_size_custom_dimensions' }
+                    ]
+                }
+            };
+
+            const STEP_LABEL_KEYS = {
+                product: 'tailoring_step_product',
+                material: 'tailoring_step_material',
+                color: 'tailoring_step_color',
+                lining: 'tailoring_step_lining',
+                hardware: 'tailoring_step_hardware',
+                size: 'tailoring_step_size',
+                notes: 'tailoring_step_notes'
+            };
+
             const selections = {};
-            let currentStep = 1;
-            function showStep(stepNum) {
-                steps.forEach(s => s.classList.remove('active'));
-                const target = form.querySelector(`[data-step="${stepNum}"]`);
-                if (target) target.classList.add('active');
-                progressSteps.forEach(p => { p.classList.remove('active', 'completed'); const pStep = parseInt(p.getAttribute('data-step')); if (pStep === stepNum) p.classList.add('active'); if (pStep < stepNum) p.classList.add('completed'); });
-                currentStep = stepNum;
-                window.scrollTo({ top: form.offsetTop - 120, behavior: 'smooth' });
+            let flow = ['product'];
+            let currentIndex = 0;
+
+            function t(key) {
+                return (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t(key) : key;
             }
+
+            function buildSizeOptions(productType) {
+                const config = SIZE_STEP_CONFIG[productType] || SIZE_STEP_CONFIG.jacket;
+                const titleEl = document.getElementById('size-step-title');
+                const optionsEl = document.getElementById('size-step-options');
+                const stepDiv = document.querySelector('.configurator-step[data-flow-key="size"]');
+                titleEl.setAttribute('data-i18n', config.titleKey);
+                titleEl.textContent = t(config.titleKey);
+                optionsEl.innerHTML = config.options.map(opt => `
+                    <button type="button" class="step-option-card" data-value="${opt.value}">
+                        <div class="option-icon">${opt.icon}</div>
+                        <h4 data-i18n="${opt.labelKey}">${t(opt.labelKey)}</h4>
+                    </button>
+                `).join('');
+                const nextBtn = stepDiv.querySelector('.btn-next');
+                if (nextBtn) nextBtn.disabled = true;
+            }
+
+            function renderProgress() {
+                progressEl.innerHTML = flow.map((key) => `
+                    <div class="progress-step" data-flow-key="${key}">
+                        <div class="progress-step-num"></div>
+                        <div class="progress-step-label" data-i18n="${STEP_LABEL_KEYS[key]}">${t(STEP_LABEL_KEYS[key])}</div>
+                    </div>
+                `).join('');
+                progressEl.querySelectorAll('.progress-step-num').forEach((el, i) => { el.textContent = i + 1; });
+                updateProgressState();
+            }
+
+            function updateProgressState() {
+                progressEl.querySelectorAll('.progress-step').forEach((el, i) => {
+                    el.classList.remove('active', 'completed');
+                    if (i === currentIndex) el.classList.add('active');
+                    else if (i < currentIndex) el.classList.add('completed');
+                });
+            }
+
+            function showStep(index) {
+                currentIndex = index;
+                const key = flow[index];
+                form.querySelectorAll('.configurator-step').forEach(s => s.classList.remove('active'));
+                const target = form.querySelector(`[data-flow-key="${key}"]`);
+                if (target) target.classList.add('active');
+                updateProgressState();
+            }
+
+            function setFlow(productType) {
+                const rest = (PRODUCT_FLOWS[productType] || PRODUCT_FLOWS.other).slice();
+                flow = ['product'].concat(rest);
+                if (flow.includes('size')) buildSizeOptions(productType);
+                renderProgress();
+            }
+
+            function getSelectedLabel(flowKey) {
+                const stepDiv = form.querySelector(`[data-flow-key="${flowKey}"]`);
+                if (!stepDiv) return null;
+                const selectedCard = stepDiv.querySelector('.step-option-card.selected');
+                if (!selectedCard) return null;
+                const h4 = selectedCard.querySelector('h4');
+                return h4 ? h4.textContent : selectedCard.getAttribute('data-value');
+            }
+
+            function updateSummary() {
+                const grid = document.getElementById('summary-grid');
+                if (!grid) return;
+                grid.innerHTML = '';
+                flow.forEach((key) => {
+                    if (key === 'notes') return;
+                    const label = getSelectedLabel(key);
+                    if (label) {
+                        grid.innerHTML += `<div class="summary-item"><span class="summary-label">${t(STEP_LABEL_KEYS[key])}</span><span class="summary-value">${label}</span></div>`;
+                    }
+                });
+            }
+
+            setFlow('jacket');
+            showStep(0);
+
             form.addEventListener('click', (e) => {
                 const card = e.target.closest('.step-option-card');
                 if (!card) return;
                 const stepDiv = card.closest('.configurator-step');
-                const stepNum = parseInt(stepDiv.getAttribute('data-step'));
+                const flowKey = stepDiv.getAttribute('data-flow-key');
                 const value = card.getAttribute('data-value');
                 stepDiv.querySelectorAll('.step-option-card').forEach(c => c.classList.remove('selected'));
                 card.classList.add('selected');
-                selections[stepNum] = { value, label: card.querySelector('h4')?.textContent || value };
+                selections[flowKey] = { value };
                 const nextBtn = stepDiv.querySelector('.btn-next');
                 if (nextBtn) nextBtn.disabled = false;
-                if (stepNum >= 6) updateSummary();
+
+                if (flowKey === 'product') setFlow(value);
             });
-            form.addEventListener('click', (e) => { if (e.target.classList.contains('btn-next') && currentStep < 7) showStep(currentStep + 1); if (e.target.classList.contains('btn-back') && currentStep > 1) showStep(currentStep - 1); });
-            document.getElementById('configurator-progress').addEventListener('click', (e) => { const stepEl = e.target.closest('.progress-step'); if (!stepEl) return; const targetStep = parseInt(stepEl.getAttribute('data-step')); if (targetStep <= currentStep) showStep(targetStep); });
-            function updateSummary() { const grid = document.getElementById('summary-grid'); if (!grid) return; const stepNames = { 1: (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t('tailoring_step_product') : 'Product', 2: (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t('tailoring_step_material') : 'Material', 3: (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t('tailoring_step_color') : 'Color', 4: (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t('tailoring_step_lining') : 'Lining', 5: (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t('tailoring_step_hardware') : 'Hardware', 6: (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t('tailoring_step_size') : 'Size' }; grid.innerHTML = ''; for (let i = 1; i <= 6; i++) { if (selections[i]) { grid.innerHTML += `<div class="summary-item"><span class="summary-label">${stepNames[i]}</span><span class="summary-value">${selections[i].label}</span></div>`; } } }
+
+            form.addEventListener('click', (e) => {
+                if (e.target.classList.contains('btn-next')) {
+                    const next = currentIndex + 1;
+                    if (next < flow.length) {
+                        if (flow[next] === 'notes') updateSummary();
+                        showStep(next);
+                    }
+                }
+                if (e.target.classList.contains('btn-back')) {
+                    if (currentIndex > 0) showStep(currentIndex - 1);
+                }
+            });
+
+            progressEl.addEventListener('click', (e) => {
+                const stepEl = e.target.closest('.progress-step');
+                if (!stepEl) return;
+                const idx = Array.prototype.indexOf.call(progressEl.children, stepEl);
+                if (idx <= currentIndex) showStep(idx);
+            });
+
+            document.addEventListener('sd_i18n_changed', () => {
+                updateSummary();
+            });
+
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const submitBtn = document.getElementById('tailoring-submit-btn');
@@ -728,7 +864,7 @@
 
                 const name = document.getElementById('tailoring-name').value.trim();
                 const email = document.getElementById('tailoring-email').value.trim();
-                if (!selections[1]) {
+                if (!selections.product) {
                     msg.textContent = 'Please select a creation type.';
                     msg.classList.add('error');
                     return;
@@ -743,12 +879,12 @@
                 submitBtn.textContent = 'Sending…';
 
                 window.SD_API.submitTailoringRequest({
-                    productType: selections[1] ? selections[1].value : 'other',
-                    material: selections[2] ? selections[2].value : null,
-                    color: selections[3] ? selections[3].value : null,
-                    lining: selections[4] ? selections[4].value : null,
-                    hardware: selections[5] ? selections[5].value : null,
-                    sizeType: selections[6] ? selections[6].value : null,
+                    productType: selections.product ? selections.product.value : 'other',
+                    material: flow.includes('material') && selections.material ? selections.material.value : null,
+                    color: flow.includes('color') && selections.color ? selections.color.value : null,
+                    lining: flow.includes('lining') && selections.lining ? selections.lining.value : null,
+                    hardware: flow.includes('hardware') && selections.hardware ? selections.hardware.value : null,
+                    sizeType: flow.includes('size') && selections.size ? selections.size.value : null,
                     notes: document.getElementById('tailoring-notes').value.trim(),
                     contactName: name,
                     contactEmail: email,
@@ -767,7 +903,6 @@
                     submitBtn.textContent = 'Submit Enquiry';
                 });
             });
-            showStep(1);
         });
     </script>
 </body>

@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: http://localhost:3000; connect-src 'self' http://localhost:3000; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="description"
-        content="SAN DUKHAR - Istanbul's premier luxury house for exotic leather goods. Handcrafted accessories and clothing from genuine crocodile, python, ostrich, stingray, and lizard leather. Made in Turkey.">
+        content="SAN DUKHAR - Istanbul's premier luxury house for exotic leather goods. Handcrafted accessories and clothing from genuine crocodile, python, ostrich, stingray leather and fine suede. Made in Turkey.">
     <meta name="keywords"
         content="SAN DUKHAR, luxury leather, exotic leather, crocodile leather, python leather, handmade, Istanbul, Turkey, luxury fashion, bespoke tailoring, leather accessories">
 
@@ -34,15 +35,15 @@
             "url": "https://www.sandukhar.com",
             "logo": "https://www.sandukhar.com/icons/sandukhar-logo-gold.svg",
             "description": "Istanbul-based luxury atelier specializing in handcrafted exotic leather goods.",
-            "foundingDate": "2008",
+            "foundingDate": "2021",
             "founder": { "@type": "Person", "name": "Dukhar San" },
             "address": { "@type": "PostalAddress", "streetAddress": "Yenidoğan, Zübeyde Hanım Cd. No:80/B", "addressLocality": "Zeytinburnu / İstanbul", "postalCode": "34021", "addressCountry": "TR" },
             "contactPoint": { "@type": "ContactPoint", "telephone": "+90 544 697 67 79", "contactType": "customer service", "availableLanguage": ["English", "Turkish"] },
-            "sameAs": ["https://www.instagram.com/sandukhar", "https://www.facebook.com/sandukhar", "https://www.pinterest.com/sandukhar"]
+            "sameAs": ["https://www.instagram.com/sandukhar", "https://www.facebook.com/sandukhar", "https://www.tiktok.com/@sandukhar"]
         }
     </script>
 
-    <title>SAN DUKHAR | Genuine Exotic Leather Atelier | Istanbul </title>
+    <title data-i18n="title_home">SAN DUKHAR | Genuine Exotic Leather Atelier | Istanbul</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -79,14 +80,19 @@
                                 <div class="mega-menu-column">
                                     <h4 class="mega-menu-title" data-i18n="nav_by_product">By Product</h4>
                                     <ul>
-                                        <li><a href="catalog.html?category=jackets" data-i18n="nav_jackets">Leather
-                                                Jackets</a></li>
+                                        <li><a href="catalog.html?category=jackets" data-i18n="nav_jackets">Jackets</a></li>
+                                        <li><a href="catalog.html?category=shirts" data-i18n="nav_shirts">Shirts</a></li>
+                                        <li><a href="catalog.html?category=shoes" data-i18n="nav_shoes">Footwear</a></li>
                                         <li><a href="catalog.html?category=bags" data-i18n="nav_bags">Bags &
-                                                Briefcases</a></li>
-                                        <li><a href="catalog.html?category=shoes" data-i18n="nav_shoes">Footwear</a>
-                                        </li>
+                                                Backpacks</a></li>
+                                        <li><a href="catalog.html?category=belts" data-i18n="nav_belts">Belts</a></li>
+                                        <li><a href="catalog.html?category=suitcases" data-i18n="nav_suitcases">Suitcases</a></li>
+                                        <li><a href="catalog.html?category=gloves" data-i18n="nav_gloves">Gloves</a></li>
+                                        <li><a href="catalog.html?category=wallets" data-i18n="nav_wallets">Wallets &
+                                                Cardholders</a></li>
+                                        <li><a href="catalog.html?category=headwear" data-i18n="nav_headwear">Headwear</a></li>
                                         <li><a href="catalog.html?category=accessories"
-                                                data-i18n="nav_accessories">Small Leather Goods</a></li>
+                                                data-i18n="nav_accessories">Accessories</a></li>
                                     </ul>
                                 </div>
                                 <div class="mega-menu-column">
@@ -100,12 +106,12 @@
                                         </li>
                                         <li><a href="materials.html#stingray" data-i18n="nav_stingray">Stingray
                                                 Leather</a></li>
-                                        <li><a href="materials.html#lizard" data-i18n="nav_lizard">Lizard Leather</a>
+                                        <li><a href="materials.html#suede" data-i18n="nav_suede">Suede Leather</a>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="mega-menu-column mega-menu-image">
-                                    <img src="images/placeholder-tile.svg" alt="SAN DUKHAR Exclusive Collection"
+                                    <img src="images/nav/mega-menu-collection.jpg" alt="SAN DUKHAR Exclusive Collection"
                                         loading="lazy">
                                     <p data-i18n="nav_new_arrivals">The Serpentine Collection — New Arrivals</p>
                                 </div>
@@ -122,6 +128,8 @@
                 </ul>
             </nav>
             <div class="header-utilities">
+                <button class="utility-btn lang-toggle" data-lang-toggle aria-label="Switch language"><span class="lang-toggle-current">RU</span></button>
+
                 <button class="utility-btn search-trigger" aria-label="Search">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="1.5">
@@ -170,6 +178,7 @@
 
     <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
         <div class="mobile-nav-container">
+            <span class="mobile-nav-eyebrow">Menu</span>
             <ul>
                 <li><a href="index.html" data-i18n="nav_home">Home</a></li>
                 <li><a href="catalog.html" data-i18n="nav_collections">Collections</a></li>
@@ -179,7 +188,7 @@
                 <li><a href="contacts.html" data-i18n="nav_contact">Contact</a></li>
                 <li><a href="account.html" data-i18n="account_title">My Account</a></li>
                 <li><a href="wishlist.html" data-i18n="account_wishlist">Wishlist</a></li>
-                <li><a href="cart.html" data-i18n="cart_title">Cart</a></li>
+                <li><a href="cart.html" data-i18n="nav_cart">Cart</a></li>
             </ul>
         </div>
     </nav>
@@ -187,10 +196,8 @@
     <main>
         <!-- HERO -->
         <section id="hero" class="hero-section">
-            <div class="hero-video-wrapper">
-                <video autoplay muted loop playsinline poster="images/placeholder-bg.svg" class="hero-video">
-                    <source src="video/sandukhar-hero.mp4" type="video/mp4">
-                </video>
+            <div class="hero-bg-wrapper">
+                <img class="hero-bg-image" src="images/hero/crocodile-closeup-black.jpg" alt="" aria-hidden="true" loading="eager">
                 <div class="hero-overlay"></div>
             </div>
             <div class="hero-content">
@@ -216,7 +223,7 @@
         <section id="featured-collection" class="section-padding">
             <div class="container">
                 <div class="section-header slide-up">
-                    <h2 class="section-title" data-i18n="section_featured">The Imperium Collection</h2>
+                    <h2 class="section-title" data-i18n="section_featured">The Sovereign Collection</h2>
                     <p class="section-subtitle" data-i18n="section_featured_desc">A study in power and precision.
                         Crafted from the rarest Nile crocodile skins, each piece is a testament to nature's artistry and
                         human skill. Limited to a series of 25 worldwide.</p>
@@ -225,7 +232,7 @@
                     <div class="featured-item large" style="min-height:400px;display:flex;align-items:center;justify-content:center;color:var(--color-text-muted);">Loading…</div>
                 </div>
                 <div class="section-action slide-up">
-                    <a href="catalog.html?collection=imperium" class="btn-outline"
+                    <a href="catalog.html?collection=sovereign" class="btn-outline"
                         data-i18n="section_view_collection">View Full Collection</a>
                 </div>
             </div>
@@ -235,21 +242,16 @@
         <section id="brand-story" class="section-padding bg-graphite">
             <div class="container split-layout">
                 <div class="split-image parallax-image">
-                    <img src="images/placeholder-tile.svg"
+                    <img src="images/craftsmanship/artisan-inspecting-leather.jpg"
                         alt="SAN DUKHAR Master Artisan inspecting genuine python leather in Istanbul atelier"
                         loading="lazy">
                 </div>
                 <div class="split-content slide-up">
                     <h2 class="section-title text-light" data-i18n="brand_title">The Atelier of Silent Luxury</h2>
-                    <p class="text-light" data-i18n="brand_desc1">SAN DUKHAR was born from a profound respect for
-                        nature's most exquisite materials. Founded in Istanbul in 2008, our maison bridges the ancient
-                        traditions of Anatolian craftsmanship with a relentless pursuit of perfection. We do not follow
-                        trends; we create heirlooms designed to transcend generations.</p>
-                    <p class="text-light" data-i18n="brand_desc2">Every stitch, every cut, and every polish is performed
-                        by a master artisan whose hands have spent decades perfecting a single skill. We believe that
-                        true luxury is not about logos—it's about the unmistakable feel of genuine exotic leather, the
-                        perfect symmetry of a hand-stitched seam, and the quiet confidence it brings to the person who
-                        owns it.</p>
+                    <p class="text-light" data-i18n="brand_desc1">Founded in 2021, SAN DUKHAR began as an online
+                        atelier dedicated to handcrafted leather garments. In just a few years, the brand evolved
+                        into a destination where craftsmanship, individuality, and uncompromising quality define
+                        every creation.</p>
                     <a href="about.html" class="btn-gold" data-i18n="brand_discover">Discover Our Philosophy</a>
                 </div>
             </div>
@@ -268,7 +270,7 @@
                     <div class="material-card">
                         <a href="materials.html#crocodile" class="material-link">
                             <div class="material-image-wrapper">
-                                <img src="images/placeholder-tile.svg"
+                                <img src="images/materials/crocodile-real.jpg"
                                     alt="Genuine Nile crocodile leather with uniform scale pattern" loading="lazy">
                                 <div class="material-overlay"></div>
                             </div>
@@ -281,7 +283,7 @@
                     <div class="material-card">
                         <a href="materials.html#python" class="material-link">
                             <div class="material-image-wrapper">
-                                <img src="images/placeholder-tile.svg"
+                                <img src="images/materials/python-real.jpg"
                                     alt="Natural python leather with distinctive overlapping scale pattern"
                                     loading="lazy">
                                 <div class="material-overlay"></div>
@@ -295,7 +297,7 @@
                     <div class="material-card">
                         <a href="materials.html#ostrich" class="material-link">
                             <div class="material-image-wrapper">
-                                <img src="images/placeholder-tile.svg"
+                                <img src="images/materials/ostrich-real.jpg"
                                     alt="Full quill ostrich leather with distinctive follicle pattern" loading="lazy">
                                 <div class="material-overlay"></div>
                             </div>
@@ -308,7 +310,7 @@
                     <div class="material-card">
                         <a href="materials.html#stingray" class="material-link">
                             <div class="material-image-wrapper">
-                                <img src="images/placeholder-tile.svg"
+                                <img src="images/materials/stingray-real.jpg"
                                     alt="Polished stingray leather with calcium deposit texture" loading="lazy">
                                 <div class="material-overlay"></div>
                             </div>
@@ -319,15 +321,15 @@
                         </a>
                     </div>
                     <div class="material-card">
-                        <a href="materials.html#lizard" class="material-link">
+                        <a href="materials.html#suede" class="material-link">
                             <div class="material-image-wrapper">
-                                <img src="images/placeholder-tile.svg"
-                                    alt="Teju lizard leather with small uniform scales" loading="lazy">
+                                <img src="images/materials/suede-real.jpg"
+                                    alt="Fine suede leather with a soft napped texture" loading="lazy">
                                 <div class="material-overlay"></div>
                             </div>
                             <div class="material-info">
-                                <h3 data-i18n="material_lizard">Lizard</h3>
-                                <p data-i18n="material_teju">Teju & Varanus</p>
+                                <h3 data-i18n="material_suede">Suede</h3>
+                                <p data-i18n="material_suede_sub">Nubuck & Suede</p>
                             </div>
                         </a>
                     </div>
@@ -337,7 +339,7 @@
 
         <!-- BESPOKE CTA -->
         <section id="bespoke-cta" class="section-padding parallax-section"
-            style="background-image: url('images/placeholder-bg.svg');">
+            style="background-image: url('images/tailoring/bespoke-hero.jpg');">
             <div class="container text-center">
                 <div class="slide-up">
                     <h2 class="section-title text-light" data-i18n="section_bespoke_cta">Bespoke Tailoring</h2>
@@ -346,36 +348,6 @@
                         through every detail—from leather selection to the final fitting.</p>
                     <a href="tailoring.html" class="btn-primary" data-i18n="section_begin_journey">Begin Your
                         Journey</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- LOOKBOOK — FIXED: NO DUPLICATE TEXT -->
-        <section id="lookbook" class="section-padding">
-            <div class="container">
-                <div class="section-header slide-up">
-                    <h2 class="section-title" data-i18n="section_lookbook">The Visual Diary</h2>
-                    <p class="section-subtitle">
-                        <span data-i18n="section_lookbook_follow">Follow</span>
-                        <a href="https://www.instagram.com/sandukhar" target="_blank" rel="noopener noreferrer"
-                            class="gold-link">@sandukhar</a>
-                        <span data-i18n="section_lookbook_glimpse">for a glimpse into our world of craft, travel, and
-                            timeless style.</span>
-                    </p>
-                </div>
-                <div class="lookbook-grid">
-                    <div class="lookbook-item tall"><img src="images/placeholder-tile.svg"
-                            alt="SAN DUKHAR ostrich leather jacket styled on a coastal road" loading="lazy"></div>
-                    <div class="lookbook-item"><img src="images/placeholder-tile.svg"
-                            alt="Close up of hand-stitching on a python leather bag" loading="lazy"></div>
-                    <div class="lookbook-item"><img src="images/placeholder-tile.svg"
-                            alt="Crocodile leather briefcase in a private jet setting" loading="lazy"></div>
-                    <div class="lookbook-item wide"><img src="images/placeholder-tile.svg"
-                            alt="Artisan polishing stingray leather in the Istanbul workshop" loading="lazy"></div>
-                    <div class="lookbook-item"><img src="images/placeholder-tile.svg"
-                            alt="Stingray leather cardholder with personalization" loading="lazy"></div>
-                    <div class="lookbook-item tall"><img src="images/placeholder-tile.svg"
-                            alt="A couple wearing matching SAN DUKHAR lizard leather shoes" loading="lazy"></div>
                 </div>
             </div>
         </section>
@@ -412,54 +384,6 @@
             </div>
         </section>
 
-        <!-- Цитата -->
-        <section id="testimonials" class="section-padding">
-            <div class="container">
-                <div class="section-header slide-up">
-                    <h2 class="section-title" data-i18n="section_testimonials">Words from Our Patrons</h2>
-                </div>
-                <div class="testimonial-slider slide-up">
-                    <div class="testimonial-item active">
-                        <blockquote data-i18n="testimonial_1">"The Imperium Briefcase is not merely an accessory; it is
-                            a companion for life. The scent of the leather, the sound of the lock—it's pure mechanical
-                            poetry."</blockquote>
-                        <p class="testimonial-author" data-i18n="testimonial_1_author">— A. R. Voss, Zurich</p>
-                    </div>
-                    <div class="testimonial-item">
-                        <blockquote data-i18n="testimonial_2">"Commissioning a bespoke jacket from SAN DUKHAR was one of
-                            the most personal and rewarding experiences I've ever had. The fit is, predictably,
-                            flawless."</blockquote>
-                        <p class="testimonial-author" data-i18n="testimonial_2_author">— L. E. Moreau, Paris</p>
-                    </div>
-                    <div class="testimonial-item">
-                        <blockquote data-i18n="testimonial_3">"I inherited a SAN DUKHAR wallet from my father. It's 15
-                            years old and looks as magnificent as the day he bought it. This is what true luxury means."
-                        </blockquote>
-                        <p class="testimonial-author" data-i18n="testimonial_3_author">— K. Tanaka, Tokyo</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- NEWSLETTER -->
-        <section id="newsletter" class="section-padding bg-graphite">
-            <div class="container text-center">
-                <div class="slide-up">
-                    <h2 class="section-title text-light" data-i18n="section_newsletter">A Glimpse into Our World</h2>
-                    <p class="section-subtitle text-light" data-i18n="section_newsletter_desc">Receive exclusive
-                        previews of new collections, invitations to private events, and stories from our Istanbul
-                        atelier.</p>
-                    <form class="newsletter-form" id="newsletter-form" novalidate>
-                        <input type="email" id="newsletter-email" data-i18n-attr="placeholder" data-i18n="section_newsletter_placeholder"
-                            placeholder="Your Email Address" aria-label="Email Address" required>
-                        <button type="submit" class="btn-gold" id="newsletter-submit" data-i18n="section_subscribe">Subscribe</button>
-                    </form>
-                    <p class="form-message" id="newsletter-message" role="status"></p>
-                    <p class="form-notation text-light" data-i18n="section_privacy_note">We respect your privacy.
-                        Unsubscribe anytime.</p>
-                </div>
-            </div>
-        </section>
     </main>
 
     <!-- FOOTER -->
@@ -469,22 +393,22 @@
                 <div class="footer-col footer-col-brand">
                     <a href="index.html" class="footer-logo"><img src="icons/sandukhar-logo-gold.svg"
                             alt="SAN DUKHAR"></a>
-                    <p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship. Since 2008,
+                    <p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship. Since 2021,
                         Istanbul.</p>
                     <div class="social-links">
                         <a href="https://www.instagram.com/sandukhar" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="icons/instagram.svg" alt=""></a>
                         <a href="https://www.facebook.com/sandukhar" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><img src="icons/facebook.svg" alt=""></a>
-                        <a href="https://www.pinterest.com/sandukhar" target="_blank" rel="noopener noreferrer" aria-label="Pinterest"><img src="icons/pinterest.svg" alt=""></a>
+                        <a href="https://www.tiktok.com/@sandukhar" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><img src="icons/tiktok.svg" alt=""></a>
                     </div>
                 </div>
                 <div class="footer-col">
                     <h4 data-i18n="footer_customer_care">Customer Care</h4>
                     <ul>
                         <li><a href="contacts.html" data-i18n="footer_contact_faq">Contact & FAQ</a></li>
-                        <li><a href="#" data-i18n="footer_shipping_delivery">Shipping & Delivery</a></li>
-                        <li><a href="#" data-i18n="footer_returns">Returns & Exchanges</a></li>
+                        <li><a href="shipping-delivery.html" data-i18n="footer_shipping_delivery">Shipping & Delivery</a></li>
+                        <li><a href="returns-exchanges.html" data-i18n="footer_returns">Returns & Exchanges</a></li>
                         <li><a href="track-order.html" data-i18n="footer_track">Track Your Order</a></li>
-                        <li><a href="#" data-i18n="footer_care_guide">Care Guide</a></li>
+                        <li><a href="care-guide.html" data-i18n="footer_care_guide">Care Guide</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -493,15 +417,15 @@
                         <li><a href="about.html" data-i18n="footer_brand_story">Brand Story</a></li>
                         <li><a href="materials.html" data-i18n="footer_materials">Materials</a></li>
                         <li><a href="tailoring.html" data-i18n="footer_bespoke">Bespoke</a></li>
-                        <li><a href="#" data-i18n="footer_careers">Careers</a></li>
+                        <li><a href="careers.html" data-i18n="footer_careers">Careers</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4 data-i18n="footer_legal">Legal</h4>
                     <ul>
-                        <li><a href="#" data-i18n="footer_privacy">Privacy Policy</a></li>
-                        <li><a href="#" data-i18n="footer_terms">Terms & Conditions</a></li>
-                        <li><a href="#" data-i18n="footer_cookies">Cookie Policy</a></li>
+                        <li><a href="privacy-policy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
+                        <li><a href="cookie-policy.html" data-i18n="footer_cookies">Cookie Policy</a></li>
                     </ul>
                 </div>
                 <div class="footer-col footer-col-contact">
@@ -513,7 +437,6 @@
             </div>
             <div class="footer-bottom">
                 <p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR. All rights reserved.</p>
-                <div class="payment-icons"><span>Amex</span><span>Mastercard</span><span>Visa</span></div>
             </div>
         </div>
     </footer>
@@ -529,28 +452,32 @@
 
     <script src="js/api.js?v=2" defer></script>
     <script src="js/app.js?v=2" defer></script>
+    <script src="js/translations.js?v=1"></script>
+    <script src="js/i18n.js?v=1"></script>
     <script src="js/animations.js?v=2" defer></script>
     <script src="js/cart.js?v=2" defer></script>
     <script src="js/wishlist.js?v=2" defer></script>
     <script src="js/catalog.js?v=2" defer></script>
     <script src="js/account.js?v=2" defer></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        function loadFeaturedProducts() {
             const grid = document.getElementById('featured-products-grid');
-            if (grid) {
-                fetch(window.SD_API.baseURL + '/products?featured=true&limit=3')
-                    .then(res => res.json())
-                    .then(data => {
-                        const products = (data.success ? data.data.products : []);
-                        if (products.length === 0) {
-                            grid.closest('section').style.display = 'none';
-                            return;
-                        }
-                        grid.innerHTML = products.map((p, i) => {
-                            const image = (p.images && p.images.length)
-                                ? `<img src="${p.images[0].url}" alt="${p.name_en}" loading="lazy">`
-                                : SANDUKHAR.media.placeholder(p.name_en, p.material_slug);
-                            return `<div class="featured-item ${i === 0 ? 'large' : ''}">
+            if (!grid) return;
+            const lang = (window.SD_I18N && window.SD_I18N.getLang) ? window.SD_I18N.getLang() : 'en';
+            fetch(window.SD_API.baseURL + '/products?featured=true&limit=3&locale=' + lang)
+                .then(res => res.json())
+                .then(data => {
+                    const products = (data.success ? data.data.products : []);
+                    if (products.length === 0) {
+                        grid.closest('section').style.display = 'none';
+                        return;
+                    }
+                    grid.innerHTML = products.map((p, i) => {
+                        const name = (lang === 'ru' ? p.name_ru : p.name_en) || p.name_en;
+                        const image = (p.images && p.images.length)
+                            ? `<img src="${p.images[0].url}" alt="${name}" loading="lazy">`
+                            : SANDUKHAR.media.placeholder(name, p.material_slug);
+                        return `<div class="featured-item ${i === 0 ? 'large' : ''}">
                                 <a href="product.html?slug=${p.slug}" class="product-card-link">
                                     <div class="product-card-image">
                                         ${image}
@@ -559,49 +486,25 @@
                                         </div>
                                     </div>
                                     <div class="product-card-info">
-                                        <h3 class="product-card-name">${p.name_en}</h3>
+                                        <h3 class="product-card-name">${name}</h3>
                                         <p class="product-card-material">${p.material_name || ''}</p>
                                         <p class="product-card-price">${SANDUKHAR.format.price(p.price)}</p>
                                     </div>
                                 </a>
                             </div>`;
-                        }).join('');
-                    })
-                    .catch(() => { grid.closest('section').style.display = 'none'; });
-            }
+                    }).join('');
+                })
+                .catch(() => { grid.closest('section').style.display = 'none'; });
+        }
 
-            const form = document.getElementById('newsletter-form');
-            if (!form) return;
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const emailInput = document.getElementById('newsletter-email');
-                const btn = document.getElementById('newsletter-submit');
-                const msg = document.getElementById('newsletter-message');
-                msg.className = 'form-message';
+        document.addEventListener('DOMContentLoaded', loadFeaturedProducts);
+        document.addEventListener('sd_i18n_changed', loadFeaturedProducts);
 
-                if (!emailInput.value.trim() || !emailInput.checkValidity()) {
-                    msg.textContent = 'Please enter a valid email address.';
-                    msg.classList.add('error');
-                    return;
-                }
-
-                btn.disabled = true;
-                const originalText = btn.textContent;
-                btn.textContent = 'Subscribing…';
-
-                window.SD_API.subscribe(emailInput.value.trim()).then((res) => {
-                    msg.textContent = res.message || 'Thank you for subscribing.';
-                    msg.classList.add('success');
-                    form.reset();
-                }).catch((err) => {
-                    msg.textContent = err.message || 'Could not subscribe. Please try again.';
-                    msg.classList.add('error');
-                }).finally(() => {
-                    btn.disabled = false;
-                    btn.textContent = originalText;
-                });
-            });
-        });
+        // Respect prefers-reduced-motion: keep the poster frame, skip playback.
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            var heroVideo = document.querySelector('.hero-bg-image');
+            if (heroVideo) heroVideo.removeAttribute('autoplay'), heroVideo.pause();
+        }
     </script>
 </body>
 

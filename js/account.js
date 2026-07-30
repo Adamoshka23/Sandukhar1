@@ -17,8 +17,63 @@ SANDUKHAR.account = {
         this.bindAddressForm();
         this.bindMeasurementsForm();
         this.bindProfileForm();
+        this.bindResendVerification();
 
+        this.handleEmailVerificationLink();
         this.checkSession();
+    },
+
+    // ============================================================
+    // EMAIL VERIFICATION
+    // ============================================================
+    handleEmailVerificationLink: function() {
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get('verify');
+        if (!token) return;
+
+        // Strip the token from the URL so it can't be reused/shared accidentally.
+        window.history.replaceState({}, '', window.location.pathname);
+
+        const msg = document.getElementById('verify-result-message');
+        window.SD_API.verifyEmail(token).then(() => {
+            msg.textContent = 'Your email has been verified.';
+            msg.className = 'form-message success';
+            msg.style.display = 'block';
+            if (this.currentUser) {
+                this.currentUser.emailVerified = true;
+                this.updateVerifyBanner();
+            }
+        }).catch((err) => {
+            msg.textContent = err.message || 'This verification link is invalid or has expired.';
+            msg.className = 'form-message error';
+            msg.style.display = 'block';
+        });
+    },
+
+    updateVerifyBanner: function() {
+        const banner = document.getElementById('email-verify-banner');
+        if (!banner) return;
+        banner.style.display = (this.currentUser && !this.currentUser.emailVerified) ? 'flex' : 'none';
+    },
+
+    bindResendVerification: function() {
+        const btn = document.getElementById('resend-verification-btn');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+            btn.disabled = true;
+            const originalText = btn.textContent;
+            btn.textContent = 'Sending…';
+            window.SD_API.resendVerification().then(() => {
+                btn.textContent = 'Sent!';
+            }).catch(() => {
+                btn.textContent = 'Failed — try again';
+            }).finally(() => {
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.textContent = originalText;
+                }, 3000);
+            });
+        });
     },
 
     // ============================================================
@@ -50,6 +105,7 @@ SANDUKHAR.account = {
         this.populateProfile();
         this.loadOrders();
         this.loadAddresses();
+        this.updateVerifyBanner();
     },
 
     // ============================================================

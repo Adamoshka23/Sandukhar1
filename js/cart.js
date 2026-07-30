@@ -479,6 +479,7 @@ SANDUKHAR.cart = {
         const priceEl = productSection
             ? productSection.querySelector('.product-price, .product-card-price, .quick-view-price')
             : null;
+        const variantSizeEl = document.getElementById('selected-size');
         const variantColorEl = document.getElementById('selected-color');
         const variantHardwareEl = document.getElementById('selected-hardware');
         const imageEl =
@@ -490,6 +491,7 @@ SANDUKHAR.cart = {
         const price = parseInt(priceText, 10) || 0;
 
         const variantParts = [];
+        if (variantSizeEl && variantSizeEl.textContent.trim()) variantParts.push('Size ' + variantSizeEl.textContent.trim());
         if (variantColorEl) variantParts.push(variantColorEl.textContent.trim());
         if (variantHardwareEl) variantParts.push(variantHardwareEl.textContent.trim());
         const variant = variantParts.join(' · ');

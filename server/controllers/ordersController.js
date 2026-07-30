@@ -6,6 +6,7 @@
 
 const { query, getClient } = require('../config/database');
 const { v4: uuidv4 } = require('uuid');
+const { notifyNew, escapeHtml } = require('../utils/notifications');
 
 function generateOrderNumber() {
     const date = new Date();
@@ -101,6 +102,15 @@ const ordersController = {
                 message: 'Order placed successfully.',
                 data: { order: { ...order, items: resolvedItems } }
             });
+
+            const itemLines = resolvedItems
+                .map(i => `• ${escapeHtml(i.productName)} × ${i.quantity} — $${i.totalPrice.toLocaleString()}`)
+                .join('\n');
+            notifyNew('order', {
+                telegramText: `<b>🛍 New order ${escapeHtml(orderNumber)}</b>\n${itemLines}\n\n<b>Total: $${total.toLocaleString()}</b>\n\n${escapeHtml(shippingAddress.firstName)} ${escapeHtml(shippingAddress.lastName)}\n${escapeHtml(shippingAddress.email)}`,
+                emailSubject: `New order ${orderNumber} — $${total.toLocaleString()}`,
+                emailHtml: `<h2>New order ${escapeHtml(orderNumber)}</h2><ul>${resolvedItems.map(i => `<li>${escapeHtml(i.productName)} × ${i.quantity} — $${i.totalPrice.toLocaleString()}</li>`).join('')}</ul><p><strong>Total: $${total.toLocaleString()}</strong></p><p>${escapeHtml(shippingAddress.firstName)} ${escapeHtml(shippingAddress.lastName)}<br>${escapeHtml(shippingAddress.email)}</p>`
+            }).catch(() => {});
         } catch (error) {
             await client.query('ROLLBACK');
             next(error);

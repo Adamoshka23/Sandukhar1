@@ -4,10 +4,41 @@
  * ============================================================
  */
 
+const crypto = require('crypto');
 const { query, getClient } = require('../config/database');
 const jwtService = require('../services/jwtService');
 const passwordService = require('../services/passwordService');
 const { v4: uuidv4 } = require('uuid');
+const environment = require('../config/environment');
+const { sendTransactionalEmail } = require('../utils/notifications');
+
+const VERIFICATION_TOKEN_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+async function issueVerificationEmail(user) {
+    const token = crypto.randomBytes(32).toString('hex');
+    await query(
+        `INSERT INTO email_verification_tokens (id, user_id, token, expires_at)
+         VALUES ($1, $2, $3, $4)`,
+        [uuidv4(), user.id, token, new Date(Date.now() + VERIFICATION_TOKEN_TTL_MS)]
+    );
+
+    const verifyUrl = `${environment.FRONTEND_URL}/account.html?verify=${token}`;
+    const firstName = user.first_name || user.firstName || '';
+
+    return sendTransactionalEmail(
+        user.email,
+        'Confirm your email — SAN DUKHAR',
+        `<div style="font-family:Georgia,serif;max-width:480px;margin:0 auto;padding:32px 24px;color:#1a1a1a;">
+            <h1 style="font-weight:300;letter-spacing:2px;font-size:20px;">SAN DUKHAR</h1>
+            <p>Hello${firstName ? ' ' + firstName : ''},</p>
+            <p>Please confirm your email address to activate your SAN DUKHAR account.</p>
+            <p style="margin:28px 0;">
+                <a href="${verifyUrl}" style="background:#c5a572;color:#0a0a0a;padding:12px 28px;text-decoration:none;font-size:14px;letter-spacing:1px;">CONFIRM EMAIL</a>
+            </p>
+            <p style="font-size:12px;color:#777;">This link expires in 24 hours. If you didn't create this account, you can ignore this email.</p>
+        </div>`
+    );
+}
 
 const authController = {
     /**
@@ -69,12 +100,16 @@ const authController = {
                         email: user.email,
                         firstName: user.first_name,
                         lastName: user.last_name,
-                        role: user.role
+                        role: user.role,
+                        emailVerified: false
                     },
                     accessToken,
                     refreshToken
                 }
             });
+
+            // Fire-and-forget — never let a flaky email provider affect registration.
+            issueVerificationEmail(user).catch(() => {});
         } catch (error) {
             await client.query('ROLLBACK');
             next(error);
@@ -92,7 +127,7 @@ const authController = {
 
             // Find user
             const result = await query(
-                'SELECT id, email, password_hash, first_name, last_name, role, is_active FROM users WHERE email = $1',
+                'SELECT id, email, password_hash, first_name, last_name, role, is_active, email_verified FROM users WHERE email = $1',
                 [email]
             );
 
@@ -146,7 +181,8 @@ const authController = {
                         email: user.email,
                         firstName: user.first_name,
                         lastName: user.last_name,
-                        role: user.role
+                        role: user.role,
+                        emailVerified: user.email_verified
                     },
                     accessToken,
                     refreshToken
@@ -306,6 +342,85 @@ const authController = {
                         lastLogin: user.last_login
                     }
                 }
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    /**
+     * Confirm a registration email via the token from the emailed link
+     */
+    verifyEmail: async (req, res, next) => {
+        try {
+            const { token } = req.query;
+
+            if (!token) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Verification token is required.'
+                });
+            }
+
+            const tokenResult = await query(
+                'SELECT * FROM email_verification_tokens WHERE token = $1 AND expires_at > NOW()',
+                [token]
+            );
+
+            if (tokenResult.rows.length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'This verification link is invalid or has expired.'
+                });
+            }
+
+            const record = tokenResult.rows[0];
+
+            await query('UPDATE users SET email_verified = true WHERE id = $1', [record.user_id]);
+            await query('DELETE FROM email_verification_tokens WHERE user_id = $1', [record.user_id]);
+
+            res.status(200).json({
+                success: true,
+                message: 'Email verified successfully.'
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    /**
+     * Resend the verification email to the signed-in user
+     */
+    resendVerification: async (req, res, next) => {
+        try {
+            const result = await query(
+                'SELECT id, email, first_name, email_verified FROM users WHERE id = $1',
+                [req.user.id]
+            );
+
+            if (result.rows.length === 0) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'User not found.'
+                });
+            }
+
+            const user = result.rows[0];
+
+            if (user.email_verified) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'This email is already verified.'
+                });
+            }
+
+            // Invalidate any previously issued tokens before sending a new one.
+            await query('DELETE FROM email_verification_tokens WHERE user_id = $1', [user.id]);
+            await issueVerificationEmail(user);
+
+            res.status(200).json({
+                success: true,
+                message: 'Verification email sent.'
             });
         } catch (error) {
             next(error);

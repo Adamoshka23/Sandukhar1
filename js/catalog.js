@@ -10,8 +10,12 @@ const MATERIAL_TONE = {
     python: 'natural',
     ostrich: 'brown',
     stingray: 'grey',
-    lizard: 'cognac'
+    suede: 'cognac'
 };
+
+function sdLang() {
+    return (window.SD_I18N && window.SD_I18N.getLang) ? window.SD_I18N.getLang() : 'en';
+}
 
 function sdAvailability(product) {
     if (product.limited_edition) return 'limited';
@@ -20,19 +24,25 @@ function sdAvailability(product) {
     return 'made-to-order';
 }
 
+function sdT(key, fallback) {
+    return (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t(key) : fallback;
+}
+
 function sdBadge(product) {
-    if (product.limited_edition) return '<span class="product-badge limited">Limited Edition</span>';
-    if (product.made_to_order) return '<span class="product-badge made-to-order">Made to Order</span>';
-    if (product.stock > 0 && product.stock <= 5) return '<span class="product-badge in-stock">Only Few Left</span>';
+    if (product.limited_edition) return `<span class="product-badge limited">${sdT('catalog_limited', 'Limited Edition')}</span>`;
+    if (product.made_to_order) return `<span class="product-badge made-to-order">${sdT('catalog_made_to_order', 'Made to Order')}</span>`;
+    if (product.stock > 0 && product.stock <= 5) return `<span class="product-badge in-stock">${sdT('catalog_few_left', 'Only Few Left')}</span>`;
     return '';
 }
 
 function sdProductCardHTML(product) {
     const availability = sdAvailability(product);
     const color = MATERIAL_TONE[product.material_slug] || 'natural';
+    const lang = sdLang();
+    const name = (lang === 'ru' ? product.name_ru : product.name_en) || product.name_en;
     const image = (product.images && product.images.length)
-        ? `<img src="${product.images[0].url}" alt="${product.name_en}" loading="lazy">`
-        : (window.SANDUKHAR ? window.SANDUKHAR.media.placeholder(product.name_en) : '');
+        ? `<img src="${product.images[0].url}" alt="${name}" loading="lazy">`
+        : (window.SANDUKHAR ? window.SANDUKHAR.media.placeholder(name) : '');
 
     return `
         <div class="product-card" data-product-id="${product.id}" data-category="${product.category_slug || ''}" data-material="${product.material_slug || ''}" data-color="${color}" data-price="${product.price}" data-availability="${availability}">
@@ -48,7 +58,7 @@ function sdProductCardHTML(product) {
                     </button>
                 </div>
                 <div class="product-card-info">
-                    <h3 class="product-card-name">${product.name_en}</h3>
+                    <h3 class="product-card-name">${name}</h3>
                     <p class="product-card-material">${product.material_name || ''}</p>
                     <p class="product-card-price">${SANDUKHAR.format.price(product.price)}</p>
                 </div>
@@ -96,7 +106,7 @@ SANDUKHAR.catalog = {
 
     fetchProducts: async function () {
         try {
-            const res = await fetch(`${window.SD_API.baseURL}/products?limit=100`);
+            const res = await fetch(`${window.SD_API.baseURL}/products?limit=100&locale=${sdLang()}`);
             const data = await res.json();
             this.allProducts = (data.success && data.data.products) ? data.data.products : [];
         } catch (error) {
@@ -108,6 +118,22 @@ SANDUKHAR.catalog = {
             + this.emptyStateMarkup() + this.paginationMarkup();
 
         this.updateFilterOptionCounts();
+    },
+
+    /**
+     * Re-fetch products in the new locale and rebuild the grid,
+     * preserving active filters/sort/page. Also rebinds the
+     * pagination click handler since fetchProducts() replaces
+     * the pagination DOM node.
+     */
+    refreshLocale: async function () {
+        if (!this.productsGrid) return;
+        await this.fetchProducts();
+        this.collectProductData();
+        this.bindPagination();
+        this.applyAllFilters();
+        this.updateResultsDisplay();
+        this.updatePagination(Math.ceil(this.filteredProducts.length / this.productsPerPage));
     },
 
     emptyStateMarkup: function () {
@@ -125,6 +151,17 @@ SANDUKHAR.catalog = {
             <div class="page-numbers"><button class="page-btn active" data-page="1">1</button></div>
             <button class="page-btn next" aria-label="Next Page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m9 18 6-6-6-6"/></svg></button>
         </nav>`;
+    },
+
+    bindPagination: function () {
+        if (!this.pagination) return;
+        this.pagination.addEventListener('click', (e) => {
+            const pageBtn = e.target.closest('.page-btn');
+            if (!pageBtn || pageBtn.disabled) return;
+            if (pageBtn.classList.contains('prev')) this.goToPage(this.currentPage - 1);
+            else if (pageBtn.classList.contains('next')) this.goToPage(this.currentPage + 1);
+            else this.goToPage(parseInt(pageBtn.getAttribute('data-page')));
+        });
     },
 
     updateFilterOptionCounts: function () {
@@ -180,15 +217,7 @@ SANDUKHAR.catalog = {
         this.viewButtons.forEach(btn => btn.addEventListener('click', () => this.switchView(btn)));
 
         // Пагинация
-        if (this.pagination) {
-            this.pagination.addEventListener('click', (e) => {
-                const pageBtn = e.target.closest('.page-btn');
-                if (!pageBtn || pageBtn.disabled) return;
-                if (pageBtn.classList.contains('prev')) this.goToPage(this.currentPage - 1);
-                else if (pageBtn.classList.contains('next')) this.goToPage(this.currentPage + 1);
-                else this.goToPage(parseInt(pageBtn.getAttribute('data-page')));
-            });
-        }
+        this.bindPagination();
 
         // Очистка фильтров
         if (this.clearFiltersBtn) this.clearFiltersBtn.addEventListener('click', () => this.clearAllFilters());
@@ -241,7 +270,6 @@ SANDUKHAR.catalog = {
         this.filteredProducts = this.productCards.filter(card => {
             if (this.activeFilters['category']?.length && !this.activeFilters['category'].includes(card.getAttribute('data-category'))) return false;
             if (this.activeFilters['material']?.length && !this.activeFilters['material'].includes(card.getAttribute('data-material'))) return false;
-            if (this.activeFilters['color']?.length && !this.activeFilters['color'].includes(card.getAttribute('data-color'))) return false;
             if (this.activeFilters['availability']?.length && !this.activeFilters['availability'].includes(card.getAttribute('data-availability'))) return false;
             if (this.activeFilters['price']) {
                 const cardPrice = parseFloat(card.getAttribute('data-price'));
@@ -340,17 +368,16 @@ SANDUKHAR.catalog = {
         if (!this.activeFiltersContainer) return;
         this.activeFiltersContainer.innerHTML = '';
         const filterLabels = {
-            'category': 'Category',
-            'material': 'Material',
-            'color': 'Color',
-            'availability': 'Availability'
+            'category': sdT('catalog_category', 'Category'),
+            'material': sdT('catalog_material_filter', 'Material'),
+            'availability': sdT('catalog_availability', 'Availability')
         };
         for (const [filterType, values] of Object.entries(this.activeFilters)) {
             if (filterType === 'price') {
                 const range = values[0];
                 const tag = document.createElement('span');
                 tag.className = 'active-filter-tag';
-                tag.innerHTML = `Price Range: $${range.min || 0} — $${range.max || '∞'} <span class="remove-tag" data-filter="${filterType}">×</span>`;
+                tag.innerHTML = `${sdT('catalog_price_range', 'Price Range')}: $${range.min || 0} — $${range.max || '∞'} <span class="remove-tag" data-filter="${filterType}">×</span>`;
                 this.activeFiltersContainer.appendChild(tag);
                 continue;
             }
@@ -458,4 +485,8 @@ SANDUKHAR.catalog = {
 
 document.addEventListener('DOMContentLoaded', () => {
     if (document.querySelector('#products-grid')) SANDUKHAR.catalog.init();
+});
+
+document.addEventListener('sd_i18n_changed', () => {
+    if (SANDUKHAR.catalog.productsGrid) SANDUKHAR.catalog.refreshLocale();
 });

@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: http://localhost:3000; connect-src 'self' http://localhost:3000; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="description" content="Contact SAN DUKHAR — visit our Istanbul atelier or send us a message.">
     
-    <title data-i18n="nav_contact">Contact Us | SAN DUKHAR</title>
+    <title data-i18n="title_contact">Contact Us | SAN DUKHAR</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,11 +53,30 @@
                 </ul>
             </nav>
             <div class="header-utilities">
+                <button class="utility-btn lang-toggle" data-lang-toggle aria-label="Switch language"><span class="lang-toggle-current">RU</span></button>
+
                 <a href="cart.html" class="utility-btn cart-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count">0</span></a>
                 <button class="utility-btn menu-trigger" id="mobile-menu-trigger"><span class="menu-line"></span><span class="menu-line"></span><span class="menu-line"></span></button>
             </div>
         </div>
     </header>
+
+    <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
+        <div class="mobile-nav-container">
+            <span class="mobile-nav-eyebrow">Menu</span>
+            <ul>
+                <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                <li><a href="catalog.html" data-i18n="nav_collections">Collections</a></li>
+                <li><a href="materials.html" data-i18n="nav_materials">Materials</a></li>
+                <li><a href="tailoring.html" data-i18n="nav_bespoke">Bespoke Tailoring</a></li>
+                <li><a href="about.html" data-i18n="nav_atelier">Our Atelier</a></li>
+                <li><a href="contacts.html" data-i18n="nav_contact">Contact</a></li>
+                <li><a href="account.html" data-i18n="account_title">My Account</a></li>
+                <li><a href="wishlist.html" data-i18n="account_wishlist">Wishlist</a></li>
+                <li><a href="cart.html" data-i18n="nav_cart">Cart</a></li>
+            </ul>
+        </div>
+    </nav>
 
     <main>
         <section class="contacts-hero">
@@ -77,10 +97,10 @@
                     <div class="slide-up delay-1">
                         <form class="contact-form" id="contact-form" novalidate>
                             <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
-                                <input type="text" id="contact-first-name" placeholder="First Name *" required>
-                                <input type="text" id="contact-last-name" placeholder="Last Name *" required>
+                                <input type="text" id="contact-first-name" data-i18n-attr="placeholder" data-i18n="checkout_first_name" placeholder="First Name *" required>
+                                <input type="text" id="contact-last-name" data-i18n-attr="placeholder" data-i18n="checkout_last_name" placeholder="Last Name *" required>
                             </div>
-                            <input type="email" id="contact-email" placeholder="Email Address *" required>
+                            <input type="email" id="contact-email" data-i18n-attr="placeholder" data-i18n="checkout_email" placeholder="Email Address *" required>
                             <input type="tel" id="contact-phone" data-i18n-attr="placeholder" data-i18n="contact_phone_placeholder" placeholder="+90 544 697 67 79">
                             <select id="contact-subject"><option value="" data-i18n="contact_nature_enquiry">Nature of Enquiry</option><option data-i18n="contact_bespoke_commission">Bespoke Commission</option><option data-i18n="contact_product_information">Product Information</option><option data-i18n="contact_order_status">Order Status</option><option data-i18n="contact_atelier_visit">Atelier Visit</option><option data-i18n="contact_press_media">Press & Media</option><option data-i18n="contact_other">Other</option></select>
                             <textarea id="contact-message" data-i18n-attr="placeholder" data-i18n="contact_your_message" placeholder="Your message..." required></textarea>
@@ -103,7 +123,7 @@
             <div class="footer-grid">
                 <div class="footer-col footer-col-brand"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR" style="height:1.8rem;"></a><p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship.</p></div>
                 <div class="footer-col"><h4 data-i18n="footer_customer_care">Customer Care</h4><ul><li><a href="contacts.html" data-i18n="footer_contact_faq">Contact</a></li></ul></div>
-                <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="#" data-i18n="footer_privacy">Privacy</a></li></ul></div>
+                <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="privacy-policy.html" data-i18n="footer_privacy">Privacy</a></li></ul></div>
                 <div class="footer-col"><h4 data-i18n="footer_istanbul">Istanbul</h4><address>Zeytinburnu, Istanbul</address></div>
             </div>
             <div class="footer-bottom"><p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR.</p></div>
@@ -112,6 +132,8 @@
 
     <script src="js/api.js?v=2" defer></script>
     <script src="js/app.js?v=2" defer></script>
+    <script src="js/translations.js?v=1"></script>
+    <script src="js/i18n.js?v=1"></script>
     <script>
         document.getElementById('contact-form')?.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -125,26 +147,28 @@
             const email = document.getElementById('contact-email').value.trim();
             const message = document.getElementById('contact-message').value.trim();
 
+            const t = (key, fallback) => (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t(key) : fallback;
+
             if (!firstName || !lastName || !email || !message) {
-                msg.textContent = 'Please fill in your name, email and message.';
+                msg.textContent = t('contact_form_required', 'Please fill in your name, email and message.');
                 msg.classList.add('error');
                 return;
             }
 
             btn.disabled = true;
             const originalText = btn.textContent;
-            btn.textContent = 'Sending…';
+            btn.textContent = t('contact_form_sending', 'Sending…');
 
             window.SD_API.sendContact({
                 firstName, lastName, email, message,
                 phone: document.getElementById('contact-phone').value.trim(),
                 subject: document.getElementById('contact-subject').value
             }).then((res) => {
-                msg.textContent = res.message || 'Your enquiry has been sent.';
+                msg.textContent = res.message || t('contact_form_success', 'Your enquiry has been sent.');
                 msg.classList.add('success');
                 form.reset();
             }).catch((err) => {
-                msg.textContent = err.message || 'Could not send your message. Please try again.';
+                msg.textContent = err.message || t('contact_form_error', 'Could not send your message. Please try again.');
                 msg.classList.add('error');
             }).finally(() => {
                 btn.disabled = false;

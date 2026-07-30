@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: http://localhost:3000; connect-src 'self' http://localhost:3000; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="description" content="Complete your SAN DUKHAR purchase securely. Enter your shipping and payment details.">
     <meta name="robots" content="noindex, nofollow">
     
-    <title data-i18n="checkout_title">Checkout | SAN DUKHAR</title>
+    <title data-i18n="title_checkout">Checkout | SAN DUKHAR</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -77,6 +78,8 @@
                 </ul>
             </nav>
             <div class="header-utilities">
+                <button class="utility-btn lang-toggle" data-lang-toggle aria-label="Switch language"><span class="lang-toggle-current">RU</span></button>
+
                 <a href="cart.html" class="utility-btn cart-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="cart-count">0</span></a>
                 <button class="utility-btn menu-trigger" id="mobile-menu-trigger"><span class="menu-line"></span><span class="menu-line"></span><span class="menu-line"></span></button>
             </div>
@@ -85,6 +88,7 @@
 
     <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
         <div class="mobile-nav-container">
+            <span class="mobile-nav-eyebrow">Menu</span>
             <ul>
                 <li><a href="index.html" data-i18n="nav_home">Home</a></li>
                 <li><a href="catalog.html" data-i18n="nav_collections">Collections</a></li>
@@ -231,7 +235,7 @@
             <div class="footer-grid">
                 <div class="footer-col footer-col-brand"><a href="index.html"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR" style="height:1.8rem;"></a><p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship.</p></div>
                 <div class="footer-col"><h4 data-i18n="footer_customer_care">Customer Care</h4><ul><li><a href="contacts.html" data-i18n="footer_contact_faq">Contact</a></li><li><a href="track-order.html" data-i18n="footer_track">Track Order</a></li></ul></div>
-                <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="#" data-i18n="footer_privacy">Privacy</a></li><li><a href="#" data-i18n="footer_terms">Terms</a></li></ul></div>
+                <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="privacy-policy.html" data-i18n="footer_privacy">Privacy</a></li><li><a href="terms.html" data-i18n="footer_terms">Terms</a></li></ul></div>
                 <div class="footer-col"><h4 data-i18n="footer_istanbul">Istanbul</h4><address>Zeytinburnu, Istanbul</address></div>
             </div>
             <div class="footer-bottom"><p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR.</p></div>
@@ -240,6 +244,8 @@
 
     <script src="js/api.js?v=2" defer></script>
     <script src="js/app.js?v=2" defer></script>
+    <script src="js/translations.js?v=1"></script>
+    <script src="js/i18n.js?v=1"></script>
     <script src="js/cart.js?v=2" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {

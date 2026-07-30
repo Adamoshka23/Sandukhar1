@@ -8,10 +8,6 @@
         scroll-behavior: auto !important;
     }
 
-    .hero-video {
-        display: none;
-    }
-
     .parallax-section {
         background-attachment: scroll;
     }

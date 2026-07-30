@@ -13,7 +13,8 @@ const reviewsController = {
      */
     getForProduct: async (req, res, next) => {
         try {
-            const { productId, locale = 'en' } = req.query;
+            const { productId, locale: rawLocale = 'en' } = req.query;
+            const locale = rawLocale === 'ru' ? 'ru' : 'en';
 
             if (!productId) {
                 return res.status(400).json({ success: false, message: 'productId is required.' });

@@ -6,6 +6,7 @@
 
 const { query } = require('../config/database');
 const { v4: uuidv4 } = require('uuid');
+const { notifyNew, escapeHtml } = require('../utils/notifications');
 
 const tailoringController = {
     /**
@@ -37,6 +38,12 @@ const tailoringController = {
                 message: 'Your bespoke enquiry has been received. Our atelier will contact you within 48 hours.',
                 data: { request: result.rows[0] }
             });
+
+            notifyNew('tailoring', {
+                telegramText: `<b>✂️ New bespoke enquiry</b>\n${escapeHtml(productType)}${material ? ' — ' + escapeHtml(material) : ''}\n\n${escapeHtml(contactName)}\n${escapeHtml(contactEmail)}${contactPhone ? '\n' + escapeHtml(contactPhone) : ''}${notes ? '\n\n' + escapeHtml(notes) : ''}`,
+                emailSubject: `New bespoke enquiry — ${productType}`,
+                emailHtml: `<h2>New bespoke enquiry</h2><p><strong>${escapeHtml(productType)}</strong>${material ? ' — ' + escapeHtml(material) : ''}</p><p>${escapeHtml(contactName)}<br>${escapeHtml(contactEmail)}${contactPhone ? '<br>' + escapeHtml(contactPhone) : ''}</p>${notes ? `<p>${escapeHtml(notes)}</p>` : ''}`
+            }).catch(() => {});
         } catch (error) {
             next(error);
         }

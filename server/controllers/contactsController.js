@@ -6,6 +6,7 @@
 
 const { query } = require('../config/database');
 const { v4: uuidv4 } = require('uuid');
+const { notifyNew, escapeHtml } = require('../utils/notifications');
 
 const contactsController = {
     /**
@@ -30,6 +31,12 @@ const contactsController = {
                 message: 'Your message has been sent. Our concierge team will respond within 24 hours.',
                 data: { enquiry: result.rows[0] }
             });
+
+            notifyNew('contact', {
+                telegramText: `<b>✉️ New contact enquiry</b>${subject ? '\n' + escapeHtml(subject) : ''}\n\n${escapeHtml(firstName)} ${escapeHtml(lastName)}\n${escapeHtml(email)}${phone ? '\n' + escapeHtml(phone) : ''}\n\n${escapeHtml(message)}`,
+                emailSubject: `New contact enquiry${subject ? ' — ' + subject : ''}`,
+                emailHtml: `<h2>New contact enquiry</h2><p>${escapeHtml(firstName)} ${escapeHtml(lastName)}<br>${escapeHtml(email)}${phone ? '<br>' + escapeHtml(phone) : ''}</p><p>${escapeHtml(message)}</p>`
+            }).catch(() => {});
         } catch (error) {
             next(error);
         }

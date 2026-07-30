@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: http://localhost:3000; connect-src 'self' http://localhost:3000; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="description"
-        content="Explore SAN DUKHAR's complete collection of handcrafted exotic leather goods. Browse jackets, bags, footwear, and accessories made from genuine crocodile, python, ostrich, stingray, and lizard leather.">
+        content="Explore SAN DUKHAR's complete collection of handcrafted exotic leather goods. Browse jackets, bags, footwear, and accessories made from genuine crocodile, python, ostrich, stingray leather and fine suede.">
     <meta name="keywords"
         content="SAN DUKHAR catalog, exotic leather collection, crocodile leather bags, python leather jackets, luxury accessories, handmade leather goods">
 
@@ -32,7 +33,7 @@
         }
     </script>
 
-    <title>Collections | SAN DUKHAR | Exotic Leather Atelier</title>
+    <title data-i18n="title_catalog">Collections | SAN DUKHAR | Exotic Leather Atelier</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,14 +69,19 @@
                                 <div class="mega-menu-column">
                                     <h4 class="mega-menu-title" data-i18n="nav_by_product">By Product</h4>
                                     <ul>
-                                        <li><a href="catalog.html?category=jackets" data-i18n="nav_jackets">Leather
-                                                Jackets</a></li>
+                                        <li><a href="catalog.html?category=jackets" data-i18n="nav_jackets">Jackets</a></li>
+                                        <li><a href="catalog.html?category=shirts" data-i18n="nav_shirts">Shirts</a></li>
+                                        <li><a href="catalog.html?category=shoes" data-i18n="nav_shoes">Footwear</a></li>
                                         <li><a href="catalog.html?category=bags" data-i18n="nav_bags">Bags &
-                                                Briefcases</a></li>
-                                        <li><a href="catalog.html?category=shoes" data-i18n="nav_shoes">Footwear</a>
-                                        </li>
+                                                Backpacks</a></li>
+                                        <li><a href="catalog.html?category=belts" data-i18n="nav_belts">Belts</a></li>
+                                        <li><a href="catalog.html?category=suitcases" data-i18n="nav_suitcases">Suitcases</a></li>
+                                        <li><a href="catalog.html?category=gloves" data-i18n="nav_gloves">Gloves</a></li>
+                                        <li><a href="catalog.html?category=wallets" data-i18n="nav_wallets">Wallets &
+                                                Cardholders</a></li>
+                                        <li><a href="catalog.html?category=headwear" data-i18n="nav_headwear">Headwear</a></li>
                                         <li><a href="catalog.html?category=accessories"
-                                                data-i18n="nav_accessories">Small Leather Goods</a></li>
+                                                data-i18n="nav_accessories">Accessories</a></li>
                                     </ul>
                                 </div>
                                 <div class="mega-menu-column">
@@ -89,12 +95,12 @@
                                                 Leather</a></li>
                                         <li><a href="catalog.html?material=stingray" data-i18n="nav_stingray">Stingray
                                                 Leather</a></li>
-                                        <li><a href="catalog.html?material=lizard" data-i18n="nav_lizard">Lizard
+                                        <li><a href="catalog.html?material=suede" data-i18n="nav_suede">Suede
                                                 Leather</a></li>
                                     </ul>
                                 </div>
                                 <div class="mega-menu-column mega-menu-image">
-                                    <img src="images/placeholder-tile.svg" alt="SAN DUKHAR Exclusive Collection"
+                                    <img src="images/nav/mega-menu-collection.jpg" alt="SAN DUKHAR Exclusive Collection"
                                         loading="lazy">
                                     <p data-i18n="nav_new_arrivals">The Serpentine Collection — New Arrivals</p>
                                 </div>
@@ -111,6 +117,8 @@
                 </ul>
             </nav>
             <div class="header-utilities">
+                <button class="utility-btn lang-toggle" data-lang-toggle aria-label="Switch language"><span class="lang-toggle-current">RU</span></button>
+
                 <button class="utility-btn search-trigger" aria-label="Search">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="1.5">
@@ -159,6 +167,7 @@
 
     <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
         <div class="mobile-nav-container">
+            <span class="mobile-nav-eyebrow">Menu</span>
             <ul>
                 <li><a href="index.html" data-i18n="nav_home">Home</a></li>
                 <li><a href="catalog.html" data-i18n="nav_collections">Collections</a></li>
@@ -168,7 +177,7 @@
                 <li><a href="contacts.html" data-i18n="nav_contact">Contact</a></li>
                 <li><a href="account.html" data-i18n="account_title">My Account</a></li>
                 <li><a href="wishlist.html" data-i18n="account_wishlist">Wishlist</a></li>
-                <li><a href="cart.html" data-i18n="cart_title">Cart</a></li>
+                <li><a href="cart.html" data-i18n="nav_cart">Cart</a></li>
             </ul>
         </div>
     </nav>
@@ -177,7 +186,7 @@
         <!-- Catalog Hero Banner -->
         <section class="catalog-hero">
             <div class="catalog-hero-image">
-                <img src="images/placeholder-bg.svg" alt="SAN DUKHAR Collections — Exotic Leather Masterpieces"
+                <img src="images/catalog/catalog-hero.jpg" alt="SAN DUKHAR Collections — Exotic Leather Masterpieces"
                     class="parallax-image">
                 <div class="catalog-hero-overlay"></div>
             </div>
@@ -259,18 +268,42 @@
                             <div class="filter-options">
                                 <label class="filter-option"><input type="checkbox" name="category"
                                         value="jackets"><span class="checkmark"></span><span class="option-label"
-                                        data-i18n="nav_jackets">Leather Jackets</span><span
-                                        class="option-count">3</span></label>
-                                <label class="filter-option"><input type="checkbox" name="category" value="bags"><span
-                                        class="checkmark"></span><span class="option-label" data-i18n="nav_bags">Bags &
-                                        Briefcases</span><span class="option-count">3</span></label>
+                                        data-i18n="nav_jackets">Jackets</span><span
+                                        class="option-count">0</span></label>
+                                <label class="filter-option"><input type="checkbox" name="category"
+                                        value="shirts"><span class="checkmark"></span><span class="option-label"
+                                        data-i18n="nav_shirts">Shirts</span><span
+                                        class="option-count">0</span></label>
                                 <label class="filter-option"><input type="checkbox" name="category" value="shoes"><span
                                         class="checkmark"></span><span class="option-label"
-                                        data-i18n="nav_shoes">Footwear</span><span class="option-count">3</span></label>
+                                        data-i18n="nav_shoes">Footwear</span><span class="option-count">0</span></label>
+                                <label class="filter-option"><input type="checkbox" name="category" value="bags"><span
+                                        class="checkmark"></span><span class="option-label" data-i18n="nav_bags">Bags &
+                                        Backpacks</span><span class="option-count">0</span></label>
+                                <label class="filter-option"><input type="checkbox" name="category"
+                                        value="belts"><span class="checkmark"></span><span class="option-label"
+                                        data-i18n="nav_belts">Belts</span><span
+                                        class="option-count">0</span></label>
+                                <label class="filter-option"><input type="checkbox" name="category"
+                                        value="suitcases"><span class="checkmark"></span><span class="option-label"
+                                        data-i18n="nav_suitcases">Suitcases</span><span
+                                        class="option-count">0</span></label>
+                                <label class="filter-option"><input type="checkbox" name="category"
+                                        value="gloves"><span class="checkmark"></span><span class="option-label"
+                                        data-i18n="nav_gloves">Gloves</span><span
+                                        class="option-count">0</span></label>
+                                <label class="filter-option"><input type="checkbox" name="category"
+                                        value="wallets"><span class="checkmark"></span><span class="option-label"
+                                        data-i18n="nav_wallets">Wallets & Cardholders</span><span
+                                        class="option-count">0</span></label>
+                                <label class="filter-option"><input type="checkbox" name="category"
+                                        value="headwear"><span class="checkmark"></span><span class="option-label"
+                                        data-i18n="nav_headwear">Headwear</span><span
+                                        class="option-count">0</span></label>
                                 <label class="filter-option"><input type="checkbox" name="category"
                                         value="accessories"><span class="checkmark"></span><span class="option-label"
-                                        data-i18n="nav_accessories">Small Leather Goods</span><span
-                                        class="option-count">3</span></label>
+                                        data-i18n="nav_accessories">Accessories</span><span
+                                        class="option-count">0</span></label>
                             </div>
                         </div>
                         <div class="filter-group">
@@ -294,31 +327,10 @@
                                         value="stingray"><span class="checkmark"></span><span class="option-label"
                                         data-i18n="nav_stingray">Stingray Leather</span><span
                                         class="option-count">2</span></label>
-                                <label class="filter-option"><input type="checkbox" name="material" value="lizard"><span
+                                <label class="filter-option"><input type="checkbox" name="material" value="suede"><span
                                         class="checkmark"></span><span class="option-label"
-                                        data-i18n="nav_lizard">Lizard Leather</span><span
+                                        data-i18n="nav_suede">Suede Leather</span><span
                                         class="option-count">3</span></label>
-                            </div>
-                        </div>
-                        <div class="filter-group">
-                            <h4 class="filter-group-title"><span data-i18n="catalog_color">Color</span><span
-                                    class="filter-arrow"></span></h4>
-                            <div class="filter-options color-options">
-                                <label class="filter-option color-swatch"><input type="checkbox" name="color"
-                                        value="black"><span class="swatch" style="background:#1a1a1a;"></span><span
-                                        class="option-label">Black</span></label>
-                                <label class="filter-option color-swatch"><input type="checkbox" name="color"
-                                        value="brown"><span class="swatch" style="background:#5c3a21;"></span><span
-                                        class="option-label">Brown</span></label>
-                                <label class="filter-option color-swatch"><input type="checkbox" name="color"
-                                        value="cognac"><span class="swatch" style="background:#8b5a2b;"></span><span
-                                        class="option-label">Cognac</span></label>
-                                <label class="filter-option color-swatch"><input type="checkbox" name="color"
-                                        value="grey"><span class="swatch" style="background:#6b6b6b;"></span><span
-                                        class="option-label">Graphite</span></label>
-                                <label class="filter-option color-swatch"><input type="checkbox" name="color"
-                                        value="natural"><span class="swatch" style="background:#d4c5b2;"></span><span
-                                        class="option-label">Natural</span></label>
                             </div>
                         </div>
                         <div class="filter-group">
@@ -368,22 +380,22 @@
                 <div class="footer-col footer-col-brand">
                     <a href="index.html" class="footer-logo"><img src="icons/sandukhar-logo-gold.svg"
                             alt="SAN DUKHAR"></a>
-                    <p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship. Since 2008,
+                    <p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship. Since 2021,
                         Istanbul.</p>
                     <div class="social-links">
                         <a href="https://www.instagram.com/sandukhar" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="icons/instagram.svg" alt=""></a>
                         <a href="https://www.facebook.com/sandukhar" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><img src="icons/facebook.svg" alt=""></a>
-                        <a href="https://www.pinterest.com/sandukhar" target="_blank" rel="noopener noreferrer" aria-label="Pinterest"><img src="icons/pinterest.svg" alt=""></a>
+                        <a href="https://www.tiktok.com/@sandukhar" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><img src="icons/tiktok.svg" alt=""></a>
                     </div>
                 </div>
                 <div class="footer-col">
                     <h4 data-i18n="footer_customer_care">Customer Care</h4>
                     <ul>
                         <li><a href="contacts.html" data-i18n="footer_contact_faq">Contact & FAQ</a></li>
-                        <li><a href="#" data-i18n="footer_shipping_delivery">Shipping & Delivery</a></li>
-                        <li><a href="#" data-i18n="footer_returns">Returns & Exchanges</a></li>
+                        <li><a href="shipping-delivery.html" data-i18n="footer_shipping_delivery">Shipping & Delivery</a></li>
+                        <li><a href="returns-exchanges.html" data-i18n="footer_returns">Returns & Exchanges</a></li>
                         <li><a href="track-order.html" data-i18n="footer_track">Track Your Order</a></li>
-                        <li><a href="#" data-i18n="footer_care_guide">Care Guide</a></li>
+                        <li><a href="care-guide.html" data-i18n="footer_care_guide">Care Guide</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -392,15 +404,15 @@
                         <li><a href="about.html" data-i18n="footer_brand_story">Brand Story</a></li>
                         <li><a href="materials.html" data-i18n="footer_materials">Materials</a></li>
                         <li><a href="tailoring.html" data-i18n="footer_bespoke">Bespoke</a></li>
-                        <li><a href="#" data-i18n="footer_careers">Careers</a></li>
+                        <li><a href="careers.html" data-i18n="footer_careers">Careers</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4 data-i18n="footer_legal">Legal</h4>
                     <ul>
-                        <li><a href="#" data-i18n="footer_privacy">Privacy Policy</a></li>
-                        <li><a href="#" data-i18n="footer_terms">Terms & Conditions</a></li>
-                        <li><a href="#" data-i18n="footer_cookies">Cookie Policy</a></li>
+                        <li><a href="privacy-policy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
+                        <li><a href="cookie-policy.html" data-i18n="footer_cookies">Cookie Policy</a></li>
                     </ul>
                 </div>
                 <div class="footer-col footer-col-contact">
@@ -413,13 +425,14 @@
             <div class="footer-bottom">
                 <p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR. All rights reserved. Handcrafted with pride in
                     Turkey.</p>
-                <div class="payment-icons"><span>Amex</span><span>Mastercard</span><span>Visa</span></div>
             </div>
         </div>
     </footer>
 
     <script src="js/api.js?v=2" defer></script>
     <script src="js/app.js?v=2" defer></script>
+    <script src="js/translations.js?v=1"></script>
+    <script src="js/i18n.js?v=1"></script>
     <script src="js/catalog.js?v=2" defer></script>
     <script src="js/cart.js?v=2" defer></script>
     <script src="js/wishlist.js?v=2" defer></script>

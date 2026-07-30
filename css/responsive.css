@@ -357,6 +357,10 @@
         min-height: 100svh;
     }
 
+    .hero-bg-image {
+        object-position: 38% 32%;
+    }
+
     .hero-subtitle {
         font-size: 0.9rem;
         max-width: 400px;
@@ -780,7 +784,7 @@
     .mobile-nav,
     .search-overlay,
     .hero-scroll-indicator,
-    .hero-video-wrapper,
+    .hero-bg-wrapper,
     .newsletter-form,
     .social-links,
     .modal-overlay,

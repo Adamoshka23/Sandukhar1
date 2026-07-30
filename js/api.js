@@ -138,6 +138,14 @@ const SD_API = {
         return this.request('/auth/me');
     },
 
+    async verifyEmail(token) {
+        return this.request(`/auth/verify-email?token=${encodeURIComponent(token)}`);
+    },
+
+    async resendVerification() {
+        return this.request('/auth/resend-verification', { method: 'POST' });
+    },
+
     // ============================================================
     // USERS
     // ============================================================
@@ -227,16 +235,6 @@ const SD_API = {
         return this.request('/contacts', {
             method: 'POST',
             body: JSON.stringify(contactData)
-        });
-    },
-
-    // ============================================================
-    // NEWSLETTER
-    // ============================================================
-    async subscribe(email) {
-        return this.request('/newsletter', {
-            method: 'POST',
-            body: JSON.stringify({ email })
         });
     }
 };

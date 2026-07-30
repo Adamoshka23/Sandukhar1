@@ -21,8 +21,18 @@ const environment = {
     MAX_FILE_SIZE: parseInt(process.env.MAX_FILE_SIZE, 10) || 10485760,
 
     CORS_ORIGIN: process.env.CORS_ORIGIN || 'http://localhost:5500',
+    // Where verification/reset links should point — the frontend's own origin.
+    FRONTEND_URL: process.env.FRONTEND_URL || process.env.CORS_ORIGIN || 'http://localhost:5500',
     ADMIN_EMAIL: process.env.ADMIN_EMAIL || 'admin@sandukhar.com',
-    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || 'Admin123!Secure'
+    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || 'Admin123!Secure',
+
+    // Order/enquiry notifications (optional — notifications are skipped
+    // with a console warning if these are left unset).
+    TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN || '',
+    TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID || '',
+    RESEND_API_KEY: process.env.RESEND_API_KEY || '',
+    NOTIFY_EMAIL_FROM: process.env.NOTIFY_EMAIL_FROM || 'SAN DUKHAR <onboarding@resend.dev>',
+    NOTIFY_EMAIL_TO: process.env.NOTIFY_EMAIL_TO || ''
 };
 
 module.exports = environment;

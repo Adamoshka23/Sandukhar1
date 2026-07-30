@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: http://localhost:3000; connect-src 'self' http://localhost:3000; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="robots" content="noindex, nofollow">
     <title>SAN DUKHAR | Admin Panel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -272,12 +273,12 @@
             <div class="modal-body">
                 <input type="hidden" id="product-id">
                 <div class="form-row">
-                    <div class="form-group"><label>Slug *</label><input type="text" id="product-slug" placeholder="imperium-briefcase"></div>
+                    <div class="form-group"><label>Slug *</label><input type="text" id="product-slug" placeholder="sovereign-briefcase"></div>
                     <div class="form-group"><label>SKU *</label><input type="text" id="product-sku" placeholder="SD-XXX-000"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Name (EN) *</label><input type="text" id="product-name-en" placeholder="Imperium Briefcase"></div>
-                    <div class="form-group"><label>Name (RU) *</label><input type="text" id="product-name-ru" placeholder="Портфель Imperium"></div>
+                    <div class="form-group"><label>Name (EN) *</label><input type="text" id="product-name-en" placeholder="Sovereign Briefcase"></div>
+                    <div class="form-group"><label>Name (RU) *</label><input type="text" id="product-name-ru" placeholder="Портфель Sovereign"></div>
                 </div>
                 <div class="form-group"><label>Short Description (EN)</label><textarea id="product-short-desc-en" rows="2"></textarea></div>
                 <div class="form-group"><label>Short Description (RU)</label><textarea id="product-short-desc-ru" rows="2"></textarea></div>
@@ -286,7 +287,7 @@
                 <div class="form-row triple">
                     <div class="form-group"><label>Price ($) *</label><input type="number" id="product-price" step="0.01" placeholder="18500.00"></div>
                     <div class="form-group"><label>Old Price ($)</label><input type="number" id="product-old-price" step="0.01"></div>
-                    <div class="form-group"><label>Stock</label><input type="number" id="product-stock" value="0"></div>
+                    <div class="form-group" id="product-stock-group"><label>Stock</label><input type="number" id="product-stock" value="0"></div>
                 </div>
                 <div class="form-row">
                     <div class="form-group"><label>Category</label><select id="product-category"><option value="">Select...</option></select></div>
@@ -297,8 +298,16 @@
                     <div class="form-group" style="flex-direction:row;align-items:center;gap:1rem;padding-top:1.2rem;">
                         <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;"><input type="checkbox" id="product-featured"> Featured</label>
                         <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;"><input type="checkbox" id="product-limited"> Limited Edition</label>
+                        <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;"><input type="checkbox" id="product-made-to-order" onchange="toggleMadeToOrderUI()"> Made to Order</label>
                     </div>
                 </div>
+                <div class="form-group" id="product-sizes-group">
+                    <label>Sizes &amp; Stock</label>
+                    <p style="font-size:0.75rem;color:var(--text-muted);margin:-0.3rem 0 0.6rem;">Add a row per size you stock (e.g. "42", "S", "One Size"). Leave empty if this product has no size variants — the flat Stock field above will be used instead.</p>
+                    <div id="product-sizes-rows" style="display:flex;flex-direction:column;gap:0.5rem;"></div>
+                    <button type="button" class="btn-secondary" style="margin-top:0.6rem;align-self:flex-start;" onclick="addSizeRow()">+ Add Size</button>
+                </div>
+                <p class="form-group" id="product-made-to-order-hint" style="display:none;font-size:0.8rem;color:var(--text-muted);background:rgba(197,165,114,0.08);border:1px solid var(--gold);border-radius:var(--radius);padding:0.8rem 1rem;">This product is marked <strong>Made to Order</strong> — it has no fixed stock. Customers will be told it's handcrafted to their measurements; the Stock field and size rows above are hidden and ignored.</p>
                 <div class="form-group" id="product-images-section" style="display:none;">
                     <label>Images</label>
                     <div id="product-images-gallery" style="display:flex;flex-wrap:wrap;gap:0.6rem;margin-bottom:0.6rem;"></div>
@@ -489,6 +498,15 @@
             };
         }
 
+        // Customer- and admin-submitted text (order addresses, product names, etc.)
+        // is rendered into innerHTML throughout this panel — always pass it
+        // through this before interpolating into a template literal.
+        function escapeHtml(value) {
+            const div = document.createElement('div');
+            div.textContent = value ?? '';
+            return div.innerHTML;
+        }
+
         // ============================================================
         // NAVIGATION
         // ============================================================
@@ -580,6 +598,41 @@
             renderProductsTable(filtered);
         }
 
+        function addSizeRow(size = '', stock = 0) {
+            const rows = document.getElementById('product-sizes-rows');
+            const row = document.createElement('div');
+            row.className = 'size-row';
+            row.style.cssText = 'display:flex;gap:0.6rem;align-items:center;';
+            row.innerHTML = `
+                <input type="text" class="size-row-label" placeholder="Size (e.g. 42, M, One Size)" value="${size.replace(/"/g, '&quot;')}" style="flex:2;">
+                <input type="number" class="size-row-stock" placeholder="Qty" min="0" value="${stock}" style="flex:1;">
+                <button type="button" class="btn-icon" onclick="this.closest('.size-row').remove()" title="Remove size">✕</button>
+            `;
+            rows.appendChild(row);
+        }
+
+        function renderSizeRows(sizes) {
+            const rows = document.getElementById('product-sizes-rows');
+            rows.innerHTML = '';
+            (sizes || []).forEach(s => addSizeRow(s.size || '', s.stock || 0));
+        }
+
+        function collectSizesFromForm() {
+            return Array.from(document.querySelectorAll('#product-sizes-rows .size-row'))
+                .map(row => ({
+                    size: row.querySelector('.size-row-label').value.trim(),
+                    stock: parseInt(row.querySelector('.size-row-stock').value, 10) || 0
+                }))
+                .filter(s => s.size);
+        }
+
+        function toggleMadeToOrderUI() {
+            const madeToOrder = document.getElementById('product-made-to-order').checked;
+            document.getElementById('product-stock-group').style.display = madeToOrder ? 'none' : '';
+            document.getElementById('product-sizes-group').style.display = madeToOrder ? 'none' : '';
+            document.getElementById('product-made-to-order-hint').style.display = madeToOrder ? 'block' : 'none';
+        }
+
         function openProductModal(productId = null) {
             document.getElementById('product-modal').classList.add('active');
             document.getElementById('product-id').value = '';
@@ -610,8 +663,11 @@
             document.getElementById('product-status').value = 'active';
             document.getElementById('product-featured').checked = false;
             document.getElementById('product-limited').checked = false;
+            document.getElementById('product-made-to-order').checked = false;
             document.getElementById('product-category').value = '';
             document.getElementById('product-material').value = '';
+            renderSizeRows([]);
+            toggleMadeToOrderUI();
         }
 
         function fillProductForm(product) {
@@ -630,8 +686,11 @@
             document.getElementById('product-status').value = product.status || 'active';
             document.getElementById('product-featured').checked = product.featured || false;
             document.getElementById('product-limited').checked = product.limited_edition || false;
+            document.getElementById('product-made-to-order').checked = product.made_to_order || false;
             document.getElementById('product-category').value = product.category_id || '';
             document.getElementById('product-material').value = product.material_id || '';
+            renderSizeRows(product.sizes || []);
+            toggleMadeToOrderUI();
 
             document.getElementById('product-images-section').style.display = 'flex';
             document.getElementById('product-images-hint').style.display = 'none';
@@ -709,6 +768,14 @@
 
         async function saveProduct() {
             const id = document.getElementById('product-id').value;
+            const madeToOrder = document.getElementById('product-made-to-order').checked;
+            const sizes = madeToOrder ? [] : collectSizesFromForm();
+            const stock = madeToOrder
+                ? 0
+                : (sizes.length > 0
+                    ? sizes.reduce((sum, s) => sum + s.stock, 0)
+                    : (parseInt(document.getElementById('product-stock').value) || 0));
+
             const productData = {
                 slug: document.getElementById('product-slug').value,
                 sku: document.getElementById('product-sku').value,
@@ -722,7 +789,9 @@
                 oldPrice: parseFloat(document.getElementById('product-old-price').value) || null,
                 categoryId: document.getElementById('product-category').value || null,
                 materialId: document.getElementById('product-material').value || null,
-                stock: parseInt(document.getElementById('product-stock').value) || 0,
+                stock: stock,
+                sizes: sizes,
+                madeToOrder: madeToOrder,
                 status: document.getElementById('product-status').value,
                 featured: document.getElementById('product-featured').checked,
                 limitedEdition: document.getElementById('product-limited').checked
@@ -965,8 +1034,8 @@
                         ? '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">No orders yet</td></tr>'
                         : data.data.orders.map(o => `
                             <tr>
-                                <td style="font-family:monospace;">${o.order_number}</td>
-                                <td>${(o.shipping_address && o.shipping_address.email) || 'Guest'}</td>
+                                <td style="font-family:monospace;">${escapeHtml(o.order_number)}</td>
+                                <td>${escapeHtml((o.shipping_address && o.shipping_address.email) || 'Guest')}</td>
                                 <td style="color:var(--gold);">$${parseFloat(o.total).toLocaleString()}</td>
                                 <td>
                                     <select onchange="updateOrderStatus('${o.id}', this.value)" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:0.3rem 0.5rem;border-radius:var(--radius);font-size:0.75rem;">

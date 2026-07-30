@@ -18,10 +18,16 @@ VALUES (
 
 -- Categories
 INSERT INTO categories (id, slug, name_ru, name_en, description_ru, description_en, sort_order) VALUES
-(uuid_generate_v4(), 'jackets', 'Кожаные куртки', 'Leather Jackets', 'Эксклюзивные куртки из экзотической кожи ручной работы', 'Exclusive handcrafted exotic leather jackets', 1),
-(uuid_generate_v4(), 'bags', 'Сумки и портфели', 'Bags & Briefcases', 'Премиальные сумки и портфели из крокодиловой кожи и других экзотических материалов', 'Premium bags and briefcases from crocodile leather and other exotic materials', 2),
+(uuid_generate_v4(), 'jackets', 'Куртки', 'Jackets', 'Эксклюзивные куртки из экзотической кожи ручной работы', 'Exclusive handcrafted exotic leather jackets', 1),
+(uuid_generate_v4(), 'shirts', 'Рубашки', 'Shirts', 'Рубашки из тонкой выделанной кожи', 'Shirts crafted from fine dressed leather', 2),
 (uuid_generate_v4(), 'shoes', 'Обувь', 'Footwear', 'Обувь ручной работы из лучших сортов экзотической кожи', 'Handcrafted footwear from the finest exotic leathers', 3),
-(uuid_generate_v4(), 'accessories', 'Малые кожаные изделия', 'Small Leather Goods', 'Кошельки, ремни, кардхолдеры и другие аксессуары', 'Wallets, belts, cardholders and other accessories', 4);
+(uuid_generate_v4(), 'bags', 'Сумки и рюкзаки', 'Bags & Backpacks', 'Премиальные сумки и рюкзаки из крокодиловой кожи и других экзотических материалов', 'Premium bags and backpacks from crocodile leather and other exotic materials', 4),
+(uuid_generate_v4(), 'belts', 'Ремни', 'Belts', 'Ремни из экзотической кожи с фирменной фурнитурой', 'Exotic leather belts with signature hardware', 5),
+(uuid_generate_v4(), 'suitcases', 'Чемоданы', 'Suitcases', 'Дорожные чемоданы ручной работы', 'Handcrafted travel suitcases', 6),
+(uuid_generate_v4(), 'gloves', 'Перчатки', 'Gloves', 'Перчатки из мягкой выделанной кожи', 'Gloves crafted from soft dressed leather', 7),
+(uuid_generate_v4(), 'wallets', 'Кошельки и кредитницы', 'Wallets & Cardholders', 'Кошельки, кредитницы и другие малые кожаные изделия', 'Wallets, cardholders and other small leather goods', 8),
+(uuid_generate_v4(), 'headwear', 'Головные уборы', 'Headwear', 'Головные уборы из экзотической кожи', 'Exotic leather headwear', 9),
+(uuid_generate_v4(), 'accessories', 'Аксессуары', 'Accessories', 'Дополнительные аксессуары из экзотической кожи', 'Additional exotic leather accessories', 10);
 
 -- Materials
 INSERT INTO materials (id, slug, name_ru, name_en, scientific_name, description_ru, description_en, sort_order) VALUES
@@ -34,10 +40,10 @@ INSERT INTO materials (id, slug, name_ru, name_en, scientific_name, description_
 -- Sample Products
 INSERT INTO products (id, slug, sku, name_ru, name_en, description_ru, description_en, price, category_id, material_id, status, featured, limited_edition, stock) 
 SELECT 
-    uuid_generate_v4(), 'imperium-briefcase', 'SD-IMP-BRF-001',
-    'Портфель Imperium', 'Imperium Briefcase',
-    'Портфель Imperium — абсолютное воплощение силы и утончённости. Создан из цельной безупречной кожи нильского крокодила.',
-    'The Imperium Briefcase is the definitive statement of power and refinement. Crafted from a single flawless Nile crocodile skin.',
+    uuid_generate_v4(), 'sovereign-briefcase', 'SD-SOV-BRF-001',
+    'Портфель Sovereign', 'Sovereign Briefcase',
+    'Портфель Sovereign — абсолютное воплощение силы и утончённости. Создан из цельной безупречной кожи нильского крокодила.',
+    'The Sovereign Briefcase is the definitive statement of power and refinement. Crafted from a single flawless Nile crocodile skin.',
     18500.00,
     c.id, m.id,
     'active', true, true, 25
@@ -46,20 +52,20 @@ WHERE c.slug = 'bags' AND m.slug = 'crocodile';
 
 INSERT INTO products (id, slug, sku, name_ru, name_en, description_ru, description_en, price, category_id, material_id, status, featured, stock)
 SELECT 
-    uuid_generate_v4(), 'imperium-bifold-wallet', 'SD-IMP-WLT-002',
-    'Бумажник Imperium', 'Imperium Bifold Wallet',
-    'Бумажник из глазированной кожи нильского крокодила с палладиевой фурнитурой.',
-    'Bifold wallet in glazed Nile crocodile leather with palladium hardware.',
+    uuid_generate_v4(), 'sovereign-bifold-wallet', 'SD-SOV-WLT-002',
+    'Бумажник Sovereign', 'Sovereign Bifold Wallet',
+    'Бумажник из глазированной кожи нильского крокодила с серебряной фурнитурой.',
+    'Bifold wallet in glazed Nile crocodile leather with silver hardware.',
     2200.00,
     c.id, m.id,
     'active', true, 50
 FROM categories c, materials m
-WHERE c.slug = 'accessories' AND m.slug = 'crocodile';
+WHERE c.slug = 'wallets' AND m.slug = 'crocodile';
 
 INSERT INTO products (id, slug, sku, name_ru, name_en, description_ru, description_en, price, category_id, material_id, status, featured, limited_edition, stock)
 SELECT
-    uuid_generate_v4(), 'imperium-loafers', 'SD-IMP-LFR-003',
-    'Лоферы Imperium', 'Imperium Loafers',
+    uuid_generate_v4(), 'sovereign-loafers', 'SD-SOV-LFR-003',
+    'Лоферы Sovereign', 'Sovereign Loafers',
     'Лоферы из полированной кожи Porosus с пряжкой, покрытой золотом.',
     'Loafers in polished Porosus leather with gold-plated buckle.',
     6800.00,
@@ -97,20 +103,20 @@ INSERT INTO products (id, slug, sku, name_ru, name_en, description_ru, descripti
 SELECT
     uuid_generate_v4(), 'abyss-cardholder', 'SD-ABY-CRD-006',
     'Кардхолдер Abyss', 'Abyss Cardholder',
-    'Кардхолдер из полированного галюша с палладиевой отделкой.',
-    'Cardholder in polished galuchat with palladium finish.',
+    'Кардхолдер из полированного галюша с серебряной отделкой.',
+    'Cardholder in polished galuchat with silver finish.',
     1800.00,
     c.id, m.id,
     'active', 30
 FROM categories c, materials m
-WHERE c.slug = 'accessories' AND m.slug = 'stingray';
+WHERE c.slug = 'wallets' AND m.slug = 'stingray';
 
 INSERT INTO products (id, slug, sku, name_ru, name_en, description_ru, description_en, price, category_id, material_id, status, limited_edition, stock)
 SELECT
     uuid_generate_v4(), 'nocturne-jacket', 'SD-NOC-JKT-007',
     'Куртка Nocturne', 'Nocturne Jacket',
-    'Куртка из кожи ящерицы Teju с рутениевыми молниями.',
-    'Jacket in Teju lizard leather with ruthenium zippers.',
+    'Куртка из кожи ящерицы Teju с серебряными молниями.',
+    'Jacket in Teju lizard leather with silver zippers.',
     8900.00,
     c.id, m.id,
     'active', true, 10

@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Discover the exotic leathers of SAN DUKHAR — Nile crocodile, python, ostrich, stingray, and lizard. Learn about their origins, unique characteristics, and proper care.">
-    <meta name="keywords" content="exotic leather guide, crocodile leather, python leather, ostrich leather, stingray leather, lizard leather, leather care, SAN DUKHAR materials">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: http://localhost:3000; connect-src 'self' http://localhost:3000; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="description" content="Discover the exotic leathers of SAN DUKHAR — Nile crocodile, python, ostrich, stingray, and fine suede. Learn about their origins, unique characteristics, and proper care.">
+    <meta name="keywords" content="exotic leather guide, crocodile leather, python leather, ostrich leather, stingray leather, suede leather, leather care, SAN DUKHAR materials">
 
     <meta property="og:title" content="Exotic Leather Materials | SAN DUKHAR">
     <meta property="og:description" content="Explore the finest exotic leathers sourced from ethical farms worldwide.">
     <meta property="og:image" content="https://www.sandukhar.com/images/og-cover.svg">
     <meta property="og:url" content="https://www.sandukhar.com/materials.html">
 
-    <title>Exotic Leather Materials | Crocodile, Python, Ostrich & More | SAN DUKHAR</title>
+    <title data-i18n="title_materials">Exotic Leather Materials | Crocodile, Python, Ostrich & More | SAN DUKHAR</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -489,6 +490,8 @@
                 </ul>
             </nav>
             <div class="header-utilities">
+                <button class="utility-btn lang-toggle" data-lang-toggle aria-label="Switch language"><span class="lang-toggle-current">RU</span></button>
+
                 <button class="utility-btn search-trigger" aria-label="Search">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                 </button>
@@ -522,6 +525,7 @@
     <!-- ============================================================ -->
     <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
         <div class="mobile-nav-container">
+            <span class="mobile-nav-eyebrow">Menu</span>
             <ul>
                 <li><a href="index.html" data-i18n="nav_home">Home</a></li>
                 <li><a href="catalog.html" data-i18n="nav_collections">Collections</a></li>
@@ -531,7 +535,7 @@
                 <li><a href="contacts.html" data-i18n="nav_contact">Contact</a></li>
                 <li><a href="account.html" data-i18n="account_title">My Account</a></li>
                 <li><a href="wishlist.html" data-i18n="account_wishlist">Wishlist</a></li>
-                <li><a href="cart.html" data-i18n="cart_title">Cart</a></li>
+                <li><a href="cart.html" data-i18n="nav_cart">Cart</a></li>
             </ul>
         </div>
     </nav>
@@ -543,7 +547,7 @@
         <!-- Hero Banner -->
         <section class="materials-hero">
             <div class="materials-hero-image">
-                <img src="images/placeholder-bg.svg" alt="Collection of exotic leather textures — crocodile, python, ostrich, stingray, and lizard" class="parallax-image">
+                <img src="images/materials/materials-hero.jpg" alt="Collection of exotic leather textures — crocodile, python, ostrich, stingray, and suede" class="parallax-image">
                 <div class="materials-hero-overlay"></div>
             </div>
             <div class="materials-hero-content">
@@ -556,8 +560,8 @@
         <section class="materials-intro">
             <div class="container">
                 <div class="section-header slide-up">
-                    <h2 class="section-title">A Philosophy of Material</h2>
-                    <p class="section-subtitle">We believe that the foundation of any exceptional creation lies in its raw material. Our atelier sources exclusively from CITES-certified farms where animal welfare and environmental stewardship are paramount. Each skin is individually selected by our master artisans for its symmetry, texture, and character.</p>
+                    <h2 class="section-title" data-i18n="materials_philosophy_title">A Philosophy of Material</h2>
+                    <p class="section-subtitle" data-i18n="materials_philosophy_desc">We believe that the foundation of any exceptional creation lies in its raw material. Our atelier sources exclusively from CITES-certified farms where animal welfare and environmental stewardship are paramount. Each skin is individually selected by our master artisans for its symmetry, texture, and character.</p>
                 </div>
             </div>
         </section>
@@ -571,31 +575,31 @@
                     </div>
                     <div class="material-detail-content slide-up delay-1">
                         <p class="material-label">01 — Porosus & Niloticus</p>
-                        <h2 class="material-detail-title">Crocodile Leather</h2>
+                        <h2 class="material-detail-title" data-i18n="nav_crocodile">Crocodile Leather</h2>
                         <div class="material-divider"></div>
-                        <p class="material-description">The undisputed king of exotic leathers. Crocodile skin is defined by its regular, rectangular scale pattern with prominent pore markings — a hallmark of authenticity that cannot be replicated. We work exclusively with Nile crocodile (Crocodylus niloticus) and saltwater crocodile (Crocodylus porosus), sourced from farms in Madagascar, Zimbabwe, and Australia.</p>
+                        <p class="material-description" data-i18n="materials_crocodile_desc">The undisputed king of exotic leathers. Crocodile skin is defined by its regular, rectangular scale pattern with prominent pore markings — a hallmark of authenticity that cannot be replicated. We work exclusively with Nile crocodile (Crocodylus niloticus) and saltwater crocodile (Crocodylus porosus), sourced from farms in Madagascar, Zimbabwe, and Australia.</p>
                         
                         <div class="material-attributes">
                             <div class="attribute">
-                                <h4>Origin</h4>
-                                <p>Madagascar, Zimbabwe, Northern Australia</p>
+                                <h4 data-i18n="materials_attr_origin">Origin</h4>
+                                <p data-i18n="materials_crocodile_origin">Madagascar, Zimbabwe, Northern Australia</p>
                             </div>
                             <div class="attribute">
-                                <h4>Character</h4>
-                                <p>Uniform tile-like scales, natural sheen, exceptional durability</p>
+                                <h4 data-i18n="materials_attr_character">Character</h4>
+                                <p data-i18n="materials_crocodile_character">Uniform tile-like scales, natural sheen, exceptional durability</p>
                             </div>
                             <div class="attribute">
-                                <h4>Patina</h4>
-                                <p>Develops a rich, deep luster over decades of use</p>
+                                <h4 data-i18n="materials_attr_patina">Patina</h4>
+                                <p data-i18n="materials_crocodile_patina">Develops a rich, deep luster over decades of use</p>
                             </div>
                             <div class="attribute">
-                                <h4>Care</h4>
-                                <p>Occasional conditioning with natural oils. Avoid prolonged moisture.</p>
+                                <h4 data-i18n="materials_attr_care">Care</h4>
+                                <p data-i18n="materials_crocodile_care">Occasional conditioning with natural oils. Avoid prolonged moisture.</p>
                             </div>
                         </div>
 
                         <div class="material-finishes">
-                            <h4>Available Finishes</h4>
+                            <h4 data-i18n="materials_finishes_title">Available Finishes</h4>
                             <div class="finish-swatches">
                                 <span class="finish-swatch" style="background: #1a1a1a;" title="Matte Black"></span>
                                 <span class="finish-swatch" style="background: #3e2723;" title="Deep Brown"></span>
@@ -605,7 +609,7 @@
                             </div>
                         </div>
 
-                        <a href="catalog.html?material=crocodile" class="btn-outline" data-i18n="section_view_collection">Explore Crocodile Collection</a>
+                        <a href="catalog.html?material=crocodile" class="btn-outline" data-i18n="section_view_crocodile">Explore Crocodile Collection</a>
                     </div>
                 </div>
             </div>
@@ -620,31 +624,31 @@
                     </div>
                     <div class="material-detail-content slide-up delay-1">
                         <p class="material-label">02 — Reticulatus & Molurus</p>
-                        <h2 class="material-detail-title">Python Leather</h2>
+                        <h2 class="material-detail-title" data-i18n="nav_python">Python Leather</h2>
                         <div class="material-divider"></div>
-                        <p class="material-description">Python skin is immediately recognizable by its dramatic, overlapping scale pattern that creates a natural three-dimensional effect. Each skin is utterly unique — a fingerprint of nature. We source from Southeast Asian farms where pythons are raised for their skins as part of a regulated trade that supports local communities.</p>
+                        <p class="material-description" data-i18n="materials_python_desc">Python skin is immediately recognizable by its dramatic, overlapping scale pattern that creates a natural three-dimensional effect. Each skin is utterly unique — a fingerprint of nature. We source from Southeast Asian farms where pythons are raised for their skins as part of a regulated trade that supports local communities.</p>
                         
                         <div class="material-attributes">
                             <div class="attribute">
-                                <h4>Origin</h4>
-                                <p>Indonesia, Malaysia, Vietnam</p>
+                                <h4 data-i18n="materials_attr_origin">Origin</h4>
+                                <p data-i18n="materials_python_origin">Indonesia, Malaysia, Vietnam</p>
                             </div>
                             <div class="attribute">
-                                <h4>Character</h4>
-                                <p>Supple, lightweight, dramatic scale pattern</p>
+                                <h4 data-i18n="materials_attr_character">Character</h4>
+                                <p data-i18n="materials_python_character">Supple, lightweight, dramatic scale pattern</p>
                             </div>
                             <div class="attribute">
-                                <h4>Patina</h4>
-                                <p>Softens and gains character with wear</p>
+                                <h4 data-i18n="materials_attr_patina">Patina</h4>
+                                <p data-i18n="materials_python_patina">Softens and gains character with wear</p>
                             </div>
                             <div class="attribute">
-                                <h4>Care</h4>
-                                <p>Gentle brushing to maintain scale alignment. Avoid friction.</p>
+                                <h4 data-i18n="materials_attr_care">Care</h4>
+                                <p data-i18n="materials_python_care">Gentle brushing to maintain scale alignment. Avoid friction.</p>
                             </div>
                         </div>
 
                         <div class="material-finishes">
-                            <h4>Available Finishes</h4>
+                            <h4 data-i18n="materials_finishes_title">Available Finishes</h4>
                             <div class="finish-swatches">
                                 <span class="finish-swatch" style="background: #d4c5b2;" title="Natural"></span>
                                 <span class="finish-swatch" style="background: #1a1a1a;" title="Black"></span>
@@ -654,7 +658,7 @@
                             </div>
                         </div>
 
-                        <a href="catalog.html?material=python" class="btn-outline" data-i18n="section_view_collection">Explore Python Collection</a>
+                        <a href="catalog.html?material=python" class="btn-outline" data-i18n="section_view_python">Explore Python Collection</a>
                     </div>
                 </div>
             </div>
@@ -669,31 +673,31 @@
                     </div>
                     <div class="material-detail-content slide-up delay-1">
                         <p class="material-label">03 — Struthio Camelus</p>
-                        <h2 class="material-detail-title">Ostrich Leather</h2>
+                        <h2 class="material-detail-title" data-i18n="nav_ostrich">Ostrich Leather</h2>
                         <div class="material-divider"></div>
-                        <p class="material-description">Ostrich leather is celebrated for its unique quill follicle pattern — the small bumps where feathers once grew. This creates a surface that is both visually striking and remarkably durable. We use only full-quill ostrich from the crown of the skin, sourced from South African farms with the highest ethical standards.</p>
+                        <p class="material-description" data-i18n="materials_ostrich_desc">Ostrich leather is celebrated for its unique quill follicle pattern — the small bumps where feathers once grew. This creates a surface that is both visually striking and remarkably durable. We use only full-quill ostrich from the crown of the skin, sourced from South African farms with the highest ethical standards.</p>
                         
                         <div class="material-attributes">
                             <div class="attribute">
-                                <h4>Origin</h4>
-                                <p>South Africa, Oudtshoorn region</p>
+                                <h4 data-i18n="materials_attr_origin">Origin</h4>
+                                <p data-i18n="materials_ostrich_origin">South Africa, Oudtshoorn region</p>
                             </div>
                             <div class="attribute">
-                                <h4>Character</h4>
-                                <p>Soft, pliable, distinctive quill pattern</p>
+                                <h4 data-i18n="materials_attr_character">Character</h4>
+                                <p data-i18n="materials_ostrich_character">Soft, pliable, distinctive quill pattern</p>
                             </div>
                             <div class="attribute">
-                                <h4>Patina</h4>
-                                <p>Darkens gracefully, follicles become more pronounced</p>
+                                <h4 data-i18n="materials_attr_patina">Patina</h4>
+                                <p data-i18n="materials_ostrich_patina">Darkens gracefully, follicles become more pronounced</p>
                             </div>
                             <div class="attribute">
-                                <h4>Care</h4>
-                                <p>Hydrate with specialized ostrich leather cream. Avoid heat.</p>
+                                <h4 data-i18n="materials_attr_care">Care</h4>
+                                <p data-i18n="materials_ostrich_care">Hydrate with specialized ostrich leather cream. Avoid heat.</p>
                             </div>
                         </div>
 
                         <div class="material-finishes">
-                            <h4>Available Finishes</h4>
+                            <h4 data-i18n="materials_finishes_title">Available Finishes</h4>
                             <div class="finish-swatches">
                                 <span class="finish-swatch" style="background: #3e2723;" title="Dark Brown"></span>
                                 <span class="finish-swatch" style="background: #8b5a2b;" title="Cognac"></span>
@@ -703,7 +707,7 @@
                             </div>
                         </div>
 
-                        <a href="catalog.html?material=ostrich" class="btn-outline" data-i18n="section_view_collection">Explore Ostrich Collection</a>
+                        <a href="catalog.html?material=ostrich" class="btn-outline" data-i18n="section_view_ostrich">Explore Ostrich Collection</a>
                     </div>
                 </div>
             </div>
@@ -718,31 +722,31 @@
                     </div>
                     <div class="material-detail-content slide-up delay-1">
                         <p class="material-label">04 — Galuchat</p>
-                        <h2 class="material-detail-title">Stingray Leather</h2>
+                        <h2 class="material-detail-title" data-i18n="nav_stingray">Stingray Leather</h2>
                         <div class="material-divider"></div>
-                        <p class="material-description">Stingray leather — known in French as galuchat — is one of the most durable and distinctive exotic materials in existence. Its surface is covered in tiny calcium deposits that form a natural armor. When polished, these deposits create a mesmerizing shimmer that changes with the light. Our stingray skins come from sustainable fisheries in Thailand and Indonesia.</p>
+                        <p class="material-description" data-i18n="materials_stingray_desc">Stingray leather — known in French as galuchat — is one of the most durable and distinctive exotic materials in existence. Its surface is covered in tiny calcium deposits that form a natural armor. When polished, these deposits create a mesmerizing shimmer that changes with the light. Our stingray skins come from sustainable fisheries in Thailand and Indonesia.</p>
                         
                         <div class="material-attributes">
                             <div class="attribute">
-                                <h4>Origin</h4>
-                                <p>Thailand, Indonesia coastal waters</p>
+                                <h4 data-i18n="materials_attr_origin">Origin</h4>
+                                <p data-i18n="materials_stingray_origin">Thailand, Indonesia coastal waters</p>
                             </div>
                             <div class="attribute">
-                                <h4>Character</h4>
-                                <p>Extremely durable, shimmering pearl-like surface</p>
+                                <h4 data-i18n="materials_attr_character">Character</h4>
+                                <p data-i18n="materials_stingray_character">Extremely durable, shimmering pearl-like surface</p>
                             </div>
                             <div class="attribute">
-                                <h4>Patina</h4>
-                                <p>Calcium pearls polish naturally with use</p>
+                                <h4 data-i18n="materials_attr_patina">Patina</h4>
+                                <p data-i18n="materials_stingray_patina">Calcium pearls polish naturally with use</p>
                             </div>
                             <div class="attribute">
-                                <h4>Care</h4>
-                                <p>Wipe with soft dry cloth. Virtually waterproof.</p>
+                                <h4 data-i18n="materials_attr_care">Care</h4>
+                                <p data-i18n="materials_stingray_care">Wipe with soft dry cloth. Virtually waterproof.</p>
                             </div>
                         </div>
 
                         <div class="material-finishes">
-                            <h4>Available Finishes</h4>
+                            <h4 data-i18n="materials_finishes_title">Available Finishes</h4>
                             <div class="finish-swatches">
                                 <span class="finish-swatch" style="background: #4a4a4a;" title="Graphite"></span>
                                 <span class="finish-swatch" style="background: #1a1a1a;" title="Black"></span>
@@ -751,46 +755,46 @@
                             </div>
                         </div>
 
-                        <a href="catalog.html?material=stingray" class="btn-outline" data-i18n="section_view_collection">Explore Stingray Collection</a>
+                        <a href="catalog.html?material=stingray" class="btn-outline" data-i18n="section_view_stingray">Explore Stingray Collection</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Material 5: Lizard -->
-        <section id="lizard" class="material-detail-section">
+        <!-- Material 5: Suede -->
+        <section id="suede" class="material-detail-section">
             <div class="container">
                 <div class="material-detail-layout">
                     <div class="material-detail-image slide-up">
-                        <img src="images/materials/tile-lizard.svg" alt="Teju lizard leather with small uniform scales" loading="lazy">
+                        <img src="images/materials/tile-suede.svg" alt="Fine suede leather with a soft napped texture" loading="lazy">
                     </div>
                     <div class="material-detail-content slide-up delay-1">
-                        <p class="material-label">05 — Teju & Varanus</p>
-                        <h2 class="material-detail-title">Lizard Leather</h2>
+                        <p class="material-label">05 — Nubuck & Suede</p>
+                        <h2 class="material-detail-title" data-i18n="nav_suede">Suede Leather</h2>
                         <div class="material-divider"></div>
-                        <p class="material-description">Lizard skin offers a refined, understated elegance with its small, uniform scales that create a subtle geometric pattern. We use two varieties: Teju lizard from South America, known for its smooth, fine scales, and Varanus from Southeast Asia, which has a slightly more textured surface. Both are prized for their flexibility and sophisticated appearance.</p>
-                        
+                        <p class="material-description" data-i18n="materials_suede_desc">Suede offers a soft, velvety departure from our scaled exotic skins — pure tactile luxury with a refined matte finish. Each hide is brushed to perfection and selected for its uniform nap and supple hand-feel, ideal for pieces that invite touch as much as admiration.</p>
+
                         <div class="material-attributes">
                             <div class="attribute">
-                                <h4>Origin</h4>
-                                <p>Argentina, Indonesia, Malaysia</p>
+                                <h4 data-i18n="materials_attr_origin">Origin</h4>
+                                <p data-i18n="materials_suede_origin">Italy, France</p>
                             </div>
                             <div class="attribute">
-                                <h4>Character</h4>
-                                <p>Fine uniform scales, lightweight, elegant</p>
+                                <h4 data-i18n="materials_attr_character">Character</h4>
+                                <p data-i18n="materials_suede_character">Soft napped texture, matte finish, supple</p>
                             </div>
                             <div class="attribute">
-                                <h4>Patina</h4>
-                                <p>Develops a subtle sheen over time</p>
+                                <h4 data-i18n="materials_attr_patina">Patina</h4>
+                                <p data-i18n="materials_suede_patina">Develops a richer depth of color with wear</p>
                             </div>
                             <div class="attribute">
-                                <h4>Care</h4>
-                                <p>Light conditioning. Store away from direct light.</p>
+                                <h4 data-i18n="materials_attr_care">Care</h4>
+                                <p data-i18n="materials_suede_care">Brush regularly. Protect from water and moisture.</p>
                             </div>
                         </div>
 
                         <div class="material-finishes">
-                            <h4>Available Finishes</h4>
+                            <h4 data-i18n="materials_finishes_title">Available Finishes</h4>
                             <div class="finish-swatches">
                                 <span class="finish-swatch" style="background: #1a1a1a;" title="Black"></span>
                                 <span class="finish-swatch" style="background: #8b4513;" title="Saddle"></span>
@@ -799,7 +803,7 @@
                             </div>
                         </div>
 
-                        <a href="catalog.html?material=lizard" class="btn-outline" data-i18n="section_view_collection">Explore Lizard Collection</a>
+                        <a href="catalog.html?material=suede" class="btn-outline" data-i18n="section_view_suede">Explore Suede Collection</a>
                     </div>
                 </div>
             </div>
@@ -809,39 +813,39 @@
         <section class="care-guide-section">
             <div class="container">
                 <div class="section-header slide-up">
-                    <h2 class="section-title">The Art of Preservation</h2>
-                    <p class="section-subtitle">Your SAN DUKHAR creation is designed to be passed down through generations. Proper care will ensure it ages with grace and dignity.</p>
+                    <h2 class="section-title" data-i18n="materials_care_title">The Art of Preservation</h2>
+                    <p class="section-subtitle" data-i18n="materials_care_subtitle">Your SAN DUKHAR creation is designed to be passed down through generations. Proper care will ensure it ages with grace and dignity.</p>
                 </div>
                 <div class="care-grid">
                     <div class="care-card slide-up delay-1">
                         <span class="care-icon" aria-hidden="true">☂</span>
-                        <h3>Avoid Water</h3>
-                        <p>Exotic leathers are naturally resistant but not waterproof. If exposed to rain, pat dry immediately with a soft, absorbent cloth and allow to air dry away from direct heat.</p>
+                        <h3 data-i18n="materials_care_avoid_water_title">Avoid Water</h3>
+                        <p data-i18n="materials_care_avoid_water_desc">Exotic leathers are naturally resistant but not waterproof. If exposed to rain, pat dry immediately with a soft, absorbent cloth and allow to air dry away from direct heat.</p>
                     </div>
                     <div class="care-card slide-up delay-2">
                         <span class="care-icon" aria-hidden="true">☀</span>
-                        <h3>Mind the Sun</h3>
-                        <p>Prolonged exposure to direct sunlight can cause fading and drying. Store your pieces in their SAN DUKHAR dust bags when not in use.</p>
+                        <h3 data-i18n="materials_care_mind_sun_title">Mind the Sun</h3>
+                        <p data-i18n="materials_care_mind_sun_desc">Prolonged exposure to direct sunlight can cause fading and drying. Store your pieces in their SAN DUKHAR dust bags when not in use.</p>
                     </div>
                     <div class="care-card slide-up delay-3">
                         <span class="care-icon" aria-hidden="true">🧴</span>
-                        <h3>Condition Regularly</h3>
-                        <p>Apply a specialized exotic leather conditioner every 6–12 months. Use sparingly — a little goes a long way with premium skins.</p>
+                        <h3 data-i18n="materials_care_condition_title">Condition Regularly</h3>
+                        <p data-i18n="materials_care_condition_desc">Apply a specialized exotic leather conditioner every 6–12 months. Use sparingly — a little goes a long way with premium skins.</p>
                     </div>
                     <div class="care-card slide-up delay-4">
                         <span class="care-icon" aria-hidden="true">✋</span>
-                        <h3>Handle with Care</h3>
-                        <p>The natural oils from your hands contribute to the patina. Handle your piece with clean hands and avoid contact with alcohol-based products.</p>
+                        <h3 data-i18n="materials_care_handle_title">Handle with Care</h3>
+                        <p data-i18n="materials_care_handle_desc">The natural oils from your hands contribute to the patina. Handle your piece with clean hands and avoid contact with alcohol-based products.</p>
                     </div>
                     <div class="care-card slide-up delay-5">
                         <span class="care-icon" aria-hidden="true">📦</span>
-                        <h3>Store Properly</h3>
-                        <p>Store in a cool, dry place. Use the original box or dust bag. Never store in plastic, which traps moisture and can damage the leather.</p>
+                        <h3 data-i18n="materials_care_store_title">Store Properly</h3>
+                        <p data-i18n="materials_care_store_desc">Store in a cool, dry place. Use the original box or dust bag. Never store in plastic, which traps moisture and can damage the leather.</p>
                     </div>
                     <div class="care-card slide-up delay-6">
                         <span class="care-icon" aria-hidden="true">🔧</span>
-                        <h3>Professional Service</h3>
-                        <p>We offer complimentary cleaning for the first 5 years and lifetime restoration services at preferential rates for all SAN DUKHAR pieces.</p>
+                        <h3 data-i18n="materials_care_service_title">Professional Service</h3>
+                        <p data-i18n="materials_care_service_desc">We offer complimentary cleaning for the first 5 years and lifetime restoration services at preferential rates for all SAN DUKHAR pieces.</p>
                     </div>
                 </div>
             </div>
@@ -856,21 +860,21 @@
             <div class="footer-grid">
                 <div class="footer-col footer-col-brand">
                     <a href="index.html" class="footer-logo"><img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR"></a>
-                    <p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship. Since 2008, Istanbul.</p>
+                    <p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship. Since 2021, Istanbul.</p>
                     <div class="social-links">
                         <a href="https://www.instagram.com/sandukhar" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="icons/instagram.svg" alt=""></a>
                         <a href="https://www.facebook.com/sandukhar" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><img src="icons/facebook.svg" alt=""></a>
-                        <a href="https://www.pinterest.com/sandukhar" target="_blank" rel="noopener noreferrer" aria-label="Pinterest"><img src="icons/pinterest.svg" alt=""></a>
+                        <a href="https://www.tiktok.com/@sandukhar" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><img src="icons/tiktok.svg" alt=""></a>
                     </div>
                 </div>
                 <div class="footer-col">
                     <h4 data-i18n="footer_customer_care">Customer Care</h4>
                     <ul>
                         <li><a href="contacts.html" data-i18n="footer_contact_faq">Contact & FAQ</a></li>
-                        <li><a href="#" data-i18n="footer_shipping_delivery">Shipping & Delivery</a></li>
-                        <li><a href="#" data-i18n="footer_returns">Returns & Exchanges</a></li>
+                        <li><a href="shipping-delivery.html" data-i18n="footer_shipping_delivery">Shipping & Delivery</a></li>
+                        <li><a href="returns-exchanges.html" data-i18n="footer_returns">Returns & Exchanges</a></li>
                         <li><a href="track-order.html" data-i18n="footer_track">Track Your Order</a></li>
-                        <li><a href="#" data-i18n="footer_care_guide">Care Guide</a></li>
+                        <li><a href="care-guide.html" data-i18n="footer_care_guide">Care Guide</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -879,15 +883,15 @@
                         <li><a href="about.html" data-i18n="footer_brand_story">Brand Story</a></li>
                         <li><a href="materials.html" data-i18n="footer_materials">Materials</a></li>
                         <li><a href="tailoring.html" data-i18n="footer_bespoke">Bespoke</a></li>
-                        <li><a href="#" data-i18n="footer_careers">Careers</a></li>
+                        <li><a href="careers.html" data-i18n="footer_careers">Careers</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4 data-i18n="footer_legal">Legal</h4>
                     <ul>
-                        <li><a href="#" data-i18n="footer_privacy">Privacy Policy</a></li>
-                        <li><a href="#" data-i18n="footer_terms">Terms & Conditions</a></li>
-                        <li><a href="#" data-i18n="footer_cookies">Cookie Policy</a></li>
+                        <li><a href="privacy-policy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
+                        <li><a href="cookie-policy.html" data-i18n="footer_cookies">Cookie Policy</a></li>
                     </ul>
                 </div>
                 <div class="footer-col footer-col-contact">
@@ -901,17 +905,14 @@
             </div>
             <div class="footer-bottom">
                 <p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR. All rights reserved. Handcrafted with pride in Turkey.</p>
-                <div class="payment-icons">
-                    <span>Amex</span>
-                    <span>Mastercard</span>
-                    <span>Visa</span>
-                </div>
             </div>
         </div>
     </footer>
     
     <script src="js/api.js?v=2" defer></script>
     <script src="js/app.js?v=2" defer></script>
+    <script src="js/translations.js?v=1"></script>
+    <script src="js/i18n.js?v=1"></script>
     <script src="js/cart.js?v=2" defer></script>
     <script src="js/wishlist.js?v=2" defer></script>
 </body>

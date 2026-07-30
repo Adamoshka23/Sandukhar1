@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta id="meta-description" name="description" content="Discover handcrafted exotic leather pieces from SAN DUKHAR — genuine crocodile, python, ostrich, stingray and lizard leather, made by master artisans in Istanbul.">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: http://localhost:3000; connect-src 'self' http://localhost:3000; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta id="meta-description" name="description" content="Discover handcrafted exotic leather pieces from SAN DUKHAR — genuine crocodile, python, ostrich, stingray leather and fine suede, made by master artisans in Istanbul.">
     <meta name="keywords" content="SAN DUKHAR, crocodile leather, luxury leather goods, handmade leather bag, exotic leather, limited edition">
 
     <meta id="meta-og-title" property="og:title" content="SAN DUKHAR | Exotic Leather Atelier">
@@ -72,44 +73,52 @@
             </div>
             <nav class="main-navigation" aria-label="Main Navigation">
                 <ul class="nav-list">
-                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
                     <li class="nav-item dropdown">
-                        <a href="catalog.html" class="nav-link active">Collections</a>
+                        <a href="catalog.html" class="nav-link active" data-i18n="nav_collections">Collections</a>
                         <div class="mega-menu">
                             <div class="mega-menu-container">
                                 <div class="mega-menu-column">
-                                    <h4 class="mega-menu-title">By Product</h4>
+                                    <h4 class="mega-menu-title" data-i18n="nav_by_product">By Product</h4>
                                     <ul>
-                                        <li><a href="catalog.html?category=jackets">Leather Jackets</a></li>
-                                        <li><a href="catalog.html?category=bags">Bags & Briefcases</a></li>
-                                        <li><a href="catalog.html?category=shoes">Footwear</a></li>
-                                        <li><a href="catalog.html?category=accessories">Small Leather Goods</a></li>
+                                        <li><a href="catalog.html?category=jackets" data-i18n="nav_jackets">Jackets</a></li>
+                                        <li><a href="catalog.html?category=shirts" data-i18n="nav_shirts">Shirts</a></li>
+                                        <li><a href="catalog.html?category=shoes" data-i18n="nav_shoes">Footwear</a></li>
+                                        <li><a href="catalog.html?category=bags" data-i18n="nav_bags">Bags & Backpacks</a></li>
+                                        <li><a href="catalog.html?category=belts" data-i18n="nav_belts">Belts</a></li>
+                                        <li><a href="catalog.html?category=suitcases" data-i18n="nav_suitcases">Suitcases</a></li>
+                                        <li><a href="catalog.html?category=gloves" data-i18n="nav_gloves">Gloves</a></li>
+                                        <li><a href="catalog.html?category=wallets" data-i18n="nav_wallets">Wallets & Cardholders</a></li>
+                                        <li><a href="catalog.html?category=headwear" data-i18n="nav_headwear">Headwear</a></li>
+                                        <li><a href="catalog.html?category=accessories" data-i18n="nav_accessories">Accessories</a></li>
                                     </ul>
                                 </div>
                                 <div class="mega-menu-column">
-                                    <h4 class="mega-menu-title">By Material</h4>
+                                    <h4 class="mega-menu-title" data-i18n="nav_by_material">By Material</h4>
                                     <ul>
-                                        <li><a href="catalog.html?material=crocodile">Crocodile Leather</a></li>
-                                        <li><a href="catalog.html?material=python">Python Leather</a></li>
-                                        <li><a href="catalog.html?material=ostrich">Ostrich Leather</a></li>
-                                        <li><a href="catalog.html?material=stingray">Stingray Leather</a></li>
-                                        <li><a href="catalog.html?material=lizard">Lizard Leather</a></li>
+                                        <li><a href="catalog.html?material=crocodile" data-i18n="nav_crocodile">Crocodile Leather</a></li>
+                                        <li><a href="catalog.html?material=python" data-i18n="nav_python">Python Leather</a></li>
+                                        <li><a href="catalog.html?material=ostrich" data-i18n="nav_ostrich">Ostrich Leather</a></li>
+                                        <li><a href="catalog.html?material=stingray" data-i18n="nav_stingray">Stingray Leather</a></li>
+                                        <li><a href="catalog.html?material=suede" data-i18n="nav_suede">Suede Leather</a></li>
                                     </ul>
                                 </div>
                                 <div class="mega-menu-column mega-menu-image">
-                                    <img src="images/placeholder-tile.svg" alt="SAN DUKHAR Exclusive Collection" loading="lazy">
-                                    <p>The Croco Collection — Limited Series</p>
+                                    <img src="images/nav/mega-menu-collection.jpg" alt="SAN DUKHAR Exclusive Collection" loading="lazy">
+                                    <p data-i18n="product_mega_promo">The Croco Collection — Limited Series</p>
                                 </div>
                             </div>
                         </div>
                     </li>
-                    <li class="nav-item"><a href="materials.html" class="nav-link">Materials</a></li>
-                    <li class="nav-item"><a href="tailoring.html" class="nav-link">Bespoke</a></li>
-                    <li class="nav-item"><a href="about.html" class="nav-link">Atelier</a></li>
-                    <li class="nav-item"><a href="contacts.html" class="nav-link">Contact</a></li>
+                    <li class="nav-item"><a href="materials.html" class="nav-link" data-i18n="nav_materials">Materials</a></li>
+                    <li class="nav-item"><a href="tailoring.html" class="nav-link" data-i18n="nav_bespoke">Bespoke</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link" data-i18n="nav_atelier">Atelier</a></li>
+                    <li class="nav-item"><a href="contacts.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
                 </ul>
             </nav>
             <div class="header-utilities">
+                <button class="utility-btn lang-toggle" data-lang-toggle aria-label="Switch language"><span class="lang-toggle-current">RU</span></button>
+
                 <button class="utility-btn search-trigger" aria-label="Search">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                 </button>
@@ -143,6 +152,7 @@
     <!-- ============================================================ -->
     <nav class="mobile-nav" id="mobile-nav" aria-hidden="true">
         <div class="mobile-nav-container">
+            <span class="mobile-nav-eyebrow">Menu</span>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="catalog.html">Collections</a></li>
@@ -166,10 +176,10 @@
             <div class="container">
                 <nav aria-label="Breadcrumb">
                     <ol>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="catalog.html">Collections</a></li>
-                        <li><a href="catalog.html?category=bags" id="prod-category-link">Bags & Briefcases</a></li>
-                        <li><span aria-current="page" id="prod-name-breadcrumb">Imperium Briefcase</span></li>
+                        <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+                        <li><a href="catalog.html" data-i18n="nav_collections">Collections</a></li>
+                        <li><a href="catalog.html?category=bags" id="prod-category-link">Bags & Backpacks</a></li>
+                        <li><span aria-current="page" id="prod-name-breadcrumb">Sovereign Briefcase</span></li>
                     </ol>
                 </nav>
             </div>
@@ -190,9 +200,9 @@
                     <!-- Product Details -->
                     <div class="product-details">
                         <div class="product-details-sticky">
-                            <p class="product-collection-label">Collection</p>
-                            <h1 class="product-title" id="prod-name">Imperium Briefcase</h1>
-                            <p class="product-subtitle" id="prod-material">Matte Nile Crocodile · Ruthenium Hardware</p>
+                            <p class="product-collection-label" data-i18n="product_collection_label">Collection</p>
+                            <h1 class="product-title" id="prod-name">Sovereign Briefcase</h1>
+                            <p class="product-subtitle" id="prod-material">Matte Nile Crocodile · Gold Hardware</p>
 
                             <div class="product-price-block">
                                 <span class="product-price" id="prod-price">$18,500</span>
@@ -200,47 +210,57 @@
 
                             <!-- Product Options -->
                             <div class="product-options">
+                                <!-- Made to Order Notice (shown instead of size selector when applicable) -->
+                                <div class="made-to-order-notice" id="made-to-order-notice" style="display:none;">
+                                    <span>⏱</span>
+                                    <span><strong data-i18n="product_made_to_order_title">Made to Order</strong> — <span data-i18n="product_made_to_order_desc">this piece is handcrafted to your measurements. Our atelier will contact you after checkout to confirm sizing.</span></span>
+                                </div>
+
+                                <!-- Size Selection (rendered dynamically from product.sizes) -->
+                                <div class="option-group" id="size-option-group" style="display:none;">
+                                    <h4 class="option-label"><span data-i18n="product_size_label">Size</span>: <span id="selected-size"></span></h4>
+                                    <div class="option-values" id="size-options-list"></div>
+                                    <p class="size-select-hint" id="size-select-hint"></p>
+                                </div>
+
                                 <!-- Color Selection -->
                                 <div class="option-group">
-                                    <h4 class="option-label"><span>Color</span>: <span id="selected-color">Matte Black</span></h4>
+                                    <h4 class="option-label"><span data-i18n="tailoring_step_color">Color</span>: <span id="selected-color">Matte Black</span></h4>
                                     <div class="option-values">
-                                        <button class="option-value color-option active" data-color="Matte Black" style="background: #1a1a1a;" aria-label="Matte Black"></button>
-                                        <button class="option-value color-option" data-color="Deep Brown" style="background: #3e2723;" aria-label="Deep Brown"></button>
-                                        <button class="option-value color-option" data-color="Graphite" style="background: #424242;" aria-label="Graphite"></button>
+                                        <button class="option-value color-option active" data-color="Matte Black" style="background: #1a1a1a;" aria-label="Matte Black" data-i18n="product_color_matte_black" data-i18n-attr="aria-label"></button>
+                                        <button class="option-value color-option" data-color="Deep Brown" style="background: #3e2723;" aria-label="Deep Brown" data-i18n="product_color_deep_brown" data-i18n-attr="aria-label"></button>
+                                        <button class="option-value color-option" data-color="Graphite" style="background: #424242;" aria-label="Graphite" data-i18n="product_color_graphite" data-i18n-attr="aria-label"></button>
+                                        <button class="option-value color-option color-option-custom" data-color="Custom Color" style="background: linear-gradient(135deg,red,orange,yellow,green,blue,purple);" aria-label="Custom Color" data-i18n="product_color_custom" data-i18n-attr="aria-label"></button>
                                     </div>
                                 </div>
 
                                 <!-- Hardware Selection -->
                                 <div class="option-group">
-                                    <h4 class="option-label"><span>Hardware</span>: <span id="selected-hardware">Ruthenium</span></h4>
+                                    <h4 class="option-label"><span data-i18n="tailoring_step_hardware">Hardware</span>: <span id="selected-hardware">Gold</span></h4>
                                     <div class="option-values">
-                                        <button class="option-value hardware-option active" data-hardware="Ruthenium">
-                                            <span class="hardware-swatch" style="background: #4a4a4a;"></span>
-                                            Ruthenium
-                                        </button>
-                                        <button class="option-value hardware-option" data-hardware="Palladium">
-                                            <span class="hardware-swatch" style="background: #c0c0c0;"></span>
-                                            Palladium
-                                        </button>
-                                        <button class="option-value hardware-option" data-hardware="Gold Plated">
+                                        <button class="option-value hardware-option active" data-hardware="Gold">
                                             <span class="hardware-swatch" style="background: #c5a572;"></span>
-                                            Gold
+                                            <span data-i18n="tailoring_hardware_gold">Gold</span>
+                                        </button>
+                                        <button class="option-value hardware-option" data-hardware="Silver">
+                                            <span class="hardware-swatch" style="background: #c0c0c0;"></span>
+                                            <span data-i18n="tailoring_hardware_silver">Silver</span>
                                         </button>
                                     </div>
                                 </div>
 
                                 <!-- Personalization -->
                                 <div class="option-group">
-                                    <h4 class="option-label">Personalization</h4>
+                                    <h4 class="option-label" data-i18n="product_personalization">Personalization</h4>
                                     <div class="personalization-options">
                                         <label class="personalization-checkbox">
                                             <input type="checkbox" id="add-monogram">
                                             <span class="checkmark"></span>
-                                            <span>Add Monogram (+$450)</span>
+                                            <span data-i18n="product_add_monogram">Add Monogram (+$450)</span>
                                         </label>
                                         <div class="monogram-input-wrapper" id="monogram-input-wrapper" style="display: none;">
-                                            <input type="text" id="monogram-text" maxlength="4" placeholder="Your initials" class="monogram-input">
-                                            <span class="monogram-hint">Up to 4 characters, hand-embossed</span>
+                                            <input type="text" id="monogram-text" maxlength="4" placeholder="Your initials" data-i18n="product_initials_placeholder" data-i18n-attr="placeholder" class="monogram-input">
+                                            <span class="monogram-hint" data-i18n="product_monogram_hint">Up to 4 characters, hand-embossed</span>
                                         </div>
                                     </div>
                                 </div>
@@ -250,7 +270,7 @@
                             <div class="product-actions">
                                 <button class="btn-primary btn-add-to-cart" id="add-to-cart-btn" data-product-id="SD-IMP-BRF-001">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                                    <span>Add to Cart</span>
+                                    <span data-i18n="product_add_to_cart">Add to Cart</span>
                                 </button>
                                 <button class="btn-wishlist-large" id="wishlist-btn" aria-label="Add to Wishlist" data-product-id="SD-IMP-BRF-001">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -258,29 +278,29 @@
                             </div>
 
                             <a href="tailoring.html" class="bespoke-link">
-                                <span>Prefer a bespoke version?</span> <span>Commission a custom piece →</span>
+                                <span data-i18n="product_bespoke_prompt">Prefer a bespoke version?</span> <span data-i18n="product_bespoke_cta">Commission a custom piece →</span>
                             </a>
 
                             <!-- Accordion: Details, Shipping, Care -->
                             <div class="product-accordion">
                                 <div class="accordion-item">
                                     <button class="accordion-header active" aria-expanded="true">
-                                        <span>Description & Details</span>
+                                        <span data-i18n="product_accordion_description">Description & Details</span>
                                         <span class="accordion-arrow"></span>
                                     </button>
                                     <div class="accordion-content active">
                                       <div class="accordion-content-inner">
-                                        <p id="prod-description">The Imperium Briefcase is the definitive statement of power and refinement. Crafted from a single flawless Nile crocodile skin, selected for its uniform scale pattern and rich matte finish, this briefcase requires over 120 hours of meticulous handwork by a single master artisan in our Istanbul atelier.</p>
+                                        <p id="prod-description">The Sovereign Briefcase is the definitive statement of power and refinement. Crafted from a single flawless Nile crocodile skin, selected for its uniform scale pattern and rich matte finish, this briefcase requires over 120 hours of meticulous handwork by a single master artisan in our Istanbul atelier.</p>
                                         <ul>
-                                            <li>Genuine matte Nile crocodile leather (CITES certified)</li>
-                                            <li>Ruthenium-plated solid brass lock and hinges</li>
-                                            <li>Hand-stitched using waxed linen thread</li>
-                                            <li>Suede leather interior with padded laptop compartment</li>
-                                            <li>Two internal document pockets and card slots</li>
-                                            <li>Detachable shoulder strap in matching leather</li>
-                                            <li>Hand-numbered identification plate</li>
-                                            <li>Dimensions: 42cm × 30cm × 12cm</li>
-                                            <li>Weight: 2.4 kg</li>
+                                            <li data-i18n="product_detail_leather">Genuine matte Nile crocodile leather (CITES certified)</li>
+                                            <li data-i18n="product_detail_hardware">Gold or silver-plated solid brass lock and hinges</li>
+                                            <li data-i18n="product_detail_stitching">Hand-stitched using waxed linen thread</li>
+                                            <li data-i18n="product_detail_interior">Suede leather interior with padded laptop compartment</li>
+                                            <li data-i18n="product_detail_pockets">Two internal document pockets and card slots</li>
+                                            <li data-i18n="product_detail_strap">Detachable shoulder strap in matching leather</li>
+                                            <li data-i18n="product_detail_plate">Hand-numbered identification plate</li>
+                                            <li data-i18n="product_detail_dimensions">Dimensions: 42cm × 30cm × 12cm</li>
+                                            <li data-i18n="product_detail_weight">Weight: 2.4 kg</li>
                                         </ul>
                                       </div>
                                     </div>
@@ -288,17 +308,17 @@
 
                                 <div class="accordion-item">
                                     <button class="accordion-header" aria-expanded="false">
-                                        <span>Shipping & Delivery</span>
+                                        <span data-i18n="product_accordion_shipping">Shipping & Delivery</span>
                                         <span class="accordion-arrow"></span>
                                     </button>
                                     <div class="accordion-content">
                                       <div class="accordion-content-inner">
-                                        <p>Each Imperium Briefcase is made to order. Please allow 4–6 weeks for our artisans to complete your piece.</p>
+                                        <p data-i18n="product_shipping_made_to_order">Each piece is made to order. Please allow 4–6 weeks for our artisans to complete your piece.</p>
                                         <ul>
-                                            <li>Complimentary worldwide shipping via armored courier</li>
-                                            <li>Fully insured during transit</li>
-                                            <li>White-glove delivery with personal presentation</li>
-                                            <li>Discreet packaging with SAN DUKHAR signature box</li>
+                                            <li data-i18n="product_shipping_worldwide">Complimentary worldwide shipping via armored courier</li>
+                                            <li data-i18n="product_shipping_insured">Fully insured during transit</li>
+                                            <li data-i18n="product_shipping_whiteglove">White-glove delivery with personal presentation</li>
+                                            <li data-i18n="product_shipping_packaging">Discreet packaging with SAN DUKHAR signature box</li>
                                         </ul>
                                       </div>
                                     </div>
@@ -306,117 +326,25 @@
 
                                 <div class="accordion-item">
                                     <button class="accordion-header" aria-expanded="false">
-                                        <span>Care & Guarantee</span>
+                                        <span data-i18n="product_accordion_care">Care & Guarantee</span>
                                         <span class="accordion-arrow"></span>
                                     </button>
                                     <div class="accordion-content">
                                       <div class="accordion-content-inner">
-                                        <p>Your SAN DUKHAR creation is designed to last for generations with proper care.</p>
+                                        <p data-i18n="product_care_intro">Your SAN DUKHAR creation is designed to last for generations with proper care.</p>
                                         <ul>
-                                            <li>Complimentary cleaning and conditioning for the first 5 years</li>
-                                            <li>Lifetime repair service at a preferential rate</li>
-                                            <li>Store in the provided dust bag away from direct sunlight</li>
-                                            <li>Avoid contact with water, alcohol, and abrasive surfaces</li>
-                                            <li>Certificate of Authenticity included</li>
+                                            <li data-i18n="product_care_cleaning">Complimentary cleaning and conditioning for the first 5 years</li>
+                                            <li data-i18n="product_care_repair">Lifetime repair service at a preferential rate</li>
+                                            <li data-i18n="product_care_storage">Store in the provided dust bag away from direct sunlight</li>
+                                            <li data-i18n="product_care_avoid">Avoid contact with water, alcohol, and abrasive surfaces</li>
+                                            <li data-i18n="product_care_certificate">Certificate of Authenticity included</li>
                                         </ul>
                                       </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Why This Product Is Unique -->
-                            <div class="product-unique-points">
-                                <div class="unique-point">
-                                    <img src="icons/icon-handmade.svg" alt="" class="unique-icon" aria-hidden="true">
-                                    <div>
-                                        <h5>Handmade by a Single Artisan</h5>
-                                        <p>Over 120 hours of uninterrupted craftsmanship</p>
-                                    </div>
-                                </div>
-                                <div class="unique-point">
-                                    <img src="icons/icon-certificate.svg" alt="" class="unique-icon" aria-hidden="true">
-                                    <div>
-                                        <h5>Certificate of Authenticity</h5>
-                                        <p>Signed and hand-numbered</p>
-                                    </div>
-                                </div>
-                                <div class="unique-point">
-                                    <img src="icons/icon-lifetime-repair.svg" alt="" class="unique-icon" aria-hidden="true">
-                                    <div>
-                                        <h5>Lifetime Restoration</h5>
-                                        <p>Complimentary maintenance program</p>
-                                    </div>
-                                </div>
-                                <div class="unique-point">
-                                    <img src="icons/icon-limited.svg" alt="" class="unique-icon" aria-hidden="true">
-                                    <div>
-                                        <h5>Limited Production</h5>
-                                        <p>Only 25 pieces in existence</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Customer Reviews -->
-        <section class="product-reviews section-padding bg-graphite">
-            <div class="container">
-                <div class="section-header slide-up">
-                    <h2 class="section-title">Patron Reviews</h2>
-                    <p class="section-subtitle" id="reviews-summary"></p>
-                </div>
-                <div class="reviews-grid" id="reviews-grid">
-                    <p class="reviews-empty" style="text-align:center; color: var(--color-text-muted); grid-column: 1/-1;">Loading reviews…</p>
-                </div>
-                <form class="review-form" id="review-form" style="display:none; max-width: 640px; margin: 3rem auto 0;">
-                    <h3 style="margin-bottom: 1rem;">Write a Review</h3>
-                    <div class="form-group">
-                        <label for="review-rating">Rating</label>
-                        <select id="review-rating" class="form-input" required>
-                            <option value="5">★★★★★ Exceptional</option>
-                            <option value="4">★★★★ Very Good</option>
-                            <option value="3">★★★ Good</option>
-                            <option value="2">★★ Fair</option>
-                            <option value="1">★ Poor</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="review-title">Title</label>
-                        <input type="text" id="review-title" class="form-input" placeholder="Summarize your experience" maxlength="120">
-                    </div>
-                    <div class="form-group">
-                        <label for="review-content">Your Review</label>
-                        <textarea id="review-content" class="form-input" rows="4" placeholder="Share your thoughts on this piece" maxlength="1000"></textarea>
-                    </div>
-                    <button type="submit" class="btn-primary" id="review-submit-btn">Submit Review</button>
-                    <p class="form-message" id="review-form-message" role="status" style="margin-top: 0.75rem;"></p>
-                </form>
-                <p id="review-login-prompt" style="display:none; text-align:center; margin-top: 2rem; color: var(--color-text-secondary);">
-                    <a href="account.html">Sign in</a> to share your own review of this piece.
-                </p>
-            </div>
-        </section>
-
-        <!-- Related Products -->
-        <section class="related-products section-padding" id="related-products-section" style="display:none;">
-            <div class="container">
-                <div class="section-header slide-up">
-                    <h2 class="section-title">Complete the Ensemble</h2>
-                </div>
-                <div class="featured-grid" id="related-products-grid"></div>
-            </div>
-        </section>
-
-        <!-- Bespoke CTA -->
-        <section class="bespoke-cta-section section-padding bg-graphite">
-            <div class="container text-center">
-                <div class="slide-up">
-                    <h2 class="section-title">Seeking Something Truly Personal?</h2>
-                    <p class="section-subtitle">Commission a bespoke briefcase tailored to your exact specifications—leather, color, hardware, interior configuration, and personal monogram.</p>
-                    <a href="tailoring.html" class="btn-gold">Begin Your Commission</a>
                 </div>
             </div>
         </section>
@@ -432,42 +360,42 @@
                     <a href="index.html" class="footer-logo">
                         <img src="icons/sandukhar-logo-gold.svg" alt="SAN DUKHAR">
                     </a>
-                    <p>The pinnacle of genuine exotic leather craftsmanship. Since 2008, Istanbul.</p>
+                    <p data-i18n="footer_brand_desc">The pinnacle of genuine exotic leather craftsmanship. Since 2021, Istanbul.</p>
                     <div class="social-links">
                         <a href="https://www.instagram.com/sandukhar" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><img src="icons/instagram.svg" alt=""></a>
                         <a href="https://www.facebook.com/sandukhar" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><img src="icons/facebook.svg" alt=""></a>
-                        <a href="https://www.pinterest.com/sandukhar" target="_blank" rel="noopener noreferrer" aria-label="Pinterest"><img src="icons/pinterest.svg" alt=""></a>
+                        <a href="https://www.tiktok.com/@sandukhar" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><img src="icons/tiktok.svg" alt=""></a>
                     </div>
                 </div>
                 <div class="footer-col">
-                    <h4>Customer Care</h4>
+                    <h4 data-i18n="footer_customer_care">Customer Care</h4>
                     <ul>
-                        <li><a href="contacts.html">Contact & FAQ</a></li>
-                        <li><a href="#">Shipping & Delivery</a></li>
-                        <li><a href="#">Returns & Exchanges</a></li>
-                        <li><a href="track-order.html">Track Your Order</a></li>
-                        <li><a href="#">Care Guide</a></li>
+                        <li><a href="contacts.html" data-i18n="footer_contact_faq">Contact & FAQ</a></li>
+                        <li><a href="shipping-delivery.html" data-i18n="footer_shipping_delivery">Shipping & Delivery</a></li>
+                        <li><a href="returns-exchanges.html" data-i18n="footer_returns">Returns & Exchanges</a></li>
+                        <li><a href="track-order.html" data-i18n="footer_track">Track Your Order</a></li>
+                        <li><a href="care-guide.html" data-i18n="footer_care_guide">Care Guide</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Our Maison</h4>
+                    <h4 data-i18n="footer_maison">Our Maison</h4>
                     <ul>
-                        <li><a href="about.html">Brand Story</a></li>
-                        <li><a href="materials.html">Materials</a></li>
-                        <li><a href="tailoring.html">Bespoke</a></li>
-                        <li><a href="#">Careers</a></li>
+                        <li><a href="about.html" data-i18n="footer_brand_story">Brand Story</a></li>
+                        <li><a href="materials.html" data-i18n="footer_materials">Materials</a></li>
+                        <li><a href="tailoring.html" data-i18n="footer_bespoke">Bespoke</a></li>
+                        <li><a href="careers.html" data-i18n="footer_careers">Careers</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Legal</h4>
+                    <h4 data-i18n="footer_legal">Legal</h4>
                     <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms & Conditions</a></li>
-                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="privacy-policy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        <li><a href="terms.html" data-i18n="footer_terms">Terms & Conditions</a></li>
+                        <li><a href="cookie-policy.html" data-i18n="footer_cookies">Cookie Policy</a></li>
                     </ul>
                 </div>
                 <div class="footer-col footer-col-contact">
-                    <h4>Istanbul Atelier</h4>
+                    <h4 data-i18n="footer_istanbul">Istanbul Atelier</h4>
                     <address>
                         Zübeyde Hanım Cd. No:80/B<br>Yenidoğan, Zeytinburnu<br>34021, Istanbul, Turkey
                     </address>
@@ -476,12 +404,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 SAN DUKHAR. All rights reserved.</p>
-                <div class="payment-icons">
-                    <span>Amex</span>
-                    <span>Mastercard</span>
-                    <span>Visa</span>
-                </div>
+                <p data-i18n="footer_copyright">&copy; 2026 SAN DUKHAR. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -501,6 +424,8 @@
     <!-- ============================================================ -->
     <script src="js/api.js?v=2" defer></script>
     <script src="js/app.js?v=2" defer></script>
+    <script src="js/translations.js?v=1"></script>
+    <script src="js/i18n.js?v=1"></script>
     <script src="js/animations.js?v=2" defer></script>
     <script src="js/cart.js?v=2" defer></script>
     <script src="js/wishlist.js?v=2" defer></script>
@@ -519,18 +444,20 @@
             };
 
             function renderProduct(product) {
-                setText('prod-name', product.name_en);
-                setText('prod-name-breadcrumb', product.name_en);
+                var name = localizedName(product);
+                var description = (currentLang() === 'ru' ? product.description_ru : product.description_en) || product.description_en || '';
+                setText('prod-name', name);
+                setText('prod-name-breadcrumb', name);
                 setText('prod-material', product.material_name || '');
                 setText('prod-price', SANDUKHAR.format.price(product.price));
-                setText('prod-description', product.description_en || '');
+                setText('prod-description', description);
 
                 var mainImageContainer = document.getElementById('main-image-container');
                 if (mainImageContainer) {
                     if (product.images && product.images.length) {
-                        mainImageContainer.innerHTML = '<img src="' + product.images[0].url + '" alt="' + product.name_en + '" id="main-product-image" class="fade-in">';
+                        mainImageContainer.innerHTML = '<img src="' + product.images[0].url + '" alt="' + name + '" id="main-product-image" class="fade-in">';
                     } else {
-                        mainImageContainer.innerHTML = SANDUKHAR.media.placeholder(product.name_en, MATERIAL_TONE_MAP[product.material_slug]);
+                        mainImageContainer.innerHTML = SANDUKHAR.media.placeholder(name, MATERIAL_TONE_MAP[product.material_slug]);
                         mainImageContainer.querySelector('.sd-placeholder').id = 'main-product-image';
                     }
                 }
@@ -590,132 +517,89 @@
                     });
                 }
 
-                loadReviews(product.id);
-                loadRelated(product);
-                setupReviewForm(product.id);
+                setupSizeAvailability(product);
             }
 
-            var MATERIAL_TONE_MAP = { crocodile: 'crocodile', python: 'python', ostrich: 'ostrich', stingray: 'stingray', lizard: 'lizard' };
+            /**
+             * Renders the size selector (with per-size stock) or the
+             * "Made to Order" notice, and gates the Add to Cart button
+             * on a size being chosen when the product has sized variants.
+             */
+            function setupSizeAvailability(product) {
+                var notice = document.getElementById('made-to-order-notice');
+                var sizeGroup = document.getElementById('size-option-group');
+                var sizeList = document.getElementById('size-options-list');
+                var selectedSizeEl = document.getElementById('selected-size');
+                var hintEl = document.getElementById('size-select-hint');
+                var addToCartBtn = document.getElementById('add-to-cart-btn');
 
-            function loadReviews(productId) {
-                var grid = document.getElementById('reviews-grid');
-                var summaryEl = document.getElementById('reviews-summary');
-                if (!grid) return;
+                var sizes = Array.isArray(product.sizes) ? product.sizes : [];
+                selectedSizeEl.textContent = '';
+                sizeList.innerHTML = '';
+                hintEl.textContent = '';
 
-                fetch(window.SD_API.baseURL + '/reviews?productId=' + productId)
-                    .then(function(res) { return res.json(); })
-                    .then(function(data) {
-                        if (!data.success) throw new Error('Failed to load reviews');
-                        var reviews = data.data.reviews;
-                        var summary = data.data.summary;
-
-                        if (summary.count > 0 && summaryEl) {
-                            summaryEl.textContent = summary.average.toFixed(1) + ' ★ average from ' + summary.count + (summary.count === 1 ? ' review' : ' reviews');
-                        }
-
-                        if (reviews.length === 0) {
-                            grid.innerHTML = '<p style="text-align:center; color: var(--color-text-muted); grid-column: 1/-1;">Be the first to share your experience with this piece.</p>';
-                            return;
-                        }
-
-                        grid.innerHTML = reviews.map(function(r) {
-                            var stars = '★★★★★'.slice(0, r.rating) + '☆☆☆☆☆'.slice(0, 5 - r.rating);
-                            var author = (r.first_name || 'Anonymous') + (r.last_name ? ' ' + r.last_name.charAt(0) + '.' : '');
-                            return '<div class="review-card slide-up">' +
-                                '<div class="review-stars">' + stars + '</div>' +
-                                (r.title ? '<h4>' + escapeHTML(r.title) + '</h4>' : '') +
-                                '<blockquote>' + escapeHTML(r.content || '') + '</blockquote>' +
-                                '<p class="review-author">— ' + escapeHTML(author) + '</p>' +
-                                (r.is_verified ? '<p class="review-verified">Verified Purchase</p>' : '') +
-                                '</div>';
-                        }).join('');
-                    })
-                    .catch(function() {
-                        grid.innerHTML = '<p style="text-align:center; color: var(--color-text-muted); grid-column: 1/-1;">Reviews are temporarily unavailable.</p>';
-                    });
-            }
-
-            function escapeHTML(str) {
-                var div = document.createElement('div');
-                div.textContent = str;
-                return div.innerHTML;
-            }
-
-            function setupReviewForm(productId) {
-                var token = localStorage.getItem('sandukhar_token');
-                var form = document.getElementById('review-form');
-                var loginPrompt = document.getElementById('review-login-prompt');
-
-                if (!token) {
-                    if (loginPrompt) loginPrompt.style.display = 'block';
+                if (product.made_to_order) {
+                    notice.style.display = 'flex';
+                    sizeGroup.style.display = 'none';
+                    if (addToCartBtn) addToCartBtn.disabled = false;
                     return;
                 }
-                if (form) form.style.display = 'block';
-                if (!form) return;
 
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    var btn = document.getElementById('review-submit-btn');
-                    var msg = document.getElementById('review-form-message');
-                    btn.disabled = true;
-                    btn.textContent = 'Submitting…';
+                notice.style.display = 'none';
 
-                    window.SD_API.createReview({
-                        productId: productId,
-                        rating: parseInt(document.getElementById('review-rating').value, 10),
-                        title: document.getElementById('review-title').value.trim(),
-                        content: document.getElementById('review-content').value.trim()
-                    }).then(function() {
-                        msg.textContent = 'Thank you — your review is pending moderation.';
-                        msg.style.color = 'var(--color-success)';
-                        form.reset();
-                    }).catch(function(err) {
-                        msg.textContent = err.message || 'Could not submit review.';
-                        msg.style.color = 'var(--color-error)';
-                    }).finally(function() {
-                        btn.disabled = false;
-                        btn.textContent = 'Submit Review';
+                if (sizes.length === 0) {
+                    sizeGroup.style.display = 'none';
+                    if (addToCartBtn) addToCartBtn.disabled = product.stock <= 0;
+                    return;
+                }
+
+                sizeGroup.style.display = 'block';
+                if (addToCartBtn) addToCartBtn.disabled = true;
+                hintEl.textContent = (window.SD_I18N && SD_I18N.t('product_select_size_first')) || 'Please select a size to continue.';
+
+                sizeList.innerHTML = sizes.map(function(s) {
+                    var label = String(s.size || '').trim();
+                    if (!label) return '';
+                    var soldOut = (s.stock || 0) <= 0;
+                    var safeLabel = label.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                    return '<button type="button" class="option-value size-option' + (soldOut ? ' sold-out' : '') + '"' +
+                        ' data-size="' + safeLabel + '"' +
+                        (soldOut ? ' disabled' : '') + '>' + safeLabel + '</button>';
+                }).join('');
+
+                sizeList.querySelectorAll('.size-option').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        sizeList.querySelectorAll('.size-option').forEach(function(o) { o.classList.remove('active'); });
+                        btn.classList.add('active');
+                        selectedSizeEl.textContent = btn.getAttribute('data-size');
+                        hintEl.textContent = '';
+                        if (addToCartBtn) addToCartBtn.disabled = false;
                     });
                 });
+
             }
 
-            function loadRelated(product) {
-                var section = document.getElementById('related-products-section');
-                var grid = document.getElementById('related-products-grid');
-                if (!section || !grid || !product.category_slug) return;
+            var MATERIAL_TONE_MAP = { crocodile: 'crocodile', python: 'python', ostrich: 'ostrich', stingray: 'stingray', suede: 'suede' };
 
-                fetch(window.SD_API.baseURL + '/products?category=' + product.category_slug + '&limit=4')
-                    .then(function(res) { return res.json(); })
-                    .then(function(data) {
-                        if (!data.success) return;
-                        var items = data.data.products.filter(function(p) { return p.id !== product.id; }).slice(0, 3);
-                        if (items.length === 0) { section.style.display = 'none'; return; }
+            function currentLang() {
+                return (window.SD_I18N && window.SD_I18N.getLang) ? window.SD_I18N.getLang() : 'en';
+            }
 
-                        grid.innerHTML = items.map(function(p) {
-                            var image = (p.images && p.images.length)
-                                ? '<img src="' + p.images[0].url + '" alt="' + p.name_en + '" loading="lazy">'
-                                : SANDUKHAR.media.placeholder(p.name_en, MATERIAL_TONE_MAP[p.material_slug]);
-                            return '<div class="featured-item slide-up">' +
-                                '<a href="product.html?slug=' + p.slug + '" class="product-card-link">' +
-                                '<div class="product-card-image">' + image + '</div>' +
-                                '<div class="product-card-info">' +
-                                '<h3 class="product-card-name">' + p.name_en + '</h3>' +
-                                '<p class="product-card-material">' + (p.material_name || '') + '</p>' +
-                                '<p class="product-card-price">' + SANDUKHAR.format.price(p.price) + '</p>' +
-                                '</div></a></div>';
-                        }).join('');
-                        section.style.display = '';
-                    })
-                    .catch(function() { section.style.display = 'none'; });
+            function localizedName(item) {
+                return (currentLang() === 'ru' ? item.name_ru : item.name_en) || item.name_en;
+            }
+
+            function t(key) {
+                return (window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t(key) : key;
             }
 
             function loadProduct() {
                 if (!slug) {
                     var mainImageContainer = document.getElementById('main-image-container');
-                    if (mainImageContainer) mainImageContainer.innerHTML = '<p style="padding:3rem;text-align:center;color:var(--color-text-muted);">No product specified.</p>';
+                    if (mainImageContainer) mainImageContainer.innerHTML = '<p style="padding:3rem;text-align:center;color:var(--color-text-muted);">' + t('product_no_slug') + '</p>';
                     return;
                 }
-                fetch(window.SD_API.baseURL + '/products/' + slug)
+                fetch(window.SD_API.baseURL + '/products/' + slug + '?locale=' + currentLang())
                     .then(function(res) { return res.json(); })
                     .then(function(data) {
                         if (!data.success) throw new Error(data.message || 'Product not found');
@@ -723,12 +607,13 @@
                     })
                     .catch(function() {
                         var mainImageContainer = document.getElementById('main-image-container');
-                        if (mainImageContainer) mainImageContainer.innerHTML = '<p style="padding:3rem;text-align:center;color:var(--color-text-muted);">This creation could not be found.</p>';
-                        setText('prod-name', 'Product Not Found');
+                        if (mainImageContainer) mainImageContainer.innerHTML = '<p style="padding:3rem;text-align:center;color:var(--color-text-muted);">' + t('product_not_found_desc') + '</p>';
+                        setText('prod-name', t('product_not_found_title'));
                     });
             }
 
             document.addEventListener('DOMContentLoaded', loadProduct);
+            document.addEventListener('sd_i18n_changed', function () { if (slug) loadProduct(); });
         })();
     </script>
     <script>
@@ -752,24 +637,45 @@
                 });
             }
 
+            function translate(key, fallback) {
+                return (key && window.SD_I18N && window.SD_I18N.t) ? window.SD_I18N.t(key) : fallback;
+            }
+
             const colorOptions = document.querySelectorAll('.color-option');
             const selectedColorSpan = document.getElementById('selected-color');
+            function syncSelectedColorLabel() {
+                const active = document.querySelector('.color-option.active');
+                if (!active || !selectedColorSpan) return;
+                selectedColorSpan.textContent = translate(active.getAttribute('data-i18n'), active.getAttribute('data-color'));
+            }
             colorOptions.forEach(option => {
                 option.addEventListener('click', () => {
                     colorOptions.forEach(o => o.classList.remove('active'));
                     option.classList.add('active');
-                    if (selectedColorSpan) selectedColorSpan.textContent = option.getAttribute('data-color');
+                    syncSelectedColorLabel();
                 });
             });
 
             const hardwareOptions = document.querySelectorAll('.hardware-option');
             const selectedHardwareSpan = document.getElementById('selected-hardware');
+            const hardwareI18nKeys = { Gold: 'tailoring_hardware_gold', Silver: 'tailoring_hardware_silver' };
+            function syncSelectedHardwareLabel() {
+                const active = document.querySelector('.hardware-option.active');
+                if (!active || !selectedHardwareSpan) return;
+                const value = active.getAttribute('data-hardware');
+                selectedHardwareSpan.textContent = translate(hardwareI18nKeys[value], value);
+            }
             hardwareOptions.forEach(option => {
                 option.addEventListener('click', () => {
                     hardwareOptions.forEach(o => o.classList.remove('active'));
                     option.classList.add('active');
-                    if (selectedHardwareSpan) selectedHardwareSpan.textContent = option.getAttribute('data-hardware');
+                    syncSelectedHardwareLabel();
                 });
+            });
+
+            document.addEventListener('sd_i18n_changed', () => {
+                syncSelectedColorLabel();
+                syncSelectedHardwareLabel();
             });
 
             const monogramCheckbox = document.getElementById('add-monogram');

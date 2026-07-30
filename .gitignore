@@ -1,0 +1,22 @@
+# Secrets — never commit real credentials
+server/.env
+server/.env.*
+!server/.env.example
+
+# Dependencies
+node_modules/
+
+# Uploaded user content (product images etc.)
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Database backups — contain customer data, never commit
+server/backups/
+
+# OS files
+.DS_Store
+**/.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
