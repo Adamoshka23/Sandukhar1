@@ -227,10 +227,10 @@
                                 <div class="option-group">
                                     <h4 class="option-label"><span data-i18n="tailoring_step_color">Color</span>: <span id="selected-color">Matte Black</span></h4>
                                     <div class="option-values">
-                                        <button class="option-value color-option active" data-color="Matte Black" style="background: #1a1a1a;" aria-label="Matte Black" data-i18n="product_color_matte_black" data-i18n-attr="aria-label"></button>
-                                        <button class="option-value color-option" data-color="Deep Brown" style="background: #3e2723;" aria-label="Deep Brown" data-i18n="product_color_deep_brown" data-i18n-attr="aria-label"></button>
-                                        <button class="option-value color-option" data-color="Graphite" style="background: #424242;" aria-label="Graphite" data-i18n="product_color_graphite" data-i18n-attr="aria-label"></button>
-                                        <button class="option-value color-option color-option-custom" data-color="Custom Color" style="background: linear-gradient(135deg,red,orange,yellow,green,blue,purple);" aria-label="Custom Color" data-i18n="product_color_custom" data-i18n-attr="aria-label"></button>
+                                        <button class="option-value color-option active" data-color="Matte Black" aria-label="Matte Black" data-i18n="product_color_matte_black" data-i18n-attr="aria-label"><span class="color-swatch-fill" style="background: #1a1a1a;"></span></button>
+                                        <button class="option-value color-option" data-color="Deep Brown" aria-label="Deep Brown" data-i18n="product_color_deep_brown" data-i18n-attr="aria-label"><span class="color-swatch-fill" style="background: #3e2723;"></span></button>
+                                        <button class="option-value color-option" data-color="Graphite" aria-label="Graphite" data-i18n="product_color_graphite" data-i18n-attr="aria-label"><span class="color-swatch-fill" style="background: #424242;"></span></button>
+                                        <button class="option-value color-option color-option-custom" data-color="Custom Color" aria-label="Custom Color" data-i18n="product_color_custom" data-i18n-attr="aria-label"><span class="color-swatch-fill" style="background: linear-gradient(135deg,red,orange,yellow,green,blue,purple);"></span></button>
                                     </div>
                                 </div>
 
@@ -246,22 +246,6 @@
                                             <span class="hardware-swatch" style="background: #c0c0c0;"></span>
                                             <span data-i18n="tailoring_hardware_silver">Silver</span>
                                         </button>
-                                    </div>
-                                </div>
-
-                                <!-- Personalization -->
-                                <div class="option-group">
-                                    <h4 class="option-label" data-i18n="product_personalization">Personalization</h4>
-                                    <div class="personalization-options">
-                                        <label class="personalization-checkbox">
-                                            <input type="checkbox" id="add-monogram">
-                                            <span class="checkmark"></span>
-                                            <span data-i18n="product_add_monogram">Add Monogram (+$450)</span>
-                                        </label>
-                                        <div class="monogram-input-wrapper" id="monogram-input-wrapper" style="display: none;">
-                                            <input type="text" id="monogram-text" maxlength="4" placeholder="Your initials" data-i18n="product_initials_placeholder" data-i18n-attr="placeholder" class="monogram-input">
-                                            <span class="monogram-hint" data-i18n="product_monogram_hint">Up to 4 characters, hand-embossed</span>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -677,14 +661,6 @@
                 syncSelectedColorLabel();
                 syncSelectedHardwareLabel();
             });
-
-            const monogramCheckbox = document.getElementById('add-monogram');
-            const monogramWrapper = document.getElementById('monogram-input-wrapper');
-            if (monogramCheckbox && monogramWrapper) {
-                monogramCheckbox.addEventListener('change', () => {
-                    monogramWrapper.style.display = monogramCheckbox.checked ? 'block' : 'none';
-                });
-            }
 
             const accordionHeaders = document.querySelectorAll('.accordion-header');
             accordionHeaders.forEach(header => {
