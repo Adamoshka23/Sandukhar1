@@ -297,7 +297,6 @@
                     <div class="form-group"><label>Status</label><select id="product-status"><option value="active">Active</option><option value="draft">Draft</option></select></div>
                     <div class="form-group" style="flex-direction:row;align-items:center;gap:1rem;padding-top:1.2rem;">
                         <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;"><input type="checkbox" id="product-featured"> Featured</label>
-                        <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;"><input type="checkbox" id="product-limited"> Limited Edition</label>
                         <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;"><input type="checkbox" id="product-made-to-order" onchange="toggleMadeToOrderUI()"> Made to Order</label>
                     </div>
                 </div>
@@ -662,7 +661,6 @@
             });
             document.getElementById('product-status').value = 'active';
             document.getElementById('product-featured').checked = false;
-            document.getElementById('product-limited').checked = false;
             document.getElementById('product-made-to-order').checked = false;
             document.getElementById('product-category').value = '';
             document.getElementById('product-material').value = '';
@@ -685,7 +683,6 @@
             document.getElementById('product-stock').value = product.stock || 0;
             document.getElementById('product-status').value = product.status || 'active';
             document.getElementById('product-featured').checked = product.featured || false;
-            document.getElementById('product-limited').checked = product.limited_edition || false;
             document.getElementById('product-made-to-order').checked = product.made_to_order || false;
             document.getElementById('product-category').value = product.category_id || '';
             document.getElementById('product-material').value = product.material_id || '';
@@ -793,8 +790,7 @@
                 sizes: sizes,
                 madeToOrder: madeToOrder,
                 status: document.getElementById('product-status').value,
-                featured: document.getElementById('product-featured').checked,
-                limitedEdition: document.getElementById('product-limited').checked
+                featured: document.getElementById('product-featured').checked
             };
 
             if (!productData.slug || !productData.sku || !productData.nameEn || !productData.price) {

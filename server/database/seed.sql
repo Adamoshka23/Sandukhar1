@@ -38,15 +38,15 @@ INSERT INTO materials (id, slug, name_ru, name_en, scientific_name, description_
 (uuid_generate_v4(), 'lizard', 'Ящерица', 'Lizard', 'Teju & Varanus', 'Утончённая элегантность с мелкими однородными чешуйками, создающими геометрический узор.', 'Refined elegance with small uniform scales creating a subtle geometric pattern.', 5);
 
 -- Sample Products
-INSERT INTO products (id, slug, sku, name_ru, name_en, description_ru, description_en, price, category_id, material_id, status, featured, limited_edition, stock) 
-SELECT 
+INSERT INTO products (id, slug, sku, name_ru, name_en, description_ru, description_en, price, category_id, material_id, status, featured, stock)
+SELECT
     uuid_generate_v4(), 'sovereign-briefcase', 'SD-SOV-BRF-001',
     'Портфель Sovereign', 'Sovereign Briefcase',
     'Портфель Sovereign — абсолютное воплощение силы и утончённости. Создан из цельной безупречной кожи нильского крокодила.',
     'The Sovereign Briefcase is the definitive statement of power and refinement. Crafted from a single flawless Nile crocodile skin.',
     18500.00,
     c.id, m.id,
-    'active', true, true, 25
+    'active', true, 25
 FROM categories c, materials m 
 WHERE c.slug = 'bags' AND m.slug = 'crocodile';
 
@@ -62,7 +62,7 @@ SELECT
 FROM categories c, materials m
 WHERE c.slug = 'wallets' AND m.slug = 'crocodile';
 
-INSERT INTO products (id, slug, sku, name_ru, name_en, description_ru, description_en, price, category_id, material_id, status, featured, limited_edition, stock)
+INSERT INTO products (id, slug, sku, name_ru, name_en, description_ru, description_en, price, category_id, material_id, status, featured, stock)
 SELECT
     uuid_generate_v4(), 'sovereign-loafers', 'SD-SOV-LFR-003',
     'Лоферы Sovereign', 'Sovereign Loafers',
@@ -70,7 +70,7 @@ SELECT
     'Loafers in polished Porosus leather with gold-plated buckle.',
     6800.00,
     c.id, m.id,
-    'active', true, true, 15
+    'active', true, 15
 FROM categories c, materials m
 WHERE c.slug = 'shoes' AND m.slug = 'crocodile';
 
@@ -111,7 +111,7 @@ SELECT
 FROM categories c, materials m
 WHERE c.slug = 'wallets' AND m.slug = 'stingray';
 
-INSERT INTO products (id, slug, sku, name_ru, name_en, description_ru, description_en, price, category_id, material_id, status, limited_edition, stock)
+INSERT INTO products (id, slug, sku, name_ru, name_en, description_ru, description_en, price, category_id, material_id, status, stock)
 SELECT
     uuid_generate_v4(), 'nocturne-jacket', 'SD-NOC-JKT-007',
     'Куртка Nocturne', 'Nocturne Jacket',
@@ -119,7 +119,7 @@ SELECT
     'Jacket in Teju lizard leather with silver zippers.',
     8900.00,
     c.id, m.id,
-    'active', true, 10
+    'active', 10
 FROM categories c, materials m
 WHERE c.slug = 'jackets' AND m.slug = 'lizard';
 
@@ -154,7 +154,7 @@ INSERT INTO translations (key, locale, value, context) VALUES
 INSERT INTO settings (key, value, description) VALUES
 ('site_name', '{"en": "SAN DUKHAR", "ru": "SAN DUKHAR"}', 'Site name'),
 ('site_description', '{"en": "Luxury Exotic Leather Atelier", "ru": "Ателье экзотической кожи"}', 'Site description'),
-('contact_email', '"concierge@sandukhar.com"', 'Main contact email'),
+('contact_email', '"sandukhar2@gmail.com"', 'Main contact email'),
 ('contact_phone', '"+90 212 345 67 89"', 'Main contact phone'),
 ('address', '{"line1": "Yenidoğan, Zübeyde Hanım Cd. No:80/B", "city": "İstanbul", "district": "Zeytinburnu", "postal_code": "34021", "country": "Turkey"}', 'Atelier address'),
 ('working_hours', '{"en": "Monday – Friday: 10:00 – 19:00 · Saturday: 10:00 – 15:00 · Sunday: Closed", "ru": "Понедельник – Пятница: 10:00 – 19:00 · Суббота: 10:00 – 15:00 · Воскресенье: Выходной"}', 'Working hours'),

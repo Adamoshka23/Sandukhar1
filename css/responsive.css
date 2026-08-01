@@ -233,7 +233,7 @@
 
     .materials-grid .material-card:nth-child(5) {
         grid-column: span 2;
-        max-width: 50%;
+        max-width: calc(50% - 0.5rem);
         margin: 0 auto;
     }
 
@@ -376,12 +376,18 @@
     }
 
     .featured-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
     }
 
     .featured-item.large {
         grid-column: span 1;
+    }
+
+    .featured-grid > *:nth-child(3):last-child {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: calc(50% - 0.5rem);
     }
 
     .product-card-image {
@@ -403,7 +409,8 @@
 
     .materials-grid .material-card:nth-child(5) {
         grid-column: span 2;
-        max-width: 60%;
+        max-width: calc(50% - 0.5rem);
+        margin: 0 auto;
     }
 
     .material-info h3 {

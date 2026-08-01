@@ -483,8 +483,8 @@
 /* === Products Grid === */
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
 }
 
 .products-grid.list-view {
@@ -527,11 +527,6 @@
     letter-spacing: 0.1em;
     border-radius: 2px;
     z-index: 2;
-}
-
-.product-badge.limited {
-    background: var(--color-gold);
-    color: var(--color-black);
 }
 
 .product-badge.made-to-order {
@@ -638,6 +633,7 @@
 
 /* === Catalog Empty State === */
 .catalog-empty {
+    grid-column: 1 / -1;
     text-align: center;
     padding: 5rem 2rem;
 }
@@ -664,6 +660,7 @@
 
 /* === Pagination === */
 .pagination {
+    grid-column: 1 / -1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -763,8 +760,8 @@
     }
 
     .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
     }
 }
 
@@ -783,7 +780,7 @@
         max-height: 100vh;
         background: var(--color-graphite);
         z-index: 100;
-        padding: 1.5rem;
+        padding: calc(var(--header-height) + 1.5rem) 1.5rem 1.5rem;
         transform: translateX(-100%);
         transition: transform var(--transition-smooth);
         overflow-y: auto;
@@ -803,7 +800,8 @@
     }
 
     .products-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
     }
 
     .catalog-toolbar {
@@ -852,8 +850,8 @@
 
 @media screen and (max-width: 479px) {
     .products-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
     }
 
     .catalog-hero {

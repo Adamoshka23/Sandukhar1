@@ -219,60 +219,6 @@
             line-height: 1.6;
         }
 
-        /* === Material Finishes === */
-        .material-finishes {
-            margin-bottom: var(--space-xl);
-        }
-
-        .material-finishes h4 {
-            font-family: var(--font-body);
-            font-size: var(--font-size-caption);
-            font-weight: var(--font-weight-medium);
-            color: var(--color-text-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 0.8rem;
-        }
-
-        .finish-swatches {
-            display: flex;
-            gap: 0.6rem;
-            flex-wrap: wrap;
-        }
-
-        .finish-swatch {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            border: 2px solid var(--color-border);
-            cursor: pointer;
-            transition: border-color var(--transition-fast), transform var(--transition-fast);
-            position: relative;
-        }
-
-        .finish-swatch:hover {
-            border-color: var(--color-gold);
-            transform: scale(1.15);
-        }
-
-        .finish-swatch::after {
-            content: attr(title);
-            position: absolute;
-            bottom: -1.8rem;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.6rem;
-            color: var(--color-text-muted);
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity var(--transition-fast);
-            pointer-events: none;
-        }
-
-        .finish-swatch:hover::after {
-            opacity: 1;
-        }
-
         /* === Care Guide Section === */
         .care-guide-section {
             padding: var(--space-section) 0;
@@ -432,11 +378,6 @@
             .care-card h3 {
                 font-size: 1.1rem;
             }
-
-            .finish-swatch {
-                width: 28px;
-                height: 28px;
-            }
         }
 
         @media screen and (max-width: 479px) {
@@ -459,10 +400,6 @@
 
             .material-description {
                 font-size: 0.85rem;
-            }
-
-            .material-finishes h4 {
-                margin-bottom: 1.5rem;
             }
         }
     </style>
@@ -581,8 +518,8 @@
                         
                         <div class="material-attributes">
                             <div class="attribute">
-                                <h4 data-i18n="materials_attr_origin">Origin</h4>
-                                <p data-i18n="materials_crocodile_origin">Madagascar, Zimbabwe, Northern Australia</p>
+                                <h4 data-i18n="materials_attr_origin">Tannage</h4>
+                                <p data-i18n="materials_crocodile_origin">Italian, Vietnamese, and Indonesian</p>
                             </div>
                             <div class="attribute">
                                 <h4 data-i18n="materials_attr_character">Character</h4>
@@ -595,17 +532,6 @@
                             <div class="attribute">
                                 <h4 data-i18n="materials_attr_care">Care</h4>
                                 <p data-i18n="materials_crocodile_care">Occasional conditioning with natural oils. Avoid prolonged moisture.</p>
-                            </div>
-                        </div>
-
-                        <div class="material-finishes">
-                            <h4 data-i18n="materials_finishes_title">Available Finishes</h4>
-                            <div class="finish-swatches">
-                                <span class="finish-swatch" style="background: #1a1a1a;" title="Matte Black"></span>
-                                <span class="finish-swatch" style="background: #3e2723;" title="Deep Brown"></span>
-                                <span class="finish-swatch" style="background: #8b5a2b;" title="Cognac"></span>
-                                <span class="finish-swatch" style="background: #2c1810;" title="Espresso"></span>
-                                <span class="finish-swatch" style="background: #1c1c1c;" title="Glazed Black"></span>
                             </div>
                         </div>
 
@@ -630,8 +556,8 @@
                         
                         <div class="material-attributes">
                             <div class="attribute">
-                                <h4 data-i18n="materials_attr_origin">Origin</h4>
-                                <p data-i18n="materials_python_origin">Indonesia, Malaysia, Vietnam</p>
+                                <h4 data-i18n="materials_attr_origin">Tannage</h4>
+                                <p data-i18n="materials_python_origin">Italian, Vietnamese, and Indonesian</p>
                             </div>
                             <div class="attribute">
                                 <h4 data-i18n="materials_attr_character">Character</h4>
@@ -644,17 +570,6 @@
                             <div class="attribute">
                                 <h4 data-i18n="materials_attr_care">Care</h4>
                                 <p data-i18n="materials_python_care">Gentle brushing to maintain scale alignment. Avoid friction.</p>
-                            </div>
-                        </div>
-
-                        <div class="material-finishes">
-                            <h4 data-i18n="materials_finishes_title">Available Finishes</h4>
-                            <div class="finish-swatches">
-                                <span class="finish-swatch" style="background: #d4c5b2;" title="Natural"></span>
-                                <span class="finish-swatch" style="background: #1a1a1a;" title="Black"></span>
-                                <span class="finish-swatch" style="background: #5c3a21;" title="Tobacco"></span>
-                                <span class="finish-swatch" style="background: #8b0000;" title="Burgundy"></span>
-                                <span class="finish-swatch" style="background: #2f4f4f;" title="Forest"></span>
                             </div>
                         </div>
 
@@ -679,8 +594,8 @@
                         
                         <div class="material-attributes">
                             <div class="attribute">
-                                <h4 data-i18n="materials_attr_origin">Origin</h4>
-                                <p data-i18n="materials_ostrich_origin">South Africa, Oudtshoorn region</p>
+                                <h4 data-i18n="materials_attr_origin">Tannage</h4>
+                                <p data-i18n="materials_ostrich_origin">Italian, Vietnamese, and Indonesian</p>
                             </div>
                             <div class="attribute">
                                 <h4 data-i18n="materials_attr_character">Character</h4>
@@ -696,16 +611,6 @@
                             </div>
                         </div>
 
-                        <div class="material-finishes">
-                            <h4 data-i18n="materials_finishes_title">Available Finishes</h4>
-                            <div class="finish-swatches">
-                                <span class="finish-swatch" style="background: #3e2723;" title="Dark Brown"></span>
-                                <span class="finish-swatch" style="background: #8b5a2b;" title="Cognac"></span>
-                                <span class="finish-swatch" style="background: #1a1a1a;" title="Black"></span>
-                                <span class="finish-swatch" style="background: #d2b48c;" title="Tan"></span>
-                                <span class="finish-swatch" style="background: #2c1810;" title="Mocha"></span>
-                            </div>
-                        </div>
 
                         <a href="catalog.html?material=ostrich" class="btn-outline" data-i18n="section_view_ostrich">Explore Ostrich Collection</a>
                     </div>
@@ -728,8 +633,8 @@
                         
                         <div class="material-attributes">
                             <div class="attribute">
-                                <h4 data-i18n="materials_attr_origin">Origin</h4>
-                                <p data-i18n="materials_stingray_origin">Thailand, Indonesia coastal waters</p>
+                                <h4 data-i18n="materials_attr_origin">Tannage</h4>
+                                <p data-i18n="materials_stingray_origin">Italian, Vietnamese, and Indonesian</p>
                             </div>
                             <div class="attribute">
                                 <h4 data-i18n="materials_attr_character">Character</h4>
@@ -745,15 +650,6 @@
                             </div>
                         </div>
 
-                        <div class="material-finishes">
-                            <h4 data-i18n="materials_finishes_title">Available Finishes</h4>
-                            <div class="finish-swatches">
-                                <span class="finish-swatch" style="background: #4a4a4a;" title="Graphite"></span>
-                                <span class="finish-swatch" style="background: #1a1a1a;" title="Black"></span>
-                                <span class="finish-swatch" style="background: #f5f5dc;" title="Ivory"></span>
-                                <span class="finish-swatch" style="background: #191970;" title="Midnight"></span>
-                            </div>
-                        </div>
 
                         <a href="catalog.html?material=stingray" class="btn-outline" data-i18n="section_view_stingray">Explore Stingray Collection</a>
                     </div>
@@ -776,8 +672,8 @@
 
                         <div class="material-attributes">
                             <div class="attribute">
-                                <h4 data-i18n="materials_attr_origin">Origin</h4>
-                                <p data-i18n="materials_suede_origin">Italy, France</p>
+                                <h4 data-i18n="materials_attr_origin">Tannage</h4>
+                                <p data-i18n="materials_suede_origin">Italian, Vietnamese, and Indonesian</p>
                             </div>
                             <div class="attribute">
                                 <h4 data-i18n="materials_attr_character">Character</h4>
@@ -793,15 +689,6 @@
                             </div>
                         </div>
 
-                        <div class="material-finishes">
-                            <h4 data-i18n="materials_finishes_title">Available Finishes</h4>
-                            <div class="finish-swatches">
-                                <span class="finish-swatch" style="background: #1a1a1a;" title="Black"></span>
-                                <span class="finish-swatch" style="background: #8b4513;" title="Saddle"></span>
-                                <span class="finish-swatch" style="background: #d4c5b2;" title="Natural"></span>
-                                <span class="finish-swatch" style="background: #2f4f4f;" title="Green"></span>
-                            </div>
-                        </div>
 
                         <a href="catalog.html?material=suede" class="btn-outline" data-i18n="section_view_suede">Explore Suede Collection</a>
                     </div>
@@ -900,7 +787,7 @@
                         Zübeyde Hanım Cd. No:80/B<br>Yenidoğan, Zeytinburnu<br>34021, Istanbul, Turkey
                     </address>
                     <a href="tel:+905446976779">+90 544 697 67 79</a><br>
-                    <a href="mailto:concierge@sandukhar.com">concierge@sandukhar.com</a>
+                    <a href="mailto:sandukhar2@gmail.com">sandukhar2@gmail.com</a>
                 </div>
             </div>
             <div class="footer-bottom">

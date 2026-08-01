@@ -96,7 +96,6 @@ CREATE TABLE products (
     stock INTEGER DEFAULT 0,
     status VARCHAR(50) DEFAULT 'active' CHECK (status IN ('active', 'draft', 'archived', 'out_of_stock')),
     featured BOOLEAN DEFAULT false,
-    limited_edition BOOLEAN DEFAULT false,
     made_to_order BOOLEAN DEFAULT false,
     colors JSONB DEFAULT '[]',
     sizes JSONB DEFAULT '[]',

@@ -42,7 +42,7 @@ router.post('/products', async (req, res) => {
         const {
             slug, sku, nameRu, nameEn, descriptionRu, descriptionEn,
             shortDescriptionRu, shortDescriptionEn,
-            price, oldPrice, categoryId, materialId, stock, status, featured, limitedEdition,
+            price, oldPrice, categoryId, materialId, stock, status, featured,
             madeToOrder, colors, sizes, hardwareOptions, specifications
         } = req.body;
 
@@ -53,14 +53,14 @@ router.post('/products', async (req, res) => {
         const result = await query(
             `INSERT INTO products (id, slug, sku, name_ru, name_en, description_ru, description_en,
                 short_description_ru, short_description_en,
-                price, old_price, category_id, material_id, stock, status, featured, limited_edition,
+                price, old_price, category_id, material_id, stock, status, featured,
                 made_to_order, colors, sizes, hardware_options, specifications)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)
              RETURNING *`,
             [
                 uuidv4(), slug, sku, nameRu || null, nameEn, descriptionRu || null, descriptionEn || null,
                 shortDescriptionRu || null, shortDescriptionEn || null,
-                price, oldPrice || null, categoryId || null, materialId || null, stock || 0, status || 'active', featured || false, limitedEdition || false,
+                price, oldPrice || null, categoryId || null, materialId || null, stock || 0, status || 'active', featured || false,
                 madeToOrder || false, JSON.stringify(colors || []), JSON.stringify(sizes || []),
                 JSON.stringify(hardwareOptions || []), JSON.stringify(specifications || [])
             ]
@@ -81,7 +81,7 @@ router.put('/products/:id', async (req, res) => {
         const {
             slug, sku, nameRu, nameEn, descriptionRu, descriptionEn,
             shortDescriptionRu, shortDescriptionEn,
-            price, oldPrice, categoryId, materialId, stock, status, featured, limitedEdition,
+            price, oldPrice, categoryId, materialId, stock, status, featured,
             madeToOrder, colors, sizes, hardwareOptions, specifications
         } = req.body;
 
@@ -94,15 +94,15 @@ router.put('/products/:id', async (req, res) => {
                 price = COALESCE($10, price), old_price = $11,
                 category_id = $12, material_id = $13,
                 stock = COALESCE($14, stock), status = COALESCE($15, status),
-                featured = COALESCE($16, featured), limited_edition = COALESCE($17, limited_edition),
-                made_to_order = COALESCE($18, made_to_order),
-                colors = COALESCE($19, colors), sizes = COALESCE($20, sizes),
-                hardware_options = COALESCE($21, hardware_options), specifications = COALESCE($22, specifications)
+                featured = COALESCE($16, featured),
+                made_to_order = COALESCE($17, made_to_order),
+                colors = COALESCE($18, colors), sizes = COALESCE($19, sizes),
+                hardware_options = COALESCE($20, hardware_options), specifications = COALESCE($21, specifications)
              WHERE id = $1 RETURNING *`,
             [
                 id, slug, sku, nameRu, nameEn, descriptionRu, descriptionEn,
                 shortDescriptionRu, shortDescriptionEn,
-                price, oldPrice, categoryId, materialId, stock, status, featured, limitedEdition,
+                price, oldPrice, categoryId, materialId, stock, status, featured,
                 madeToOrder, colors ? JSON.stringify(colors) : null, sizes ? JSON.stringify(sizes) : null,
                 hardwareOptions ? JSON.stringify(hardwareOptions) : null, specifications ? JSON.stringify(specifications) : null
             ]

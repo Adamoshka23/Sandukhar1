@@ -213,7 +213,7 @@ const productsController = {
                 slug, sku, nameRu, nameEn, descriptionRu, descriptionEn,
                 shortDescriptionRu, shortDescriptionEn,
                 price, oldPrice, categoryId, materialId,
-                stock, status, featured, limitedEdition, madeToOrder,
+                stock, status, featured, madeToOrder,
                 colors, sizes, hardwareOptions, specifications
             } = req.body;
 
@@ -221,15 +221,15 @@ const productsController = {
                 INSERT INTO products (id, slug, sku, name_ru, name_en,
                     description_ru, description_en, short_description_ru, short_description_en,
                     price, old_price, category_id, material_id,
-                    stock, status, featured, limited_edition, made_to_order,
+                    stock, status, featured, made_to_order,
                     colors, sizes, hardware_options, specifications)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
                 RETURNING *
             `, [
                 uuidv4(), slug, sku, nameRu, nameEn,
                 descriptionRu, descriptionEn, shortDescriptionRu, shortDescriptionEn,
                 price, oldPrice, categoryId, materialId,
-                stock || 0, status || 'active', featured || false, limitedEdition || false, madeToOrder || false,
+                stock || 0, status || 'active', featured || false, madeToOrder || false,
                 JSON.stringify(colors || []), JSON.stringify(sizes || []),
                 JSON.stringify(hardwareOptions || []), JSON.stringify(specifications || [])
             ]);
@@ -263,7 +263,7 @@ const productsController = {
                 'slug', 'sku', 'name_ru', 'name_en', 'description_ru', 'description_en',
                 'short_description_ru', 'short_description_en',
                 'price', 'old_price', 'category_id', 'material_id',
-                'stock', 'status', 'featured', 'limited_edition', 'made_to_order',
+                'stock', 'status', 'featured', 'made_to_order',
                 'colors', 'sizes', 'hardware_options', 'specifications'
             ];
             const jsonbFields = ['colors', 'sizes', 'hardware_options', 'specifications'];

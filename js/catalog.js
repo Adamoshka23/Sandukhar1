@@ -18,7 +18,6 @@ function sdLang() {
 }
 
 function sdAvailability(product) {
-    if (product.limited_edition) return 'limited';
     if (product.made_to_order) return 'made-to-order';
     if (product.stock > 0) return 'in-stock';
     return 'made-to-order';
@@ -29,7 +28,6 @@ function sdT(key, fallback) {
 }
 
 function sdBadge(product) {
-    if (product.limited_edition) return `<span class="product-badge limited">${sdT('catalog_limited', 'Limited Edition')}</span>`;
     if (product.made_to_order) return `<span class="product-badge made-to-order">${sdT('catalog_made_to_order', 'Made to Order')}</span>`;
     if (product.stock > 0 && product.stock <= 5) return `<span class="product-badge in-stock">${sdT('catalog_few_left', 'Only Few Left')}</span>`;
     return '';
