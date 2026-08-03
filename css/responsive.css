@@ -146,6 +146,26 @@
 /* =============================================
    TABLET — Portrait Tablets
    ============================================= */
+/* Russian nav labels run noticeably longer than their English
+   equivalents. Rather than hiding the nav behind the hamburger menu
+   at desktop widths (which used to only happen below 991px), shrink
+   the nav spacing/type and drop the least essential icon so the full
+   menu keeps fitting on screen down to the original breakpoint. */
+@media screen and (min-width: 992px) and (max-width: 1450px) {
+    .nav-list {
+        gap: clamp(0.4rem, 0.9vw, 1.5rem);
+    }
+
+    .nav-link {
+        font-size: 0.75rem;
+    }
+
+    .header-utilities .utility-btn.search-trigger,
+    .header-utilities .utility-btn.account-btn {
+        display: none;
+    }
+}
+
 @media screen and (max-width: 991px) {
     :root {
         --header-height: 4.5rem;

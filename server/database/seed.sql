@@ -35,7 +35,10 @@ INSERT INTO materials (id, slug, name_ru, name_en, scientific_name, description_
 (uuid_generate_v4(), 'python', 'Питон', 'Python', 'Reticulatus & Molurus', 'Кожа питона с её драматичным перекрывающимся рисунком чешуи. Каждая шкура уникальна.', 'Python skin with its dramatic overlapping scale pattern. Each skin is utterly unique.', 2),
 (uuid_generate_v4(), 'ostrich', 'Страус', 'Ostrich', 'Struthio Camelus', 'Кожа страуса с характерным рисунком фолликулов — визитная карточка роскоши.', 'Ostrich leather with distinctive quill follicle pattern — a hallmark of luxury.', 3),
 (uuid_generate_v4(), 'stingray', 'Скат', 'Stingray', 'Galuchat', 'Галюша — одна из самых прочных экзотических кож с мерцающей жемчужной поверхностью.', 'Galuchat — one of the most durable exotic leathers with a shimmering pearl-like surface.', 4),
-(uuid_generate_v4(), 'lizard', 'Ящерица', 'Lizard', 'Teju & Varanus', 'Утончённая элегантность с мелкими однородными чешуйками, создающими геометрический узор.', 'Refined elegance with small uniform scales creating a subtle geometric pattern.', 5);
+(uuid_generate_v4(), 'suede', 'Замша', 'Suede', 'Nubuck & Suede', 'Мягкая, бархатистая кожа с благородной матовой фактурой.', 'Soft, velvety leather with a refined matte finish.', 5),
+(uuid_generate_v4(), 'genuine-leather', 'Натуральная кожа', 'Genuine Leather', 'Bos Taurus', 'Изысканная кожа полного цикла выделки телёнка — гладкая, ровная, вневременная.', 'Refined full-grain calfskin — smooth, even, and timeless.', 6),
+(uuid_generate_v4(), 'karakul', 'Каракуль', 'Karakul', 'Ovis Aries', 'Плотные, блестящие завитки — один из самых редких и тактильных материалов ателье.', 'Tight, lustrous curls — one of the rarest and most tactile materials in the atelier.', 7),
+(uuid_generate_v4(), 'cashmere', 'Кашемир', 'Cashmere', 'Capra Hircus', 'Тончайший подшёрсток кашмирской козы — исключительная мягкость для подкладок и вязаных акцентов.', 'Fine undercoat of the Kashmir goat — exceptional softness for linings and knitwear accents.', 8);
 
 -- Sample Products
 INSERT INTO products (id, slug, sku, name_ru, name_en, description_ru, description_en, price, category_id, material_id, status, featured, stock)
