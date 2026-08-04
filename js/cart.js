@@ -114,7 +114,6 @@ SANDUKHAR.cart = {
                 id: product.id,
                 name: product.name || 'Unknown Product',
                 variant: product.variant || '',
-                price: product.price || 0,
                 quantity: product.quantity || 1,
                 image: product.image || ''
             });
@@ -193,14 +192,6 @@ SANDUKHAR.cart = {
     // ============================================================
 
     /**
-     * Calculate subtotal.
-     * @returns {number}
-     */
-    getSubtotal: function() {
-        return this.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    },
-
-    /**
      * Get total item count.
      * @returns {number}
      */
@@ -269,7 +260,6 @@ SANDUKHAR.cart = {
                 <div class="cart-item-details">
                     <h3 class="cart-item-name">${this.escapeHTML(item.name)}</h3>
                     ${item.variant ? `<p class="cart-item-variant">${this.escapeHTML(item.variant)}</p>` : ''}
-                    <p class="cart-item-price">$${item.price.toLocaleString()}</p>
                 </div>
                 <div class="cart-item-actions">
                     <div class="quantity-control">
@@ -297,26 +287,10 @@ SANDUKHAR.cart = {
      * Update order summary section.
      */
     updateSummary: function() {
-        const subtotalEl = document.getElementById('summary-subtotal');
-        const totalEl = document.getElementById('summary-total');
+        const countEl = document.getElementById('summary-count');
         const checkoutBtn = document.getElementById('btn-checkout');
-        const shippingEl = document.getElementById('summary-shipping');
-        const taxEl = document.getElementById('summary-tax');
 
-        const subtotal = this.getSubtotal();
-
-        if (subtotalEl) subtotalEl.textContent = '$' + subtotal.toLocaleString();
-        if (totalEl) totalEl.textContent = '$' + subtotal.toLocaleString();
-
-        // Update shipping and tax texts via i18n
-        if (shippingEl) {
-            const shippingText = this.i18n('cart_shipping_value', 'Complimentary');
-            shippingEl.textContent = shippingText;
-        }
-        if (taxEl) {
-            const taxText = this.i18n('cart_tax_value', 'Included');
-            taxEl.textContent = taxText;
-        }
+        if (countEl) countEl.textContent = this.getItemCount();
 
         if (checkoutBtn) {
             if (this.items.length === 0) {
@@ -378,22 +352,6 @@ SANDUKHAR.cart = {
                 }
             });
         });
-
-        // Promo code
-        const promoInput = document.getElementById('promo-code');
-        if (promoInput) {
-            if (promoInput._keypressHandler) {
-                promoInput.removeEventListener('keypress', promoInput._keypressHandler);
-            }
-            const handler = (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    this.applyPromoCode(promoInput.value);
-                }
-            };
-            promoInput._keypressHandler = handler;
-            promoInput.addEventListener('keypress', handler);
-        }
     },
 
     /**
@@ -476,9 +434,6 @@ SANDUKHAR.cart = {
         const nameEl = productSection
             ? productSection.querySelector('.product-title, .product-card-name, .quick-view-name')
             : null;
-        const priceEl = productSection
-            ? productSection.querySelector('.product-price, .product-card-price, .quick-view-price')
-            : null;
         const variantSizeEl = document.getElementById('selected-size');
         const variantColorEl = document.getElementById('selected-color');
         const variantHardwareEl = document.getElementById('selected-hardware');
@@ -487,8 +442,6 @@ SANDUKHAR.cart = {
             (productSection ? productSection.querySelector('img') : null);
 
         const name = nameEl ? nameEl.textContent.trim() : 'Product';
-        const priceText = priceEl ? priceEl.textContent.replace(/[^0-9]/g, '') : '0';
-        const price = parseInt(priceText, 10) || 0;
 
         const variantParts = [];
         if (variantSizeEl && variantSizeEl.textContent.trim()) variantParts.push('Size ' + variantSizeEl.textContent.trim());
@@ -498,20 +451,7 @@ SANDUKHAR.cart = {
 
         const image = imageEl ? imageEl.getAttribute('src') : '';
 
-        return { id, name, variant, price, quantity: 1, image };
-    },
-
-    /**
-     * Apply promo code.
-     * @param {string} code
-     */
-    applyPromoCode: function(code) {
-        if (!code || !code.trim()) return;
-        const cleanCode = code.trim().toUpperCase();
-        this.showToast(
-            this.i18n('promo_applied', 'Promo code applied'),
-            cleanCode
-        );
+        return { id, name, variant, quantity: 1, image };
     },
 
     /**

@@ -264,6 +264,26 @@ CREATE TABLE tailoring_orders (
 );
 
 -- ============================================================
+-- CART INQUIRIES
+-- Customer expresses interest in a set of pieces; no pricing is
+-- shown or stored — the atelier follows up directly with pricing
+-- and completes the order manually. Mirrors TAILORING ORDERS above.
+-- ============================================================
+CREATE TABLE cart_inquiries (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID REFERENCES users(id) ON DELETE SET NULL,
+    status VARCHAR(50) DEFAULT 'new' CHECK (status IN ('new', 'contacted', 'quoted', 'confirmed', 'cancelled')),
+    items JSONB NOT NULL,
+    contact_name VARCHAR(200) NOT NULL,
+    contact_email VARCHAR(200) NOT NULL,
+    contact_phone VARCHAR(50),
+    shipping_address JSONB,
+    notes TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- ============================================================
 -- TRANSLATIONS
 -- ============================================================
 CREATE TABLE translations (

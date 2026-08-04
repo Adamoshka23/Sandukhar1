@@ -214,25 +214,6 @@
     margin-bottom: 1.5rem;
 }
 
-.product-price-block {
-    display: flex;
-    align-items: baseline;
-    gap: 0.8rem;
-    margin-bottom: 0.5rem;
-}
-
-.product-price {
-    font-family: var(--font-body);
-    font-size: 1.8rem;
-    font-weight: var(--font-weight-medium);
-    color: var(--color-gold);
-}
-
-.product-price-note {
-    font-size: var(--font-size-caption);
-    color: var(--color-text-muted);
-}
-
 .product-limited-notice {
     display: flex;
     align-items: center;
@@ -772,10 +753,6 @@
 
     .product-title {
         font-size: 1.8rem;
-    }
-
-    .product-price {
-        font-size: 1.4rem;
     }
 
     .gallery-thumbnails .thumbnail {

@@ -12,9 +12,6 @@
     <meta id="meta-og-image" property="og:image" content="https://www.sandukhar.com/images/og-cover.svg">
     <meta property="og:url" content="https://www.sandukhar.com/product.html">
     <meta property="og:type" content="product">
-    <meta id="meta-price-amount" property="product:price:amount" content="">
-    <meta property="product:price:currency" content="USD">
-
     <meta name="twitter:card" content="product">
     <meta id="meta-twitter-title" name="twitter:title" content="SAN DUKHAR | Exotic Leather Atelier">
     <meta id="meta-twitter-description" name="twitter:description" content="Handcrafted exotic leather pieces from the SAN DUKHAR atelier in Istanbul.">
@@ -31,14 +28,6 @@
             "brand": {
                 "@type": "Brand",
                 "name": "SAN DUKHAR"
-            },
-            "offers": {
-                "@type": "Offer",
-                "url": "https://www.sandukhar.com/product.html",
-                "priceCurrency": "USD",
-                "price": "0",
-                "availability": "https://schema.org/InStock",
-                "itemCondition": "https://schema.org/NewCondition"
             },
             "image": "https://www.sandukhar.com/images/og-cover.svg",
             "material": "Exotic Leather"
@@ -102,10 +91,6 @@
                                         <li><a href="catalog.html?material=stingray" data-i18n="nav_stingray">Stingray Leather</a></li>
                                         <li><a href="catalog.html?material=suede" data-i18n="nav_suede">Suede Leather</a></li>
                                     </ul>
-                                </div>
-                                <div class="mega-menu-column mega-menu-image">
-                                    <img src="images/nav/mega-menu-collection.jpg" alt="SAN DUKHAR Exclusive Collection" loading="lazy">
-                                    <p data-i18n="product_mega_promo">The Croco Collection — Limited Series</p>
                                 </div>
                             </div>
                         </div>
@@ -203,10 +188,6 @@
                             <p class="product-collection-label" data-i18n="product_collection_label">Collection</p>
                             <h1 class="product-title" id="prod-name">Sovereign Briefcase</h1>
                             <p class="product-subtitle" id="prod-material">Matte Nile Crocodile · Gold Hardware</p>
-
-                            <div class="product-price-block">
-                                <span class="product-price" id="prod-price">$18,500</span>
-                            </div>
 
                             <!-- Product Options -->
                             <div class="product-options">
@@ -406,6 +387,7 @@
     <!-- ============================================================ -->
     <!-- SCRIPTS -->
     <!-- ============================================================ -->
+    <script src="js/config.js?v=1" defer></script>
     <script src="js/api.js?v=2" defer></script>
     <script src="js/app.js?v=2" defer></script>
     <script src="js/translations.js?v=1"></script>
@@ -433,7 +415,6 @@
                 setText('prod-name', name);
                 setText('prod-name-breadcrumb', name);
                 setText('prod-material', product.material_name || '');
-                setText('prod-price', SANDUKHAR.format.price(product.price));
                 setText('prod-description', description);
 
                 var mainImageContainer = document.getElementById('main-image-container');
@@ -474,7 +455,6 @@
                 setMeta('meta-og-description', 'content', pageDescription);
                 setMeta('meta-twitter-title', 'content', pageTitle);
                 setMeta('meta-twitter-description', 'content', pageDescription);
-                setMeta('meta-price-amount', 'content', product.price);
                 if (product.images && product.images.length) {
                     setMeta('meta-og-image', 'content', product.images[0].url);
                 }
@@ -487,14 +467,6 @@
                         name: 'SAN DUKHAR ' + product.name_en,
                         description: pageDescription,
                         brand: { '@type': 'Brand', name: 'SAN DUKHAR' },
-                        offers: {
-                            '@type': 'Offer',
-                            url: 'https://www.sandukhar.com/product.html?slug=' + product.slug,
-                            priceCurrency: 'USD',
-                            price: String(product.price),
-                            availability: product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder',
-                            itemCondition: 'https://schema.org/NewCondition'
-                        },
                         image: (product.images && product.images[0]) ? product.images[0].url : 'https://www.sandukhar.com/images/og-cover.svg',
                         material: product.material_name || 'Exotic Leather',
                         sku: product.sku

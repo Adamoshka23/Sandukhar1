@@ -31,7 +31,6 @@
         .cart-item-image-placeholder span { color: var(--color-text-muted); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; }
         .cart-item-name { font-family: var(--font-display); font-size: 1.2rem; color: var(--color-white); margin-bottom: 0.3rem; }
         .cart-item-variant { font-size: var(--font-size-caption); color: var(--color-text-muted); }
-        .cart-item-price { font-size: 1rem; font-weight: var(--font-weight-medium); color: var(--color-gold); }
         .cart-item-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 1rem; }
         .quantity-control { display: flex; align-items: center; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); overflow: hidden; }
         .qty-btn { width: 36px; height: 36px; background: transparent; border: none; color: var(--color-text-secondary); font-size: 1rem; cursor: pointer; transition: color 0.2s ease, background-color 0.2s ease, transform 0.1s var(--ease-out-strong); }
@@ -49,14 +48,10 @@
         .summary-row { display: flex; justify-content: space-between; padding: 0.8rem 0; border-bottom: 1px solid var(--color-border); font-size: var(--font-size-small); color: var(--color-text-secondary); }
         .summary-row.total { border-bottom: none; font-size: 1.1rem; font-weight: var(--font-weight-semibold); color: var(--color-white); padding-top: 1.2rem; }
         .summary-row.total .summary-value { color: var(--color-gold); }
-        .promo-input { width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--color-border); border-radius: var(--border-radius-sm); background: transparent; color: var(--color-white); font-size: var(--font-size-caption); margin: 1rem 0; font-family: var(--font-body); }
-        .promo-input:focus { border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(197,165,114,0.12); outline: none; }
-        .promo-input::placeholder { color: var(--color-text-muted); }
         .btn-checkout { width: 100%; margin-top: 1rem; display: inline-flex; align-items: center; justify-content: center; text-align: center; }
         .cart-empty-state { text-align: center; padding: 5rem 2rem; display: none; }
         .cart-empty-state h3 { font-family: var(--font-display); font-size: 2rem; color: var(--color-white); margin-bottom: 1rem; }
         .cart-empty-state p { color: var(--color-text-muted); margin-bottom: 2rem; line-height: var(--line-height-luxury); }
-        .cart-secure-note { text-align: center; margin-top: 0.8rem; font-size: var(--font-size-caption); color: var(--color-text-muted); }
         @media screen and (max-width: 991px) { .cart-layout { grid-template-columns: 1fr; } .cart-summary { position: relative; top: 0; } }
         @media screen and (max-width: 767px) { .cart-item { grid-template-columns: 80px 1fr; gap: 1rem; } .cart-item-actions { grid-column: span 2; flex-direction: row; justify-content: space-between; align-items: center; } }
     </style>
@@ -113,14 +108,9 @@
                     <div class="cart-items" id="cart-items"></div>
 
                     <div class="cart-summary" id="cart-summary">
-                        <h3 data-i18n="cart_summary">Order Summary</h3>
-                        <div class="summary-row"><span data-i18n="cart_subtotal">Subtotal</span><span class="summary-value" id="summary-subtotal">$0</span></div>
-                        <div class="summary-row"><span data-i18n="cart_shipping">Shipping</span><span class="summary-value" id="summary-shipping" data-i18n="cart_shipping_value">Complimentary</span></div>
-                        <div class="summary-row"><span data-i18n="cart_tax">Taxes & Duties</span><span class="summary-value" id="summary-tax" data-i18n="cart_tax_value">Included</span></div>
-                        <input type="text" class="promo-input" data-i18n-attr="placeholder" data-i18n="cart_promo" placeholder="Promo Code" id="promo-code">
-                        <div class="summary-row total"><span data-i18n="cart_total">Total</span><span class="summary-value" id="summary-total">$0</span></div>
-                        <a href="checkout.html" class="btn-primary btn-checkout" id="btn-checkout" data-i18n="cart_checkout">Proceed to Checkout</a>
-                        <p class="cart-secure-note" data-i18n="cart_secure">Secure payment · Complimentary shipping</p>
+                        <h3 data-i18n="cart_summary">Your Request</h3>
+                        <div class="summary-row"><span data-i18n="cart_items_label">Items</span><span class="summary-value" id="summary-count">0</span></div>
+                        <a href="checkout.html" class="btn-primary btn-checkout" id="btn-checkout" data-i18n="cart_checkout">Submit Inquiry</a>
                     </div>
 
                     <div class="cart-empty-state" id="cart-empty">

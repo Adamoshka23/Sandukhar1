@@ -423,54 +423,6 @@
     font-size: var(--font-size-caption);
 }
 
-/* Price Range */
-.price-range-inputs {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.8rem;
-}
-
-.price-input {
-    width: 100%;
-    padding: 0.5rem 0.6rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-sm);
-    color: var(--color-white);
-    font-size: var(--font-size-caption);
-    background: rgba(255, 255, 255, 0.03);
-    transition: border-color var(--transition-fast);
-}
-
-.price-input:focus {
-    border-color: var(--color-gold);
-}
-
-.price-input::placeholder {
-    color: var(--color-text-muted);
-}
-
-.price-separator {
-    color: var(--color-text-muted);
-}
-
-.btn-apply-price {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid var(--color-gold);
-    color: var(--color-gold);
-    font-size: var(--font-size-caption);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    border-radius: var(--border-radius-sm);
-    transition: all var(--transition-fast);
-}
-
-.btn-apply-price:hover {
-    background: var(--color-gold);
-    color: var(--color-black);
-}
-
 /* Sidebar Overlay (Mobile) */
 .sidebar-overlay {
     display: none;
@@ -736,13 +688,6 @@
     font-weight: var(--font-weight-light);
     color: var(--color-white);
     margin-bottom: 0.5rem;
-}
-
-.quick-view-price {
-    font-size: 1.2rem;
-    font-weight: var(--font-weight-medium);
-    color: var(--color-gold);
-    margin-bottom: 1rem;
 }
 
 .quick-view-description {

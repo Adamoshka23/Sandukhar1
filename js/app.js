@@ -306,7 +306,6 @@ SANDUKHAR.quickView = {
                         <div class="quick-view-details">
                             <p class="quick-view-collection">${p.category_name || ''}</p>
                             <h2 class="quick-view-name">${p.name_en}</h2>
-                            <p class="quick-view-price">${SANDUKHAR.format.price(p.price)}</p>
                             <p class="quick-view-description">${p.short_description_en || p.description_en || ''}</p>
                             <a href="product.html?slug=${p.slug}" class="btn-primary" style="width:100%; margin-top:20px; display:inline-flex; text-align:center; justify-content:center;" data-i18n="view_details">${i18n('view_details', 'View Full Details')}</a>
                         </div>

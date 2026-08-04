@@ -1,7 +1,13 @@
 require('dotenv').config();
 
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
+if (NODE_ENV === 'production' && (!process.env.JWT_SECRET || !process.env.JWT_REFRESH_SECRET)) {
+    throw new Error('JWT_SECRET and JWT_REFRESH_SECRET must be set in production — refusing to start with the insecure dev defaults.');
+}
+
 const environment = {
-    NODE_ENV: process.env.NODE_ENV || 'development',
+    NODE_ENV,
     PORT: parseInt(process.env.PORT, 10) || 3000,
 
     DB_HOST: process.env.DB_HOST || 'localhost',

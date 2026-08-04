@@ -6,7 +6,7 @@
  */
 
 const SD_API = {
-    baseURL: 'http://localhost:3000/api',
+    baseURL: window.SD_CONFIG.API_BASE_URL,
     token: null,
 
     /**
@@ -184,6 +184,13 @@ const SD_API = {
     // ============================================================
     async submitTailoringRequest(data) {
         return this.request('/tailoring', { method: 'POST', body: JSON.stringify(data) });
+    },
+
+    // ============================================================
+    // CART INQUIRIES
+    // ============================================================
+    async submitCartInquiry(data) {
+        return this.request('/cart-inquiries', { method: 'POST', body: JSON.stringify(data) });
     },
 
     // ============================================================

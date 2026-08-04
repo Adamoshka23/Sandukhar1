@@ -234,9 +234,8 @@ SANDUKHAR.account = {
                         <span class="order-number">#${order.order_number}</span>
                         <span class="order-status ${statusClass}">${order.status.replace(/_/g, ' ')}</span>
                     </div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+                    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;">
                         <span class="order-date">Placed on ${new Date(order.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                        <span class="order-total">${SANDUKHAR.format.price(order.total)}</span>
                     </div>
                     ${itemsSummary ? `<p style="font-size:var(--font-size-caption);color:var(--color-text-muted);margin-top:0.5rem;">${itemsSummary}</p>` : ''}
                     <a href="track-order.html?order=${order.order_number}&email=${encodeURIComponent((order.shipping_address || {}).email || '')}" class="btn-outline" style="margin-top:1rem;display:inline-block;font-size:var(--font-size-caption);padding:0.5rem 1.2rem;">Track Order</a>

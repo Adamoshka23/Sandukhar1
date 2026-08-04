@@ -43,7 +43,7 @@ function sdProductCardHTML(product) {
         : (window.SANDUKHAR ? window.SANDUKHAR.media.placeholder(name) : '');
 
     return `
-        <div class="product-card" data-product-id="${product.id}" data-category="${product.category_slug || ''}" data-material="${product.material_slug || ''}" data-color="${color}" data-price="${product.price}" data-availability="${availability}">
+        <div class="product-card" data-product-id="${product.id}" data-category="${product.category_slug || ''}" data-material="${product.material_slug || ''}" data-color="${color}" data-availability="${availability}">
             <a href="product.html?slug=${product.slug}" class="product-card-link">
                 <div class="product-card-image">
                     ${image}
@@ -58,7 +58,6 @@ function sdProductCardHTML(product) {
                 <div class="product-card-info">
                     <h3 class="product-card-name">${name}</h3>
                     <p class="product-card-material">${product.material_name || ''}</p>
-                    <p class="product-card-price">${SANDUKHAR.format.price(product.price)}</p>
                 </div>
             </a>
         </div>`;
@@ -198,8 +197,6 @@ SANDUKHAR.catalog = {
         this.sidebar.querySelectorAll('input[type="checkbox"]').forEach(input => {
             input.addEventListener('change', () => this.onFilterChange(input));
         });
-        const applyPriceBtn = document.getElementById('apply-price');
-        if (applyPriceBtn) applyPriceBtn.addEventListener('click', () => this.onPriceFilter());
 
         // Сортировка
         if (this.sortSelect) {
@@ -253,27 +250,11 @@ SANDUKHAR.catalog = {
         this.updateFilterCount();
     },
 
-    onPriceFilter: function () {
-        const minPrice = parseFloat(document.getElementById('price-min')?.value) || 0;
-        const maxPrice = parseFloat(document.getElementById('price-max')?.value) || Infinity;
-        if (minPrice > 0 || maxPrice < Infinity) this.activeFilters['price'] = [{ min: minPrice, max: maxPrice }];
-        else delete this.activeFilters['price'];
-        this.currentPage = 1;
-        this.applyAllFilters();
-        this.updateResultsDisplay();
-        this.updateActiveFilterTags();
-    },
-
     applyAllFilters: function () {
         this.filteredProducts = this.productCards.filter(card => {
             if (this.activeFilters['category']?.length && !this.activeFilters['category'].includes(card.getAttribute('data-category'))) return false;
             if (this.activeFilters['material']?.length && !this.activeFilters['material'].includes(card.getAttribute('data-material'))) return false;
             if (this.activeFilters['availability']?.length && !this.activeFilters['availability'].includes(card.getAttribute('data-availability'))) return false;
-            if (this.activeFilters['price']) {
-                const cardPrice = parseFloat(card.getAttribute('data-price'));
-                const range = this.activeFilters['price'][0];
-                if (cardPrice < range.min || cardPrice > range.max) return false;
-            }
             return true;
         });
         this.applySorting();
@@ -283,8 +264,6 @@ SANDUKHAR.catalog = {
         const sortFns = {
             'featured': () => {},
             'newest': () => this.filteredProducts.sort((a, b) => b.getAttribute('data-product-id').localeCompare(a.getAttribute('data-product-id'))),
-            'price-asc': () => this.filteredProducts.sort((a, b) => parseFloat(a.getAttribute('data-price')) - parseFloat(b.getAttribute('data-price'))),
-            'price-desc': () => this.filteredProducts.sort((a, b) => parseFloat(b.getAttribute('data-price')) - parseFloat(a.getAttribute('data-price'))),
             'name-asc': () => this.filteredProducts.sort((a, b) => (a.querySelector('.product-card-name')?.textContent?.trim() || '').localeCompare(b.querySelector('.product-card-name')?.textContent?.trim() || ''))
         };
         if (sortFns[this.currentSort]) sortFns[this.currentSort]();
@@ -371,14 +350,6 @@ SANDUKHAR.catalog = {
             'availability': sdT('catalog_availability', 'Availability')
         };
         for (const [filterType, values] of Object.entries(this.activeFilters)) {
-            if (filterType === 'price') {
-                const range = values[0];
-                const tag = document.createElement('span');
-                tag.className = 'active-filter-tag';
-                tag.innerHTML = `${sdT('catalog_price_range', 'Price Range')}: $${range.min || 0} — $${range.max || '∞'} <span class="remove-tag" data-filter="${filterType}">×</span>`;
-                this.activeFiltersContainer.appendChild(tag);
-                continue;
-            }
             values.forEach(value => {
                 const tag = document.createElement('span');
                 tag.className = 'active-filter-tag';
@@ -394,19 +365,11 @@ SANDUKHAR.catalog = {
     },
 
     removeFilter: function (filterType, filterValue) {
-        if (filterType === 'price') {
-            delete this.activeFilters['price'];
-            const pm = document.getElementById('price-min');
-            if (pm) pm.value = '';
-            const px = document.getElementById('price-max');
-            if (px) px.value = '';
-        } else {
-            const cb = this.sidebar.querySelector(`input[name="${filterType}"][value="${filterValue}"]`);
-            if (cb) cb.checked = false;
-            if (this.activeFilters[filterType]) {
-                this.activeFilters[filterType] = this.activeFilters[filterType].filter(v => v !== filterValue);
-                if (!this.activeFilters[filterType].length) delete this.activeFilters[filterType];
-            }
+        const cb = this.sidebar.querySelector(`input[name="${filterType}"][value="${filterValue}"]`);
+        if (cb) cb.checked = false;
+        if (this.activeFilters[filterType]) {
+            this.activeFilters[filterType] = this.activeFilters[filterType].filter(v => v !== filterValue);
+            if (!this.activeFilters[filterType].length) delete this.activeFilters[filterType];
         }
         this.currentPage = 1;
         this.updateResults();
@@ -416,7 +379,6 @@ SANDUKHAR.catalog = {
 
     clearAllFilters: function () {
         this.sidebar.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-        ['price-min', 'price-max'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
         this.activeFilters = {};
         this.currentPage = 1;
         this.currentSort = 'featured';

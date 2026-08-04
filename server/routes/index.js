@@ -14,6 +14,7 @@ router.use('/addresses', require('./addresses'));
 router.use('/users', require('./users'));
 router.use('/contacts', require('./contacts'));
 router.use('/tailoring', require('./tailoring'));
+router.use('/cart-inquiries', require('./cartInquiries'));
 router.use('/faq', require('./faq'));
 router.use('/gallery', require('./gallery'));
 
