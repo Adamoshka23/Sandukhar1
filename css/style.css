@@ -747,6 +747,31 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateX(0);
 }
 
+.mobile-nav-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--header-height);
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: var(--color-white);
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: color var(--transition-fast), transform 0.15s ease;
+}
+
+.mobile-nav-close:hover {
+    color: var(--color-gold);
+}
+
+.mobile-nav-close:active {
+    transform: scale(0.9);
+}
+
 .mobile-nav-eyebrow {
     display: block;
     font-family: var(--font-body);

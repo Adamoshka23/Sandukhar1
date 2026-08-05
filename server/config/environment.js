@@ -29,8 +29,6 @@ const environment = {
     CORS_ORIGIN: process.env.CORS_ORIGIN || 'http://localhost:5500',
     // Where verification/reset links should point — the frontend's own origin.
     FRONTEND_URL: process.env.FRONTEND_URL || process.env.CORS_ORIGIN || 'http://localhost:5500',
-    ADMIN_EMAIL: process.env.ADMIN_EMAIL || 'admin@sandukhar.com',
-    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || 'Admin123!Secure',
 
     // Order/enquiry notifications (optional — notifications are skipped
     // with a console warning if these are left unset).

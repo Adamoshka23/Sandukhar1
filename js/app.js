@@ -155,17 +155,19 @@ SANDUKHAR.searchOverlay = {
 // MOBILE NAVIGATION MODULE
 // ============================================================
 SANDUKHAR.mobileNav = {
-    trigger: null, nav: null, isOpen: false,
+    trigger: null, nav: null, closeBtn: null, isOpen: false,
 
     init: function() {
         this.trigger = document.getElementById('mobile-menu-trigger');
         this.nav = document.getElementById('mobile-nav');
+        this.closeBtn = document.getElementById('mobile-nav-close');
         if (!this.trigger || !this.nav) return;
         this.bindEvents();
     },
 
     bindEvents: function() {
         this.trigger.addEventListener('click', () => this.toggle());
+        if (this.closeBtn) this.closeBtn.addEventListener('click', () => this.close());
         this.nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => this.close()));
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && this.isOpen) this.close(); });
         document.addEventListener('click', (e) => {
