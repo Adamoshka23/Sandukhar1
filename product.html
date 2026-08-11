@@ -9,15 +9,15 @@
 
     <meta id="meta-og-title" property="og:title" content="SAN DUKHAR | Exotic Leather Atelier">
     <meta id="meta-og-description" property="og:description" content="Handcrafted exotic leather pieces from the SAN DUKHAR atelier in Istanbul.">
-    <meta id="meta-og-image" property="og:image" content="https://www.sandukhar.com/images/og-cover.svg">
-    <meta property="og:url" content="https://www.sandukhar.com/product.html">
+    <meta id="meta-og-image" property="og:image" content="https://www.sandukhar.net/images/og-cover.svg">
+    <meta property="og:url" content="https://www.sandukhar.net/product.html">
     <meta property="og:type" content="product">
     <meta name="twitter:card" content="product">
     <meta id="meta-twitter-title" name="twitter:title" content="SAN DUKHAR | Exotic Leather Atelier">
     <meta id="meta-twitter-description" name="twitter:description" content="Handcrafted exotic leather pieces from the SAN DUKHAR atelier in Istanbul.">
-    <meta name="twitter:image" content="https://www.sandukhar.com/images/og-cover.svg">
+    <meta name="twitter:image" content="https://www.sandukhar.net/images/og-cover.svg">
 
-    <link rel="canonical" href="https://www.sandukhar.com/product.html">
+    <link rel="canonical" href="https://www.sandukhar.net/product.html">
 
     <script type="application/ld+json" id="product-jsonld">
         {
@@ -29,7 +29,7 @@
                 "@type": "Brand",
                 "name": "SAN DUKHAR"
             },
-            "image": "https://www.sandukhar.com/images/og-cover.svg",
+            "image": "https://www.sandukhar.net/images/og-cover.svg",
             "material": "Exotic Leather"
         }
     </script>
@@ -421,7 +421,7 @@
                 var mainImageContainer = document.getElementById('main-image-container');
                 if (mainImageContainer) {
                     if (product.images && product.images.length) {
-                        mainImageContainer.innerHTML = '<img src="' + product.images[0].url + '" alt="' + name + '" id="main-product-image" class="fade-in">';
+                        mainImageContainer.innerHTML = '<img src="' + product.images[0].url + '" alt="' + name + '" id="main-product-image">';
                     } else {
                         mainImageContainer.innerHTML = SANDUKHAR.media.placeholder(name, MATERIAL_TONE_MAP[product.material_slug]);
                         mainImageContainer.querySelector('.sd-placeholder').id = 'main-product-image';
@@ -468,7 +468,7 @@
                         name: 'SAN DUKHAR ' + product.name_en,
                         description: pageDescription,
                         brand: { '@type': 'Brand', name: 'SAN DUKHAR' },
-                        image: (product.images && product.images[0]) ? product.images[0].url : 'https://www.sandukhar.com/images/og-cover.svg',
+                        image: (product.images && product.images[0]) ? product.images[0].url : 'https://www.sandukhar.net/images/og-cover.svg',
                         material: product.material_name || 'Exotic Leather',
                         sku: product.sku
                     });

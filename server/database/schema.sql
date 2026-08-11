@@ -395,6 +395,19 @@ CREATE TABLE email_verification_tokens (
 CREATE INDEX idx_email_verification_tokens_token ON email_verification_tokens(token);
 
 -- ============================================================
+-- PASSWORD RESET TOKENS
+-- ============================================================
+CREATE TABLE password_reset_tokens (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    token VARCHAR(255) NOT NULL UNIQUE,
+    expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_password_reset_tokens_token ON password_reset_tokens(token);
+
+-- ============================================================
 -- CARTS (Server-side cart persistence)
 -- ============================================================
 CREATE TABLE carts (

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: http://localhost:3000; connect-src 'self' http://localhost:3000; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="robots" content="noindex, nofollow">
-    <title>SAN DUKHAR | Admin Panel</title>
+    <title>SAN DUKHAR | Админ-панель</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -129,18 +129,18 @@
         <aside class="sidebar">
             <div class="sidebar-logo">SAN DUKHAR</div>
             <nav class="sidebar-nav">
-                <a href="#" class="active" data-page="dashboard">📊 Dashboard</a>
-                <a href="#" data-page="products">📦 Products</a>
-                <a href="#" data-page="categories">📂 Categories</a>
-                <a href="#" data-page="materials">🪶 Materials</a>
-                <a href="#" data-page="orders">📋 Orders</a>
-                <a href="#" data-page="translations">🌐 Translations</a>
-                <a href="#" data-page="settings">⚙️ Settings</a>
+                <a href="#" class="active" data-page="dashboard">📊 Дашборд</a>
+                <a href="#" data-page="products">📦 Товары</a>
+                <a href="#" data-page="categories">📂 Категории</a>
+                <a href="#" data-page="materials">🪶 Материалы</a>
+                <a href="#" data-page="orders">📋 Заказы</a>
+                <a href="#" data-page="translations">🌐 Переводы</a>
+                <a href="#" data-page="settings">⚙️ Настройки</a>
             </nav>
             <div class="sidebar-user">
                 <div class="sidebar-user-name" id="admin-name">Admin</div>
-                <div class="sidebar-user-role">Administrator</div>
-                <button class="btn-logout" onclick="handleLogout()">Logout</button>
+                <div class="sidebar-user-role">Администратор</div>
+                <button class="btn-logout" onclick="handleLogout()">Выйти</button>
             </div>
         </aside>
 
@@ -149,39 +149,39 @@
             <!-- DASHBOARD PAGE -->
             <div id="page-dashboard" class="page active">
                 <div class="page-header">
-                    <h1 class="page-title">Dashboard</h1>
+                    <h1 class="page-title">Дашборд</h1>
                 </div>
                 <div class="stats-grid" id="dashboard-stats">
-                    <div class="stat-card"><div class="stat-label">Total Products</div><div class="stat-value" id="stat-products">—</div></div>
-                    <div class="stat-card"><div class="stat-label">Total Orders</div><div class="stat-value" id="stat-orders">—</div></div>
-                    <div class="stat-card"><div class="stat-label">Total Users</div><div class="stat-value" id="stat-users">—</div></div>
-                    <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-value" id="stat-revenue">—</div></div>
+                    <div class="stat-card"><div class="stat-label">Всего товаров</div><div class="stat-value" id="stat-products">—</div></div>
+                    <div class="stat-card"><div class="stat-label">Всего заказов</div><div class="stat-value" id="stat-orders">—</div></div>
+                    <div class="stat-card"><div class="stat-label">Всего пользователей</div><div class="stat-value" id="stat-users">—</div></div>
+                    <div class="stat-card"><div class="stat-label">Выручка</div><div class="stat-value" id="stat-revenue">—</div></div>
                 </div>
             </div>
 
             <!-- PRODUCTS PAGE -->
             <div id="page-products" class="page" style="display:none;">
                 <div class="page-header">
-                    <h1 class="page-title">Products</h1>
-                    <button class="btn-primary" onclick="openProductModal()">+ Add Product</button>
+                    <h1 class="page-title">Товары</h1>
+                    <button class="btn-primary" onclick="openProductModal()">+ Добавить товар</button>
                 </div>
                 <div class="table-container">
                     <div class="table-header">
-                        <input type="text" placeholder="Search products..." id="product-search" oninput="filterProducts()">
+                        <input type="text" placeholder="Поиск товаров..." id="product-search" oninput="filterProducts()">
                     </div>
                     <table>
                         <thead>
                             <tr>
-                                <th>Product</th>
-                                <th>SKU</th>
-                                <th>Category</th>
-                                <th>Price</th>
-                                <th>Status</th>
-                                <th>Actions</th>
+                                <th>Товар</th>
+                                <th>Артикул</th>
+                                <th>Категория</th>
+                                <th>Цена</th>
+                                <th>Статус</th>
+                                <th>Действия</th>
                             </tr>
                         </thead>
                         <tbody id="products-table-body">
-                            <tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>
+                            <tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Загрузка...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -190,14 +190,14 @@
             <!-- CATEGORIES PAGE -->
             <div id="page-categories" class="page" style="display:none;">
                 <div class="page-header">
-                    <h1 class="page-title">Categories</h1>
-                    <button class="btn-primary" onclick="openCategoryModal()">+ Add Category</button>
+                    <h1 class="page-title">Категории</h1>
+                    <button class="btn-primary" onclick="openCategoryModal()">+ Добавить категорию</button>
                 </div>
                 <div class="table-container">
                     <table>
-                        <thead><tr><th>Name</th><th>Slug</th><th>Products</th><th>Order</th><th>Actions</th></tr></thead>
+                        <thead><tr><th>Название</th><th>Slug</th><th>Товаров</th><th>Порядок</th><th>Действия</th></tr></thead>
                         <tbody id="categories-table-body">
-                            <tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>
+                            <tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Загрузка...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -206,14 +206,14 @@
             <!-- MATERIALS PAGE -->
             <div id="page-materials" class="page" style="display:none;">
                 <div class="page-header">
-                    <h1 class="page-title">Materials</h1>
-                    <button class="btn-primary" onclick="openMaterialModal()">+ Add Material</button>
+                    <h1 class="page-title">Материалы</h1>
+                    <button class="btn-primary" onclick="openMaterialModal()">+ Добавить материал</button>
                 </div>
                 <div class="table-container">
                     <table>
-                        <thead><tr><th>Name</th><th>Slug</th><th>Scientific Name</th><th>Order</th><th>Actions</th></tr></thead>
+                        <thead><tr><th>Название</th><th>Slug</th><th>Научное название</th><th>Порядок</th><th>Действия</th></tr></thead>
                         <tbody id="materials-table-body">
-                            <tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>
+                            <tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Загрузка...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -221,12 +221,12 @@
 
             <!-- ORDERS PAGE -->
             <div id="page-orders" class="page" style="display:none;">
-                <div class="page-header"><h1 class="page-title">Orders</h1></div>
+                <div class="page-header"><h1 class="page-title">Заказы</h1></div>
                 <div class="table-container">
                     <table>
-                        <thead><tr><th>Order #</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+                        <thead><tr><th>№ заказа</th><th>Клиент</th><th>Сумма</th><th>Статус</th><th>Дата</th><th>Действия</th></tr></thead>
                         <tbody id="orders-table-body">
-                            <tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>
+                            <tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Загрузка...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -235,21 +235,21 @@
             <!-- TRANSLATIONS PAGE -->
             <div id="page-translations" class="page" style="display:none;">
                 <div class="page-header">
-                    <h1 class="page-title">Translations</h1>
-                    <button class="btn-primary" onclick="openTranslationModal()">+ Add Translation</button>
+                    <h1 class="page-title">Переводы</h1>
+                    <button class="btn-primary" onclick="openTranslationModal()">+ Добавить перевод</button>
                 </div>
                 <div class="table-container">
                     <div class="table-header">
                         <select id="translation-locale-filter" onchange="loadTranslations()" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:0.5rem 0.8rem;border-radius:var(--radius);">
-                            <option value="all">All Languages</option>
-                            <option value="en">English</option>
+                            <option value="all">Все языки</option>
+                            <option value="en">Английский</option>
                             <option value="ru">Русский</option>
                         </select>
                     </div>
                     <table>
-                        <thead><tr><th>Key</th><th>Locale</th><th>Value</th><th>Context</th><th>Actions</th></tr></thead>
+                        <thead><tr><th>Ключ</th><th>Язык</th><th>Значение</th><th>Контекст</th><th>Действия</th></tr></thead>
                         <tbody id="translations-table-body">
-                            <tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Loading...</td></tr>
+                            <tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Загрузка...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -257,8 +257,8 @@
 
             <!-- SETTINGS PAGE -->
             <div id="page-settings" class="page" style="display:none;">
-                <div class="page-header"><h1 class="page-title">Settings</h1></div>
-                <p style="color:var(--text-muted);">Settings management coming soon.</p>
+                <div class="page-header"><h1 class="page-title">Настройки</h1></div>
+                <p style="color:var(--text-muted);">Управление настройками появится позже.</p>
             </div>
         </main>
     </div>
@@ -267,58 +267,58 @@
     <div class="modal-overlay" id="product-modal">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title" id="product-modal-title">Add Product</h2>
+                <h2 class="modal-title" id="product-modal-title">Добавить товар</h2>
                 <button class="btn-icon" onclick="closeProductModal()">✕</button>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="product-id">
                 <div class="form-row">
                     <div class="form-group"><label>Slug *</label><input type="text" id="product-slug" placeholder="sovereign-briefcase"></div>
-                    <div class="form-group"><label>SKU *</label><input type="text" id="product-sku" placeholder="SD-XXX-000"></div>
+                    <div class="form-group"><label>Артикул (SKU) *</label><input type="text" id="product-sku" placeholder="SD-XXX-000"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Name (EN) *</label><input type="text" id="product-name-en" placeholder="Sovereign Briefcase"></div>
-                    <div class="form-group"><label>Name (RU) *</label><input type="text" id="product-name-ru" placeholder="Портфель Sovereign"></div>
+                    <div class="form-group"><label>Название (EN) *</label><input type="text" id="product-name-en" placeholder="Sovereign Briefcase"></div>
+                    <div class="form-group"><label>Название (RU) *</label><input type="text" id="product-name-ru" placeholder="Портфель Sovereign"></div>
                 </div>
-                <div class="form-group"><label>Short Description (EN)</label><textarea id="product-short-desc-en" rows="2"></textarea></div>
-                <div class="form-group"><label>Short Description (RU)</label><textarea id="product-short-desc-ru" rows="2"></textarea></div>
-                <div class="form-group"><label>Full Description (EN)</label><textarea id="product-desc-en" rows="3"></textarea></div>
-                <div class="form-group"><label>Full Description (RU)</label><textarea id="product-desc-ru" rows="3"></textarea></div>
+                <div class="form-group"><label>Краткое описание (EN)</label><textarea id="product-short-desc-en" rows="2"></textarea></div>
+                <div class="form-group"><label>Краткое описание (RU)</label><textarea id="product-short-desc-ru" rows="2"></textarea></div>
+                <div class="form-group"><label>Полное описание (EN)</label><textarea id="product-desc-en" rows="3"></textarea></div>
+                <div class="form-group"><label>Полное описание (RU)</label><textarea id="product-desc-ru" rows="3"></textarea></div>
                 <div class="form-row triple">
-                    <div class="form-group"><label>Price ($) *</label><input type="number" id="product-price" step="0.01" placeholder="18500.00"></div>
-                    <div class="form-group"><label>Old Price ($)</label><input type="number" id="product-old-price" step="0.01"></div>
-                    <div class="form-group" id="product-stock-group"><label>Stock</label><input type="number" id="product-stock" value="0"></div>
+                    <div class="form-group"><label>Цена ($) *</label><input type="number" id="product-price" step="0.01" placeholder="18500.00"></div>
+                    <div class="form-group"><label>Старая цена ($)</label><input type="number" id="product-old-price" step="0.01"></div>
+                    <div class="form-group" id="product-stock-group"><label>Остаток</label><input type="number" id="product-stock" value="0"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Category</label><select id="product-category"><option value="">Select...</option></select></div>
-                    <div class="form-group"><label>Material</label><select id="product-material"><option value="">Select...</option></select></div>
+                    <div class="form-group"><label>Категория</label><select id="product-category"><option value="">Выбрать...</option></select></div>
+                    <div class="form-group"><label>Материал</label><select id="product-material"><option value="">Выбрать...</option></select></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Status</label><select id="product-status"><option value="active">Active</option><option value="draft">Draft</option></select></div>
+                    <div class="form-group"><label>Статус</label><select id="product-status"><option value="active">Активен</option><option value="draft">Черновик</option></select></div>
                     <div class="form-group" style="flex-direction:row;align-items:center;gap:1rem;padding-top:1.2rem;">
-                        <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;"><input type="checkbox" id="product-featured"> Featured</label>
-                        <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;"><input type="checkbox" id="product-made-to-order" onchange="toggleMadeToOrderUI()"> Made to Order</label>
+                        <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;"><input type="checkbox" id="product-featured"> Рекомендуемый</label>
+                        <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;"><input type="checkbox" id="product-made-to-order" onchange="toggleMadeToOrderUI()"> Под заказ</label>
                     </div>
                 </div>
                 <div class="form-group" id="product-sizes-group">
-                    <label>Sizes &amp; Stock</label>
-                    <p style="font-size:0.75rem;color:var(--text-muted);margin:-0.3rem 0 0.6rem;">Add a row per size you stock (e.g. "42", "S", "One Size"). Leave empty if this product has no size variants — the flat Stock field above will be used instead.</p>
+                    <label>Размеры и остатки</label>
+                    <p style="font-size:0.75rem;color:var(--text-muted);margin:-0.3rem 0 0.6rem;">Добавьте строку для каждого размера в наличии (например, «42», «S», «One Size»). Оставьте пустым, если у товара нет вариантов размера — тогда будет использовано поле «Остаток» выше.</p>
                     <div id="product-sizes-rows" style="display:flex;flex-direction:column;gap:0.5rem;"></div>
-                    <button type="button" class="btn-secondary" style="margin-top:0.6rem;align-self:flex-start;" onclick="addSizeRow()">+ Add Size</button>
+                    <button type="button" class="btn-secondary" style="margin-top:0.6rem;align-self:flex-start;" onclick="addSizeRow()">+ Добавить размер</button>
                 </div>
-                <p class="form-group" id="product-made-to-order-hint" style="display:none;font-size:0.8rem;color:var(--text-muted);background:rgba(197,165,114,0.08);border:1px solid var(--gold);border-radius:var(--radius);padding:0.8rem 1rem;">This product is marked <strong>Made to Order</strong> — it has no fixed stock. Customers will be told it's handcrafted to their measurements; the Stock field and size rows above are hidden and ignored.</p>
+                <p class="form-group" id="product-made-to-order-hint" style="display:none;font-size:0.8rem;color:var(--text-muted);background:rgba(197,165,114,0.08);border:1px solid var(--gold);border-radius:var(--radius);padding:0.8rem 1rem;">Этот товар отмечен как <strong>Под заказ</strong> — у него нет фиксированного остатка. Покупателям будет показано, что изделие изготавливается вручную по их меркам; поле «Остаток» и строки размеров выше скрыты и не учитываются.</p>
                 <div class="form-group" id="product-images-section" style="display:none;">
-                    <label>Images</label>
+                    <label>Фото</label>
                     <div id="product-images-gallery" style="display:flex;flex-wrap:wrap;gap:0.6rem;margin-bottom:0.6rem;"></div>
                     <input type="file" id="product-image-input" accept="image/jpeg,image/png,image/webp,image/avif" multiple>
-                    <button type="button" class="btn-secondary" style="margin-top:0.6rem;align-self:flex-start;" onclick="uploadProductImages()">Upload Selected Images</button>
+                    <button type="button" class="btn-secondary" style="margin-top:0.6rem;align-self:flex-start;" onclick="uploadProductImages()">Загрузить выбранные фото</button>
                     <p id="product-image-message" style="font-size:0.75rem;color:var(--text-muted);margin-top:0.4rem;"></p>
                 </div>
-                <p id="product-images-hint" style="font-size:0.75rem;color:var(--text-muted);">Save the product first, then reopen it to upload images.</p>
+                <p id="product-images-hint" style="font-size:0.75rem;color:var(--text-muted);">Сначала сохраните товар, затем откройте его снова, чтобы загрузить фото.</p>
             </div>
             <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeProductModal()">Cancel</button>
-                <button class="btn-primary" onclick="saveProduct()">Save Product</button>
+                <button class="btn-secondary" onclick="closeProductModal()">Отмена</button>
+                <button class="btn-primary" onclick="saveProduct()">Сохранить товар</button>
             </div>
         </div>
     </div>
@@ -327,23 +327,30 @@
     <div class="modal-overlay" id="category-modal">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title" id="category-modal-title">Add Category</h2>
+                <h2 class="modal-title" id="category-modal-title">Добавить категорию</h2>
                 <button class="btn-icon" onclick="closeCategoryModal()">✕</button>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="category-id">
                 <div class="form-row">
                     <div class="form-group"><label>Slug *</label><input type="text" id="category-slug"></div>
-                    <div class="form-group"><label>Sort Order</label><input type="number" id="category-order" value="0"></div>
+                    <div class="form-group"><label>Порядок сортировки</label><input type="number" id="category-order" value="0"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Name (EN) *</label><input type="text" id="category-name-en"></div>
-                    <div class="form-group"><label>Name (RU) *</label><input type="text" id="category-name-ru"></div>
+                    <div class="form-group"><label>Название (EN) *</label><input type="text" id="category-name-en"></div>
+                    <div class="form-group"><label>Название (RU) *</label><input type="text" id="category-name-ru"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Родительская категория</label>
+                        <select id="category-parent"><option value="">Нет — категория верхнего уровня</option></select>
+                        <p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.4rem;">Если выбрать категорию — эта станет её подразделом (отображается с отступом в каталоге).</p>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeCategoryModal()">Cancel</button>
-                <button class="btn-primary" onclick="saveCategory()">Save Category</button>
+                <button class="btn-secondary" onclick="closeCategoryModal()">Отмена</button>
+                <button class="btn-primary" onclick="saveCategory()">Сохранить категорию</button>
             </div>
         </div>
     </div>
@@ -352,26 +359,26 @@
     <div class="modal-overlay" id="material-modal">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title" id="material-modal-title">Add Material</h2>
+                <h2 class="modal-title" id="material-modal-title">Добавить материал</h2>
                 <button class="btn-icon" onclick="closeMaterialModal()">✕</button>
             </div>
             <div class="modal-body">
                 <input type="hidden" id="material-id">
                 <div class="form-row">
                     <div class="form-group"><label>Slug *</label><input type="text" id="material-slug"></div>
-                    <div class="form-group"><label>Scientific Name</label><input type="text" id="material-scientific"></div>
+                    <div class="form-group"><label>Научное название</label><input type="text" id="material-scientific"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Name (EN) *</label><input type="text" id="material-name-en"></div>
-                    <div class="form-group"><label>Name (RU) *</label><input type="text" id="material-name-ru"></div>
+                    <div class="form-group"><label>Название (EN) *</label><input type="text" id="material-name-en"></div>
+                    <div class="form-group"><label>Название (RU) *</label><input type="text" id="material-name-ru"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group"><label>Sort Order</label><input type="number" id="material-order" value="0"></div>
+                    <div class="form-group"><label>Порядок сортировки</label><input type="number" id="material-order" value="0"></div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeMaterialModal()">Cancel</button>
-                <button class="btn-primary" onclick="saveMaterial()">Save Material</button>
+                <button class="btn-secondary" onclick="closeMaterialModal()">Отмена</button>
+                <button class="btn-primary" onclick="saveMaterial()">Сохранить материал</button>
             </div>
         </div>
     </div>
@@ -380,20 +387,20 @@
     <div class="modal-overlay" id="translation-modal">
         <div class="modal">
             <div class="modal-header">
-                <h2 class="modal-title">Add Translation</h2>
+                <h2 class="modal-title">Добавить перевод</h2>
                 <button class="btn-icon" onclick="closeTranslationModal()">✕</button>
             </div>
             <div class="modal-body">
                 <div class="form-row">
-                    <div class="form-group"><label>Key *</label><input type="text" id="translation-key" placeholder="nav_home"></div>
-                    <div class="form-group"><label>Locale *</label><select id="translation-locale"><option value="en">English</option><option value="ru">Русский</option></select></div>
+                    <div class="form-group"><label>Ключ *</label><input type="text" id="translation-key" placeholder="nav_home"></div>
+                    <div class="form-group"><label>Язык *</label><select id="translation-locale"><option value="en">Английский</option><option value="ru">Русский</option></select></div>
                 </div>
-                <div class="form-group"><label>Value *</label><input type="text" id="translation-value" placeholder="Home"></div>
-                <div class="form-group"><label>Context</label><input type="text" id="translation-context" placeholder="navigation"></div>
+                <div class="form-group"><label>Значение *</label><input type="text" id="translation-value" placeholder="Home"></div>
+                <div class="form-group"><label>Контекст</label><input type="text" id="translation-context" placeholder="navigation"></div>
             </div>
             <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeTranslationModal()">Cancel</button>
-                <button class="btn-primary" onclick="saveTranslation()">Save Translation</button>
+                <button class="btn-secondary" onclick="closeTranslationModal()">Отмена</button>
+                <button class="btn-primary" onclick="saveTranslation()">Сохранить перевод</button>
             </div>
         </div>
     </div>
@@ -424,10 +431,10 @@
         function showLoginPrompt() {
             document.querySelector('.main-content').innerHTML = `
                 <div style="max-width:400px;margin:100px auto;text-align:center;">
-                    <h1 style="font-family:'Cormorant Garamond',serif;font-size:2rem;margin-bottom:2rem;color:var(--gold);">SAN DUKHAR Admin</h1>
+                    <h1 style="font-family:'Cormorant Garamond',serif;font-size:2rem;margin-bottom:2rem;color:var(--gold);">SAN DUKHAR Админ</h1>
                     <div class="form-group" style="margin-bottom:1rem;"><input type="email" id="login-email" placeholder="Email" style="width:100%;padding:0.8rem;"></div>
-                    <div class="form-group" style="margin-bottom:1rem;"><input type="password" id="login-password" placeholder="Password" style="width:100%;padding:0.8rem;"></div>
-                    <button class="btn-primary" onclick="doLogin()" style="width:100%;">Login</button>
+                    <div class="form-group" style="margin-bottom:1rem;"><input type="password" id="login-password" placeholder="Пароль" style="width:100%;padding:0.8rem;"></div>
+                    <button class="btn-primary" onclick="doLogin()" style="width:100%;">Войти</button>
                     <p id="login-error" style="color:var(--error);margin-top:1rem;display:none;"></p>
                 </div>
             `;
@@ -456,7 +463,7 @@
                 localStorage.setItem('sandukhar_token', authToken);
                 location.reload();
             } catch (err) {
-                errorEl.textContent = 'Connection error. Is the server running?';
+                errorEl.textContent = 'Ошибка соединения. Сервер запущен?';
                 errorEl.style.display = 'block';
             }
         }
@@ -482,7 +489,7 @@
                 loadOrders();
                 loadTranslations();
             } catch (err) {
-                showToast('Connection error', 'error');
+                showToast('Ошибка соединения', 'error');
             }
         }
 
@@ -546,7 +553,7 @@
         // ============================================================
         async function loadProducts() {
             try {
-                const res = await fetch(`${API_BASE}/products?limit=100`, { headers: getHeaders() });
+                const res = await fetch(`${API_BASE}/products?limit=1000`, { headers: getHeaders() });
                 const data = await res.json();
                 if (data.success) {
                     allProducts = data.data.products;
@@ -557,10 +564,12 @@
             }
         }
 
+        const PRODUCT_STATUS_LABELS = { active: 'Активен', draft: 'Черновик', archived: 'Архив' };
+
         function renderProductsTable(products) {
             const tbody = document.getElementById('products-table-body');
             if (products.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">No products found</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Товары не найдены</td></tr>';
                 return;
             }
             tbody.innerHTML = products.map(p => `
@@ -577,11 +586,11 @@
                     <td style="font-family:monospace;font-size:0.8rem;">${p.sku}</td>
                     <td>${p.category_name || '—'}</td>
                     <td style="color:var(--gold);">$${parseFloat(p.price).toLocaleString()}</td>
-                    <td><span class="status-badge ${p.status}">${p.status}</span></td>
+                    <td><span class="status-badge ${p.status}">${PRODUCT_STATUS_LABELS[p.status] || p.status}</span></td>
                     <td>
                         <div class="actions">
-                            <button class="btn-icon" onclick="editProduct('${p.id}')" title="Edit">✎</button>
-                            <button class="btn-danger" onclick="deleteProduct('${p.id}')" title="Delete">✕</button>
+                            <button class="btn-icon" onclick="editProduct('${p.id}')" title="Редактировать">✎</button>
+                            <button class="btn-danger" onclick="deleteProduct('${p.id}')" title="Удалить">✕</button>
                         </div>
                     </td>
                 </tr>
@@ -604,9 +613,9 @@
             row.className = 'size-row';
             row.style.cssText = 'display:flex;gap:0.6rem;align-items:center;';
             row.innerHTML = `
-                <input type="text" class="size-row-label" placeholder="Size (e.g. 42, M, One Size)" value="${size.replace(/"/g, '&quot;')}" style="flex:2;">
-                <input type="number" class="size-row-stock" placeholder="Qty" min="0" value="${stock}" style="flex:1;">
-                <button type="button" class="btn-icon" onclick="this.closest('.size-row').remove()" title="Remove size">✕</button>
+                <input type="text" class="size-row-label" placeholder="Размер (например, 42, M, One Size)" value="${size.replace(/"/g, '&quot;')}" style="flex:2;">
+                <input type="number" class="size-row-stock" placeholder="Кол-во" min="0" value="${stock}" style="flex:1;">
+                <button type="button" class="btn-icon" onclick="this.closest('.size-row').remove()" title="Удалить размер">✕</button>
             `;
             rows.appendChild(row);
         }
@@ -633,21 +642,36 @@
             document.getElementById('product-made-to-order-hint').style.display = madeToOrder ? 'block' : 'none';
         }
 
-        function openProductModal(productId = null) {
+        async function openProductModal(productId = null) {
             document.getElementById('product-modal').classList.add('active');
             document.getElementById('product-id').value = '';
-            document.getElementById('product-modal-title').textContent = 'Add Product';
+            document.getElementById('product-modal-title').textContent = 'Добавить товар';
             resetProductForm();
-            loadCategoryOptions();
-            loadMaterialOptions();
             document.getElementById('product-images-section').style.display = 'none';
             document.getElementById('product-images-hint').style.display = 'block';
 
+            // Wait for the dropdowns to be populated before selecting a value in
+            // them — otherwise fillProductForm's assignment lands on an <option>
+            // list that doesn't exist yet and silently falls back to "Select...".
+            await Promise.all([loadCategoryOptions(), loadMaterialOptions()]);
+
             if (productId) {
-                document.getElementById('product-modal-title').textContent = 'Edit Product';
+                document.getElementById('product-modal-title').textContent = 'Редактировать товар';
                 const product = allProducts.find(p => p.id === productId);
                 if (product) fillProductForm(product);
+            } else {
+                loadNextSku();
             }
+        }
+
+        async function loadNextSku() {
+            try {
+                const res = await fetch(`${API_BASE}/admin/products/next-sku`, { headers: getHeaders() });
+                const data = await res.json();
+                if (data.success) {
+                    document.getElementById('product-sku').value = data.data.sku;
+                }
+            } catch (err) {}
         }
 
         function closeProductModal() {
@@ -698,15 +722,63 @@
         function renderProductImagesGallery(images) {
             const gallery = document.getElementById('product-images-gallery');
             if (images.length === 0) {
-                gallery.innerHTML = '<p style="font-size:0.75rem;color:var(--text-muted);">No images uploaded yet.</p>';
+                gallery.innerHTML = '<p style="font-size:0.75rem;color:var(--text-muted);">Фото пока не загружены.</p>';
                 return;
             }
-            gallery.innerHTML = images.map(img => `
-                <div style="position:relative;width:70px;height:70px;">
-                    <img src="${img.url || img.image_url}" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);border:1px solid var(--border);${img.isPrimary || img.is_primary ? 'outline:2px solid var(--gold);' : ''}">
-                    <button type="button" onclick="deleteProductImage('${img.id}')" title="Remove" style="position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(--error);color:white;border:none;cursor:pointer;font-size:0.7rem;line-height:1;">✕</button>
+            gallery.innerHTML = images.map((img, index) => {
+                const isPrimary = img.isPrimary || img.is_primary;
+                return `
+                <div style="width:84px;">
+                    <div style="position:relative;width:84px;height:84px;">
+                        <img src="${img.url || img.image_url}" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);border:1px solid var(--border);${isPrimary ? 'outline:2px solid var(--gold);' : ''}">
+                        <button type="button" onclick="deleteProductImage('${img.id}')" title="Удалить" style="position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(--error);color:white;border:none;cursor:pointer;font-size:0.7rem;line-height:1;">✕</button>
+                        ${isPrimary ? '<span style="position:absolute;bottom:2px;left:2px;background:var(--gold);color:#0a0a0a;font-size:0.5rem;padding:0.1rem 0.35rem;border-radius:2px;text-transform:uppercase;letter-spacing:0.03em;">Основное</span>' : ''}
+                    </div>
+                    <div style="display:flex;gap:0.2rem;margin-top:0.3rem;">
+                        <button type="button" onclick="moveProductImage('${img.id}', -1)" title="Сдвинуть влево" ${index === 0 ? 'disabled' : ''} style="flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:var(--radius);cursor:pointer;font-size:0.7rem;padding:0.25rem 0;${index === 0 ? 'opacity:0.3;cursor:default;' : ''}">◀</button>
+                        <button type="button" onclick="setProductImagePrimary('${img.id}')" title="Сделать основным" ${isPrimary ? 'disabled' : ''} style="flex:1;background:var(--bg);border:1px solid var(--border);color:${isPrimary ? 'var(--gold)' : 'var(--text)'};border-radius:var(--radius);cursor:pointer;font-size:0.7rem;padding:0.25rem 0;${isPrimary ? 'opacity:0.5;cursor:default;' : ''}">★</button>
+                        <button type="button" onclick="moveProductImage('${img.id}', 1)" title="Сдвинуть вправо" ${index === images.length - 1 ? 'disabled' : ''} style="flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:var(--radius);cursor:pointer;font-size:0.7rem;padding:0.25rem 0;${index === images.length - 1 ? 'opacity:0.3;cursor:default;' : ''}">▶</button>
+                    </div>
                 </div>
-            `).join('');
+                `;
+            }).join('');
+        }
+
+        async function moveProductImage(imageId, direction) {
+            const id = document.getElementById('product-id').value;
+            const product = allProducts.find(p => p.id === id);
+            if (!product || !product.images) return;
+            const images = [...product.images];
+            const index = images.findIndex(img => img.id === imageId);
+            const newIndex = index + direction;
+            if (index === -1 || newIndex < 0 || newIndex >= images.length) return;
+            [images[index], images[newIndex]] = [images[newIndex], images[index]];
+            renderProductImagesGallery(images);
+            try {
+                await fetch(`${API_BASE}/admin/products/${id}/images/reorder`, {
+                    method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ order: images.map(img => img.id) })
+                });
+                await loadProducts();
+                const updated = allProducts.find(p => p.id === id);
+                if (updated) renderProductImagesGallery(updated.images || []);
+            } catch (err) {
+                showToast('Ошибка изменения порядка фото', 'error');
+            }
+        }
+
+        async function setProductImagePrimary(imageId) {
+            const id = document.getElementById('product-id').value;
+            try {
+                await fetch(`${API_BASE}/admin/products/${id}/images/${imageId}/primary`, {
+                    method: 'PATCH', headers: getHeaders()
+                });
+                await loadProducts();
+                const updated = allProducts.find(p => p.id === id);
+                if (updated) renderProductImagesGallery(updated.images || []);
+                showToast('Основное фото изменено', 'success');
+            } catch (err) {
+                showToast('Ошибка', 'error');
+            }
         }
 
         async function uploadProductImages() {
@@ -715,18 +787,18 @@
             const msg = document.getElementById('product-image-message');
 
             if (!id) {
-                msg.textContent = 'Save the product before uploading images.';
+                msg.textContent = 'Сначала сохраните товар, потом загружайте фото.';
                 return;
             }
             if (!input.files || input.files.length === 0) {
-                msg.textContent = 'Choose at least one image first.';
+                msg.textContent = 'Сначала выберите хотя бы одно изображение.';
                 return;
             }
 
             const formData = new FormData();
             Array.from(input.files).forEach(file => formData.append('images', file));
 
-            msg.textContent = 'Uploading…';
+            msg.textContent = 'Загрузка…';
             try {
                 const res = await fetch(`${API_BASE}/admin/products/${id}/images`, {
                     method: 'POST',
@@ -735,22 +807,21 @@
                 });
                 const data = await res.json();
                 if (data.success) {
-                    msg.textContent = 'Images uploaded.';
+                    msg.textContent = 'Фото загружены.';
                     input.value = '';
                     await loadProducts();
                     const updated = allProducts.find(p => p.id === id);
                     if (updated) renderProductImagesGallery(updated.images || []);
                 } else {
-                    msg.textContent = data.message || 'Upload failed.';
+                    msg.textContent = data.message || 'Не удалось загрузить.';
                 }
             } catch (err) {
-                msg.textContent = 'Connection error during upload.';
+                msg.textContent = 'Ошибка соединения при загрузке.';
             }
         }
 
         async function deleteProductImage(imageId) {
             const id = document.getElementById('product-id').value;
-            if (!confirm('Remove this image?')) return;
             try {
                 await fetch(`${API_BASE}/admin/products/${id}/images/${imageId}`, {
                     method: 'DELETE', headers: getHeaders()
@@ -758,9 +829,9 @@
                 await loadProducts();
                 const updated = allProducts.find(p => p.id === id);
                 if (updated) renderProductImagesGallery(updated.images || []);
-                showToast('Image removed', 'success');
+                showToast('Фото удалено', 'success');
             } catch (err) {
-                showToast('Error removing image', 'error');
+                showToast('Ошибка удаления фото', 'error');
             }
         }
 
@@ -795,30 +866,42 @@
             };
 
             if (!productData.slug || !productData.sku || !productData.nameEn || !productData.price) {
-                showToast('Please fill all required fields', 'error');
+                showToast('Заполните все обязательные поля', 'error');
                 return;
             }
 
             try {
                 const url = id ? `${API_BASE}/admin/products/${id}` : `${API_BASE}/admin/products`;
                 const method = id ? 'PUT' : 'POST';
-                
+
                 const res = await fetch(url, {
                     method,
                     headers: getHeaders(),
                     body: JSON.stringify(productData)
                 });
                 const data = await res.json();
-                
+
                 if (data.success) {
-                    showToast(id ? 'Product updated' : 'Product created', 'success');
-                    closeProductModal();
+                    if (id) {
+                        showToast('Товар обновлён', 'success');
+                        closeProductModal();
+                    } else {
+                        // Keep the modal open and switch it into "edit" mode so the
+                        // photo upload section (which needs a saved product id) is
+                        // immediately available — no need to close and reopen.
+                        showToast('Товар создан — теперь можно добавить фото', 'success');
+                        document.getElementById('product-id').value = data.data.product.id;
+                        document.getElementById('product-modal-title').textContent = 'Редактировать товар';
+                        document.getElementById('product-images-section').style.display = 'flex';
+                        document.getElementById('product-images-hint').style.display = 'none';
+                        renderProductImagesGallery([]);
+                    }
                     loadProducts();
                 } else {
-                    showToast(data.message || 'Error saving product', 'error');
+                    showToast(data.message || 'Ошибка сохранения товара', 'error');
                 }
             } catch (err) {
-                showToast('Connection error', 'error');
+                showToast('Ошибка соединения', 'error');
             }
         }
 
@@ -827,7 +910,7 @@
         }
 
         async function deleteProduct(id) {
-            if (!confirm('Archive this product? It will be hidden from the store.')) return;
+            if (!confirm('Архивировать товар? Он будет скрыт из магазина.')) return;
             try {
                 const res = await fetch(`${API_BASE}/admin/products/${id}`, {
                     method: 'DELETE',
@@ -835,11 +918,11 @@
                 });
                 const data = await res.json();
                 if (data.success) {
-                    showToast('Product archived', 'success');
+                    showToast('Товар архивирован', 'success');
                     loadProducts();
                 }
             } catch (err) {
-                showToast('Error deleting product', 'error');
+                showToast('Ошибка удаления товара', 'error');
             }
         }
 
@@ -849,8 +932,8 @@
                 const data = await res.json();
                 if (data.success) {
                     const select = document.getElementById('product-category');
-                    select.innerHTML = '<option value="">Select...</option>' + 
-                        data.data.categories.map(c => `<option value="${c.id}">${c.name_en}</option>`).join('');
+                    select.innerHTML = '<option value="">Выбрать...</option>' +
+                        data.data.categories.map(c => `<option value="${c.id}">${c.name_ru}</option>`).join('');
                 }
             } catch (err) {}
         }
@@ -861,8 +944,8 @@
                 const data = await res.json();
                 if (data.success) {
                     const select = document.getElementById('product-material');
-                    select.innerHTML = '<option value="">Select...</option>' + 
-                        data.data.materials.map(m => `<option value="${m.id}">${m.name_en}</option>`).join('');
+                    select.innerHTML = '<option value="">Выбрать...</option>' +
+                        data.data.materials.map(m => `<option value="${m.id}">${m.name_ru}</option>`).join('');
                 }
             } catch (err) {}
         }
@@ -876,30 +959,47 @@
                 const data = await res.json();
                 if (data.success) {
                     allCategories = data.data.categories;
-                    document.getElementById('categories-table-body').innerHTML = allCategories.map(c => `
+                    const topLevel = allCategories.filter(c => !c.parent_id).sort((a, b) => a.sort_order - b.sort_order);
+                    const childrenOf = (parentId) => allCategories.filter(c => c.parent_id === parentId).sort((a, b) => a.sort_order - b.sort_order);
+
+                    const rowHtml = (c, isChild) => `
                         <tr>
-                            <td>${c.name_en} <span style="color:var(--text-muted);font-size:0.75rem;">/ ${c.name_ru}</span></td>
+                            <td${isChild ? ' style="padding-left:2.2rem;"' : ''}>${isChild ? '↳ ' : ''}${c.name_en} <span style="color:var(--text-muted);font-size:0.75rem;">/ ${c.name_ru}</span></td>
                             <td style="font-family:monospace;">${c.slug}</td>
                             <td>—</td>
                             <td>${c.sort_order}</td>
                             <td><div class="actions">
-                                <button class="btn-icon" onclick="editCategory('${c.id}')">✎</button>
-                                <button class="btn-danger" onclick="deleteCategory('${c.id}')">✕</button>
+                                <button class="btn-icon" onclick="editCategory('${c.id}')" title="Редактировать">✎</button>
+                                <button class="btn-danger" onclick="deleteCategory('${c.id}')" title="Удалить">✕</button>
                             </div></td>
                         </tr>
-                    `).join('');
+                    `;
+
+                    document.getElementById('categories-table-body').innerHTML = topLevel.map(parent =>
+                        rowHtml(parent, false) + childrenOf(parent.id).map(child => rowHtml(child, true)).join('')
+                    ).join('');
                 }
             } catch (err) {}
+        }
+
+        function populateCategoryParentSelect(excludeId) {
+            const select = document.getElementById('category-parent');
+            const topLevelOptions = allCategories
+                .filter(c => !c.parent_id && c.id !== excludeId)
+                .sort((a, b) => a.sort_order - b.sort_order)
+                .map(c => `<option value="${c.id}">${c.name_ru}</option>`).join('');
+            select.innerHTML = '<option value="">Нет — категория верхнего уровня</option>' + topLevelOptions;
         }
 
         function openCategoryModal(id = null) {
             document.getElementById('category-modal').classList.add('active');
             document.getElementById('category-id').value = '';
-            document.getElementById('category-modal-title').textContent = 'Add Category';
+            document.getElementById('category-modal-title').textContent = 'Добавить категорию';
             ['category-slug','category-name-en','category-name-ru','category-order'].forEach(f => document.getElementById(f).value = '');
             document.getElementById('category-order').value = '0';
+            populateCategoryParentSelect(id);
             if (id) {
-                document.getElementById('category-modal-title').textContent = 'Edit Category';
+                document.getElementById('category-modal-title').textContent = 'Редактировать категорию';
                 const cat = allCategories.find(c => c.id === id);
                 if (cat) {
                     document.getElementById('category-id').value = cat.id;
@@ -907,6 +1007,7 @@
                     document.getElementById('category-name-en').value = cat.name_en;
                     document.getElementById('category-name-ru').value = cat.name_ru;
                     document.getElementById('category-order').value = cat.sort_order;
+                    document.getElementById('category-parent').value = cat.parent_id || '';
                 }
             }
         }
@@ -919,26 +1020,32 @@
                 slug: document.getElementById('category-slug').value,
                 nameEn: document.getElementById('category-name-en').value,
                 nameRu: document.getElementById('category-name-ru').value,
-                sortOrder: parseInt(document.getElementById('category-order').value) || 0
+                sortOrder: parseInt(document.getElementById('category-order').value) || 0,
+                parentId: document.getElementById('category-parent').value || null
             };
             try {
                 const url = id ? `${API_BASE}/admin/categories/${id}` : `${API_BASE}/admin/categories`;
                 const method = id ? 'PUT' : 'POST';
                 const res = await fetch(url, { method, headers: getHeaders(), body: JSON.stringify(data) });
                 const result = await res.json();
-                if (result.success) { showToast('Category saved', 'success'); closeCategoryModal(); loadCategories(); }
+                if (result.success) { showToast('Категория сохранена', 'success'); closeCategoryModal(); loadCategories(); }
                 else showToast(result.message, 'error');
-            } catch (err) { showToast('Error', 'error'); }
+            } catch (err) { showToast('Ошибка', 'error'); }
         }
 
         function editCategory(id) { openCategoryModal(id); }
         async function deleteCategory(id) {
-            if (!confirm('Delete this category?')) return;
+            const cat = allCategories.find(c => c.id === id);
+            const childCount = allCategories.filter(c => c.parent_id === id).length;
+            let msg = `Удалить категорию «${cat ? cat.name_ru : ''}»?`;
+            if (childCount > 0) msg += ` У неё ${childCount} подкатегори${childCount === 1 ? 'я' : 'й'} — они станут отдельными категориями верхнего уровня.`;
+            msg += ' Товары, которые были в этой категории, останутся без категории.';
+            if (!confirm(msg)) return;
             try {
                 await fetch(`${API_BASE}/admin/categories/${id}`, { method: 'DELETE', headers: getHeaders() });
-                showToast('Category deleted', 'success');
+                showToast('Категория удалена', 'success');
                 loadCategories();
-            } catch (err) { showToast('Error', 'error'); }
+            } catch (err) { showToast('Ошибка', 'error'); }
         }
 
         // ============================================================
@@ -957,8 +1064,8 @@
                             <td>${m.scientific_name || '—'}</td>
                             <td>${m.sort_order}</td>
                             <td><div class="actions">
-                                <button class="btn-icon" onclick="editMaterial('${m.id}')">✎</button>
-                                <button class="btn-danger" onclick="deleteMaterial('${m.id}')">✕</button>
+                                <button class="btn-icon" onclick="editMaterial('${m.id}')" title="Редактировать">✎</button>
+                                <button class="btn-danger" onclick="deleteMaterial('${m.id}')" title="Удалить">✕</button>
                             </div></td>
                         </tr>
                     `).join('');
@@ -969,11 +1076,11 @@
         function openMaterialModal(id = null) {
             document.getElementById('material-modal').classList.add('active');
             document.getElementById('material-id').value = '';
-            document.getElementById('material-modal-title').textContent = 'Add Material';
+            document.getElementById('material-modal-title').textContent = 'Добавить материал';
             ['material-slug','material-scientific','material-name-en','material-name-ru','material-order'].forEach(f => document.getElementById(f).value = '');
             document.getElementById('material-order').value = '0';
             if (id) {
-                document.getElementById('material-modal-title').textContent = 'Edit Material';
+                document.getElementById('material-modal-title').textContent = 'Редактировать материал';
                 const mat = allMaterials.find(m => m.id === id);
                 if (mat) {
                     document.getElementById('material-id').value = mat.id;
@@ -1002,25 +1109,35 @@
                 const method = id ? 'PUT' : 'POST';
                 const res = await fetch(url, { method, headers: getHeaders(), body: JSON.stringify(data) });
                 const result = await res.json();
-                if (result.success) { showToast('Material saved', 'success'); closeMaterialModal(); loadMaterials(); }
+                if (result.success) { showToast('Материал сохранён', 'success'); closeMaterialModal(); loadMaterials(); }
                 else showToast(result.message, 'error');
-            } catch (err) { showToast('Error', 'error'); }
+            } catch (err) { showToast('Ошибка', 'error'); }
         }
 
         function editMaterial(id) { openMaterialModal(id); }
         async function deleteMaterial(id) {
-            if (!confirm('Delete this material?')) return;
+            if (!confirm('Удалить этот материал?')) return;
             try {
                 await fetch(`${API_BASE}/admin/materials/${id}`, { method: 'DELETE', headers: getHeaders() });
-                showToast('Material deleted', 'success');
+                showToast('Материал удалён', 'success');
                 loadMaterials();
-            } catch (err) { showToast('Error', 'error'); }
+            } catch (err) { showToast('Ошибка', 'error'); }
         }
 
         // ============================================================
         // ORDERS
         // ============================================================
         const ORDER_STATUSES = ['pending', 'confirmed', 'in_production', 'quality_check', 'shipped', 'delivered', 'cancelled', 'returned'];
+        const ORDER_STATUS_LABELS = {
+            pending: 'Ожидает',
+            confirmed: 'Подтверждён',
+            in_production: 'В производстве',
+            quality_check: 'Проверка качества',
+            shipped: 'Отправлен',
+            delivered: 'Доставлен',
+            cancelled: 'Отменён',
+            returned: 'Возврат'
+        };
 
         async function loadOrders() {
             try {
@@ -1028,19 +1145,19 @@
                 const data = await res.json();
                 if (data.success) {
                     document.getElementById('orders-table-body').innerHTML = data.data.orders.length === 0
-                        ? '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">No orders yet</td></tr>'
+                        ? '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Заказов пока нет</td></tr>'
                         : data.data.orders.map(o => `
                             <tr>
                                 <td style="font-family:monospace;">${escapeHtml(o.order_number)}</td>
-                                <td>${escapeHtml((o.shipping_address && o.shipping_address.email) || 'Guest')}</td>
+                                <td>${escapeHtml((o.shipping_address && o.shipping_address.email) || 'Гость')}</td>
                                 <td style="color:var(--gold);">$${parseFloat(o.total).toLocaleString()}</td>
                                 <td>
                                     <select onchange="updateOrderStatus('${o.id}', this.value)" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:0.3rem 0.5rem;border-radius:var(--radius);font-size:0.75rem;">
-                                        ${ORDER_STATUSES.map(s => `<option value="${s}" ${s === o.status ? 'selected' : ''}>${s.replace('_', ' ')}</option>`).join('')}
+                                        ${ORDER_STATUSES.map(s => `<option value="${s}" ${s === o.status ? 'selected' : ''}>${ORDER_STATUS_LABELS[s]}</option>`).join('')}
                                     </select>
                                 </td>
                                 <td>${new Date(o.created_at).toLocaleDateString()}</td>
-                                <td><button class="btn-icon" onclick="alert(${JSON.stringify(orderSummary(o))})" title="Order summary">👁</button></td>
+                                <td><button class="btn-icon" onclick="alert(${JSON.stringify(orderSummary(o))})" title="Детали заказа">👁</button></td>
                             </tr>
                         `).join('');
                 }
@@ -1049,7 +1166,7 @@
 
         function orderSummary(o) {
             const addr = o.shipping_address || {};
-            return `Order ${o.order_number}\n${addr.firstName || ''} ${addr.lastName || ''}\n${addr.addressLine1 || ''}, ${addr.city || ''}\n${addr.email || ''} · ${addr.phone || ''}\nTotal: $${parseFloat(o.total).toLocaleString()}\nShipping: ${o.shipping_method} · Payment: ${o.payment_method}`;
+            return `Заказ ${o.order_number}\n${addr.firstName || ''} ${addr.lastName || ''}\n${addr.addressLine1 || ''}, ${addr.city || ''}\n${addr.email || ''} · ${addr.phone || ''}\nСумма: $${parseFloat(o.total).toLocaleString()}\nДоставка: ${o.shipping_method} · Оплата: ${o.payment_method}`;
         }
 
         async function updateOrderStatus(id, status) {
@@ -1058,10 +1175,10 @@
                     method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ status })
                 });
                 const data = await res.json();
-                if (data.success) showToast('Order status updated', 'success');
-                else showToast(data.message || 'Error updating order', 'error');
+                if (data.success) showToast('Статус заказа обновлён', 'success');
+                else showToast(data.message || 'Ошибка обновления заказа', 'error');
             } catch (err) {
-                showToast('Connection error', 'error');
+                showToast('Ошибка соединения', 'error');
             }
         }
 
@@ -1077,14 +1194,14 @@
                 if (data.success) {
                     const translations = data.data.translations || [];
                     document.getElementById('translations-table-body').innerHTML = translations.length === 0
-                        ? '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">No translations found</td></tr>'
+                        ? '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Переводы не найдены</td></tr>'
                         : translations.map(t => `
                             <tr>
                                 <td style="font-family:monospace;font-size:0.8rem;">${t.key}</td>
                                 <td><span style="background:var(--gold-pale);padding:0.1rem 0.5rem;border-radius:2px;font-size:0.7rem;">${t.locale}</span></td>
                                 <td>${t.value}</td>
                                 <td style="font-size:0.7rem;color:var(--text-muted);">${t.context || '—'}</td>
-                                <td><button class="btn-danger" onclick="deleteTranslation('${t.id}')">✕</button></td>
+                                <td><button class="btn-danger" onclick="deleteTranslation('${t.id}')" title="Удалить">✕</button></td>
                             </tr>
                         `).join('');
                 }
@@ -1106,18 +1223,18 @@
                     method: 'POST', headers: getHeaders(), body: JSON.stringify(data)
                 });
                 const result = await res.json();
-                if (result.success) { showToast('Translation saved', 'success'); closeTranslationModal(); loadTranslations(); }
+                if (result.success) { showToast('Перевод сохранён', 'success'); closeTranslationModal(); loadTranslations(); }
                 else showToast(result.message, 'error');
-            } catch (err) { showToast('Error', 'error'); }
+            } catch (err) { showToast('Ошибка', 'error'); }
         }
 
         async function deleteTranslation(id) {
-            if (!confirm('Delete this translation?')) return;
+            if (!confirm('Удалить этот перевод?')) return;
             try {
                 await fetch(`${API_BASE}/admin/translations/${id}`, { method: 'DELETE', headers: getHeaders() });
-                showToast('Translation deleted', 'success');
+                showToast('Перевод удалён', 'success');
                 loadTranslations();
-            } catch (err) { showToast('Error', 'error'); }
+            } catch (err) { showToast('Ошибка', 'error'); }
         }
 
         // ============================================================

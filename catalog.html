@@ -12,15 +12,15 @@
 
     <meta property="og:title" content="SAN DUKHAR | Collections">
     <meta property="og:description" content="Browse our complete collection of exotic leather masterpieces.">
-    <meta property="og:image" content="https://www.sandukhar.com/images/og-cover.svg">
-    <meta property="og:url" content="https://www.sandukhar.com/catalog.html">
+    <meta property="og:image" content="https://www.sandukhar.net/images/og-cover.svg">
+    <meta property="og:url" content="https://www.sandukhar.net/catalog.html">
     <meta property="og:type" content="website">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="SAN DUKHAR | Collections">
     <meta name="twitter:description" content="Browse our complete collection of exotic leather masterpieces.">
 
-    <link rel="canonical" href="https://www.sandukhar.com/catalog.html">
+    <link rel="canonical" href="https://www.sandukhar.net/catalog.html">
 
     <script type="application/ld+json">
         {
@@ -28,8 +28,8 @@
             "@type": "CollectionPage",
             "name": "SAN DUKHAR Collections",
             "description": "Complete collection of exotic leather goods from SAN DUKHAR atelier in Istanbul.",
-            "url": "https://www.sandukhar.com/catalog.html",
-            "isPartOf": { "@type": "WebSite", "name": "SAN DUKHAR", "url": "https://www.sandukhar.com" }
+            "url": "https://www.sandukhar.net/catalog.html",
+            "isPartOf": { "@type": "WebSite", "name": "SAN DUKHAR", "url": "https://www.sandukhar.net" }
         }
     </script>
 
@@ -259,45 +259,9 @@
                         <div class="filter-group">
                             <h4 class="filter-group-title"><span data-i18n="catalog_category">Category</span><span
                                     class="filter-arrow"></span></h4>
-                            <div class="filter-options">
-                                <label class="filter-option"><input type="checkbox" name="category"
-                                        value="jackets"><span class="checkmark"></span><span class="option-label"
-                                        data-i18n="nav_jackets">Jackets</span><span
-                                        class="option-count">0</span></label>
-                                <label class="filter-option"><input type="checkbox" name="category"
-                                        value="shirts"><span class="checkmark"></span><span class="option-label"
-                                        data-i18n="nav_shirts">Shirts</span><span
-                                        class="option-count">0</span></label>
-                                <label class="filter-option"><input type="checkbox" name="category" value="shoes"><span
-                                        class="checkmark"></span><span class="option-label"
-                                        data-i18n="nav_shoes">Footwear</span><span class="option-count">0</span></label>
-                                <label class="filter-option"><input type="checkbox" name="category" value="bags"><span
-                                        class="checkmark"></span><span class="option-label" data-i18n="nav_bags">Bags &
-                                        Backpacks</span><span class="option-count">0</span></label>
-                                <label class="filter-option"><input type="checkbox" name="category"
-                                        value="belts"><span class="checkmark"></span><span class="option-label"
-                                        data-i18n="nav_belts">Belts</span><span
-                                        class="option-count">0</span></label>
-                                <label class="filter-option"><input type="checkbox" name="category"
-                                        value="suitcases"><span class="checkmark"></span><span class="option-label"
-                                        data-i18n="nav_suitcases">Suitcases</span><span
-                                        class="option-count">0</span></label>
-                                <label class="filter-option"><input type="checkbox" name="category"
-                                        value="gloves"><span class="checkmark"></span><span class="option-label"
-                                        data-i18n="nav_gloves">Gloves</span><span
-                                        class="option-count">0</span></label>
-                                <label class="filter-option"><input type="checkbox" name="category"
-                                        value="wallets"><span class="checkmark"></span><span class="option-label"
-                                        data-i18n="nav_wallets">Wallets & Cardholders</span><span
-                                        class="option-count">0</span></label>
-                                <label class="filter-option"><input type="checkbox" name="category"
-                                        value="headwear"><span class="checkmark"></span><span class="option-label"
-                                        data-i18n="nav_headwear">Headwear</span><span
-                                        class="option-count">0</span></label>
-                                <label class="filter-option"><input type="checkbox" name="category"
-                                        value="accessories"><span class="checkmark"></span><span class="option-label"
-                                        data-i18n="nav_accessories">Accessories</span><span
-                                        class="option-count">0</span></label>
+                            <div class="filter-options" id="category-filter-options">
+                                <!-- Populated at runtime from GET /categories (js/catalog.js renderCategoryFilter) —
+                                     categories and their subcategories are fully managed via the admin panel. -->
                             </div>
                         </div>
                         <div class="filter-group">

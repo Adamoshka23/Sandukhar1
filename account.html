@@ -118,26 +118,41 @@
             <p id="verify-result-message" class="form-message" style="display:none; text-align:center; margin-bottom:1.5rem;"></p>
             <!-- AUTH GATE -->
             <div id="auth-gate" class="auth-gate">
-                <h1 class="account-title fade-in-up">My Account</h1>
+                <h1 class="account-title fade-in-up" data-i18n="account_title">My Account</h1>
                 <div class="auth-tabs">
-                    <button class="auth-tab active" data-tab="login">Sign In</button>
-                    <button class="auth-tab" data-tab="register">Create Account</button>
+                    <button class="auth-tab active" data-tab="login" data-i18n="auth_sign_in">Sign In</button>
+                    <button class="auth-tab" data-tab="register" data-i18n="auth_create_account">Create Account</button>
                 </div>
                 <form class="auth-form active" id="login-form">
-                    <div class="form-group"><label for="login-email">Email</label><input type="email" id="login-email" required autocomplete="email"></div>
-                    <div class="form-group"><label for="login-password">Password</label><input type="password" id="login-password" required autocomplete="current-password"></div>
+                    <div class="form-group"><label for="login-email" data-i18n="account_email">Email</label><input type="email" id="login-email" required autocomplete="email"></div>
+                    <div class="form-group"><label for="login-password" data-i18n="auth_password">Password</label><input type="password" id="login-password" required autocomplete="current-password"></div>
                     <p class="form-message" id="login-message"></p>
-                    <button type="submit" class="btn-gold" id="login-submit">Sign In</button>
+                    <button type="submit" class="btn-gold" id="login-submit" data-i18n="auth_sign_in">Sign In</button>
+                    <p style="text-align:right;margin-top:0.6rem;"><a href="#" id="forgot-password-link" data-i18n="auth_forgot_password" style="font-size:0.85rem;color:var(--color-text-muted);">Forgot password?</a></p>
                 </form>
                 <form class="auth-form" id="register-form">
                     <div class="form-row-2col">
-                        <div class="form-group"><label for="register-first-name">First Name</label><input type="text" id="register-first-name" autocomplete="given-name"></div>
-                        <div class="form-group"><label for="register-last-name">Last Name</label><input type="text" id="register-last-name" autocomplete="family-name"></div>
+                        <div class="form-group"><label for="register-first-name" data-i18n="account_first_name">First Name</label><input type="text" id="register-first-name" autocomplete="given-name"></div>
+                        <div class="form-group"><label for="register-last-name" data-i18n="account_last_name">Last Name</label><input type="text" id="register-last-name" autocomplete="family-name"></div>
                     </div>
-                    <div class="form-group"><label for="register-email">Email</label><input type="email" id="register-email" required autocomplete="email"></div>
-                    <div class="form-group"><label for="register-password">Password (min. 8 characters)</label><input type="password" id="register-password" required minlength="8" autocomplete="new-password"></div>
+                    <div class="form-group"><label for="register-email" data-i18n="account_email">Email</label><input type="email" id="register-email" required autocomplete="email"></div>
+                    <div class="form-group"><label for="register-password" data-i18n="auth_password_min">Password (min. 8 characters)</label><input type="password" id="register-password" required minlength="8" autocomplete="new-password"></div>
                     <p class="form-message" id="register-message"></p>
-                    <button type="submit" class="btn-gold" id="register-submit">Create Account</button>
+                    <button type="submit" class="btn-gold" id="register-submit" data-i18n="auth_create_account">Create Account</button>
+                </form>
+                <form class="auth-form" id="forgot-password-form">
+                    <p data-i18n="auth_forgot_password_desc" style="margin-bottom:1.2rem;color:var(--color-text-secondary);font-size:0.9rem;">Enter your email and we'll send you a link to reset your password.</p>
+                    <div class="form-group"><label for="forgot-password-email" data-i18n="account_email">Email</label><input type="email" id="forgot-password-email" required autocomplete="email"></div>
+                    <p class="form-message" id="forgot-password-message"></p>
+                    <button type="submit" class="btn-gold" id="forgot-password-submit" data-i18n="auth_send_reset_link">Send Reset Link</button>
+                    <p style="text-align:center;margin-top:1rem;"><a href="#" id="back-to-login-link" data-i18n="auth_back_to_sign_in" style="font-size:0.85rem;color:var(--color-text-muted);">Back to Sign In</a></p>
+                </form>
+                <form class="auth-form" id="reset-password-form">
+                    <p data-i18n="auth_reset_password_desc" style="margin-bottom:1.2rem;color:var(--color-text-secondary);font-size:0.9rem;">Choose a new password for your account.</p>
+                    <div class="form-group"><label for="reset-password-new" data-i18n="auth_new_password">New Password (min. 8 characters)</label><input type="password" id="reset-password-new" required minlength="8" autocomplete="new-password"></div>
+                    <div class="form-group"><label for="reset-password-confirm" data-i18n="auth_confirm_password">Confirm Password</label><input type="password" id="reset-password-confirm" required minlength="8" autocomplete="new-password"></div>
+                    <p class="form-message" id="reset-password-message"></p>
+                    <button type="submit" class="btn-gold" id="reset-password-submit" data-i18n="auth_set_new_password">Set New Password</button>
                 </form>
             </div>
 
@@ -145,7 +160,7 @@
             <div id="account-dashboard" style="display:none;">
                 <div class="account-header-bar">
                     <h1 class="account-title fade-in-up" data-i18n="account_title">My Account</h1>
-                    <button class="btn-outline logout-btn" id="logout-btn">Sign Out</button>
+                    <button class="btn-outline logout-btn" id="logout-btn" data-i18n="auth_sign_out">Sign Out</button>
                 </div>
                 <div id="email-verify-banner" class="email-verify-banner" style="display:none;">
                     <span>Please verify your email address to secure your account.</span>

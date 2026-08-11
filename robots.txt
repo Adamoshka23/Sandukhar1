@@ -7,4 +7,4 @@ Disallow: /cart.html
 Disallow: /track-order.html
 Disallow: /server/
 
-Sitemap: https://www.sandukhar.com/sitemap.xml
+Sitemap: https://www.sandukhar.net/sitemap.xml

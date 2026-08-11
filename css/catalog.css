@@ -350,6 +350,23 @@
     color: var(--color-white);
 }
 
+.filter-option.filter-suboption {
+    margin-left: 1.6rem;
+    font-size: var(--font-size-caption);
+}
+
+.filter-option.filter-suboption .checkmark {
+    width: 15px;
+    height: 15px;
+}
+
+.filter-option.filter-suboption input:checked~.checkmark::after {
+    left: 4px;
+    top: 1px;
+    width: 5px;
+    height: 8px;
+}
+
 .filter-option input[type="checkbox"] {
     position: absolute;
     opacity: 0;

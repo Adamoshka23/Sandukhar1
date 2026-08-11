@@ -13,6 +13,7 @@ const environment = require('../config/environment');
 const { sendTransactionalEmail } = require('../utils/notifications');
 
 const VERIFICATION_TOKEN_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+const PASSWORD_RESET_TOKEN_TTL_MS = 60 * 60 * 1000; // 1 hour
 
 async function issueVerificationEmail(user) {
     const token = crypto.randomBytes(32).toString('hex');
@@ -36,6 +37,32 @@ async function issueVerificationEmail(user) {
                 <a href="${verifyUrl}" style="background:#c5a572;color:#0a0a0a;padding:12px 28px;text-decoration:none;font-size:14px;letter-spacing:1px;">CONFIRM EMAIL</a>
             </p>
             <p style="font-size:12px;color:#777;">This link expires in 24 hours. If you didn't create this account, you can ignore this email.</p>
+        </div>`
+    );
+}
+
+async function issuePasswordResetEmail(user) {
+    const token = crypto.randomBytes(32).toString('hex');
+    await query(
+        `INSERT INTO password_reset_tokens (id, user_id, token, expires_at)
+         VALUES ($1, $2, $3, $4)`,
+        [uuidv4(), user.id, token, new Date(Date.now() + PASSWORD_RESET_TOKEN_TTL_MS)]
+    );
+
+    const resetUrl = `${environment.FRONTEND_URL}/account.html?reset=${token}`;
+    const firstName = user.first_name || user.firstName || '';
+
+    return sendTransactionalEmail(
+        user.email,
+        'Reset your password — SAN DUKHAR',
+        `<div style="font-family:Georgia,serif;max-width:480px;margin:0 auto;padding:32px 24px;color:#1a1a1a;">
+            <h1 style="font-weight:300;letter-spacing:2px;font-size:20px;">SAN DUKHAR</h1>
+            <p>Hello${firstName ? ' ' + firstName : ''},</p>
+            <p>We received a request to reset your SAN DUKHAR account password. Click below to choose a new one.</p>
+            <p style="margin:28px 0;">
+                <a href="${resetUrl}" style="background:#c5a572;color:#0a0a0a;padding:12px 28px;text-decoration:none;font-size:14px;letter-spacing:1px;">RESET PASSWORD</a>
+            </p>
+            <p style="font-size:12px;color:#777;">This link expires in 1 hour. If you didn't request this, you can safely ignore this email — your password will not be changed.</p>
         </div>`
     );
 }
@@ -421,6 +448,78 @@ const authController = {
             res.status(200).json({
                 success: true,
                 message: 'Verification email sent.'
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    /**
+     * Request a password reset email. Always responds with the same generic
+     * message whether or not the email is registered, so this endpoint can't
+     * be used to enumerate accounts.
+     */
+    forgotPassword: async (req, res, next) => {
+        try {
+            const { email } = req.body;
+            const genericMessage = 'If an account exists for that email, a password reset link has been sent.';
+
+            const result = await query(
+                'SELECT id, email, first_name FROM users WHERE email = $1',
+                [email]
+            );
+
+            if (result.rows.length > 0) {
+                const user = result.rows[0];
+                await query('DELETE FROM password_reset_tokens WHERE user_id = $1', [user.id]);
+                await issuePasswordResetEmail(user);
+            }
+
+            res.status(200).json({
+                success: true,
+                message: genericMessage
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    /**
+     * Consume a password reset token and set a new password.
+     */
+    resetPassword: async (req, res, next) => {
+        try {
+            const { token, password } = req.body;
+
+            if (!token || !password) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Token and new password are required.'
+                });
+            }
+
+            const tokenResult = await query(
+                'SELECT * FROM password_reset_tokens WHERE token = $1 AND expires_at > NOW()',
+                [token]
+            );
+
+            if (tokenResult.rows.length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'This reset link is invalid or has expired.'
+                });
+            }
+
+            const record = tokenResult.rows[0];
+            const passwordHash = await passwordService.hash(password);
+
+            // Clearing refresh_token signs the account out everywhere else.
+            await query('UPDATE users SET password_hash = $1, refresh_token = NULL WHERE id = $2', [passwordHash, record.user_id]);
+            await query('DELETE FROM password_reset_tokens WHERE user_id = $1', [record.user_id]);
+
+            res.status(200).json({
+                success: true,
+                message: 'Password updated successfully.'
             });
         } catch (error) {
             next(error);

@@ -4,8 +4,20 @@
  */
 'use strict';
 
+const ORDER_STATUS_KEYS = {
+    pending: 'order_status_pending',
+    confirmed: 'order_status_confirmed',
+    in_production: 'order_status_in_production',
+    quality_check: 'order_status_quality_check',
+    shipped: 'order_status_shipped',
+    delivered: 'order_status_delivered',
+    cancelled: 'order_status_cancelled',
+    returned: 'order_status_returned'
+};
+
 SANDUKHAR.account = {
     currentUser: null,
+    resetToken: null,
 
     init: function() {
         if (!document.getElementById('auth-gate')) return;
@@ -18,9 +30,25 @@ SANDUKHAR.account = {
         this.bindMeasurementsForm();
         this.bindProfileForm();
         this.bindResendVerification();
+        this.bindForgotPassword();
+        this.bindForgotPasswordForm();
+        this.bindResetPasswordForm();
 
         this.handleEmailVerificationLink();
+        this.handlePasswordResetLink();
         this.checkSession();
+    },
+
+    /**
+     * @param {string} key
+     * @param {string} fallback
+     * @returns {string}
+     */
+    i18n: function(key, fallback) {
+        if (window.SD_I18N && typeof window.SD_I18N.t === 'function') {
+            return window.SD_I18N.t(key);
+        }
+        return fallback;
     },
 
     // ============================================================
@@ -36,7 +64,7 @@ SANDUKHAR.account = {
 
         const msg = document.getElementById('verify-result-message');
         window.SD_API.verifyEmail(token).then(() => {
-            msg.textContent = 'Your email has been verified.';
+            msg.textContent = this.i18n('auth_email_verified', 'Your email has been verified.');
             msg.className = 'form-message success';
             msg.style.display = 'block';
             if (this.currentUser) {
@@ -44,7 +72,7 @@ SANDUKHAR.account = {
                 this.updateVerifyBanner();
             }
         }).catch((err) => {
-            msg.textContent = err.message || 'This verification link is invalid or has expired.';
+            msg.textContent = err.message || this.i18n('auth_verify_link_invalid', 'This verification link is invalid or has expired.');
             msg.className = 'form-message error';
             msg.style.display = 'block';
         });
@@ -62,16 +90,132 @@ SANDUKHAR.account = {
         btn.addEventListener('click', () => {
             btn.disabled = true;
             const originalText = btn.textContent;
-            btn.textContent = 'Sending…';
+            btn.textContent = this.i18n('auth_sending', 'Sending…');
             window.SD_API.resendVerification().then(() => {
-                btn.textContent = 'Sent!';
+                btn.textContent = this.i18n('auth_verification_sent', 'Sent!');
             }).catch(() => {
-                btn.textContent = 'Failed — try again';
+                btn.textContent = this.i18n('auth_verification_failed', 'Failed — try again');
             }).finally(() => {
                 setTimeout(() => {
                     btn.disabled = false;
                     btn.textContent = originalText;
                 }, 3000);
+            });
+        });
+    },
+
+    // ============================================================
+    // PASSWORD RESET
+    // ============================================================
+    handlePasswordResetLink: function() {
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get('reset');
+        if (!token) return;
+
+        // Strip the token from the URL so it can't be reused/shared accidentally.
+        window.history.replaceState({}, '', window.location.pathname);
+
+        this.resetToken = token;
+        document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+        document.querySelector('.auth-tabs').style.display = 'none';
+        document.getElementById('reset-password-form').classList.add('active');
+    },
+
+    bindForgotPassword: function() {
+        const link = document.getElementById('forgot-password-link');
+        const backLink = document.getElementById('back-to-login-link');
+
+        if (link) {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+                document.querySelector('.auth-tabs').style.display = 'none';
+                document.getElementById('forgot-password-form').classList.add('active');
+            });
+        }
+
+        if (backLink) {
+            backLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+                document.querySelector('.auth-tabs').style.display = 'flex';
+                document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+                document.querySelector('.auth-tab[data-tab="login"]').classList.add('active');
+                document.getElementById('login-form').classList.add('active');
+            });
+        }
+    },
+
+    bindForgotPasswordForm: function() {
+        const form = document.getElementById('forgot-password-form');
+        if (!form) return;
+        const self = this;
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('forgot-password-submit');
+            const msg = document.getElementById('forgot-password-message');
+            msg.className = 'form-message';
+            btn.disabled = true;
+            btn.textContent = self.i18n('auth_sending', 'Sending…');
+
+            window.SD_API.forgotPassword(document.getElementById('forgot-password-email').value.trim()).then(() => {
+                msg.textContent = self.i18n('auth_reset_link_sent', 'If an account exists for that email, a reset link has been sent.');
+                msg.className = 'form-message success';
+                form.reset();
+            }).catch((err) => {
+                msg.textContent = err.message || self.i18n('auth_generic_error', 'Something went wrong. Please try again.');
+                msg.className = 'form-message error';
+            }).finally(() => {
+                btn.disabled = false;
+                btn.textContent = self.i18n('auth_send_reset_link', 'Send Reset Link');
+            });
+        });
+    },
+
+    bindResetPasswordForm: function() {
+        const form = document.getElementById('reset-password-form');
+        if (!form) return;
+        const self = this;
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('reset-password-submit');
+            const msg = document.getElementById('reset-password-message');
+            msg.className = 'form-message';
+
+            const password = document.getElementById('reset-password-new').value;
+            const confirmPassword = document.getElementById('reset-password-confirm').value;
+
+            if (password.length < 8) {
+                msg.textContent = self.i18n('auth_password_min_length', 'Password must be at least 8 characters.');
+                msg.className = 'form-message error';
+                return;
+            }
+            if (password !== confirmPassword) {
+                msg.textContent = self.i18n('auth_passwords_no_match', 'Passwords do not match.');
+                msg.className = 'form-message error';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = self.i18n('auth_saving', 'Saving…');
+
+            window.SD_API.resetPassword(self.resetToken, password).then(() => {
+                msg.textContent = self.i18n('auth_password_updated', 'Password updated. You can now sign in.');
+                msg.className = 'form-message success';
+                form.reset();
+                setTimeout(() => {
+                    document.getElementById('reset-password-form').classList.remove('active');
+                    document.querySelector('.auth-tabs').style.display = 'flex';
+                    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelector('.auth-tab[data-tab="login"]').classList.add('active');
+                    document.getElementById('login-form').classList.add('active');
+                }, 1800);
+            }).catch((err) => {
+                msg.textContent = err.message || self.i18n('auth_reset_link_invalid', 'This reset link is invalid or has expired.');
+                msg.className = 'form-message error';
+            }).finally(() => {
+                btn.disabled = false;
+                btn.textContent = self.i18n('auth_set_new_password', 'Set New Password');
             });
         });
     },
@@ -134,7 +278,7 @@ SANDUKHAR.account = {
             const msg = document.getElementById('login-message');
             msg.className = 'form-message';
             btn.disabled = true;
-            btn.textContent = 'Signing In…';
+            btn.textContent = self.i18n('auth_signing_in', 'Signing In…');
 
             window.SD_API.login(
                 document.getElementById('login-email').value.trim(),
@@ -143,11 +287,11 @@ SANDUKHAR.account = {
                 self.currentUser = res.data.user;
                 self.showDashboard();
             }).catch((err) => {
-                msg.textContent = err.message || 'Invalid email or password.';
+                msg.textContent = err.message || self.i18n('auth_invalid_credentials', 'Invalid email or password.');
                 msg.className = 'form-message error';
             }).finally(() => {
                 btn.disabled = false;
-                btn.textContent = 'Sign In';
+                btn.textContent = self.i18n('auth_sign_in', 'Sign In');
             });
         });
 
@@ -159,13 +303,13 @@ SANDUKHAR.account = {
 
             const password = document.getElementById('register-password').value;
             if (password.length < 8) {
-                msg.textContent = 'Password must be at least 8 characters.';
+                msg.textContent = self.i18n('auth_password_min_length', 'Password must be at least 8 characters.');
                 msg.className = 'form-message error';
                 return;
             }
 
             btn.disabled = true;
-            btn.textContent = 'Creating Account…';
+            btn.textContent = self.i18n('auth_creating_account', 'Creating Account…');
 
             window.SD_API.register({
                 firstName: document.getElementById('register-first-name').value.trim(),
@@ -176,11 +320,11 @@ SANDUKHAR.account = {
                 self.currentUser = res.data.user;
                 self.showDashboard();
             }).catch((err) => {
-                msg.textContent = err.message || 'Could not create account.';
+                msg.textContent = err.message || self.i18n('auth_could_not_create_account', 'Could not create account.');
                 msg.className = 'form-message error';
             }).finally(() => {
                 btn.disabled = false;
-                btn.textContent = 'Create Account';
+                btn.textContent = self.i18n('auth_create_account', 'Create Account');
             });
         });
     },
@@ -220,30 +364,37 @@ SANDUKHAR.account = {
     // ============================================================
     loadOrders: function() {
         const list = document.getElementById('orders-list');
+        const self = this;
         window.SD_API.getOrders().then((res) => {
             const orders = res.data.orders;
             if (orders.length === 0) {
-                list.innerHTML = '<div class="empty-state"><p>You have not placed any orders yet.</p><a href="catalog.html" class="btn-outline">Explore Collections</a></div>';
+                list.innerHTML = `<div class="empty-state"><p>${self.i18n('account_no_orders', 'You have not placed any orders yet.')}</p><a href="catalog.html" class="btn-outline">${self.i18n('cart_empty_btn', 'Explore Collections')}</a></div>`;
                 return;
             }
             list.innerHTML = orders.map(order => {
                 const statusClass = order.status === 'delivered' ? 'delivered' : 'in-progress';
+                const statusLabel = self.i18n(ORDER_STATUS_KEYS[order.status], order.status.replace(/_/g, ' '));
                 const itemsSummary = (order.items || []).map(i => i.product_name).join(', ');
                 return `<div class="order-card">
                     <div class="order-card-header">
                         <span class="order-number">#${order.order_number}</span>
-                        <span class="order-status ${statusClass}">${order.status.replace(/_/g, ' ')}</span>
+                        <span class="order-status ${statusClass}">${statusLabel}</span>
                     </div>
                     <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;">
-                        <span class="order-date">Placed on ${new Date(order.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                        <span class="order-date">${self.i18n('account_placed_on', 'Placed on')} ${new Date(order.created_at).toLocaleDateString(self.currentLocale(), { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                     </div>
                     ${itemsSummary ? `<p style="font-size:var(--font-size-caption);color:var(--color-text-muted);margin-top:0.5rem;">${itemsSummary}</p>` : ''}
-                    <a href="track-order.html?order=${order.order_number}&email=${encodeURIComponent((order.shipping_address || {}).email || '')}" class="btn-outline" style="margin-top:1rem;display:inline-block;font-size:var(--font-size-caption);padding:0.5rem 1.2rem;">Track Order</a>
+                    <a href="track-order.html?order=${order.order_number}&email=${encodeURIComponent((order.shipping_address || {}).email || '')}" class="btn-outline" style="margin-top:1rem;display:inline-block;font-size:var(--font-size-caption);padding:0.5rem 1.2rem;">${self.i18n('footer_track', 'Track Order')}</a>
                 </div>`;
             }).join('');
         }).catch(() => {
-            list.innerHTML = '<div class="empty-state"><p>Could not load your orders. Please try again later.</p></div>';
+            list.innerHTML = `<div class="empty-state"><p>${self.i18n('account_could_not_load_orders', 'Could not load your orders. Please try again later.')}</p></div>`;
         });
+    },
+
+    currentLocale: function() {
+        const lang = (window.SD_I18N && window.SD_I18N.getLang) ? window.SD_I18N.getLang() : 'en';
+        return lang === 'ru' ? 'ru-RU' : 'en-US';
     },
 
     // ============================================================
@@ -278,7 +429,7 @@ SANDUKHAR.account = {
                 form.style.display = 'none';
                 this.loadAddresses();
             }).catch((err) => {
-                msg.textContent = err.message || 'Could not save address.';
+                msg.textContent = err.message || this.i18n('account_could_not_save_address', 'Could not save address.');
                 msg.className = 'form-message error';
             }).finally(() => {
                 btn.disabled = false;
@@ -288,26 +439,27 @@ SANDUKHAR.account = {
 
     loadAddresses: function() {
         const list = document.getElementById('addresses-list');
+        const self = this;
         window.SD_API.getAddresses().then((res) => {
             const addresses = res.data.addresses;
             if (addresses.length === 0) {
-                list.innerHTML = '<div class="empty-state"><p>No saved addresses yet.</p></div>';
+                list.innerHTML = `<div class="empty-state"><p>${self.i18n('account_no_addresses', 'No saved addresses yet.')}</p></div>`;
                 return;
             }
             list.innerHTML = addresses.map(a => `
                 <div class="address-card">
-                    <h4>${a.label}${a.is_default ? ' (Default)' : ''}</h4>
+                    <h4>${a.label}${a.is_default ? ' ' + self.i18n('account_default', '(Default)') : ''}</h4>
                     <p>${a.first_name} ${a.last_name}<br>${a.address_line1}<br>${a.city}, ${a.postal_code}<br>${a.country}</p>
-                    <button class="btn-outline" style="margin-top:0.8rem;font-size:var(--font-size-caption);padding:0.4rem 1rem;" data-address-id="${a.id}">Remove</button>
+                    <button class="btn-outline" style="margin-top:0.8rem;font-size:var(--font-size-caption);padding:0.4rem 1rem;" data-address-id="${a.id}">${self.i18n('remove', 'Remove')}</button>
                 </div>
             `).join('');
             list.querySelectorAll('[data-address-id]').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    window.SD_API.deleteAddress(btn.getAttribute('data-address-id')).then(() => this.loadAddresses());
+                    window.SD_API.deleteAddress(btn.getAttribute('data-address-id')).then(() => self.loadAddresses());
                 });
             });
         }).catch(() => {
-            list.innerHTML = '<div class="empty-state"><p>Could not load addresses.</p></div>';
+            list.innerHTML = `<div class="empty-state"><p>${self.i18n('account_could_not_load_addresses', 'Could not load addresses.')}</p></div>`;
         });
     },
 
@@ -322,7 +474,7 @@ SANDUKHAR.account = {
             const btn = form.querySelector('button[type="submit"]');
             const msg = document.getElementById('measurements-message');
             btn.disabled = true;
-            btn.textContent = 'Saving…';
+            btn.textContent = this.i18n('auth_saving', 'Saving…');
 
             window.SD_API.updateProfile({
                 measurements: {
@@ -332,14 +484,14 @@ SANDUKHAR.account = {
                     sleeve: document.getElementById('measure-sleeve').value
                 }
             }).then(() => {
-                msg.textContent = 'Measurements saved.';
+                msg.textContent = this.i18n('account_measurements_saved', 'Measurements saved.');
                 msg.className = 'form-message success';
             }).catch((err) => {
-                msg.textContent = err.message || 'Could not save measurements.';
+                msg.textContent = err.message || this.i18n('account_could_not_save_measurements', 'Could not save measurements.');
                 msg.className = 'form-message error';
             }).finally(() => {
                 btn.disabled = false;
-                btn.textContent = 'Save Measurements';
+                btn.textContent = this.i18n('account_save_measurements', 'Save Measurements');
             });
         });
     },
@@ -372,7 +524,7 @@ SANDUKHAR.account = {
             const btn = form.querySelector('button[type="submit"]');
             const msg = document.getElementById('profile-message');
             btn.disabled = true;
-            btn.textContent = 'Saving…';
+            btn.textContent = this.i18n('auth_saving', 'Saving…');
 
             window.SD_API.updateProfile({
                 firstName: document.getElementById('profile-first-name').value.trim(),
@@ -380,14 +532,14 @@ SANDUKHAR.account = {
                 phone: document.getElementById('profile-phone').value.trim()
             }).then((res) => {
                 this.currentUser = Object.assign(this.currentUser, res.data.user);
-                msg.textContent = 'Profile updated.';
+                msg.textContent = this.i18n('account_profile_updated', 'Profile updated.');
                 msg.className = 'form-message success';
             }).catch((err) => {
-                msg.textContent = err.message || 'Could not update profile.';
+                msg.textContent = err.message || this.i18n('account_could_not_update_profile', 'Could not update profile.');
                 msg.className = 'form-message error';
             }).finally(() => {
                 btn.disabled = false;
-                btn.textContent = 'Update Profile';
+                btn.textContent = this.i18n('account_update_profile', 'Update Profile');
             });
         });
     }

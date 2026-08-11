@@ -13,6 +13,18 @@ const MATERIAL_TONE = {
     suede: 'cognac'
 };
 
+// categoryChildren: parent category slug -> its subcategory slugs, built at
+// runtime from the categories API (see buildCategoryChildren). A product
+// filed under a subcategory should still count toward and show up under
+// the parent.
+function categoryMatchesFilter(cardCategory, activeCategories, categoryChildren) {
+    return activeCategories.some(filterValue => {
+        if (filterValue === cardCategory) return true;
+        const children = categoryChildren[filterValue];
+        return children ? children.includes(cardCategory) : false;
+    });
+}
+
 function sdLang() {
     return (window.SD_I18N && window.SD_I18N.getLang) ? window.SD_I18N.getLang() : 'en';
 }
@@ -85,13 +97,17 @@ SANDUKHAR.catalog = {
     productsPerPage: 12,
     filteredProducts: [],
     allProducts: [],
+    categories: [],
+    categoryChildren: {},
 
     init: async function () {
         this.productsGrid = document.getElementById('products-grid');
         if (!this.productsGrid) return;
         this.cacheDOMElements();
         this.showLoadingState();
-        await this.fetchProducts();
+        await Promise.all([this.fetchProducts(), this.fetchCategories()]);
+        this.renderCategoryFilter();
+        this.updateFilterOptionCounts();
         this.bindEvents();
         this.applyInitialFilters();
         this.updateResults();
@@ -99,6 +115,42 @@ SANDUKHAR.catalog = {
 
     showLoadingState: function () {
         this.productsGrid.innerHTML = '<div class="catalog-loading" style="grid-column:1/-1;text-align:center;padding:4rem 0;color:var(--color-text-muted);letter-spacing:0.08em;text-transform:uppercase;font-size:0.85rem;">Loading the collection…</div>';
+    },
+
+    fetchCategories: async function () {
+        try {
+            const res = await fetch(`${window.SD_API.baseURL}/categories`);
+            const data = await res.json();
+            this.categories = (data.success && data.data.categories) ? data.data.categories : [];
+        } catch (error) {
+            this.categories = [];
+        }
+        this.categoryChildren = {};
+        this.categories.forEach(c => {
+            if (!c.parent_id) return;
+            const parent = this.categories.find(p => p.id === c.parent_id);
+            if (!parent) return;
+            if (!this.categoryChildren[parent.slug]) this.categoryChildren[parent.slug] = [];
+            this.categoryChildren[parent.slug].push(c.slug);
+        });
+    },
+
+    renderCategoryFilter: function () {
+        const container = document.getElementById('category-filter-options');
+        if (!container || this.categories.length === 0) return;
+
+        const lang = sdLang();
+        const nameOf = (c) => (lang === 'ru' ? c.name_ru : c.name_en) || c.name_en;
+        const topLevel = this.categories.filter(c => !c.parent_id).sort((a, b) => a.sort_order - b.sort_order);
+        const childrenOf = (parentId) => this.categories.filter(c => c.parent_id === parentId).sort((a, b) => a.sort_order - b.sort_order);
+
+        const optionHtml = (c, isChild) => `
+            <label class="filter-option${isChild ? ' filter-suboption' : ''}"><input type="checkbox" name="category" value="${c.slug}"><span class="checkmark"></span><span class="option-label">${nameOf(c)}</span><span class="option-count">0</span></label>
+        `;
+
+        container.innerHTML = topLevel.map(parent =>
+            optionHtml(parent, false) + childrenOf(parent.id).map(child => optionHtml(child, true)).join('')
+        ).join('');
     },
 
     fetchProducts: async function () {
@@ -128,6 +180,18 @@ SANDUKHAR.catalog = {
         await this.fetchProducts();
         this.collectProductData();
         this.bindPagination();
+
+        // Category option labels are rendered in the current language —
+        // rebuild them, then re-check whatever was active and rebind
+        // their change listeners (renderCategoryFilter replaces the nodes).
+        const checkedCategories = this.activeFilters['category'] || [];
+        this.renderCategoryFilter();
+        this.sidebar?.querySelectorAll('input[name="category"]').forEach(input => {
+            input.checked = checkedCategories.includes(input.value);
+            input.addEventListener('change', () => this.onFilterChange(input));
+        });
+        this.updateFilterOptionCounts();
+
         this.applyAllFilters();
         this.updateResultsDisplay();
         this.updatePagination(Math.ceil(this.filteredProducts.length / this.productsPerPage));
@@ -165,7 +229,10 @@ SANDUKHAR.catalog = {
         if (!this.sidebar) return;
         this.sidebar.querySelectorAll('input[name="category"], input[name="material"]').forEach(input => {
             const attr = input.name === 'category' ? 'category_slug' : 'material_slug';
-            const count = this.allProducts.filter(p => p[attr] === input.value).length;
+            const matchValues = input.name === 'category' && this.categoryChildren[input.value]
+                ? [input.value, ...this.categoryChildren[input.value]]
+                : [input.value];
+            const count = this.allProducts.filter(p => matchValues.includes(p[attr])).length;
             const countEl = input.closest('.filter-option')?.querySelector('.option-count');
             if (countEl) countEl.textContent = count;
         });
@@ -252,7 +319,7 @@ SANDUKHAR.catalog = {
 
     applyAllFilters: function () {
         this.filteredProducts = this.productCards.filter(card => {
-            if (this.activeFilters['category']?.length && !this.activeFilters['category'].includes(card.getAttribute('data-category'))) return false;
+            if (this.activeFilters['category']?.length && !categoryMatchesFilter(card.getAttribute('data-category'), this.activeFilters['category'], this.categoryChildren)) return false;
             if (this.activeFilters['material']?.length && !this.activeFilters['material'].includes(card.getAttribute('data-material'))) return false;
             if (this.activeFilters['availability']?.length && !this.activeFilters['availability'].includes(card.getAttribute('data-availability'))) return false;
             return true;
@@ -354,7 +421,9 @@ SANDUKHAR.catalog = {
                 const tag = document.createElement('span');
                 tag.className = 'active-filter-tag';
                 const label = filterLabels[filterType] || filterType;
-                const displayValue = value.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                const optionLabelEl = this.sidebar?.querySelector(`input[name="${filterType}"][value="${value}"]`)
+                    ?.closest('.filter-option')?.querySelector('.option-label');
+                const displayValue = optionLabelEl ? optionLabelEl.textContent : value.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
                 tag.innerHTML = `${label}: ${displayValue} <span class="remove-tag" data-filter="${filterType}" data-value="${value}">×</span>`;
                 this.activeFiltersContainer.appendChild(tag);
             });

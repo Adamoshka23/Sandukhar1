@@ -29,6 +29,12 @@ INSERT INTO categories (id, slug, name_ru, name_en, description_ru, description_
 (uuid_generate_v4(), 'headwear', 'Головные уборы', 'Headwear', 'Головные уборы из экзотической кожи', 'Exotic leather headwear', 9),
 (uuid_generate_v4(), 'accessories', 'Аксессуары', 'Accessories', 'Дополнительные аксессуары из экзотической кожи', 'Additional exotic leather accessories', 10);
 
+-- Accessories subcategories
+INSERT INTO categories (id, slug, name_ru, name_en, sort_order, parent_id) VALUES
+(uuid_generate_v4(), 'cases', 'Чехлы', 'Cases', 11, (SELECT id FROM categories WHERE slug = 'accessories')),
+(uuid_generate_v4(), 'passport-cover', 'Обложка для паспорта', 'Passport Cover', 12, (SELECT id FROM categories WHERE slug = 'accessories')),
+(uuid_generate_v4(), 'magnetic-cardholder', 'Картхолдер магнитный', 'Magnetic Cardholder', 13, (SELECT id FROM categories WHERE slug = 'accessories'));
+
 -- Materials
 INSERT INTO materials (id, slug, name_ru, name_en, scientific_name, description_ru, description_en, sort_order) VALUES
 (uuid_generate_v4(), 'crocodile', 'Крокодил', 'Crocodile', 'Porosus & Niloticus', 'Кожа крокодила — король экзотических кож. Отличается регулярным прямоугольным рисунком чешуи.', 'Crocodile leather — the king of exotic leathers. Defined by its regular rectangular scale pattern.', 1),

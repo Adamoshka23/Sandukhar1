@@ -37,6 +37,22 @@ router.get('/dashboard', async (req, res) => {
 // ============================================================
 // PRODUCTS CRUD
 // ============================================================
+
+// Suggests the next SKU in the "SD-XXX-NNN" sequence, scanning every
+// product regardless of status so archived/draft SKUs aren't reused.
+router.get('/products/next-sku', async (req, res) => {
+    try {
+        const result = await query('SELECT sku FROM products');
+        const nextNumber = result.rows.reduce((max, row) => {
+            const match = /-(\d+)$/.exec(row.sku || '');
+            return match ? Math.max(max, parseInt(match[1], 10)) : max;
+        }, 0) + 1;
+        res.json({ success: true, data: { sku: `SD-XXX-${String(nextNumber).padStart(3, '0')}` } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
 router.post('/products', async (req, res) => {
     try {
         const {
@@ -168,6 +184,38 @@ router.post('/products/:id/images', productUpload.array('images', 10), async (re
     }
 });
 
+// Body: { order: [imageId, ...] } — persists the gallery's on-screen order
+// by writing each image's index in the array to sort_order.
+router.patch('/products/:id/images/reorder', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { order } = req.body;
+        if (!Array.isArray(order) || order.length === 0) {
+            return res.status(400).json({ success: false, message: 'order must be a non-empty array of image ids' });
+        }
+        await Promise.all(order.map((imageId, index) =>
+            query('UPDATE product_images SET sort_order = $1 WHERE id = $2 AND product_id = $3', [index, imageId, id])
+        ));
+        res.json({ success: true, message: 'Image order updated' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.patch('/products/:id/images/:imageId/primary', async (req, res) => {
+    try {
+        const { id, imageId } = req.params;
+        const result = await query(
+            'UPDATE product_images SET is_primary = (id = $1) WHERE product_id = $2 RETURNING id',
+            [imageId, id]
+        );
+        if (result.rows.length === 0) return res.status(404).json({ success: false, message: 'Product has no images' });
+        res.json({ success: true, message: 'Primary image updated' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
 router.delete('/products/:id/images/:imageId', async (req, res) => {
     try {
         const { imageId } = req.params;
@@ -181,18 +229,42 @@ router.delete('/products/:id/images/:imageId', async (req, res) => {
 // ============================================================
 // CATEGORIES CRUD
 // ============================================================
+// A category can only nest one level deep — if the requested parent is
+// itself already a subcategory, reject rather than silently creating a
+// grandchild the storefront filter tree can't display.
+async function assertValidParent(parentId, ownId) {
+    if (!parentId) return null;
+    if (parentId === ownId) {
+        return 'A category cannot be its own parent.';
+    }
+    const result = await query('SELECT parent_id FROM categories WHERE id = $1', [parentId]);
+    if (result.rows.length === 0) {
+        return 'Parent category not found.';
+    }
+    if (result.rows[0].parent_id) {
+        return 'The chosen parent is itself a subcategory — only top-level categories can be a parent.';
+    }
+    return null;
+}
+
 router.post('/categories', async (req, res) => {
     try {
-        const { slug, nameEn, nameRu, sortOrder } = req.body;
+        const { slug, nameEn, nameRu, sortOrder, parentId } = req.body;
         if (!slug || !nameEn || !nameRu) {
             return res.status(400).json({ success: false, message: 'Slug, name (EN) and name (RU) are required' });
         }
+        const parentError = await assertValidParent(parentId || null, null);
+        if (parentError) return res.status(400).json({ success: false, message: parentError });
+
         const result = await query(
-            `INSERT INTO categories (id, slug, name_ru, name_en, sort_order) VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-            [uuidv4(), slug, nameRu, nameEn, sortOrder || 0]
+            `INSERT INTO categories (id, slug, name_ru, name_en, sort_order, parent_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+            [uuidv4(), slug, nameRu, nameEn, sortOrder || 0, parentId || null]
         );
         res.status(201).json({ success: true, data: { category: result.rows[0] } });
     } catch (error) {
+        if (error.code === '23505') {
+            return res.status(409).json({ success: false, message: 'A category with this slug already exists' });
+        }
         res.status(500).json({ success: false, message: error.message });
     }
 });
@@ -200,14 +272,20 @@ router.post('/categories', async (req, res) => {
 router.put('/categories/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { slug, nameEn, nameRu, sortOrder } = req.body;
+        const { slug, nameEn, nameRu, sortOrder, parentId } = req.body;
+        const parentError = await assertValidParent(parentId || null, id);
+        if (parentError) return res.status(400).json({ success: false, message: parentError });
+
         const result = await query(
-            `UPDATE categories SET slug = COALESCE($2, slug), name_ru = COALESCE($3, name_ru), name_en = COALESCE($4, name_en), sort_order = COALESCE($5, sort_order) WHERE id = $1 RETURNING *`,
-            [id, slug, nameRu, nameEn, sortOrder]
+            `UPDATE categories SET slug = COALESCE($2, slug), name_ru = COALESCE($3, name_ru), name_en = COALESCE($4, name_en), sort_order = COALESCE($5, sort_order), parent_id = $6 WHERE id = $1 RETURNING *`,
+            [id, slug, nameRu, nameEn, sortOrder, parentId || null]
         );
         if (result.rows.length === 0) return res.status(404).json({ success: false, message: 'Category not found' });
         res.json({ success: true, data: { category: result.rows[0] } });
     } catch (error) {
+        if (error.code === '23505') {
+            return res.status(409).json({ success: false, message: 'A category with this slug already exists' });
+        }
         res.status(500).json({ success: false, message: error.message });
     }
 });

@@ -36,4 +36,13 @@ router.get('/me', authenticate, authController.getMe);
 router.get('/verify-email', authController.verifyEmail);
 router.post('/resend-verification', authLimiter, authenticate, authController.resendVerification);
 
+router.post('/forgot-password', authLimiter, [
+    body('email').isEmail().withMessage('Valid email is required').normalizeEmail()
+], validate, authController.forgotPassword);
+
+router.post('/reset-password', authLimiter, [
+    body('token').notEmpty().withMessage('Token is required'),
+    body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters')
+], validate, authController.resetPassword);
+
 module.exports = router;
