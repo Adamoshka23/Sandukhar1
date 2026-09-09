@@ -285,13 +285,14 @@
                 <div class="form-group"><label>Полное описание (EN)</label><textarea id="product-desc-en" rows="3"></textarea></div>
                 <div class="form-group"><label>Полное описание (RU)</label><textarea id="product-desc-ru" rows="3"></textarea></div>
                 <div class="form-row triple">
-                    <div class="form-group"><label>Цена ($) *</label><input type="number" id="product-price" step="0.01" placeholder="18500.00"></div>
+                    <div class="form-group"><label>Цена ($)</label><input type="number" id="product-price" step="0.01" placeholder="Укажите при запросе клиента"></div>
                     <div class="form-group"><label>Старая цена ($)</label><input type="number" id="product-old-price" step="0.01"></div>
                     <div class="form-group" id="product-stock-group"><label>Остаток</label><input type="number" id="product-stock" value="0"></div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group"><label>Категория</label><select id="product-category"><option value="">Выбрать...</option></select></div>
-                    <div class="form-group"><label>Материал</label><select id="product-material"><option value="">Выбрать...</option></select></div>
+                <div class="form-group"><label>Категория</label><select id="product-category"><option value="">Выбрать...</option></select></div>
+                <div class="form-group">
+                    <label>Материал (можно выбрать несколько)</label>
+                    <div id="product-materials-checkboxes" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.4rem;"></div>
                 </div>
                 <div class="form-row">
                     <div class="form-group"><label>Статус</label><select id="product-status"><option value="active">Активен</option><option value="draft">Черновик</option></select></div>
@@ -307,6 +308,18 @@
                     <button type="button" class="btn-secondary" style="margin-top:0.6rem;align-self:flex-start;" onclick="addSizeRow()">+ Добавить размер</button>
                 </div>
                 <p class="form-group" id="product-made-to-order-hint" style="display:none;font-size:0.8rem;color:var(--text-muted);background:rgba(197,165,114,0.08);border:1px solid var(--gold);border-radius:var(--radius);padding:0.8rem 1rem;">Этот товар отмечен как <strong>Под заказ</strong> — у него нет фиксированного остатка. Покупателям будет показано, что изделие изготавливается вручную по их меркам; поле «Остаток» и строки размеров выше скрыты и не учитываются.</p>
+                <div class="form-group" id="product-colors-section" style="display:none;">
+                    <label>Цвета</label>
+                    <p style="font-size:0.75rem;color:var(--text-muted);margin:-0.3rem 0 0.6rem;">Добавьте цвета, в которых доступно изделие. Затем в галерее фото ниже укажите, к какому цвету относится каждое фото — при выборе цвета на сайте покупатель увидит фото именно этого цвета.</p>
+                    <div id="product-colors-list" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.6rem;"></div>
+                    <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+                        <input type="text" id="new-color-name-ru" placeholder="Название (RU)" style="flex:1;min-width:120px;">
+                        <input type="text" id="new-color-name-en" placeholder="Название (EN, необязательно)" style="flex:1;min-width:120px;">
+                        <input type="color" id="new-color-hex" value="#1a1a1a" style="width:40px;height:36px;padding:2px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);cursor:pointer;">
+                        <button type="button" class="btn-secondary" onclick="addProductColor()">+ Добавить цвет</button>
+                    </div>
+                    <p style="font-size:0.7rem;color:var(--text-muted);margin-top:0.3rem;">Достаточно заполнить одно название — второе подставится автоматически, перевод можно уточнить позже.</p>
+                </div>
                 <div class="form-group" id="product-images-section" style="display:none;">
                     <label>Фото</label>
                     <div id="product-images-gallery" style="display:flex;flex-wrap:wrap;gap:0.6rem;margin-bottom:0.6rem;"></div>
@@ -314,7 +327,7 @@
                     <button type="button" class="btn-secondary" style="margin-top:0.6rem;align-self:flex-start;" onclick="uploadProductImages()">Загрузить выбранные фото</button>
                     <p id="product-image-message" style="font-size:0.75rem;color:var(--text-muted);margin-top:0.4rem;"></p>
                 </div>
-                <p id="product-images-hint" style="font-size:0.75rem;color:var(--text-muted);">Сначала сохраните товар, затем откройте его снова, чтобы загрузить фото.</p>
+                <p id="product-images-hint" style="font-size:0.75rem;color:var(--text-muted);">Сначала сохраните товар, затем откройте его снова, чтобы загрузить фото и добавить цвета.</p>
             </div>
             <div class="modal-footer">
                 <button class="btn-secondary" onclick="closeProductModal()">Отмена</button>
@@ -585,7 +598,7 @@
                     </td>
                     <td style="font-family:monospace;font-size:0.8rem;">${p.sku}</td>
                     <td>${p.category_name || '—'}</td>
-                    <td style="color:var(--gold);">$${parseFloat(p.price).toLocaleString()}</td>
+                    <td style="color:var(--gold);">${p.price != null ? '$' + parseFloat(p.price).toLocaleString() : '—'}</td>
                     <td><span class="status-badge ${p.status}">${PRODUCT_STATUS_LABELS[p.status] || p.status}</span></td>
                     <td>
                         <div class="actions">
@@ -648,7 +661,10 @@
             document.getElementById('product-modal-title').textContent = 'Добавить товар';
             resetProductForm();
             document.getElementById('product-images-section').style.display = 'none';
+            document.getElementById('product-colors-section').style.display = 'none';
             document.getElementById('product-images-hint').style.display = 'block';
+            currentProductColors = [];
+            renderProductColors([]);
 
             // Wait for the dropdowns to be populated before selecting a value in
             // them — otherwise fillProductForm's assignment lands on an <option>
@@ -688,7 +704,7 @@
             document.getElementById('product-featured').checked = false;
             document.getElementById('product-made-to-order').checked = false;
             document.getElementById('product-category').value = '';
-            document.getElementById('product-material').value = '';
+            document.querySelectorAll('.product-material-checkbox').forEach(cb => cb.checked = false);
             renderSizeRows([]);
             toggleMadeToOrderUI();
         }
@@ -710,13 +726,117 @@
             document.getElementById('product-featured').checked = product.featured || false;
             document.getElementById('product-made-to-order').checked = product.made_to_order || false;
             document.getElementById('product-category').value = product.category_id || '';
-            document.getElementById('product-material').value = product.material_id || '';
+            const selectedMaterialIds = (product.materials || []).map(m => m.id);
+            document.querySelectorAll('.product-material-checkbox').forEach(cb => {
+                cb.checked = selectedMaterialIds.includes(cb.value);
+            });
             renderSizeRows(product.sizes || []);
             toggleMadeToOrderUI();
 
             document.getElementById('product-images-section').style.display = 'flex';
+            document.getElementById('product-colors-section').style.display = 'block';
             document.getElementById('product-images-hint').style.display = 'none';
+            currentProductColors = product.colors || [];
+            renderProductColors(currentProductColors);
             renderProductImagesGallery(product.images || []);
+        }
+
+        let currentProductColors = [];
+
+        function renderProductColors(colors) {
+            const list = document.getElementById('product-colors-list');
+            if (colors.length === 0) {
+                list.innerHTML = '<p style="font-size:0.75rem;color:var(--text-muted);">Цвета пока не добавлены.</p>';
+                return;
+            }
+            list.innerHTML = colors.map(c => `
+                <span style="display:inline-flex;align-items:center;gap:0.4rem;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:0.35rem 0.6rem;font-size:0.8rem;">
+                    <span style="width:14px;height:14px;border-radius:50%;background:${c.hex_code || c.hex};border:1px solid var(--border);display:inline-block;"></span>
+                    ${c.name_ru || c.name}
+                    <button type="button" onclick="deleteProductColor('${c.id}')" title="Удалить цвет" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:0.85rem;line-height:1;padding:0;">✕</button>
+                </span>
+            `).join('');
+        }
+
+        async function addProductColor() {
+            const id = document.getElementById('product-id').value;
+            const nameEn = document.getElementById('new-color-name-en').value.trim();
+            const nameRu = document.getElementById('new-color-name-ru').value.trim();
+            const hexCode = document.getElementById('new-color-hex').value;
+            if (!nameEn && !nameRu) {
+                showToast('Укажите название цвета хотя бы на одном языке', 'error');
+                return;
+            }
+            try {
+                const res = await fetch(`${API_BASE}/admin/products/${id}/colors`, {
+                    method: 'POST', headers: getHeaders(),
+                    body: JSON.stringify({ nameEn, nameRu, hexCode })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    document.getElementById('new-color-name-en').value = '';
+                    document.getElementById('new-color-name-ru').value = '';
+                    document.getElementById('new-color-hex').value = '#1a1a1a';
+                    await loadProducts();
+                    const updated = allProducts.find(p => p.id === id);
+                    currentProductColors = updated?.colors || [];
+                    renderProductColors(currentProductColors);
+                    renderProductImagesGallery(updated?.images || []);
+                    showToast('Цвет добавлен', 'success');
+                } else {
+                    showToast(data.message || 'Не удалось добавить цвет', 'error');
+                }
+            } catch (err) {
+                showToast('Ошибка соединения', 'error');
+            }
+        }
+
+        async function deleteProductColor(colorId) {
+            const id = document.getElementById('product-id').value;
+            try {
+                await fetch(`${API_BASE}/admin/products/${id}/colors/${colorId}`, {
+                    method: 'DELETE', headers: getHeaders()
+                });
+                await loadProducts();
+                const updated = allProducts.find(p => p.id === id);
+                currentProductColors = updated?.colors || [];
+                renderProductColors(currentProductColors);
+                renderProductImagesGallery(updated?.images || []);
+                showToast('Цвет удалён', 'success');
+            } catch (err) {
+                showToast('Ошибка удаления цвета', 'error');
+            }
+        }
+
+        // Renders one thumbnail (image + delete/reorder/primary controls +
+        // color select). `groupImages` is the image's own color group (or
+        // the full list when the product has no colors yet) — reorder
+        // arrows move the image only within that group, never across
+        // colors, so "flip through photos" on the storefront stays inside
+        // whichever color the shopper picked.
+        function renderImageThumb(img, groupImages, groupKey) {
+            const isPrimary = img.isPrimary || img.is_primary;
+            const indexInGroup = groupImages.findIndex(i => i.id === img.id);
+            return `
+            <div style="width:84px;">
+                <div style="position:relative;width:84px;height:84px;">
+                    <img src="${img.url || img.image_url}" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);border:1px solid var(--border);${isPrimary ? 'outline:2px solid var(--gold);' : ''}">
+                    <button type="button" onclick="deleteProductImage('${img.id}')" title="Удалить" style="position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(--error);color:white;border:none;cursor:pointer;font-size:0.7rem;line-height:1;">✕</button>
+                    ${isPrimary ? '<span style="position:absolute;bottom:2px;left:2px;background:var(--gold);color:#0a0a0a;font-size:0.5rem;padding:0.1rem 0.35rem;border-radius:2px;text-transform:uppercase;letter-spacing:0.03em;">Основное</span>' : ''}
+                </div>
+                <div style="display:flex;gap:0.2rem;margin-top:0.3rem;">
+                    <button type="button" onclick="moveProductImage('${img.id}', -1, '${groupKey}')" title="Сдвинуть влево" ${indexInGroup === 0 ? 'disabled' : ''} style="flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:var(--radius);cursor:pointer;font-size:0.7rem;padding:0.25rem 0;${indexInGroup === 0 ? 'opacity:0.3;cursor:default;' : ''}">◀</button>
+                    <button type="button" onclick="setProductImagePrimary('${img.id}')" title="Сделать основным" ${isPrimary ? 'disabled' : ''} style="flex:1;background:var(--bg);border:1px solid var(--border);color:${isPrimary ? 'var(--gold)' : 'var(--text)'};border-radius:var(--radius);cursor:pointer;font-size:0.7rem;padding:0.25rem 0;${isPrimary ? 'opacity:0.5;cursor:default;' : ''}">★</button>
+                    <button type="button" onclick="moveProductImage('${img.id}', 1, '${groupKey}')" title="Сдвинуть вправо" ${indexInGroup === groupImages.length - 1 ? 'disabled' : ''} style="flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:var(--radius);cursor:pointer;font-size:0.7rem;padding:0.25rem 0;${indexInGroup === groupImages.length - 1 ? 'opacity:0.3;cursor:default;' : ''}">▶</button>
+                </div>
+                ${currentProductColors.length > 0 ? `
+                <select onchange="setProductImageColor('${img.id}', this.value)" style="width:100%;margin-top:0.3rem;font-size:0.65rem;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:var(--radius);padding:0.2rem;">
+                    <option value="">Без цвета</option>
+                    ${currentProductColors.map(c => `<option value="${c.id}" ${img.colorId === c.id ? 'selected' : ''}>${c.name_ru || c.name}</option>`).join('')}
+                </select>
+                ` : ''}
+            </div>
+            `;
         }
 
         function renderProductImagesGallery(images) {
@@ -725,38 +845,61 @@
                 gallery.innerHTML = '<p style="font-size:0.75rem;color:var(--text-muted);">Фото пока не загружены.</p>';
                 return;
             }
-            gallery.innerHTML = images.map((img, index) => {
-                const isPrimary = img.isPrimary || img.is_primary;
-                return `
-                <div style="width:84px;">
-                    <div style="position:relative;width:84px;height:84px;">
-                        <img src="${img.url || img.image_url}" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);border:1px solid var(--border);${isPrimary ? 'outline:2px solid var(--gold);' : ''}">
-                        <button type="button" onclick="deleteProductImage('${img.id}')" title="Удалить" style="position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(--error);color:white;border:none;cursor:pointer;font-size:0.7rem;line-height:1;">✕</button>
-                        ${isPrimary ? '<span style="position:absolute;bottom:2px;left:2px;background:var(--gold);color:#0a0a0a;font-size:0.5rem;padding:0.1rem 0.35rem;border-radius:2px;text-transform:uppercase;letter-spacing:0.03em;">Основное</span>' : ''}
-                    </div>
-                    <div style="display:flex;gap:0.2rem;margin-top:0.3rem;">
-                        <button type="button" onclick="moveProductImage('${img.id}', -1)" title="Сдвинуть влево" ${index === 0 ? 'disabled' : ''} style="flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:var(--radius);cursor:pointer;font-size:0.7rem;padding:0.25rem 0;${index === 0 ? 'opacity:0.3;cursor:default;' : ''}">◀</button>
-                        <button type="button" onclick="setProductImagePrimary('${img.id}')" title="Сделать основным" ${isPrimary ? 'disabled' : ''} style="flex:1;background:var(--bg);border:1px solid var(--border);color:${isPrimary ? 'var(--gold)' : 'var(--text)'};border-radius:var(--radius);cursor:pointer;font-size:0.7rem;padding:0.25rem 0;${isPrimary ? 'opacity:0.5;cursor:default;' : ''}">★</button>
-                        <button type="button" onclick="moveProductImage('${img.id}', 1)" title="Сдвинуть вправо" ${index === images.length - 1 ? 'disabled' : ''} style="flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:var(--radius);cursor:pointer;font-size:0.7rem;padding:0.25rem 0;${index === images.length - 1 ? 'opacity:0.3;cursor:default;' : ''}">▶</button>
-                    </div>
-                </div>
+
+            // No colors defined yet — one flat gallery, same as before.
+            if (currentProductColors.length === 0) {
+                gallery.innerHTML = images.map(img => renderImageThumb(img, images, '')).join('');
+                return;
+            }
+
+            // Colors exist — group photos by color so it's obvious which
+            // photos a shopper will see when they flip through a given
+            // color, and reorder within each group independently.
+            const groups = [
+                { key: '', label: 'Без цвета', hex: null, images: images.filter(img => !img.colorId) },
+                ...currentProductColors.map(c => ({
+                    key: c.id, label: c.name_ru || c.name, hex: c.hex_code || c.hex,
+                    images: images.filter(img => img.colorId === c.id)
+                }))
+            ];
+
+            gallery.innerHTML = groups.map(g => {
+                const heading = `
+                    <p style="width:100%;font-size:0.7rem;color:var(--text-muted);display:flex;align-items:center;gap:0.35rem;margin:0.6rem 0 0.3rem;">
+                        ${g.hex ? `<span style="width:10px;height:10px;border-radius:50%;background:${g.hex};display:inline-block;border:1px solid var(--border);"></span>` : ''}
+                        ${g.label}${g.images.length === 0 ? ' — фото не назначены' : ''}
+                    </p>
                 `;
+                if (g.images.length === 0) {
+                    return g.key === '' ? '' : heading;
+                }
+                return heading + g.images.map(img => renderImageThumb(img, g.images, g.key)).join('');
             }).join('');
         }
 
-        async function moveProductImage(imageId, direction) {
+        async function moveProductImage(imageId, direction, groupKey) {
             const id = document.getElementById('product-id').value;
             const product = allProducts.find(p => p.id === id);
             if (!product || !product.images) return;
-            const images = [...product.images];
-            const index = images.findIndex(img => img.id === imageId);
-            const newIndex = index + direction;
-            if (index === -1 || newIndex < 0 || newIndex >= images.length) return;
-            [images[index], images[newIndex]] = [images[newIndex], images[index]];
-            renderProductImagesGallery(images);
+            const fullImages = [...product.images];
+
+            // Swap the image only with its neighbor within the same color
+            // group, then splice the group back into its original slots in
+            // the full list so every other image's relative order is
+            // untouched.
+            const groupIndices = [];
+            fullImages.forEach((img, i) => { if ((img.colorId || '') === (groupKey || '')) groupIndices.push(i); });
+            const groupImages = groupIndices.map(i => fullImages[i]);
+            const posInGroup = groupImages.findIndex(img => img.id === imageId);
+            const newPosInGroup = posInGroup + direction;
+            if (posInGroup === -1 || newPosInGroup < 0 || newPosInGroup >= groupImages.length) return;
+            [groupImages[posInGroup], groupImages[newPosInGroup]] = [groupImages[newPosInGroup], groupImages[posInGroup]];
+            groupIndices.forEach((fullIdx, gi) => { fullImages[fullIdx] = groupImages[gi]; });
+
+            renderProductImagesGallery(fullImages);
             try {
                 await fetch(`${API_BASE}/admin/products/${id}/images/reorder`, {
-                    method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ order: images.map(img => img.id) })
+                    method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ order: fullImages.map(img => img.id) })
                 });
                 await loadProducts();
                 const updated = allProducts.find(p => p.id === id);
@@ -776,6 +919,21 @@
                 const updated = allProducts.find(p => p.id === id);
                 if (updated) renderProductImagesGallery(updated.images || []);
                 showToast('Основное фото изменено', 'success');
+            } catch (err) {
+                showToast('Ошибка', 'error');
+            }
+        }
+
+        async function setProductImageColor(imageId, colorId) {
+            const id = document.getElementById('product-id').value;
+            try {
+                await fetch(`${API_BASE}/admin/products/${id}/images/${imageId}/color`, {
+                    method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ colorId: colorId || null })
+                });
+                await loadProducts();
+                const updated = allProducts.find(p => p.id === id);
+                if (updated) renderProductImagesGallery(updated.images || []);
+                showToast('Цвет фото обновлён', 'success');
             } catch (err) {
                 showToast('Ошибка', 'error');
             }
@@ -854,10 +1012,10 @@
                 descriptionEn: document.getElementById('product-desc-en').value,
                 shortDescriptionRu: document.getElementById('product-short-desc-ru').value,
                 shortDescriptionEn: document.getElementById('product-short-desc-en').value,
-                price: parseFloat(document.getElementById('product-price').value),
+                price: parseFloat(document.getElementById('product-price').value) || null,
                 oldPrice: parseFloat(document.getElementById('product-old-price').value) || null,
                 categoryId: document.getElementById('product-category').value || null,
-                materialId: document.getElementById('product-material').value || null,
+                materialIds: Array.from(document.querySelectorAll('.product-material-checkbox:checked')).map(cb => cb.value),
                 stock: stock,
                 sizes: sizes,
                 madeToOrder: madeToOrder,
@@ -865,7 +1023,7 @@
                 featured: document.getElementById('product-featured').checked
             };
 
-            if (!productData.slug || !productData.sku || !productData.nameEn || !productData.price) {
+            if (!productData.slug || !productData.sku || !productData.nameEn) {
                 showToast('Заполните все обязательные поля', 'error');
                 return;
             }
@@ -893,7 +1051,10 @@
                         document.getElementById('product-id').value = data.data.product.id;
                         document.getElementById('product-modal-title').textContent = 'Редактировать товар';
                         document.getElementById('product-images-section').style.display = 'flex';
+                        document.getElementById('product-colors-section').style.display = 'block';
                         document.getElementById('product-images-hint').style.display = 'none';
+                        currentProductColors = [];
+                        renderProductColors([]);
                         renderProductImagesGallery([]);
                     }
                     loadProducts();
@@ -943,9 +1104,12 @@
                 const res = await fetch(`${API_BASE}/materials`);
                 const data = await res.json();
                 if (data.success) {
-                    const select = document.getElementById('product-material');
-                    select.innerHTML = '<option value="">Выбрать...</option>' +
-                        data.data.materials.map(m => `<option value="${m.id}">${m.name_ru}</option>`).join('');
+                    const container = document.getElementById('product-materials-checkboxes');
+                    container.innerHTML = data.data.materials.map(m => `
+                        <label style="display:flex;align-items:center;gap:0.35rem;cursor:pointer;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:0.4rem 0.7rem;font-size:0.8rem;">
+                            <input type="checkbox" class="product-material-checkbox" value="${m.id}">${m.name_ru}
+                        </label>
+                    `).join('');
                 }
             } catch (err) {}
         }

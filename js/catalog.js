@@ -13,6 +13,18 @@ const MATERIAL_TONE = {
     suede: 'cognac'
 };
 
+// The browser's automatic scroll restoration fires before the (async,
+// fetch-driven) product grid has finished rendering, so it restores
+// against a still-empty/short page and lands at the top regardless of
+// where the user actually was. Take manual control instead — see
+// SANDUKHAR.catalog.restoreScrollIfReturning().
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+window.addEventListener('pagehide', () => {
+    try { sessionStorage.setItem('sd_catalog_scroll', String(window.scrollY)); } catch (e) {}
+});
+
 // categoryChildren: parent category slug -> its subcategory slugs, built at
 // runtime from the categories API (see buildCategoryChildren). A product
 // filed under a subcategory should still count toward and show up under
@@ -41,21 +53,26 @@ function sdT(key, fallback) {
 
 function sdBadge(product) {
     if (product.made_to_order) return `<span class="product-badge made-to-order">${sdT('catalog_made_to_order', 'Made to Order')}</span>`;
-    if (product.stock > 0 && product.stock <= 5) return `<span class="product-badge in-stock">${sdT('catalog_few_left', 'Only Few Left')}</span>`;
     return '';
 }
 
 function sdProductCardHTML(product) {
     const availability = sdAvailability(product);
-    const color = MATERIAL_TONE[product.material_slug] || 'natural';
+    const materials = product.materials || [];
+    const color = MATERIAL_TONE[materials[0]?.slug] || 'natural';
+    const materialSlugs = materials.map(m => m.slug).join(',');
+    const materialNames = materials.map(m => m.name).join(', ');
     const lang = sdLang();
     const name = (lang === 'ru' ? product.name_ru : product.name_en) || product.name_en;
-    const image = (product.images && product.images.length)
-        ? `<img src="${product.images[0].url}" alt="${name}" loading="lazy">`
+    const primaryImage = product.images && product.images.length
+        ? (product.images.find(img => img.isPrimary) || product.images[0])
+        : null;
+    const image = primaryImage
+        ? `<img src="${primaryImage.url}" alt="${name}" loading="lazy">`
         : (window.SANDUKHAR ? window.SANDUKHAR.media.placeholder(name) : '');
 
     return `
-        <div class="product-card" data-product-id="${product.id}" data-category="${product.category_slug || ''}" data-material="${product.material_slug || ''}" data-color="${color}" data-availability="${availability}">
+        <div class="product-card" data-product-id="${product.id}" data-category="${product.category_slug || ''}" data-material="${materialSlugs}" data-color="${color}" data-availability="${availability}">
             <a href="product.html?slug=${product.slug}" class="product-card-link">
                 <div class="product-card-image">
                     ${image}
@@ -69,7 +86,7 @@ function sdProductCardHTML(product) {
                 </div>
                 <div class="product-card-info">
                     <h3 class="product-card-name">${name}</h3>
-                    <p class="product-card-material">${product.material_name || ''}</p>
+                    <p class="product-card-material">${materialNames}</p>
                 </div>
             </a>
         </div>`;
@@ -78,6 +95,7 @@ function sdProductCardHTML(product) {
 // ========== ОСНОВНОЙ МОДУЛЬ ==========
 SANDUKHAR.catalog = {
     productsGrid: null,
+    productsCards: null,
     productCards: [],
     sidebar: null,
     sidebarOverlay: null,
@@ -111,6 +129,24 @@ SANDUKHAR.catalog = {
         this.bindEvents();
         this.applyInitialFilters();
         this.updateResults();
+        this.restoreScrollIfReturning();
+    },
+
+    // If this load is the result of the browser's Back/Forward button
+    // (rather than a fresh visit), scroll back to where the user was —
+    // by then the filters/sort/page above already match the URL, so the
+    // grid is the same height it was when they left.
+    restoreScrollIfReturning: function () {
+        const navEntries = typeof performance !== 'undefined' && performance.getEntriesByType
+            ? performance.getEntriesByType('navigation') : [];
+        const isBackForward = navEntries[0] && navEntries[0].type === 'back_forward';
+        if (!isBackForward) return;
+        let savedY = null;
+        try { savedY = sessionStorage.getItem('sd_catalog_scroll'); } catch (e) {}
+        if (savedY === null) return;
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => window.scrollTo(0, parseInt(savedY, 10)));
+        });
     },
 
     showLoadingState: function () {
@@ -155,7 +191,7 @@ SANDUKHAR.catalog = {
 
     fetchProducts: async function () {
         try {
-            const res = await fetch(`${window.SD_API.baseURL}/products?limit=100&locale=${sdLang()}`);
+            const res = await fetch(`${window.SD_API.baseURL}/products?limit=1000&locale=${sdLang()}`);
             const data = await res.json();
             this.allProducts = (data.success && data.data.products) ? data.data.products : [];
         } catch (error) {
@@ -163,7 +199,8 @@ SANDUKHAR.catalog = {
             this.allProducts = [];
         }
 
-        this.productsGrid.innerHTML = this.allProducts.map(sdProductCardHTML).join('')
+        this.productsGrid.innerHTML = '<div class="products-cards" id="products-cards">'
+            + this.allProducts.map(sdProductCardHTML).join('') + '</div>'
             + this.emptyStateMarkup() + this.paginationMarkup();
 
         this.updateFilterOptionCounts();
@@ -227,12 +264,11 @@ SANDUKHAR.catalog = {
 
     updateFilterOptionCounts: function () {
         if (!this.sidebar) return;
-        this.sidebar.querySelectorAll('input[name="category"], input[name="material"]').forEach(input => {
-            const attr = input.name === 'category' ? 'category_slug' : 'material_slug';
-            const matchValues = input.name === 'category' && this.categoryChildren[input.value]
+        this.sidebar.querySelectorAll('input[name="category"]').forEach(input => {
+            const matchValues = this.categoryChildren[input.value]
                 ? [input.value, ...this.categoryChildren[input.value]]
                 : [input.value];
-            const count = this.allProducts.filter(p => matchValues.includes(p[attr])).length;
+            const count = this.allProducts.filter(p => matchValues.includes(p.category_slug)).length;
             const countEl = input.closest('.filter-option')?.querySelector('.option-count');
             if (countEl) countEl.textContent = count;
         });
@@ -251,6 +287,7 @@ SANDUKHAR.catalog = {
     },
 
     collectProductData: function () {
+        this.productsCards = document.getElementById('products-cards');
         this.pagination = document.getElementById('catalog-pagination');
         this.emptyState = document.getElementById('catalog-empty');
         this.productCards = Array.from(this.productsGrid.querySelectorAll('.product-card'));
@@ -272,6 +309,7 @@ SANDUKHAR.catalog = {
                 this.applySorting();
                 this.currentPage = 1;
                 this.updateResultsDisplay();
+                this.syncUrlWithState();
             });
         }
 
@@ -313,14 +351,19 @@ SANDUKHAR.catalog = {
         this.currentPage = 1;
         this.applyAllFilters();
         this.updateResultsDisplay();
+        this.updatePagination(Math.ceil(this.filteredProducts.length / this.productsPerPage));
         this.updateActiveFilterTags();
         this.updateFilterCount();
+        this.syncUrlWithState();
     },
 
     applyAllFilters: function () {
         this.filteredProducts = this.productCards.filter(card => {
             if (this.activeFilters['category']?.length && !categoryMatchesFilter(card.getAttribute('data-category'), this.activeFilters['category'], this.categoryChildren)) return false;
-            if (this.activeFilters['material']?.length && !this.activeFilters['material'].includes(card.getAttribute('data-material'))) return false;
+            if (this.activeFilters['material']?.length) {
+                const cardMaterials = (card.getAttribute('data-material') || '').split(',').filter(Boolean);
+                if (!this.activeFilters['material'].some(m => cardMaterials.includes(m))) return false;
+            }
             if (this.activeFilters['availability']?.length && !this.activeFilters['availability'].includes(card.getAttribute('data-availability'))) return false;
             return true;
         });
@@ -351,14 +394,13 @@ SANDUKHAR.catalog = {
         // them. Re-append in the current sorted order (then any filtered-out
         // cards after) so the grid's visual order actually matches.
         const hidden = this.productCards.filter(c => !this.filteredProducts.includes(c));
-        const referenceNode = this.emptyState || this.pagination || null;
-        this.filteredProducts.concat(hidden).forEach(c => this.productsGrid.insertBefore(c, referenceNode));
+        this.filteredProducts.concat(hidden).forEach(c => this.productsCards.appendChild(c));
 
+        this.productCards.forEach(c => c.style.display = 'none');
         if (total === 0) { this.showEmptyState(); return; }
         this.hideEmptyState();
         const start = (this.currentPage - 1) * this.productsPerPage;
         const pageProducts = this.filteredProducts.slice(start, start + this.productsPerPage);
-        this.productCards.forEach(c => c.style.display = 'none');
         pageProducts.forEach(c => c.style.display = '');
     },
 
@@ -388,6 +430,7 @@ SANDUKHAR.catalog = {
         this.currentPage = page;
         this.updateResultsDisplay();
         this.updatePagination(Math.ceil(this.filteredProducts.length / this.productsPerPage));
+        this.syncUrlWithState();
         if (this.productsGrid) this.productsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
     },
 
@@ -395,7 +438,7 @@ SANDUKHAR.catalog = {
         this.viewButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         this.currentView = btn.getAttribute('data-view');
-        this.productsGrid.classList.toggle('list-view', this.currentView === 'list');
+        this.productsCards.classList.toggle('list-view', this.currentView === 'list');
     },
 
     showEmptyState: function () {
@@ -444,6 +487,7 @@ SANDUKHAR.catalog = {
         this.updateResults();
         this.updateActiveFilterTags();
         this.updateFilterCount();
+        this.syncUrlWithState();
     },
 
     clearAllFilters: function () {
@@ -457,6 +501,7 @@ SANDUKHAR.catalog = {
         this.updateActiveFilterTags();
         this.updateFilterCount();
         this.closeSidebar();
+        this.syncUrlWithState();
     },
 
     updateFilterCount: function () {
@@ -467,13 +512,39 @@ SANDUKHAR.catalog = {
         this.filterCount.classList.toggle('active', count > 0);
     },
 
+    // Reflects the current filters/sort/page in the URL (no navigation,
+    // no new history entry) so that reloading — including the browser's
+    // Back button landing back on this page — reconstructs the same view
+    // instead of resetting to an unfiltered page 1.
+    syncUrlWithState: function () {
+        const params = new URLSearchParams();
+        ['category', 'material', 'availability'].forEach(type => {
+            if (this.activeFilters[type]?.length) params.set(type, this.activeFilters[type].join(','));
+        });
+        if (this.currentSort && this.currentSort !== 'featured') params.set('sort', this.currentSort);
+        if (this.currentPage > 1) params.set('page', this.currentPage);
+        const qs = params.toString();
+        const newUrl = window.location.pathname + (qs ? '?' + qs : '');
+        history.replaceState(history.state, '', newUrl);
+    },
+
     applyInitialFilters: function () {
         const params = new URLSearchParams(window.location.search);
         if (params.has('search')) { const q = params.get('search'); if (q?.trim().length >= 2) { this.performSearch(q.trim()); return; } }
-        ['category', 'material'].forEach(type => {
-            if (params.has(type)) { const val = params.get(type); this.activeFilters[type] = [val]; this.syncCheckbox(type, val); }
+        ['category', 'material', 'availability'].forEach(type => {
+            if (params.has(type)) {
+                const values = params.get(type).split(',').filter(Boolean);
+                this.activeFilters[type] = values;
+                values.forEach(val => this.syncCheckbox(type, val));
+            }
         });
         if (params.has('collection')) this.activeFilters['collection'] = [params.get('collection')];
+        if (params.has('sort')) {
+            this.currentSort = params.get('sort');
+            if (this.sortSelect) this.sortSelect.value = this.currentSort;
+        }
+        const pageParam = parseInt(params.get('page'), 10);
+        if (pageParam > 1) this.currentPage = pageParam;
         this.updateActiveFilterTags();
         this.updateFilterCount();
         this.updateResults();

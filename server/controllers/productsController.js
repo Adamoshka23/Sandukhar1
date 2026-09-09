@@ -26,8 +26,18 @@ const productsController = {
                 SELECT p.*,
                        c.slug as category_slug,
                        c.name_${locale} as category_name,
-                       m.slug as material_slug,
-                       m.name_${locale} as material_name,
+                       COALESCE(
+                           (SELECT json_agg(json_build_object('id', m.id, 'slug', m.slug, 'name', m.name_${locale}) ORDER BY m.sort_order)
+                            FROM product_materials pm JOIN materials m ON pm.material_id = m.id
+                            WHERE pm.product_id = p.id),
+                           '[]'::json
+                       ) as materials,
+                       COALESCE(
+                           (SELECT json_agg(json_build_object('id', pc.id, 'name', pc.name_${locale}, 'hex', pc.hex_code) ORDER BY pc.sort_order)
+                            FROM product_colors pc
+                            WHERE pc.product_id = p.id),
+                           '[]'::json
+                       ) as colors,
                        COALESCE(
                            json_agg(
                                json_build_object(
@@ -35,14 +45,14 @@ const productsController = {
                                    'url', pi.image_url,
                                    'thumbnail', pi.thumbnail_url,
                                    'alt', pi.alt_text_${locale},
-                                   'isPrimary', pi.is_primary
+                                   'isPrimary', pi.is_primary,
+                                   'colorId', pi.color_id
                                ) ORDER BY pi.sort_order
                            ) FILTER (WHERE pi.id IS NOT NULL),
                            '[]'::json
                        ) as images
                 FROM products p
                 LEFT JOIN categories c ON p.category_id = c.id
-                LEFT JOIN materials m ON p.material_id = m.id
                 LEFT JOIN product_images pi ON p.id = pi.product_id
                 WHERE p.status = 'active'
             `;
@@ -58,7 +68,7 @@ const productsController = {
 
             if (material) {
                 paramCount++;
-                sql += ` AND m.slug = $${paramCount}`;
+                sql += ` AND EXISTS (SELECT 1 FROM product_materials pm2 JOIN materials m2 ON pm2.material_id = m2.id WHERE pm2.product_id = p.id AND m2.slug = $${paramCount})`;
                 params.push(material);
             }
 
@@ -72,7 +82,7 @@ const productsController = {
                 params.push(`%${search}%`);
             }
 
-            sql += ` GROUP BY p.id, c.slug, c.name_${locale}, m.slug, m.name_${locale}`;
+            sql += ` GROUP BY p.id, c.slug, c.name_${locale}`;
 
             // Sorting
             const allowedSorts = ['price', 'created_at', 'name_en', 'name_ru'];
@@ -94,7 +104,6 @@ const productsController = {
                 SELECT COUNT(DISTINCT p.id) as total
                 FROM products p
                 LEFT JOIN categories c ON p.category_id = c.id
-                LEFT JOIN materials m ON p.material_id = m.id
                 WHERE p.status = 'active'
             `;
             const countParams = [];
@@ -107,7 +116,7 @@ const productsController = {
             }
             if (material) {
                 countParamCount++;
-                countSql += ` AND m.slug = $${countParamCount}`;
+                countSql += ` AND EXISTS (SELECT 1 FROM product_materials pm2 JOIN materials m2 ON pm2.material_id = m2.id WHERE pm2.product_id = p.id AND m2.slug = $${countParamCount})`;
                 countParams.push(material);
             }
             if (search) {
@@ -152,15 +161,26 @@ const productsController = {
                 SELECT p.*,
                        c.slug as category_slug,
                        c.name_${locale} as category_name,
-                       m.slug as material_slug,
-                       m.name_${locale} as material_name,
+                       COALESCE(
+                           (SELECT json_agg(json_build_object('id', m.id, 'slug', m.slug, 'name', m.name_${locale}) ORDER BY m.sort_order)
+                            FROM product_materials pm JOIN materials m ON pm.material_id = m.id
+                            WHERE pm.product_id = p.id),
+                           '[]'::json
+                       ) as materials,
+                       COALESCE(
+                           (SELECT json_agg(json_build_object('id', pc.id, 'name', pc.name_${locale}, 'hex', pc.hex_code) ORDER BY pc.sort_order)
+                            FROM product_colors pc
+                            WHERE pc.product_id = p.id),
+                           '[]'::json
+                       ) as colors,
                        COALESCE(
                            json_agg(
                                json_build_object(
                                    'id', pi.id, 'url', pi.image_url,
                                    'thumbnail', pi.thumbnail_url,
                                    'alt', pi.alt_text_${locale},
-                                   'isPrimary', pi.is_primary
+                                   'isPrimary', pi.is_primary,
+                                   'colorId', pi.color_id
                                ) ORDER BY pi.sort_order
                            ) FILTER (WHERE pi.id IS NOT NULL),
                            '[]'::json
@@ -177,11 +197,10 @@ const productsController = {
                        ) as videos
                 FROM products p
                 LEFT JOIN categories c ON p.category_id = c.id
-                LEFT JOIN materials m ON p.material_id = m.id
                 LEFT JOIN product_images pi ON p.id = pi.product_id
                 LEFT JOIN product_videos pv ON p.id = pv.product_id
                 WHERE p.slug = $1 AND p.status = 'active'
-                GROUP BY p.id, c.slug, c.name_${locale}, m.slug, m.name_${locale}
+                GROUP BY p.id, c.slug, c.name_${locale}
             `, [slug]);
 
             if (result.rows.length === 0) {

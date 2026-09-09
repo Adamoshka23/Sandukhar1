@@ -74,11 +74,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.1s ease-out, opacity 0.3s ease;
-}
-
-.gallery-main-image img:hover {
-    transform: scale(1.8);
+    transition: opacity 0.3s ease;
 }
 
 .gallery-badge {
@@ -146,6 +142,44 @@
     background: var(--color-white);
     color: var(--color-black);
     border-color: var(--color-white);
+}
+
+.gallery-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    z-index: 2;
+}
+
+.gallery-nav-btn:hover {
+    background: var(--color-white);
+    color: var(--color-black);
+    border-color: var(--color-white);
+}
+
+.gallery-nav-btn:active {
+    transform: translateY(-50%) scale(0.92);
+}
+
+.gallery-nav-prev {
+    left: 1rem;
+}
+
+.gallery-nav-next {
+    right: 1rem;
 }
 
 /* Gallery Thumbnails */
@@ -256,19 +290,19 @@
 
 .option-values {
     display: flex;
-    gap: 0.6rem;
+    gap: 0.5rem;
     flex-wrap: wrap;
 }
 
 .color-option {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     border: 2px solid transparent;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
     position: relative;
-    padding: 0;
+    padding: 3px;
     -webkit-appearance: none;
     appearance: none;
     background: none;
@@ -281,10 +315,15 @@
     border-radius: 50%;
     overflow: hidden;
     pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
 }
 
 .color-option:hover {
-    transform: scale(1.1);
+    transform: scale(1.08);
+}
+
+.color-option:active {
+    transform: scale(0.94);
 }
 
 .color-option.active {
@@ -339,7 +378,7 @@
     transition: all var(--transition-fast);
 }
 
-.size-option:hover:not(.sold-out) {
+.size-option:hover {
     border-color: var(--color-gold);
     color: var(--color-white);
 }
@@ -348,13 +387,6 @@
     border-color: var(--color-gold);
     color: var(--color-gold);
     background: var(--color-gold-pale);
-}
-
-.size-option.sold-out {
-    color: var(--color-text-muted);
-    text-decoration: line-through;
-    cursor: not-allowed;
-    opacity: 0.5;
 }
 
 .size-select-hint {
@@ -741,9 +773,6 @@
         grid-template-columns: 1fr 1fr;
     }
 
-    .gallery-main-image img:hover {
-        transform: scale(1.4);
-    }
 }
 
 @media screen and (max-width: 767px) {

@@ -15,6 +15,10 @@ const environment = {
     DB_NAME: process.env.DB_NAME || 'sandukhar',
     DB_USER: process.env.DB_USER || 'sandukhar_admin',
     DB_PASSWORD: process.env.DB_PASSWORD || '',
+    // Most self-hosted/single-server Postgres setups (including a plain
+    // VPS install) don't have SSL configured — only turn this on for a
+    // managed database provider that requires it.
+    DB_SSL: process.env.DB_SSL === 'true',
 
     JWT_SECRET: process.env.JWT_SECRET || 'dev-secret-change-in-production',
     JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || '7d',

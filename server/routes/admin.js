@@ -53,18 +53,33 @@ router.get('/products/next-sku', async (req, res) => {
     }
 });
 
+// Replaces this product's rows in the product_materials join table to
+// match materialIds exactly. Pass undefined to leave materials untouched
+// (e.g. a PATCH-style update that doesn't mention materials at all).
+async function syncProductMaterials(productId, materialIds) {
+    if (materialIds === undefined) return;
+    await query('DELETE FROM product_materials WHERE product_id = $1', [productId]);
+    const ids = Array.isArray(materialIds) ? materialIds.filter(Boolean) : [];
+    if (ids.length === 0) return;
+    await Promise.all(ids.map(materialId =>
+        query('INSERT INTO product_materials (product_id, material_id) VALUES ($1, $2) ON CONFLICT DO NOTHING', [productId, materialId])
+    ));
+}
+
 router.post('/products', async (req, res) => {
     try {
         const {
             slug, sku, nameRu, nameEn, descriptionRu, descriptionEn,
             shortDescriptionRu, shortDescriptionEn,
-            price, oldPrice, categoryId, materialId, stock, status, featured,
+            price, oldPrice, categoryId, materialIds, stock, status, featured,
             madeToOrder, colors, sizes, hardwareOptions, specifications
         } = req.body;
 
-        if (!slug || !sku || !nameEn || !price) {
-            return res.status(400).json({ success: false, message: 'Slug, SKU, name (EN) and price are required' });
+        if (!slug || !sku || !nameEn) {
+            return res.status(400).json({ success: false, message: 'Slug, SKU and name (EN) are required' });
         }
+
+        const primaryMaterialId = Array.isArray(materialIds) && materialIds.length > 0 ? materialIds[0] : null;
 
         const result = await query(
             `INSERT INTO products (id, slug, sku, name_ru, name_en, description_ru, description_en,
@@ -76,11 +91,13 @@ router.post('/products', async (req, res) => {
             [
                 uuidv4(), slug, sku, nameRu || null, nameEn, descriptionRu || null, descriptionEn || null,
                 shortDescriptionRu || null, shortDescriptionEn || null,
-                price, oldPrice || null, categoryId || null, materialId || null, stock || 0, status || 'active', featured || false,
+                price || null, oldPrice || null, categoryId || null, primaryMaterialId, stock || 0, status || 'active', featured || false,
                 madeToOrder || false, JSON.stringify(colors || []), JSON.stringify(sizes || []),
                 JSON.stringify(hardwareOptions || []), JSON.stringify(specifications || [])
             ]
         );
+
+        await syncProductMaterials(result.rows[0].id, materialIds);
 
         res.status(201).json({ success: true, data: { product: result.rows[0] } });
     } catch (error) {
@@ -97,9 +114,11 @@ router.put('/products/:id', async (req, res) => {
         const {
             slug, sku, nameRu, nameEn, descriptionRu, descriptionEn,
             shortDescriptionRu, shortDescriptionEn,
-            price, oldPrice, categoryId, materialId, stock, status, featured,
+            price, oldPrice, categoryId, materialIds, stock, status, featured,
             madeToOrder, colors, sizes, hardwareOptions, specifications
         } = req.body;
+
+        const primaryMaterialId = Array.isArray(materialIds) && materialIds.length > 0 ? materialIds[0] : null;
 
         const result = await query(
             `UPDATE products SET
@@ -107,7 +126,7 @@ router.put('/products/:id', async (req, res) => {
                 name_ru = COALESCE($4, name_ru), name_en = COALESCE($5, name_en),
                 description_ru = COALESCE($6, description_ru), description_en = COALESCE($7, description_en),
                 short_description_ru = COALESCE($8, short_description_ru), short_description_en = COALESCE($9, short_description_en),
-                price = COALESCE($10, price), old_price = $11,
+                price = $10, old_price = $11,
                 category_id = $12, material_id = $13,
                 stock = COALESCE($14, stock), status = COALESCE($15, status),
                 featured = COALESCE($16, featured),
@@ -118,7 +137,7 @@ router.put('/products/:id', async (req, res) => {
             [
                 id, slug, sku, nameRu, nameEn, descriptionRu, descriptionEn,
                 shortDescriptionRu, shortDescriptionEn,
-                price, oldPrice, categoryId, materialId, stock, status, featured,
+                price, oldPrice, categoryId, primaryMaterialId, stock, status, featured,
                 madeToOrder, colors ? JSON.stringify(colors) : null, sizes ? JSON.stringify(sizes) : null,
                 hardwareOptions ? JSON.stringify(hardwareOptions) : null, specifications ? JSON.stringify(specifications) : null
             ]
@@ -127,6 +146,8 @@ router.put('/products/:id', async (req, res) => {
         if (result.rows.length === 0) {
             return res.status(404).json({ success: false, message: 'Product not found' });
         }
+
+        await syncProductMaterials(id, materialIds);
 
         res.json({ success: true, data: { product: result.rows[0] } });
     } catch (error) {
@@ -221,6 +242,78 @@ router.delete('/products/:id/images/:imageId', async (req, res) => {
         const { imageId } = req.params;
         await query('DELETE FROM product_images WHERE id = $1', [imageId]);
         res.json({ success: true, message: 'Image deleted' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// Assigns (or clears, with colorId: null) which color variant a gallery
+// image belongs to — lets the storefront swap photos when a shopper
+// picks a color.
+router.patch('/products/:id/images/:imageId/color', async (req, res) => {
+    try {
+        const { id, imageId } = req.params;
+        const { colorId } = req.body;
+        const result = await query(
+            'UPDATE product_images SET color_id = $1 WHERE id = $2 AND product_id = $3 RETURNING id',
+            [colorId || null, imageId, id]
+        );
+        if (result.rows.length === 0) return res.status(404).json({ success: false, message: 'Image not found' });
+        res.json({ success: true, message: 'Image color updated' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// ============================================================
+// PRODUCT COLORS
+// ============================================================
+router.post('/products/:id/colors', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { nameRu, nameEn, hexCode } = req.body;
+        if (!nameEn && !nameRu) {
+            return res.status(400).json({ success: false, message: 'A color name (EN or RU) is required' });
+        }
+        // Only one language given — reuse it for the other so the color
+        // still works everywhere; the admin can fill in the translation later.
+        const finalNameEn = nameEn || nameRu;
+        const finalNameRu = nameRu || nameEn;
+        const sortResult = await query('SELECT COALESCE(MAX(sort_order), -1) + 1 as next_order FROM product_colors WHERE product_id = $1', [id]);
+        const result = await query(
+            `INSERT INTO product_colors (id, product_id, name_ru, name_en, hex_code, sort_order)
+             VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+            [uuidv4(), id, finalNameRu, finalNameEn, hexCode || '#000000', sortResult.rows[0].next_order]
+        );
+        res.status(201).json({ success: true, data: { color: result.rows[0] } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.put('/products/:id/colors/:colorId', async (req, res) => {
+    try {
+        const { id, colorId } = req.params;
+        const { nameRu, nameEn, hexCode } = req.body;
+        const result = await query(
+            `UPDATE product_colors SET
+                name_ru = COALESCE($3, name_ru), name_en = COALESCE($4, name_en),
+                hex_code = COALESCE($5, hex_code)
+             WHERE id = $1 AND product_id = $2 RETURNING *`,
+            [colorId, id, nameRu || null, nameEn || null, hexCode || null]
+        );
+        if (result.rows.length === 0) return res.status(404).json({ success: false, message: 'Color not found' });
+        res.json({ success: true, data: { color: result.rows[0] } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.delete('/products/:id/colors/:colorId', async (req, res) => {
+    try {
+        const { id, colorId } = req.params;
+        await query('DELETE FROM product_colors WHERE id = $1 AND product_id = $2', [colorId, id]);
+        res.json({ success: true, message: 'Color deleted' });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

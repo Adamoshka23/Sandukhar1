@@ -3,9 +3,7 @@
   "configurations": [
     {
       "name": "frontend",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["scripts/dev-server.py", "5500"],
-      "port": 5500
+      "url": "http://localhost:5500"
     }
   ]
 }

@@ -89,7 +89,9 @@ CREATE TABLE products (
     description_en TEXT,
     short_description_ru TEXT,
     short_description_en TEXT,
-    price DECIMAL(12, 2) NOT NULL,
+    -- Nullable: pricing isn't shown on the storefront — the atelier quotes
+    -- each request directly, so a product can be listed with no price set.
+    price DECIMAL(12, 2),
     old_price DECIMAL(12, 2),
     category_id UUID REFERENCES categories(id) ON DELETE SET NULL,
     material_id UUID REFERENCES materials(id) ON DELETE SET NULL,
@@ -116,11 +118,44 @@ CREATE INDEX idx_products_featured ON products(featured);
 CREATE INDEX idx_products_slug ON products(slug);
 
 -- ============================================================
+-- PRODUCT MATERIALS (many-to-many)
+-- A product can be made from several materials. products.material_id
+-- above is kept only for historical/backward-compat reads — this table
+-- is the source of truth going forward.
+-- ============================================================
+CREATE TABLE product_materials (
+    product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    material_id UUID NOT NULL REFERENCES materials(id) ON DELETE CASCADE,
+    PRIMARY KEY (product_id, material_id)
+);
+
+CREATE INDEX idx_product_materials_material ON product_materials(material_id);
+
+-- ============================================================
+-- PRODUCT COLORS
+-- A product can be offered in several colors. Each color can have its
+-- own set of gallery photos (see product_images.color_id below) so the
+-- storefront can swap photos when a shopper picks a color.
+-- ============================================================
+CREATE TABLE product_colors (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    name_ru VARCHAR(100) NOT NULL,
+    name_en VARCHAR(100) NOT NULL,
+    hex_code VARCHAR(7) NOT NULL DEFAULT '#000000',
+    sort_order INTEGER DEFAULT 0,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX idx_product_colors_product ON product_colors(product_id);
+
+-- ============================================================
 -- PRODUCT GALLERY IMAGES
 -- ============================================================
 CREATE TABLE product_images (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    color_id UUID REFERENCES product_colors(id) ON DELETE SET NULL,
     image_url VARCHAR(500) NOT NULL,
     thumbnail_url VARCHAR(500),
     alt_text_ru VARCHAR(300),
@@ -129,6 +164,8 @@ CREATE TABLE product_images (
     is_primary BOOLEAN DEFAULT false,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
+
+CREATE INDEX idx_product_images_color ON product_images(color_id);
 
 -- ============================================================
 -- PRODUCT VIDEOS

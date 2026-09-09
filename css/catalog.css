@@ -449,14 +449,24 @@
     z-index: 99;
 }
 
-/* === Products Grid === */
+/* === Products Grid ===
+   #products-grid is the outer flex column: it holds the actual card
+   grid (.products-cards) plus the empty-state/pagination as siblings,
+   so pagination can be pinned to the bottom via margin-top:auto
+   regardless of how few cards there are. */
 .products-grid {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - var(--header-height-scrolled) - 100px);
+}
+
+.products-cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
 }
 
-.products-grid.list-view {
+.products-cards.list-view {
     grid-template-columns: 1fr;
     gap: 1rem;
 }
@@ -502,12 +512,6 @@
     background: transparent;
     border: 1px solid var(--color-gold);
     color: var(--color-gold);
-}
-
-.product-badge.in-stock {
-    background: rgba(90, 143, 106, 0.2);
-    border: 1px solid var(--color-success);
-    color: var(--color-success);
 }
 
 /* Wishlist Button on Card */
@@ -567,34 +571,34 @@
 }
 
 /* List View Product Card */
-.products-grid.list-view .product-card {
+.products-cards.list-view .product-card {
     border-bottom: 1px solid var(--color-border);
     padding-bottom: 1.5rem;
 }
 
-.products-grid.list-view .product-card-link {
+.products-cards.list-view .product-card-link {
     display: grid;
     grid-template-columns: 200px 1fr auto;
     gap: 1.5rem;
     align-items: center;
 }
 
-.products-grid.list-view .product-card-image {
+.products-cards.list-view .product-card-image {
     aspect-ratio: 1/1;
     margin-bottom: 0;
 }
 
-.products-grid.list-view .product-card-info {
+.products-cards.list-view .product-card-info {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
 }
 
-.products-grid.list-view .product-card-name {
-    font-size: 1.3rem;
+.products-cards.list-view .product-card-name {
+    font-size: 1.1rem;
 }
 
-.products-grid.list-view .btn-wishlist {
+.products-cards.list-view .btn-wishlist {
     position: static;
     opacity: 1;
     transform: none;
@@ -602,7 +606,6 @@
 
 /* === Catalog Empty State === */
 .catalog-empty {
-    grid-column: 1 / -1;
     text-align: center;
     padding: 5rem 2rem;
 }
@@ -629,12 +632,11 @@
 
 /* === Pagination === */
 .pagination {
-    grid-column: 1 / -1;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    margin-top: 3rem;
+    margin-top: auto;
     padding-top: 2rem;
     border-top: 1px solid var(--color-border);
 }
@@ -721,7 +723,7 @@
         gap: 2rem;
     }
 
-    .products-grid {
+    .products-cards {
         grid-template-columns: repeat(3, 1fr);
         gap: 1.25rem;
     }
@@ -761,7 +763,7 @@
         display: flex;
     }
 
-    .products-grid {
+    .products-cards {
         grid-template-columns: repeat(3, 1fr);
         gap: 1.25rem;
     }
@@ -777,12 +779,12 @@
 }
 
 @media screen and (max-width: 767px) {
-    .products-grid {
+    .products-cards {
         grid-template-columns: 1fr 1fr;
         gap: 1rem;
     }
 
-    .products-grid.list-view .product-card-link {
+    .products-cards.list-view .product-card-link {
         grid-template-columns: 120px 1fr;
         gap: 1rem;
     }
@@ -811,7 +813,7 @@
 }
 
 @media screen and (max-width: 479px) {
-    .products-grid {
+    .products-cards {
         grid-template-columns: 1fr 1fr;
         gap: 0.75rem;
     }

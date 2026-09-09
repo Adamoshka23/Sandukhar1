@@ -296,9 +296,13 @@ SANDUKHAR.quickView = {
             .then(data => {
                 if (!data.success) throw new Error('Not found');
                 const p = data.data.product;
-                const image = (p.images && p.images.length)
-                    ? `<img src="${p.images[0].url}" alt="${p.name_en}" style="width:100%;height:100%;object-fit:cover;">`
-                    : SANDUKHAR.media.placeholder(p.name_en, p.material_slug);
+                const firstMaterialSlug = p.materials && p.materials[0] ? p.materials[0].slug : null;
+                const primaryImage = p.images && p.images.length
+                    ? (p.images.find(img => img.isPrimary) || p.images[0])
+                    : null;
+                const image = primaryImage
+                    ? `<img src="${primaryImage.url}" alt="${p.name_en}" style="width:100%;height:100%;object-fit:cover;">`
+                    : SANDUKHAR.media.placeholder(p.name_en, firstMaterialSlug);
 
                 this.content.innerHTML = `
                     <div class="quick-view-layout">

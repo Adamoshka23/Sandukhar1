@@ -436,7 +436,9 @@ SANDUKHAR.cart = {
             : null;
         const variantSizeEl = document.getElementById('selected-size');
         const variantColorEl = document.getElementById('selected-color');
+        const hardwareGroupEl = document.getElementById('hardware-option-group');
         const variantHardwareEl = document.getElementById('selected-hardware');
+        const hardwareVisible = !hardwareGroupEl || hardwareGroupEl.style.display !== 'none';
         const imageEl =
             document.getElementById('main-product-image') ||
             (productSection ? productSection.querySelector('img') : null);
@@ -446,7 +448,7 @@ SANDUKHAR.cart = {
         const variantParts = [];
         if (variantSizeEl && variantSizeEl.textContent.trim()) variantParts.push('Size ' + variantSizeEl.textContent.trim());
         if (variantColorEl) variantParts.push(variantColorEl.textContent.trim());
-        if (variantHardwareEl) variantParts.push(variantHardwareEl.textContent.trim());
+        if (variantHardwareEl && hardwareVisible) variantParts.push(variantHardwareEl.textContent.trim());
         const variant = variantParts.join(' · ');
 
         const image = imageEl ? imageEl.getAttribute('src') : '';
