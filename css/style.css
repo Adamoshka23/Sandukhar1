@@ -1180,6 +1180,11 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: var(--letter-spacing-subtitle);
 }
 
+.product-card-price {
+    font-size: var(--font-size-card-title);
+    color: var(--color-gold);
+}
+
 /* === Materials Grid === */
 .materials-grid {
     display: grid;

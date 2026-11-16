@@ -405,11 +405,6 @@
     flex: 1;
 }
 
-.option-count {
-    font-size: var(--font-size-caption);
-    color: var(--color-text-muted);
-}
-
 /* Color Swatches */
 .color-options {
     flex-direction: row;

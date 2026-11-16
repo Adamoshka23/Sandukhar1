@@ -18,6 +18,15 @@ const routes = require('./routes/index');
 
 const app = express();
 
+// In production this process sits behind nginx on the same host, which
+// sets X-Forwarded-For — trust exactly that one hop so express-rate-limit
+// (and req.ip generally) see the real client IP instead of nginx's own.
+// A bare `true` would trust the header from any hop, which is wrong/unsafe
+// once this ever sits behind more than a single local reverse proxy.
+if (environment.NODE_ENV === 'production') {
+    app.set('trust proxy', 1);
+}
+
 // ============================================================
 // SECURITY MIDDLEWARE
 // ============================================================
@@ -52,7 +61,10 @@ app.use(cors({
     origin: function (origin, callback) {
         if (!origin) return callback(null, true); // curl, server-to-server, etc.
         if (origin === environment.CORS_ORIGIN) return callback(null, true);
-        if (LOCAL_ORIGIN_PATTERN.test(origin)) return callback(null, true);
+        // Only relax to any-localhost-port in development — in production
+        // this would needlessly widen who the API accepts credentialed
+        // requests from.
+        if (environment.NODE_ENV !== 'production' && LOCAL_ORIGIN_PATTERN.test(origin)) return callback(null, true);
         callback(new Error('Not allowed by CORS: ' + origin));
     },
     credentials: true,

@@ -70,6 +70,10 @@ function sdProductCardHTML(product) {
     const image = primaryImage
         ? `<img src="${primaryImage.url}" alt="${name}" loading="lazy">`
         : (window.SANDUKHAR ? window.SANDUKHAR.media.placeholder(name) : '');
+    const priceValue = parseFloat(product.price);
+    const price = (priceValue > 0 && window.SANDUKHAR && window.SANDUKHAR.format)
+        ? window.SANDUKHAR.format.price(priceValue)
+        : '';
 
     return `
         <div class="product-card" data-product-id="${product.id}" data-category="${product.category_slug || ''}" data-material="${materialSlugs}" data-color="${color}" data-availability="${availability}">
@@ -87,6 +91,7 @@ function sdProductCardHTML(product) {
                 <div class="product-card-info">
                     <h3 class="product-card-name">${name}</h3>
                     <p class="product-card-material">${materialNames}</p>
+                    <p class="product-card-price">${price}</p>
                 </div>
             </a>
         </div>`;
@@ -125,7 +130,6 @@ SANDUKHAR.catalog = {
         this.showLoadingState();
         await Promise.all([this.fetchProducts(), this.fetchCategories()]);
         this.renderCategoryFilter();
-        this.updateFilterOptionCounts();
         this.bindEvents();
         this.applyInitialFilters();
         this.updateResults();
@@ -181,7 +185,7 @@ SANDUKHAR.catalog = {
         const childrenOf = (parentId) => this.categories.filter(c => c.parent_id === parentId).sort((a, b) => a.sort_order - b.sort_order);
 
         const optionHtml = (c, isChild) => `
-            <label class="filter-option${isChild ? ' filter-suboption' : ''}"><input type="checkbox" name="category" value="${c.slug}"><span class="checkmark"></span><span class="option-label">${nameOf(c)}</span><span class="option-count">0</span></label>
+            <label class="filter-option${isChild ? ' filter-suboption' : ''}"><input type="checkbox" name="category" value="${c.slug}"><span class="checkmark"></span><span class="option-label">${nameOf(c)}</span></label>
         `;
 
         container.innerHTML = topLevel.map(parent =>
@@ -199,11 +203,46 @@ SANDUKHAR.catalog = {
             this.allProducts = [];
         }
 
+        this.applyFeaturedOrder();
+
         this.productsGrid.innerHTML = '<div class="products-cards" id="products-cards">'
             + this.allProducts.map(sdProductCardHTML).join('') + '</div>'
             + this.emptyStateMarkup() + this.paginationMarkup();
+    },
 
-        this.updateFilterOptionCounts();
+    shuffleArray: function (arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    },
+
+    // "Featured" (the default, no-filter view) shows products in a
+    // scattered order rather than raw insertion order. The order is
+    // re-shuffled once per tab session and then persisted in
+    // sessionStorage, so paging through the grid or returning via the
+    // back button (see restoreScrollIfReturning) lands on the same
+    // arrangement instead of reshuffling under the user.
+    applyFeaturedOrder: function () {
+        let savedOrder = null;
+        try {
+            savedOrder = JSON.parse(sessionStorage.getItem('sd_catalog_order'));
+        } catch (e) {}
+
+        if (Array.isArray(savedOrder) && savedOrder.length) {
+            const byId = new Map(this.allProducts.map(p => [p.id, p]));
+            const ordered = savedOrder.map(id => byId.get(id)).filter(Boolean);
+            const seen = new Set(ordered.map(p => p.id));
+            const newProducts = this.allProducts.filter(p => !seen.has(p.id));
+            this.allProducts = ordered.concat(this.shuffleArray(newProducts));
+        } else {
+            this.allProducts = this.shuffleArray(this.allProducts.slice());
+        }
+
+        try {
+            sessionStorage.setItem('sd_catalog_order', JSON.stringify(this.allProducts.map(p => p.id)));
+        } catch (e) {}
     },
 
     /**
@@ -227,7 +266,6 @@ SANDUKHAR.catalog = {
             input.checked = checkedCategories.includes(input.value);
             input.addEventListener('change', () => this.onFilterChange(input));
         });
-        this.updateFilterOptionCounts();
 
         this.applyAllFilters();
         this.updateResultsDisplay();
@@ -259,18 +297,6 @@ SANDUKHAR.catalog = {
             if (pageBtn.classList.contains('prev')) this.goToPage(this.currentPage - 1);
             else if (pageBtn.classList.contains('next')) this.goToPage(this.currentPage + 1);
             else this.goToPage(parseInt(pageBtn.getAttribute('data-page')));
-        });
-    },
-
-    updateFilterOptionCounts: function () {
-        if (!this.sidebar) return;
-        this.sidebar.querySelectorAll('input[name="category"]').forEach(input => {
-            const matchValues = this.categoryChildren[input.value]
-                ? [input.value, ...this.categoryChildren[input.value]]
-                : [input.value];
-            const count = this.allProducts.filter(p => matchValues.includes(p.category_slug)).length;
-            const countEl = input.closest('.filter-option')?.querySelector('.option-count');
-            if (countEl) countEl.textContent = count;
         });
     },
 

@@ -114,6 +114,8 @@ SANDUKHAR.cart = {
                 id: product.id,
                 name: product.name || 'Unknown Product',
                 variant: product.variant || '',
+                color: product.color || '',
+                hardware: product.hardware || '',
                 quantity: product.quantity || 1,
                 image: product.image || ''
             });
@@ -445,15 +447,18 @@ SANDUKHAR.cart = {
 
         const name = nameEl ? nameEl.textContent.trim() : 'Product';
 
+        const color = variantColorEl ? variantColorEl.textContent.trim() : '';
+        const hardware = (variantHardwareEl && hardwareVisible) ? variantHardwareEl.textContent.trim() : '';
+
         const variantParts = [];
         if (variantSizeEl && variantSizeEl.textContent.trim()) variantParts.push('Size ' + variantSizeEl.textContent.trim());
-        if (variantColorEl) variantParts.push(variantColorEl.textContent.trim());
-        if (variantHardwareEl && hardwareVisible) variantParts.push(variantHardwareEl.textContent.trim());
+        if (color) variantParts.push(color);
+        if (hardware) variantParts.push(hardware);
         const variant = variantParts.join(' · ');
 
         const image = imageEl ? imageEl.getAttribute('src') : '';
 
-        return { id, name, variant, quantity: 1, image };
+        return { id, name, variant, color, hardware, quantity: 1, image };
     },
 
     /**

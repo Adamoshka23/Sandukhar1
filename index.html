@@ -2,9 +2,22 @@
 <html lang="en">
 
 <head>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=112571689', 'ym');
+
+        ym(112571689, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/112571689" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: http://localhost:3000; connect-src 'self' http://localhost:3000; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://mc.yandex.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: http://localhost:3000 https:; connect-src 'self' http://localhost:3000 https: wss:; frame-src https://mc.yandex.ru https://mc.yandex.com; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="description"
         content="SAN DUKHAR - Istanbul's premier luxury house for exotic leather goods. Handcrafted accessories and clothing from genuine crocodile, python, ostrich, stingray leather and fine suede. Made in Turkey.">
     <meta name="keywords"
@@ -38,7 +51,7 @@
             "foundingDate": "2021",
             "founder": { "@type": "Person", "name": "AbdurRohman Musaev" },
             "address": { "@type": "PostalAddress", "streetAddress": "Yenidoğan, Zübeyde Hanım Cd. No:80/B", "addressLocality": "Zeytinburnu / İstanbul", "postalCode": "34021", "addressCountry": "TR" },
-            "contactPoint": { "@type": "ContactPoint", "telephone": "+90 544 697 67 79", "contactType": "customer service", "availableLanguage": ["English", "Turkish"] },
+            "contactPoint": { "@type": "ContactPoint", "telephone": "+90 535 838 98 93", "contactType": "customer service", "availableLanguage": ["English", "Turkish"] },
             "sameAs": ["https://www.instagram.com/sandukhar", "https://www.facebook.com/sandukhar", "https://www.tiktok.com/@sandukhar"]
         }
     </script>
@@ -51,7 +64,7 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="css/animations.css?v=2">
-    <link rel="stylesheet" href="css/style.css?v=5">
+    <link rel="stylesheet" href="css/style.css?v=7">
     <link rel="stylesheet" href="css/responsive.css?v=3">
 
     <link rel="icon" type="image/svg+xml" href="icons/sandukhar-logo-gold.svg">
@@ -241,7 +254,7 @@
         <section id="brand-story" class="section-padding bg-graphite">
             <div class="container split-layout">
                 <div class="split-image parallax-image">
-                    <img src="images/craftsmanship/artisan-inspecting-leather.jpg"
+                    <img src="images/craftsmanship/artisan-with-hides.jpg"
                         alt="SAN DUKHAR Master Artisan inspecting genuine python leather in Istanbul atelier"
                         loading="lazy">
                 </div>
@@ -418,6 +431,7 @@
                 <div class="footer-col footer-col-contact">
                     <h4 data-i18n="footer_istanbul">Istanbul Atelier</h4>
                     <address>Zübeyde Hanım Cd. No:80/B<br>Yenidoğan, Zeytinburnu<br>34021, Istanbul, Turkey</address>
+                    <a href="tel:+905358389893">+90 535 838 98 93</a><br>
                     <a href="tel:+905446976779">+90 544 697 67 79</a><br>
                     <a href="mailto:sandukhar2@gmail.com">sandukhar2@gmail.com</a>
                 </div>
@@ -440,12 +454,12 @@
     <script src="js/config.js?v=1" defer></script>
     <script src="js/api.js?v=2" defer></script>
     <script src="js/app.js?v=3" defer></script>
-    <script src="js/translations.js?v=1"></script>
+    <script src="js/translations.js?v=4"></script>
     <script src="js/i18n.js?v=1"></script>
     <script src="js/animations.js?v=2" defer></script>
-    <script src="js/cart.js?v=2" defer></script>
+    <script src="js/cart.js?v=3" defer></script>
     <script src="js/wishlist.js?v=2" defer></script>
-    <script src="js/catalog.js?v=8" defer></script>
+    <script src="js/catalog.js?v=12" defer></script>
     <script src="js/account.js?v=2" defer></script>
     <script>
         function loadFeaturedProducts() {
@@ -470,6 +484,10 @@
                         const image = primaryImage
                             ? `<img src="${primaryImage.url}" alt="${name}" loading="lazy">`
                             : SANDUKHAR.media.placeholder(name, firstMaterialSlug);
+                        const priceValue = parseFloat(p.price);
+                        const price = (priceValue > 0 && window.SANDUKHAR && window.SANDUKHAR.format)
+                            ? window.SANDUKHAR.format.price(priceValue)
+                            : '';
                         return `<div class="featured-item ${i === 0 ? 'large' : ''}">
                                 <a href="product.html?slug=${p.slug}" class="product-card-link">
                                     <div class="product-card-image">
@@ -481,6 +499,7 @@
                                     <div class="product-card-info">
                                         <h3 class="product-card-name">${name}</h3>
                                         <p class="product-card-material">${materialNames}</p>
+                                        <p class="product-card-price">${price}</p>
                                     </div>
                                 </a>
                             </div>`;

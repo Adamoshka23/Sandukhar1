@@ -34,10 +34,22 @@ const environment = {
     // Where verification/reset links should point — the frontend's own origin.
     FRONTEND_URL: process.env.FRONTEND_URL || process.env.CORS_ORIGIN || 'http://localhost:5500',
 
+    // Base to prefix onto stored /uploads paths. In production the API sits
+    // behind the same domain as the frontend (nginx proxies /uploads to this
+    // process), so a bare relative path resolves correctly on its own — only
+    // local dev needs an absolute origin, since the frontend (port 5500) and
+    // this API (port 3000) are different origins there.
+    UPLOADS_ORIGIN: NODE_ENV === 'production' ? '' : `http://localhost:${parseInt(process.env.PORT, 10) || 3000}`,
+
     // Order/enquiry notifications (optional — notifications are skipped
     // with a console warning if these are left unset).
     TELEGRAM_BOT_TOKEN: process.env.TELEGRAM_BOT_TOKEN || '',
     TELEGRAM_CHAT_ID: process.env.TELEGRAM_CHAT_ID || '',
+    // Verifies incoming Telegram webhook calls really came from Telegram
+    // (sent back as the X-Telegram-Bot-Api-Secret-Token header on every
+    // update once set via the setWebhook API call) — see
+    // server/routes/telegramWebhook.js.
+    TELEGRAM_WEBHOOK_SECRET: process.env.TELEGRAM_WEBHOOK_SECRET || '',
     RESEND_API_KEY: process.env.RESEND_API_KEY || '',
     NOTIFY_EMAIL_FROM: process.env.NOTIFY_EMAIL_FROM || 'SAN DUKHAR <onboarding@resend.dev>',
     NOTIFY_EMAIL_TO: process.env.NOTIFY_EMAIL_TO || ''

@@ -2,9 +2,22 @@
 <html lang="en">
 
 <head>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=112571689', 'ym');
+
+        ym(112571689, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/112571689" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: http://localhost:3000; connect-src 'self' http://localhost:3000; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://mc.yandex.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: http://localhost:3000 https:; connect-src 'self' http://localhost:3000 https: wss:; frame-src https://mc.yandex.ru https://mc.yandex.com; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="description"
         content="Commission a bespoke exotic leather piece from SAN DUKHAR. Configure your custom jacket, bag, or accessory.">
 
@@ -17,7 +30,7 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="css/animations.css?v=2">
-    <link rel="stylesheet" href="css/style.css?v=5">
+    <link rel="stylesheet" href="css/style.css?v=7">
     <link rel="stylesheet" href="css/responsive.css?v=3">
     <link rel="icon" type="image/svg+xml" href="icons/sandukhar-logo-gold.svg">
 
@@ -239,6 +252,28 @@
         }
 
         .step-option-card.selected .color-preview {
+            border-color: var(--color-gold);
+            box-shadow: 0 0 0 3px rgba(197, 165, 114, 0.2);
+        }
+
+        .material-preview {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: var(--border-radius-sm);
+            overflow: hidden;
+            margin-bottom: 0.8rem;
+            border: 1px solid var(--color-border);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .material-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .step-option-card.selected .material-preview {
             border-color: var(--color-gold);
             box-shadow: 0 0 0 3px rgba(197, 165, 114, 0.2);
         }
@@ -492,27 +527,31 @@
                         </div>
                     </div>
                     <div class="configurator-step" data-flow-key="material">
-                        <h3 class="step-title" data-i18n="tailoring_choose_leather">Choose Your Leather</h3>
+                        <h3 class="step-title" data-i18n="tailoring_choose_leather">Choose Your Material</h3>
                         <div class="step-options">
-                            <button type="button" class="step-option-card" data-value="crocodile">
-                                <div class="option-icon">🐊</div>
+                            <button type="button" class="step-option-card material-option-card" data-value="crocodile">
+                                <div class="material-preview"><img src="images/materials/crocodile-real.jpg" alt="Crocodile leather" loading="lazy"></div>
                                 <h4 data-i18n="material_short_crocodile">Crocodile</h4>
                             </button>
-                            <button type="button" class="step-option-card" data-value="python">
-                                <div class="option-icon">🐍</div>
+                            <button type="button" class="step-option-card material-option-card" data-value="python">
+                                <div class="material-preview"><img src="images/materials/python-real.jpg" alt="Python leather" loading="lazy"></div>
                                 <h4 data-i18n="material_short_python">Python</h4>
                             </button>
-                            <button type="button" class="step-option-card" data-value="ostrich">
-                                <div class="option-icon">🦢</div>
+                            <button type="button" class="step-option-card material-option-card" data-value="ostrich">
+                                <div class="material-preview"><img src="images/materials/ostrich-real.jpg" alt="Ostrich leather" loading="lazy"></div>
                                 <h4 data-i18n="material_short_ostrich">Ostrich</h4>
                             </button>
-                            <button type="button" class="step-option-card" data-value="stingray">
-                                <div class="option-icon">🦈</div>
+                            <button type="button" class="step-option-card material-option-card" data-value="stingray">
+                                <div class="material-preview"><img src="images/materials/stingray-real.jpg" alt="Stingray leather" loading="lazy"></div>
                                 <h4 data-i18n="material_short_stingray">Stingray</h4>
                             </button>
-                            <button type="button" class="step-option-card" data-value="suede">
-                                <div class="option-icon">🐐</div>
+                            <button type="button" class="step-option-card material-option-card" data-value="suede">
+                                <div class="material-preview"><img src="images/materials/suede-real.jpg" alt="Suede leather" loading="lazy"></div>
                                 <h4 data-i18n="material_short_suede">Suede</h4>
+                            </button>
+                            <button type="button" class="step-option-card material-option-card" data-value="cashmere">
+                                <div class="material-preview"><img src="images/materials/cashmere-real.jpg" alt="Cashmere" loading="lazy"></div>
+                                <h4 data-i18n="material_short_cashmere">Cashmere</h4>
                             </button>
                         </div>
                         <div class="step-nav"><button type="button" class="btn-back" data-i18n="tailoring_back">←
@@ -619,10 +658,17 @@
                                 <input type="email" id="tailoring-email" class="step-comment" style="min-height:auto;padding:0.9rem 1rem;" required>
                             </div>
                         </div>
-                        <div class="form-group" style="margin-top:1rem;">
-                            <label style="display:block;margin-bottom:0.5rem;color:var(--color-text-secondary);font-size:var(--font-size-caption);text-transform:uppercase;letter-spacing:0.08em;" data-i18n="account_phone">Phone</label>
-                            <input type="tel" id="tailoring-phone" class="step-comment" style="min-height:auto;padding:0.9rem 1rem;">
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;">
+                            <div class="form-group">
+                                <label style="display:block;margin-bottom:0.5rem;color:var(--color-text-secondary);font-size:var(--font-size-caption);text-transform:uppercase;letter-spacing:0.08em;" data-i18n="account_phone">Phone</label>
+                                <input type="tel" id="tailoring-phone" class="step-comment" style="min-height:auto;padding:0.9rem 1rem;">
+                            </div>
+                            <div class="form-group">
+                                <label style="display:block;margin-bottom:0.5rem;color:var(--color-text-secondary);font-size:var(--font-size-caption);text-transform:uppercase;letter-spacing:0.08em;" data-i18n="checkout_telegram">Telegram Username</label>
+                                <input type="text" id="tailoring-telegram" class="step-comment" style="min-height:auto;padding:0.9rem 1rem;" data-i18n-attr="placeholder" data-i18n="checkout_telegram_placeholder" placeholder="@username">
+                            </div>
                         </div>
+                        <p style="font-size:var(--font-size-caption);color:var(--color-text-muted);margin-top:0.6rem;" data-i18n="checkout_contact_privacy_note">We collect this information only so our atelier can reach you about your request.</p>
                         <p class="form-message" id="tailoring-form-message" role="status"></p>
 
                         <div class="step-nav"><button type="button" class="btn-back" data-i18n="tailoring_back">←
@@ -673,7 +719,7 @@
     <script src="js/config.js?v=1" defer></script>
     <script src="js/api.js?v=2" defer></script>
     <script src="js/app.js?v=2" defer></script>
-    <script src="js/translations.js?v=1"></script>
+    <script src="js/translations.js?v=4"></script>
     <script src="js/i18n.js?v=1"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -882,15 +928,21 @@
 
                 window.SD_API.submitTailoringRequest({
                     productType: selections.product ? selections.product.value : 'other',
+                    productTypeLabel: getSelectedLabel('product'),
                     material: flow.includes('material') && selections.material ? selections.material.value : null,
+                    materialLabel: flow.includes('material') ? getSelectedLabel('material') : null,
                     color: flow.includes('color') && selections.color ? selections.color.value : null,
+                    colorLabel: flow.includes('color') ? getSelectedLabel('color') : null,
                     lining: flow.includes('lining') && selections.lining ? selections.lining.value : null,
                     hardware: flow.includes('hardware') && selections.hardware ? selections.hardware.value : null,
+                    hardwareLabel: flow.includes('hardware') ? getSelectedLabel('hardware') : null,
                     sizeType: flow.includes('size') && selections.size ? selections.size.value : null,
+                    sizeLabel: flow.includes('size') ? getSelectedLabel('size') : null,
                     notes: document.getElementById('tailoring-notes').value.trim(),
                     contactName: name,
                     contactEmail: email,
-                    contactPhone: document.getElementById('tailoring-phone').value.trim()
+                    contactPhone: document.getElementById('tailoring-phone').value.trim(),
+                    contactTelegram: document.getElementById('tailoring-telegram').value.trim()
                 }).then((res) => {
                     submitBtn.textContent = 'Enquiry Sent ✓';
                     submitBtn.style.background = 'var(--color-success)';

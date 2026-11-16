@@ -85,6 +85,13 @@
         .status-badge.archived { background: rgba(201,75,75,0.1); color: var(--error); }
         .actions { display: flex; gap: 0.3rem; }
 
+        /* INQUIRIES */
+        .inquiry-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .inquiry-tab { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.1rem; border: 1px solid var(--border); border-radius: var(--radius); background: transparent; color: var(--text-muted); cursor: pointer; font-size: 0.8rem; font-family: 'Inter', sans-serif; transition: border-color 0.15s ease, color 0.15s ease; }
+        .inquiry-tab:hover { border-color: var(--gold); color: var(--text); }
+        .inquiry-tab.active { border-color: var(--gold); color: var(--gold); background: rgba(197,165,114,0.08); }
+        .tab-badge { display: inline-block; min-width: 18px; padding: 0.05rem 0.4rem; border-radius: 10px; background: var(--gold); color: var(--bg); font-size: 0.65rem; font-weight: 600; text-align: center; }
+
         /* MODAL */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(10,10,10,0.9); z-index: 100;
@@ -134,6 +141,7 @@
                 <a href="#" data-page="categories">📂 Категории</a>
                 <a href="#" data-page="materials">🪶 Материалы</a>
                 <a href="#" data-page="orders">📋 Заказы</a>
+                <a href="#" data-page="inquiries">📩 Заявки <span class="tab-badge" id="nav-badge-inquiries" style="display:none;"></span></a>
                 <a href="#" data-page="translations">🌐 Переводы</a>
                 <a href="#" data-page="settings">⚙️ Настройки</a>
             </nav>
@@ -232,6 +240,43 @@
                 </div>
             </div>
 
+            <!-- INQUIRIES PAGE -->
+            <div id="page-inquiries" class="page" style="display:none;">
+                <div class="page-header"><h1 class="page-title">Заявки</h1></div>
+                <div class="inquiry-tabs">
+                    <button type="button" class="inquiry-tab active" data-inquiry-tab="cart">Из корзины <span class="tab-badge" id="badge-cart-inquiries" style="display:none;"></span></button>
+                    <button type="button" class="inquiry-tab" data-inquiry-tab="tailoring">Индивидуальный пошив <span class="tab-badge" id="badge-tailoring" style="display:none;"></span></button>
+                    <button type="button" class="inquiry-tab" data-inquiry-tab="contacts">Обращения <span class="tab-badge" id="badge-contacts" style="display:none;"></span></button>
+                </div>
+
+                <div class="inquiry-panel" id="inquiry-panel-cart">
+                    <div class="table-container">
+                        <table>
+                            <thead><tr><th>Клиент</th><th>Товары</th><th>Статус</th><th>Дата</th><th>Действия</th></tr></thead>
+                            <tbody id="cart-inquiries-table-body"><tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Загрузка...</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="inquiry-panel" id="inquiry-panel-tailoring" style="display:none;">
+                    <div class="table-container">
+                        <table>
+                            <thead><tr><th>Клиент</th><th>Изделие</th><th>Материал</th><th>Статус</th><th>Дата</th><th>Действия</th></tr></thead>
+                            <tbody id="tailoring-table-body"><tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Загрузка...</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="inquiry-panel" id="inquiry-panel-contacts" style="display:none;">
+                    <div class="table-container">
+                        <table>
+                            <thead><tr><th>Клиент</th><th>Тема</th><th>Сообщение</th><th>Статус</th><th>Дата</th><th>Действия</th></tr></thead>
+                            <tbody id="contacts-table-body"><tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Загрузка...</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             <!-- TRANSLATIONS PAGE -->
             <div id="page-translations" class="page" style="display:none;">
                 <div class="page-header">
@@ -258,7 +303,14 @@
             <!-- SETTINGS PAGE -->
             <div id="page-settings" class="page" style="display:none;">
                 <div class="page-header"><h1 class="page-title">Настройки</h1></div>
-                <p style="color:var(--text-muted);">Управление настройками появится позже.</p>
+                <div style="max-width:420px;">
+                    <h3 style="margin-bottom:1rem;">Смена пароля</h3>
+                    <div class="form-group"><label>Текущий пароль</label><input type="password" id="settings-current-password" autocomplete="current-password"></div>
+                    <div class="form-group"><label>Новый пароль (минимум 8 символов)</label><input type="password" id="settings-new-password" autocomplete="new-password"></div>
+                    <div class="form-group"><label>Повторите новый пароль</label><input type="password" id="settings-new-password-confirm" autocomplete="new-password"></div>
+                    <p id="settings-password-message" style="font-size:0.85rem;display:none;margin-bottom:0.8rem;"></p>
+                    <button class="btn-primary" onclick="changeAdminPassword()">Сохранить новый пароль</button>
+                </div>
             </div>
         </main>
     </div>
@@ -500,6 +552,9 @@
                 loadCategories();
                 loadMaterials();
                 loadOrders();
+                loadCartInquiries();
+                loadTailoringRequests();
+                loadContactEnquiries();
                 loadTranslations();
             } catch (err) {
                 showToast('Ошибка соединения', 'error');
@@ -509,6 +564,41 @@
         function handleLogout() {
             localStorage.removeItem('sandukhar_token');
             location.reload();
+        }
+
+        async function changeAdminPassword() {
+            const currentPassword = document.getElementById('settings-current-password').value;
+            const newPassword = document.getElementById('settings-new-password').value;
+            const confirmPassword = document.getElementById('settings-new-password-confirm').value;
+            const msgEl = document.getElementById('settings-password-message');
+            const showMsg = (text, isError) => {
+                msgEl.textContent = text;
+                msgEl.style.display = 'block';
+                msgEl.style.color = isError ? 'var(--error)' : 'var(--success)';
+            };
+
+            if (!currentPassword || !newPassword) return showMsg('Заполните оба поля пароля.', true);
+            if (newPassword.length < 8) return showMsg('Новый пароль должен быть не короче 8 символов.', true);
+            if (newPassword !== confirmPassword) return showMsg('Пароли не совпадают.', true);
+
+            try {
+                const res = await fetch(`${API_BASE}/users/me/password`, {
+                    method: 'PATCH',
+                    headers: getHeaders(),
+                    body: JSON.stringify({ currentPassword, newPassword })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showMsg('Пароль обновлён.', false);
+                    document.getElementById('settings-current-password').value = '';
+                    document.getElementById('settings-new-password').value = '';
+                    document.getElementById('settings-new-password-confirm').value = '';
+                } else {
+                    showMsg(data.message || 'Не удалось сменить пароль.', true);
+                }
+            } catch (err) {
+                showMsg('Ошибка соединения.', true);
+            }
         }
 
         function getHeaders() {
@@ -1341,6 +1431,183 @@
                 const data = await res.json();
                 if (data.success) showToast('Статус заказа обновлён', 'success');
                 else showToast(data.message || 'Ошибка обновления заказа', 'error');
+            } catch (err) {
+                showToast('Ошибка соединения', 'error');
+            }
+        }
+
+        // ============================================================
+        // INQUIRIES (cart price requests, bespoke tailoring, contact form)
+        // ============================================================
+        document.querySelectorAll('.inquiry-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.inquiry-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                document.querySelectorAll('.inquiry-panel').forEach(p => p.style.display = 'none');
+                const panel = document.getElementById(`inquiry-panel-${tab.getAttribute('data-inquiry-tab')}`);
+                if (panel) panel.style.display = 'block';
+            });
+        });
+
+        const inquiryUnhandledCounts = { cart: 0, tailoring: 0, contacts: 0 };
+
+        function updateInquiryBadge(elId, count) {
+            const el = document.getElementById(elId);
+            if (!el) return;
+            el.textContent = count;
+            el.style.display = count > 0 ? 'inline-block' : 'none';
+
+            const source = elId === 'badge-cart-inquiries' ? 'cart' : elId === 'badge-tailoring' ? 'tailoring' : elId === 'badge-contacts' ? 'contacts' : null;
+            if (source) inquiryUnhandledCounts[source] = count;
+            const total = inquiryUnhandledCounts.cart + inquiryUnhandledCounts.tailoring + inquiryUnhandledCounts.contacts;
+            const navBadge = document.getElementById('nav-badge-inquiries');
+            if (navBadge) {
+                navBadge.textContent = total;
+                navBadge.style.display = total > 0 ? 'inline-block' : 'none';
+            }
+        }
+
+        // Shared 3-stage status model for every inquiry type: a new
+        // request comes in, work starts on it, and once it's completed
+        // it's fully handled — it drops out of the active queue below
+        // (the record itself stays in the database, just no longer shown).
+        const INQUIRY_STATUSES = ['new', 'in_production', 'completed'];
+        const INQUIRY_STATUS_LABELS = { new: 'Новая', in_production: 'В производстве', completed: 'Завершена' };
+
+        async function loadCartInquiries() {
+            try {
+                const res = await fetch(`${API_BASE}/admin/cart-inquiries`, { headers: getHeaders() });
+                const data = await res.json();
+                if (!data.success) return;
+                const inquiries = data.data.inquiries;
+                updateInquiryBadge('badge-cart-inquiries', inquiries.filter(i => i.status === 'new').length);
+                const visible = inquiries.filter(i => i.status !== 'completed');
+                document.getElementById('cart-inquiries-table-body').innerHTML = visible.length === 0
+                    ? '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">Заявок пока нет</td></tr>'
+                    : visible.map(i => `
+                        <tr>
+                            <td>${escapeHtml(i.contact_name)}<div style="font-size:0.75rem;color:var(--text-muted);">${escapeHtml(i.contact_email)}${i.contact_phone ? ' · ' + escapeHtml(i.contact_phone) : ''}${i.contact_telegram ? ' · @' + escapeHtml(i.contact_telegram.replace(/^@/, '')) : ''}</div></td>
+                            <td>${(i.items || []).map(it => `${escapeHtml(it.name)}${it.variant ? ' (' + escapeHtml(it.variant) + ')' : ''} × ${it.quantity}`).join('<br>')}</td>
+                            <td>
+                                <select onchange="updateCartInquiryStatus('${i.id}', this.value)" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:0.3rem 0.5rem;border-radius:var(--radius);font-size:0.75rem;">
+                                    ${INQUIRY_STATUSES.map(s => `<option value="${s}" ${s === i.status ? 'selected' : ''}>${INQUIRY_STATUS_LABELS[s]}</option>`).join('')}
+                                </select>
+                            </td>
+                            <td>${new Date(i.created_at).toLocaleDateString()}</td>
+                            <td><button class="btn-icon" onclick="alert(${JSON.stringify(cartInquirySummary(i))})" title="Детали">👁</button></td>
+                        </tr>
+                    `).join('');
+            } catch (err) {}
+        }
+
+        function cartInquirySummary(i) {
+            const items = (i.items || []).map(it => `${it.name}${it.variant ? ' (' + it.variant + ')' : ''} × ${it.quantity}`).join('\n');
+            const addr = i.shipping_address || {};
+            const addrLine = addr.addressLine1 ? `\n\nАдрес: ${addr.addressLine1}, ${addr.city || ''} ${addr.postalCode || ''}, ${addr.country || ''}` : '';
+            const notes = i.notes ? `\n\nКомментарий: ${i.notes}` : '';
+            const telegram = i.contact_telegram ? ' · @' + i.contact_telegram.replace(/^@/, '') : '';
+            return `Заявка из корзины\n${i.contact_name}\n${i.contact_email}${i.contact_phone ? ' · ' + i.contact_phone : ''}${telegram}\n\n${items}${addrLine}${notes}`;
+        }
+
+        async function updateCartInquiryStatus(id, status) {
+            try {
+                const res = await fetch(`${API_BASE}/admin/cart-inquiries/${id}/status`, {
+                    method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ status })
+                });
+                const data = await res.json();
+                if (data.success) { showToast('Статус обновлён', 'success'); loadCartInquiries(); }
+                else showToast(data.message || 'Ошибка обновления', 'error');
+            } catch (err) {
+                showToast('Ошибка соединения', 'error');
+            }
+        }
+
+        async function loadTailoringRequests() {
+            try {
+                const res = await fetch(`${API_BASE}/admin/tailoring`, { headers: getHeaders() });
+                const data = await res.json();
+                if (!data.success) return;
+                const requests = data.data.requests;
+                updateInquiryBadge('badge-tailoring', requests.filter(r => r.status === 'new').length);
+                const visible = requests.filter(r => r.status !== 'completed');
+                document.getElementById('tailoring-table-body').innerHTML = visible.length === 0
+                    ? '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Заявок пока нет</td></tr>'
+                    : visible.map(r => `
+                        <tr>
+                            <td>${escapeHtml(r.contact_name || '—')}<div style="font-size:0.75rem;color:var(--text-muted);">${escapeHtml(r.contact_email || '')}${r.contact_phone ? ' · ' + escapeHtml(r.contact_phone) : ''}${r.contact_telegram ? ' · @' + escapeHtml(r.contact_telegram.replace(/^@/, '')) : ''}</div></td>
+                            <td>${escapeHtml(r.product_type || '—')}</td>
+                            <td>${escapeHtml(r.material || '—')}</td>
+                            <td>
+                                <select onchange="updateTailoringStatus('${r.id}', this.value)" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:0.3rem 0.5rem;border-radius:var(--radius);font-size:0.75rem;">
+                                    ${INQUIRY_STATUSES.map(s => `<option value="${s}" ${s === r.status ? 'selected' : ''}>${INQUIRY_STATUS_LABELS[s]}</option>`).join('')}
+                                </select>
+                            </td>
+                            <td>${new Date(r.created_at).toLocaleDateString()}</td>
+                            <td><button class="btn-icon" onclick="alert(${JSON.stringify(tailoringSummary(r))})" title="Детали">👁</button></td>
+                        </tr>
+                    `).join('');
+            } catch (err) {}
+        }
+
+        function tailoringSummary(r) {
+            const notes = r.notes ? `\n\nКомментарий: ${r.notes}` : '';
+            const telegram = r.contact_telegram ? ' · @' + r.contact_telegram.replace(/^@/, '') : '';
+            return `Заявка на индивидуальный пошив\n${r.contact_name || ''}\n${r.contact_email || ''}${r.contact_phone ? ' · ' + r.contact_phone : ''}${telegram}\n\nИзделие: ${r.product_type || '—'}\nМатериал: ${r.material || '—'}\nЦвет: ${r.color || '—'}\nПодкладка: ${r.lining || '—'}\nФурнитура: ${r.hardware || '—'}\nРазмер: ${r.size_type || '—'}${notes}`;
+        }
+
+        async function updateTailoringStatus(id, status) {
+            try {
+                const res = await fetch(`${API_BASE}/admin/tailoring/${id}/status`, {
+                    method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ status })
+                });
+                const data = await res.json();
+                if (data.success) { showToast('Статус обновлён', 'success'); loadTailoringRequests(); }
+                else showToast(data.message || 'Ошибка обновления', 'error');
+            } catch (err) {
+                showToast('Ошибка соединения', 'error');
+            }
+        }
+
+        async function loadContactEnquiries() {
+            try {
+                const res = await fetch(`${API_BASE}/admin/contacts`, { headers: getHeaders() });
+                const data = await res.json();
+                if (!data.success) return;
+                const enquiries = data.data.enquiries;
+                updateInquiryBadge('badge-contacts', enquiries.filter(e => e.status === 'new').length);
+                const visible = enquiries.filter(e => e.status !== 'completed');
+                document.getElementById('contacts-table-body').innerHTML = visible.length === 0
+                    ? '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);">Обращений пока нет</td></tr>'
+                    : visible.map(e => `
+                        <tr>
+                            <td>${escapeHtml(e.first_name)} ${escapeHtml(e.last_name)}<div style="font-size:0.75rem;color:var(--text-muted);">${escapeHtml(e.email)}${e.phone ? ' · ' + escapeHtml(e.phone) : ''}${e.telegram ? ' · @' + escapeHtml(e.telegram.replace(/^@/, '')) : ''}</div></td>
+                            <td>${escapeHtml(e.subject || '—')}</td>
+                            <td style="max-width:280px;white-space:normal;">${escapeHtml((e.message || '').slice(0, 120))}${(e.message || '').length > 120 ? '…' : ''}</td>
+                            <td>
+                                <select onchange="updateContactStatus('${e.id}', this.value)" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:0.3rem 0.5rem;border-radius:var(--radius);font-size:0.75rem;">
+                                    ${INQUIRY_STATUSES.map(s => `<option value="${s}" ${s === e.status ? 'selected' : ''}>${INQUIRY_STATUS_LABELS[s]}</option>`).join('')}
+                                </select>
+                            </td>
+                            <td>${new Date(e.created_at).toLocaleDateString()}</td>
+                            <td><button class="btn-icon" onclick="alert(${JSON.stringify(contactSummary(e))})" title="Детали">👁</button></td>
+                        </tr>
+                    `).join('');
+            } catch (err) {}
+        }
+
+        function contactSummary(e) {
+            const telegram = e.telegram ? ' · @' + e.telegram.replace(/^@/, '') : '';
+            return `Обращение\n${e.first_name} ${e.last_name}\n${e.email}${e.phone ? ' · ' + e.phone : ''}${telegram}${e.subject ? `\n\nТема: ${e.subject}` : ''}\n\n${e.message}`;
+        }
+
+        async function updateContactStatus(id, status) {
+            try {
+                const res = await fetch(`${API_BASE}/admin/contacts/${id}/status`, {
+                    method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ status })
+                });
+                const data = await res.json();
+                if (data.success) { showToast('Статус обновлён', 'success'); loadContactEnquiries(); }
+                else showToast(data.message || 'Ошибка обновления', 'error');
             } catch (err) {
                 showToast('Ошибка соединения', 'error');
             }

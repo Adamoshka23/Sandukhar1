@@ -513,8 +513,11 @@ const authController = {
             const record = tokenResult.rows[0];
             const passwordHash = await passwordService.hash(password);
 
-            // Clearing refresh_token signs the account out everywhere else.
-            await query('UPDATE users SET password_hash = $1, refresh_token = NULL WHERE id = $2', [passwordHash, record.user_id]);
+            await query('UPDATE users SET password_hash = $1 WHERE id = $2', [passwordHash, record.user_id]);
+            // Revoke every outstanding refresh token so a reset (often triggered
+            // by a suspected compromise) actually signs the account out
+            // everywhere else, not just on this device.
+            await query('UPDATE refresh_tokens SET is_revoked = true WHERE user_id = $1 AND is_revoked = false', [record.user_id]);
             await query('DELETE FROM password_reset_tokens WHERE user_id = $1', [record.user_id]);
 
             res.status(200).json({

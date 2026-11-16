@@ -23,7 +23,6 @@ CREATE TABLE users (
     is_active BOOLEAN DEFAULT true,
     email_verified BOOLEAN DEFAULT false,
     last_login TIMESTAMP WITH TIME ZONE,
-    refresh_token VARCHAR(500),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -284,7 +283,7 @@ CREATE TABLE reviews (
 CREATE TABLE tailoring_orders (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES users(id) ON DELETE SET NULL,
-    status VARCHAR(50) DEFAULT 'new' CHECK (status IN ('new', 'consultation', 'confirmed', 'in_production', 'completed', 'cancelled')),
+    status VARCHAR(50) DEFAULT 'new' CHECK (status IN ('new', 'in_production', 'completed')),
     product_type VARCHAR(100) NOT NULL,
     material VARCHAR(100),
     color VARCHAR(100),
@@ -296,6 +295,8 @@ CREATE TABLE tailoring_orders (
     contact_name VARCHAR(200),
     contact_email VARCHAR(200),
     contact_phone VARCHAR(50),
+    contact_telegram VARCHAR(100),
+    telegram_message TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -309,11 +310,13 @@ CREATE TABLE tailoring_orders (
 CREATE TABLE cart_inquiries (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID REFERENCES users(id) ON DELETE SET NULL,
-    status VARCHAR(50) DEFAULT 'new' CHECK (status IN ('new', 'contacted', 'quoted', 'confirmed', 'cancelled')),
+    status VARCHAR(50) DEFAULT 'new' CHECK (status IN ('new', 'in_production', 'completed')),
     items JSONB NOT NULL,
     contact_name VARCHAR(200) NOT NULL,
-    contact_email VARCHAR(200) NOT NULL,
-    contact_phone VARCHAR(50),
+    contact_email VARCHAR(200),
+    contact_phone VARCHAR(50) NOT NULL,
+    contact_telegram VARCHAR(100),
+    telegram_message TEXT,
     shipping_address JSONB,
     notes TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -361,10 +364,11 @@ CREATE TABLE contact_enquiries (
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL,
     phone VARCHAR(50),
+    telegram VARCHAR(100),
     subject VARCHAR(100),
     message TEXT NOT NULL,
-    is_read BOOLEAN DEFAULT false,
-    replied BOOLEAN DEFAULT false,
+    status VARCHAR(50) DEFAULT 'new' CHECK (status IN ('new', 'in_production', 'completed')),
+    telegram_message TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 

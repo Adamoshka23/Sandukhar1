@@ -17,5 +17,6 @@ router.use('/tailoring', require('./tailoring'));
 router.use('/cart-inquiries', require('./cartInquiries'));
 router.use('/faq', require('./faq'));
 router.use('/gallery', require('./gallery'));
+router.use('/telegram', require('./telegramWebhook'));
 
 module.exports = router;

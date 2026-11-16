@@ -4,6 +4,7 @@ const { authenticate } = require('../middleware/auth');
 const { requireAdmin } = require('../middleware/admin');
 const { query } = require('../config/database');
 const { v4: uuidv4 } = require('uuid');
+const environment = require('../config/environment');
 
 // Все маршруты требуют админских прав
 router.use(authenticate, requireAdmin);
@@ -118,7 +119,20 @@ router.put('/products/:id', async (req, res) => {
             madeToOrder, colors, sizes, hardwareOptions, specifications
         } = req.body;
 
-        const primaryMaterialId = Array.isArray(materialIds) && materialIds.length > 0 ? materialIds[0] : null;
+        // price/old_price/category_id/material_id are all legitimately
+        // nullable — the admin UI always sends them (null when a field is
+        // cleared), so COALESCE-against-null would silently keep stale
+        // values instead of clearing them. But a caller that omits the key
+        // entirely (key not in req.body) means "don't touch this field",
+        // not "clear it". Track presence explicitly so both cases work:
+        // provided+null clears, omitted leaves the column alone.
+        const hasPrice = 'price' in req.body;
+        const hasOldPrice = 'oldPrice' in req.body;
+        const hasCategoryId = 'categoryId' in req.body;
+        const hasMaterialIds = materialIds !== undefined;
+        const primaryMaterialId = hasMaterialIds
+            ? (Array.isArray(materialIds) && materialIds.length > 0 ? materialIds[0] : null)
+            : null;
 
         const result = await query(
             `UPDATE products SET
@@ -126,8 +140,10 @@ router.put('/products/:id', async (req, res) => {
                 name_ru = COALESCE($4, name_ru), name_en = COALESCE($5, name_en),
                 description_ru = COALESCE($6, description_ru), description_en = COALESCE($7, description_en),
                 short_description_ru = COALESCE($8, short_description_ru), short_description_en = COALESCE($9, short_description_en),
-                price = $10, old_price = $11,
-                category_id = $12, material_id = $13,
+                price = CASE WHEN $22 THEN $10 ELSE price END,
+                old_price = CASE WHEN $23 THEN $11 ELSE old_price END,
+                category_id = CASE WHEN $24 THEN $12 ELSE category_id END,
+                material_id = CASE WHEN $25 THEN $13 ELSE material_id END,
                 stock = COALESCE($14, stock), status = COALESCE($15, status),
                 featured = COALESCE($16, featured),
                 made_to_order = COALESCE($17, made_to_order),
@@ -139,7 +155,8 @@ router.put('/products/:id', async (req, res) => {
                 shortDescriptionRu, shortDescriptionEn,
                 price, oldPrice, categoryId, primaryMaterialId, stock, status, featured,
                 madeToOrder, colors ? JSON.stringify(colors) : null, sizes ? JSON.stringify(sizes) : null,
-                hardwareOptions ? JSON.stringify(hardwareOptions) : null, specifications ? JSON.stringify(specifications) : null
+                hardwareOptions ? JSON.stringify(hardwareOptions) : null, specifications ? JSON.stringify(specifications) : null,
+                hasPrice, hasOldPrice, hasCategoryId, hasMaterialIds
             ]
         );
 
@@ -190,7 +207,7 @@ router.post('/products/:id/images', productUpload.array('images', 10), async (re
         const inserted = [];
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
-            const url = `${req.protocol}://${req.get('host')}/uploads/products/${file.filename}`;
+            const url = `${environment.UPLOADS_ORIGIN}/uploads/products/${file.filename}`;
             const result = await query(
                 `INSERT INTO product_images (id, product_id, image_url, sort_order, is_primary)
                  VALUES ($1, $2, $3, $4, $5) RETURNING *`,
@@ -542,10 +559,11 @@ router.get('/contacts', async (req, res) => {
     }
 });
 
-router.patch('/contacts/:id/read', async (req, res) => {
+router.patch('/contacts/:id/status', async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await query(`UPDATE contact_enquiries SET is_read = true WHERE id = $1 RETURNING *`, [id]);
+        const { status } = req.body;
+        const result = await query(`UPDATE contact_enquiries SET status = $2 WHERE id = $1 RETURNING *`, [id, status]);
         if (result.rows.length === 0) return res.status(404).json({ success: false, message: 'Enquiry not found' });
         res.json({ success: true, data: { enquiry: result.rows[0] } });
     } catch (error) {
@@ -572,6 +590,30 @@ router.patch('/tailoring/:id/status', async (req, res) => {
         const result = await query(`UPDATE tailoring_orders SET status = $2 WHERE id = $1 RETURNING *`, [id, status]);
         if (result.rows.length === 0) return res.status(404).json({ success: false, message: 'Request not found' });
         res.json({ success: true, data: { request: result.rows[0] } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+// ============================================================
+// CART INQUIRIES (no-price checkout requests)
+// ============================================================
+router.get('/cart-inquiries', async (req, res) => {
+    try {
+        const result = await query('SELECT * FROM cart_inquiries ORDER BY created_at DESC LIMIT 200');
+        res.json({ success: true, data: { inquiries: result.rows } });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
+router.patch('/cart-inquiries/:id/status', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+        const result = await query(`UPDATE cart_inquiries SET status = $2 WHERE id = $1 RETURNING *`, [id, status]);
+        if (result.rows.length === 0) return res.status(404).json({ success: false, message: 'Inquiry not found' });
+        res.json({ success: true, data: { inquiry: result.rows[0] } });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
